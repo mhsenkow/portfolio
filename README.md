@@ -1,2 +1,2 @@
 # portfolio
-main portfolio site
+Projects and tracking for ME. And maybe website code. 
