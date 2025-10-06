@@ -1,95 +1,58 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { projects } from '@/content/projects';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main id="content">
+      <section className="container" style={{ padding: "var(--space-16) 0" }}>
+        <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} style={{ fontSize: "var(--size-7)", lineHeight: 1.1 }}>mhsenkow</motion.h1>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.4 }} style={{ marginTop: "var(--space-4)", color: "var(--color-muted)", maxWidth: 820, display: 'grid', gap: 'var(--space-3)' }}>
+          <p>Hey hey! I’m a Staff Product Designer — passionate about crafting cutting‑edge complex tooling, AI workflows, and digital craft being used creatively.</p>
+          <p>Focus Time moments I’ve helped create are on millions of PCs. The Daiquery Notebook work enabled almost everyone at Meta to make decisions better with AI‑enabled workflows. I’ve helped build such projects as Cognos Analytics powered by Watson, early steps of IBM’s Carbon Design System, and the early days of Viva Insights.</p>
+          <p>You’re looking at a sampling of my work across tech. There’s a <Link href="/list-view">full list</Link> at the top and a more exploratory <Link href="/all-experiences">grid view</Link> as well.</p>
+          <p>Each of these cards leads to a main project from one of my eras of work. I’m currently doing a revamp in code and exploring what I can make — check it out.</p>
+          <div style={{ marginTop: 'var(--space-2)' }}>
+            <a href="https://www.figma.com/proto/SS9PFTPBKoUEmOhn1f5GJt/presentation?node-id=376-3&t=97fqkQd8qUt8cyQY-1&starting-point-node-id=376%3A3" target="_blank" rel="noreferrer noopener" style={{
+              display: 'inline-block',
+              padding: '8px 12px',
+              borderRadius: '8px',
+              border: '1px solid rgba(255,255,255,0.12)',
+              background: 'var(--color-bg-elev)'
+            }}>View AI work deck ↗</a>
+          </div>
+        </motion.div>
+      </section>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+      <section className="container" style={{ paddingBottom: 'var(--space-16)' }}>
+        <h2 style={{ fontSize: 'var(--size-4)' }}>highlights</h2>
+        <motion.div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: 'var(--space-6)',
+          marginTop: 'var(--space-6)'
+        }} initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 }}}}>
+          {projects.slice(0, 4).map((p) => (
+            <motion.div key={p.slug} variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}>
+            <Link href={`/projects/${p.slug}`} className="card">
+              {p.image && (
+                <div className="card-image">
+                  <Image src={p.image.src} alt={p.image.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+                </div>
+              )}
+              <h3 style={{ margin: 0, fontSize: 'var(--size-3)' }}>{p.title}</h3>
+              <p style={{ marginTop: 'var(--space-2)', color: 'var(--color-muted)' }}>{p.description}</p>
+            </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+        <div style={{ marginTop: 'var(--space-6)' }}>
+          <Link href="/projects">view key projects →</Link>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+    </main>
   );
 }
