@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { projects } from '@/content/projects';
 import Link from 'next/link';
 import { ProjectPager } from '@/app/components/ProjectPager';
+import { LinkToken } from '@/app/components/LinkToken';
 import { SidePanelLayout } from '@/app/components/SidePanelLayout';
 import fs from 'fs';
 import path from 'path';
@@ -53,17 +54,36 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         ...autoGallery,
     ].filter((item, idx, arr) => arr.findIndex((x) => x.src === item.src) === idx);
 
+    // If section images are defined, remove them from the bottom gallery to avoid duplication
+    const sectionImageSrcs = project.details?.sections?.flatMap((section) =>
+      section.images?.map((img) => img.src) ?? []
+    ) ?? [];
+    const galleryFiltered = gallery.filter((g) => !sectionImageSrcs.includes(g.src));
+
     const idx = projects.findIndex((p) => p.slug === slug);
     const prev = idx > 0 ? projects[idx - 1] : null;
     const next = idx >= 0 && idx < projects.length - 1 ? projects[idx + 1] : null;
+
+    // Extract a YouTube video from prototypes if present
+    const videoHref = project.details?.prototypes?.find((p) => /youtu\.be|youtube\.com/.test(p.href))?.href;
+    const embedSrc = videoHref
+      ? (() => {
+          try {
+            const u = new URL(videoHref);
+            const id = u.hostname.includes('youtu.be') ? u.pathname.slice(1) : u.searchParams.get('v');
+            return id ? `https://www.youtube.com/embed/${id}` : undefined;
+          } catch { return undefined; }
+        })()
+      : undefined;
 
 	return (
 		<main id="content">
 			<section className="container--fluid" style={{ padding: 'var(--space-16) 0' }}>
         <SidePanelLayout panel={
           <div className="project-card">
-              <h1 style={{ fontSize: 'var(--size-4)', lineHeight: 1.2 }}>{project.title}</h1>
-              <p style={{ marginTop: 'var(--space-3)', color: 'var(--color-muted)' }}>{project.description}</p>
+              <div className="eyebrow">project</div>
+              <h1 className="h3" style={{ marginTop: '6px' }}>{project.title}</h1>
+              <p className="type-secondary" style={{ marginTop: 'var(--space-3)' }}>{project.description}</p>
               {project.details && (
                 <dl className="project-meta">
                   {project.details.role && (<><dt>Role</dt><dd>{project.details.role}</dd></>)}
@@ -75,37 +95,113 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </dl>
               )}
               {project.details?.prototypes && project.details.prototypes.length > 0 && (
-                <div className="project-links">
+                <div className="project-links" style={{ gridAutoFlow: 'row', gap: '8px' }}>
                   {project.details.prototypes.map((p) => (
-                    <a key={p.href} href={p.href} target="_blank" rel="noreferrer noopener">{p.label}</a>
+                    <LinkToken key={p.href} href={p.href} label={p.label} />
                   ))}
                 </div>
               )}
           </div>
         }>
           <div className="project-content-scroll">
+            <section>
+              <div className="eyebrow">overview</div>
+              <h2 className="h2" style={{ marginTop: '6px' }}>{project.title}</h2>
+              <p className="lede" style={{ marginTop: 'var(--space-2)' }}>{project.description}</p>
+            </section>
+            {project.details?.headerImage && (
+              <div style={{ marginTop: 'var(--space-6)', background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px' }}>
+                <Image src={project.details.headerImage.src} alt={project.details.headerImage.alt} width={project.details.headerImage.width ?? 1600} height={project.details.headerImage.height ?? 900} sizes="(max-width: 600px) 100vw, (max-width: 1200px) 80vw, 1200px" priority style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
+              </div>
+            )}
             {project.details?.synopsis && (
-              <section className="project-section">
+              <section className="project-section" style={{ maxWidth: 960 }}>
                 {Array.isArray(project.details.synopsis) ? (
-                  project.details.synopsis.map((s, i) => <p key={i} style={{ color: 'var(--color-muted)' }}>{s}</p>)
+                  project.details.synopsis.map((s, i) => {
+                    const titled = s.match(/^([A-Z][A-Za-z\s&/\-]{2,100}):\s*(.*)$/);
+                    if (titled) {
+                      const [, title, rest] = titled;
+                      return (
+                        <div key={i} style={{ marginTop: i === 0 ? 0 : 'var(--space-6)' }}>
+                          <h3 className="h3">{title}</h3>
+                          {rest && <p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{rest}</p>}
+                          {/* mini gallery if sections mapping provided */}
+                          {project.details?.sections && project.details.sections.find((sec) => sec.title.toLowerCase() === title.toLowerCase())?.images && (
+                            <div style={{ marginTop: 'var(--space-3)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
+                              {project.details.sections.find((sec) => sec.title.toLowerCase() === title.toLowerCase())!.images!.map((img, idx) => (
+                                <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '6px' }}>
+                                  <Image src={img.src} alt={img.alt} width={800} height={600} sizes="(max-width: 600px) 100vw, 800px" unoptimized style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 6px)', display: 'block' }} />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }
+                    return <p key={i} className="type-secondary">{s}</p>;
+                  })
                 ) : (
-                  <p style={{ color: 'var(--color-muted)' }}>{project.details.synopsis}</p>
+                  <p className="type-secondary">{project.details.synopsis}</p>
                 )}
               </section>
             )}
-            {gallery.length > 0 ? (
-              <div style={{ marginTop: 'var(--space-6)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
-                {gallery.map((g, i) => (
-                  <div key={g.src + i}>
-                    <Image src={g.src} alt={g.alt} width={1600} height={900} unoptimized style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-md)' }} />
+			{/* If sections exist but are not anchored by titled synopsis lines, render them explicitly */}
+			{project.details?.sections && Array.isArray(project.details.synopsis) && (() => {
+				const synopsisTitles = project.details!.synopsis!
+					.map((s) => {
+						const m = typeof s === 'string' ? s.match(/^([A-Z][A-Za-z\s&/\-]{2,100}):\s*.*$/) : null;
+						return m ? m[1].toLowerCase() : null;
+					})
+					.filter(Boolean) as string[];
+				const hasAnchors = project.details!.sections!.some((sec) => synopsisTitles.includes(sec.title.toLowerCase()));
+				return hasAnchors ? null : (
+					<section className="project-section" style={{ maxWidth: 960 }}>
+						{project.details!.sections!.map((sec) => (
+							<div key={sec.title} style={{ marginTop: 'var(--space-6)' }}>
+								<h3 className="h3">{sec.title}</h3>
+								{sec.body && (Array.isArray(sec.body) ? sec.body.map((b, i) => (
+									<p key={i} className="type-secondary" style={{ marginTop: i === 0 ? 'var(--space-2)' : 'var(--space-1)' }}>{b}</p>
+								)) : <p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{sec.body}</p>)}
+								{sec.images && (
+									<div style={{ marginTop: 'var(--space-3)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
+                                        {sec.images.map((img, idx) => (
+                                            <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '6px' }}>
+                                                <Image src={img.src} alt={img.alt} width={800} height={600} sizes="(max-width: 600px) 100vw, 800px" unoptimized style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 6px)', display: 'block' }} />
+											</div>
+										))}
+									</div>
+								)}
+							</div>
+						))}
+					</section>
+				);
+			})()}
+            {galleryFiltered.length > 0 ? (
+              <section className="project-section">
+                <h3 className="h3">gallery</h3>
+                <div style={{ marginTop: 'var(--space-3)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
+                {galleryFiltered.map((g, i) => (
+                    <div key={g.src + i} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px' }}>
+                      <Image src={g.src} alt={g.alt} width={1600} height={900} sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px" unoptimized style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
                   </div>
                 ))}
-              </div>
-            ) : project.image ? (
-              <div style={{ marginTop: 'var(--space-8)' }}>
-                <Image src={project.image.src} alt={project.image.alt} width={project.image.width ?? 1600} height={project.image.height ?? 900} unoptimized style={{ width: '100%', height: 'auto' }} />
+                </div>
+              </section>
+            ) : (project.image && sectionImageSrcs.length === 0) ? (
+              <div style={{ marginTop: 'var(--space-8)', background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px' }}>
+                <Image src={project.image.src} alt={project.image.alt} width={project.image.width ?? 1600} height={project.image.height ?? 900} unoptimized style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
               </div>
             ) : null}
+            {embedSrc && (
+              <section className="project-section">
+                <h3 className="h3">login concept video</h3>
+                <div style={{ marginTop: 'var(--space-3)' }}>
+                <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-1)' }}>
+                  <iframe src={embedSrc} title="YouTube video" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+                </div>
+                </div>
+              </section>
+            )}
             <div style={{ display: 'flex', gap: 'var(--space-4)', marginTop: 'var(--space-8)', alignItems: 'center' }}>
               {prev && <Link href={`/projects/${prev.slug}`}>&larr; {prev.title}</Link>}
               <span style={{ color: 'var(--color-muted)' }}>|</span>

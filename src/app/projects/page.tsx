@@ -16,7 +16,7 @@ export default function ProjectsPage() {
 				<p style={{ marginTop: 'var(--space-4)', color: 'var(--color-muted)', maxWidth: 820 }}>
 					Staff Product Designer — passionate about crafting cutting‑edge complex tooling, AI workflows, and digital craft being used creatively.
 				</p>
-				<ProjectsGrid items={projects.slice(0,5)} />
+				<ProjectsGrid />
 			</section>
 		</main>
 	);

@@ -1,0 +1,90 @@
+"use client";
+
+import { useEffect, useState } from 'react';
+
+type Theme = 'dark' | 'light' | 'hc';
+
+function getStoredTheme(): Theme | null {
+  try { return (localStorage.getItem('theme') as Theme) || null; } catch { return null; }
+}
+
+function storeTheme(theme: Theme) {
+  try { localStorage.setItem('theme', theme); } catch {}
+}
+
+function applyTheme(theme: Theme) {
+  if (typeof document === 'undefined') return;
+  const html = document.documentElement;
+  html.setAttribute('data-theme', theme);
+}
+
+export function initThemeOnLoad() {
+  if (typeof document === 'undefined') return;
+  const stored = getStoredTheme();
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initial: Theme = stored ?? (prefersDark ? 'dark' : 'light');
+  applyTheme(initial);
+}
+
+export default function ThemeToggle() {
+  const [theme, setTheme] = useState<Theme>('dark');
+
+  useEffect(() => {
+    const stored = getStoredTheme();
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial: Theme = stored ?? (prefersDark ? 'dark' : 'light');
+    setTheme(initial);
+    applyTheme(initial);
+  }, []);
+
+  useEffect(() => {
+    applyTheme(theme);
+    storeTheme(theme);
+  }, [theme]);
+
+  return (
+    <div role="group" aria-label="Theme" style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
+      <button
+        type="button"
+        aria-pressed={theme === 'light'}
+        aria-label="Light theme"
+        onClick={() => setTheme('light')}
+        style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+      >
+        {/* sun icon */}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        aria-pressed={theme === 'dark'}
+        aria-label="Dark theme"
+        onClick={() => setTheme('dark')}
+        style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+      >
+        {/* moon icon */}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button
+        type="button"
+        aria-pressed={theme === 'hc'}
+        aria-label="High contrast theme"
+        onClick={() => setTheme('hc')}
+        style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+      >
+        {/* three circles icon */}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="7" cy="12" r="3"/>
+          <circle cx="12" cy="12" r="3"/>
+          <circle cx="17" cy="12" r="3"/>
+        </svg>
+      </button>
+    </div>
+  );
+}
+
+

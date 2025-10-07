@@ -20,8 +20,8 @@ export default function Home() {
               display: 'inline-block',
               padding: '8px 12px',
               borderRadius: '8px',
-              border: '1px solid rgba(255,255,255,0.12)',
-              background: 'var(--color-bg-elev)'
+              border: 'var(--border-strong)',
+              background: 'var(--surface-card)'
             }}>View AI work deck ↗</a>
           </div>
         </motion.div>
@@ -35,7 +35,7 @@ export default function Home() {
           gap: 'var(--space-6)',
           marginTop: 'var(--space-6)'
         }} initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 }}}}>
-          {projects.slice(0, 4).map((p) => (
+          {projects.filter((p) => p.featured === true).slice(0, 4).map((p) => (
             <motion.div key={p.slug} variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}>
             <Link href={`/projects/${p.slug}`} className="card">
               {p.image && (

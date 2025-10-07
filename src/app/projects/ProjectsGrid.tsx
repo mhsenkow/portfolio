@@ -7,7 +7,7 @@ import styles from './page.module.css';
 import { projects as allProjects, type Project } from '@/content/projects';
 
 export function ProjectsGrid({ items }: { items?: Project[] }) {
-	const list = items ?? allProjects;
+    const list = items ?? allProjects.filter((p) => p.featured === true);
 	return (
 		<motion.div className={styles.grid} style={{ marginTop: 'var(--space-8)' }} initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 }}}}>
 			{list.map((p) => (

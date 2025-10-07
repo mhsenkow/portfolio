@@ -17,8 +17,8 @@ export default function OtherDesignWorkPage() {
 				<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-6)', marginTop: 'var(--space-8)' }}>
 					{creative.map((p) => (
 						<Link key={p.slug} href={`/projects/${p.slug}`} style={{
-							background: 'var(--color-bg-elev)',
-							border: '1px solid rgba(255,255,255,0.06)',
+						background: 'var(--surface-card)',
+						border: 'var(--border-weak)',
 							borderRadius: 'var(--radius-md)',
 							padding: 'var(--space-5)',
 							boxShadow: 'var(--shadow-1)'

@@ -8,6 +8,18 @@
     --color-accent: #6ee7f9;
     --color-accent-2: #a78bfa;
 
+    /* borders (semantic) */
+    --border-weak: 1px solid rgba(255,255,255,0.06);
+    --border: 1px solid rgba(255,255,255,0.08);
+    --border-strong: 1px solid rgba(255,255,255,0.12);
+
+    /* surfaces (semantic) */
+    --surface-card: var(--color-bg-elev);
+    --surface-image-frame: #ffffff;
+
+    /* focus */
+    --focus-ring: 2px solid var(--color-accent);
+
     /* spacing */
     --space-1: 4px;
     --space-2: 8px;
@@ -29,6 +41,11 @@
     --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
     --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
+    /* type roles */
+    --type-primary: var(--size-2);
+    --type-secondary: var(--size-1);
+    --type-tertiary: var(--size-0);
+
     --size-0: clamp(12px, 0.75rem, 0.75rem);
     --size-1: clamp(14px, 0.875rem, 0.875rem);
     --size-2: clamp(16px, 1rem, 1rem);
@@ -46,7 +63,50 @@
     /* layout */
     --content-width: 1120px;
     --panel-width: 300px;
+    --panel-handle: 36px;
     --header-h: 56px;
     --footer-h: 56px;
+  }
+
+  /* explicit theme overrides via data-theme on <html> */
+  :root[data-theme="dark"] {
+    --color-bg: #0b0b0c;
+    --color-bg-elev: #121214;
+    --color-text: #e6e6e6;
+    --color-muted: #a3a3a3;
+    --border-weak: 1px solid rgba(255,255,255,0.06);
+    --border: 1px solid rgba(255,255,255,0.08);
+    --border-strong: 1px solid rgba(255,255,255,0.12);
+    --surface-card: var(--color-bg-elev);
+    --surface-image-frame: #ffffff;
+    --focus-ring: 2px solid var(--color-accent);
+  }
+
+  :root[data-theme="light"] {
+    --color-bg: #ffffff;
+    --color-bg-elev: #f7f7f8;
+    --color-text: #171717;
+    --color-muted: #525252;
+    --border-weak: 1px solid rgba(0,0,0,0.06);
+    --border: 1px solid rgba(0,0,0,0.08);
+    --border-strong: 1px solid rgba(0,0,0,0.12);
+    --surface-card: var(--color-bg-elev);
+    --surface-image-frame: #ffffff;
+    --focus-ring: 2px solid var(--color-accent-2);
+  }
+
+  :root[data-theme="hc"] {
+    --color-bg: #000000;
+    --color-bg-elev: #000000;
+    --color-text: #ffffff;
+    --color-muted: #e0e0e0;
+    --color-accent: #00ffff;
+    --color-accent-2: #ffff00;
+    --border-weak: 2px solid #ffffff;
+    --border: 2px solid #ffffff;
+    --border-strong: 3px solid #ffffff;
+    --surface-card: #000000;
+    --surface-image-frame: #ffffff;
+    --focus-ring: 3px solid #ffffff;
   }
 }

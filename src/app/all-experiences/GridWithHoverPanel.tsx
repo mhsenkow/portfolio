@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { createPortal } from 'react-dom';
 import type { Project } from '@/content/projects';
 
@@ -10,11 +11,25 @@ type Props = { items: Project[] };
 export function GridWithHoverPanel({ items }: Props) {
   const [hovered, setHovered] = useState<Project | null>(null);
   const [mountNode, setMountNode] = useState<Element | null>(null);
+  const [open, setOpen] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return window.matchMedia && window.matchMedia('(max-width: 900px)').matches ? false : true;
+  });
 
   useEffect(() => { setMountNode(document.getElementById('overlays')); }, []);
+  useEffect(() => {
+    document.body.classList.add('has-right-panel');
+    return () => { document.body.classList.remove('has-right-panel'); };
+  }, []);
+  useEffect(() => {
+    document.body.setAttribute('data-right-panel', open ? 'open' : 'closed');
+  }, [open]);
 
   const panel = useMemo(() => (
-    <aside className="overlay-panel--right" aria-label="Details">
+    <aside className="overlay-panel--right" aria-label="Details" data-state={open ? 'open' : 'closed'}>
+      <button type="button" className="panel-handle" aria-label={open ? 'Close details' : 'Open details'} onClick={() => setOpen((v) => !v)}>
+        {open ? <ChevronRightIcon width={20} height={20} /> : <ChevronLeftIcon width={20} height={20} />}
+      </button>
       <div className="project-card" style={{ height: '100%', overflow: 'auto' }}>
         {hovered ? (
           <div>
@@ -37,7 +52,7 @@ export function GridWithHoverPanel({ items }: Props) {
         )}
       </div>
     </aside>
-  ), [hovered]);
+  ), [hovered, open]);
 
   return (
     <div>
@@ -51,7 +66,7 @@ export function GridWithHoverPanel({ items }: Props) {
           <Link key={p.slug} href={`/projects/${p.slug}`} className="card" onMouseEnter={() => setHovered(p)} onFocus={() => setHovered(p)}>
             {p.image && (
               <div className="card-image" style={{ marginBottom: 'var(--space-2)' }}>
-                <Image src={p.image.src} alt={p.image.alt} fill sizes="200px" />
+                <Image src={p.image.src} alt={p.image.alt} fill sizes="(max-width: 600px) 50vw, 200px" />
               </div>
             )}
             <h3 style={{ margin: 0, fontSize: 'var(--size-2)' }}>{p.title}</h3>

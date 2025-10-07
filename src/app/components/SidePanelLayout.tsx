@@ -1,5 +1,6 @@
 "use client";
 import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { createPortal } from 'react-dom';
 
 type Props = {
@@ -9,13 +10,21 @@ type Props = {
 
 export function SidePanelLayout({ panel, children }: Props) {
   const [mountNode, setMountNode] = useState<Element | null>(null);
+  const [open, setOpen] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return window.matchMedia && window.matchMedia('(max-width: 900px)').matches ? false : true;
+  });
+
   const portalContent = useMemo(() => (
-    <aside className="overlay-panel" aria-label="Project panel">
+    <aside className="overlay-panel" aria-label="Project panel" data-state={open ? 'open' : 'closed'}>
+      <button type="button" className="panel-handle" aria-label={open ? 'Close panel' : 'Open panel'} onClick={() => setOpen((v) => !v)}>
+        {open ? <ChevronLeftIcon width={20} height={20} /> : <ChevronRightIcon width={20} height={20} />}
+      </button>
       <div className="project-card" style={{ height: '100%', overflow: 'auto' }}>
         {panel}
       </div>
     </aside>
-  ), [panel]);
+  ), [panel, open]);
 
   useEffect(() => {
     const node = document.getElementById('overlays');
@@ -26,6 +35,10 @@ export function SidePanelLayout({ panel, children }: Props) {
       document.body.classList.remove('has-left-panel');
     };
   }, []);
+
+  useEffect(() => {
+    document.body.setAttribute('data-left-panel', open ? 'open' : 'closed');
+  }, [open]);
 
   return (
     <div className="project-grid">

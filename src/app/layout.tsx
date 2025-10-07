@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
 import { Nav } from "./components/Nav";
+import Script from "next/script";
+import "@/styles/globals.css";
 import "@/styles/globals.css";
 
 const geistSans = Geist({
@@ -37,8 +38,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.className} ${geistMono.variable}`}>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem('theme');var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);}catch(e){}})();`}
+        </Script>
         <div className="app-shell">
           <a href="#content" className="sr-only">Skip to content</a>
           <header className="site-header">
@@ -50,13 +54,12 @@ export default function RootLayout({
           {/* overlay root for panels (left/right drawers, modals) */}
           <div id="overlays" className="overlay-root" />
           <footer className="site-footer">
-            <div className="container">
+            <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <p>© {new Date().getFullYear()} mhsenkow</p>
-              <div style={{ marginTop: 'var(--space-3)', display: 'flex', gap: 'var(--space-4)' }}>
-                <a href="https://www.linkedin.com/in/mhsenkow/" target="_blank" rel="noreferrer noopener">LinkedIn</a>
-                <a href="https://github.com/mhsenkow" target="_blank" rel="noreferrer noopener">GitHub</a>
-                <a href="https://thenounproject.com/creator/mhsenkow/" target="_blank" rel="noreferrer noopener">Noun Project</a>
-                <a href="mailto:mhsenkow@gmail.com">Email</a>
+              <div style={{ display: 'flex', gap: 'var(--space-4)' }}>
+                <a href="mailto:mhsenkow@gmail.com" aria-label="Email">Email</a>
+                <a href="https://github.com/mhsenkow" target="_blank" rel="noreferrer noopener" aria-label="GitHub">GitHub</a>
+                <a href="https://www.linkedin.com/in/mhsenkow/" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">LinkedIn</a>
               </div>
             </div>
           </footer>

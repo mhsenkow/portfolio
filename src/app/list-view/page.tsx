@@ -15,7 +15,7 @@ export default function ListViewPage() {
 				<h1 style={{ fontSize: 'var(--size-6)', lineHeight: 1.1 }}>full list</h1>
 				<ul style={{ marginTop: 'var(--space-8)', padding: 0, listStyle: 'none', display: 'grid', gap: 'var(--space-4)' }}>
 					{sorted.map((p) => (
-						<li key={p.slug} style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 'var(--space-4)' }}>
+						<li key={p.slug} style={{ borderBottom: 'var(--border-weak)', paddingBottom: 'var(--space-4)' }}>
 							<div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'baseline', flexWrap: 'wrap' }}>
 								<span style={{ color: 'var(--color-muted)', minWidth: 60 }}>{p.year ?? ''}</span>
 								<Link href={`/projects/${p.slug}`}>{p.title}</Link>
