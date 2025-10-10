@@ -20,6 +20,11 @@
   html[data-font="sf-pro"] { --font-sans: var(--font-sf-pro); }
   html[data-font="segoe"] { --font-sans: var(--font-segoe); }
   html[data-font="optimistic"] { --font-sans: var(--font-optimistic); }
+  html[data-font="libre-baskerville"] { --font-sans: var(--font-libre-baskerville); }
+  html[data-font="lora"] { --font-sans: var(--font-lora); }
+  html[data-font="manrope"] { --font-sans: var(--font-manrope); }
+  html[data-font="jetbrains-mono"] { --font-sans: var(--font-jetbrains-mono); }
+  html[data-font="fira-code"] { --font-sans: var(--font-fira-code); }
   
   html { font-size: 16px; }
   body {

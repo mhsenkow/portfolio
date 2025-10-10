@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light' | 'hc' | 'electric' | 'paper';
-type Font = 'geist' | 'ibm-plex' | 'inter' | 'work-sans' | 'space-grotesk' | 'dm-sans';
+type Font = 'geist' | 'ibm-plex' | 'inter' | 'work-sans' | 'space-grotesk' | 'dm-sans' | 'libre-baskerville' | 'lora' | 'manrope' | 'jetbrains-mono' | 'fira-code';
 
 function getStoredTheme(): Theme | null {
   try { return (localStorage.getItem('theme') as Theme) || null; } catch { return null; }
@@ -39,7 +39,12 @@ function applyFont(font: Font) {
     'inter': 'var(--font-inter), ui-sans-serif, system-ui',
     'work-sans': 'var(--font-work-sans), ui-sans-serif, system-ui',
     'space-grotesk': 'var(--font-space-grotesk), ui-sans-serif, system-ui',
-    'dm-sans': 'var(--font-dm-sans), ui-sans-serif, system-ui'
+    'dm-sans': 'var(--font-dm-sans), ui-sans-serif, system-ui',
+    'libre-baskerville': 'var(--font-libre-baskerville), Georgia, serif',
+    'lora': 'var(--font-lora), Georgia, serif',
+    'manrope': 'var(--font-manrope), ui-sans-serif, system-ui',
+    'jetbrains-mono': 'var(--font-jetbrains-mono), SF Mono, Monaco, monospace',
+    'fira-code': 'var(--font-fira-code), SF Mono, Monaco, monospace'
   };
   document.body.style.fontFamily = fontMap[font];
 }
@@ -180,6 +185,11 @@ export default function ThemeToggle() {
         <option value="work-sans">Work Sans</option>
         <option value="space-grotesk">Space Grotesk</option>
         <option value="dm-sans">DM Sans</option>
+        <option value="libre-baskerville">Libre Baskerville</option>
+        <option value="lora">Lora</option>
+        <option value="manrope">Manrope</option>
+        <option value="jetbrains-mono">JetBrains Mono</option>
+        <option value="fira-code">Fira Code</option>
       </select>
     </div>
   );

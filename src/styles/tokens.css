@@ -51,6 +51,13 @@
     --font-sf-pro: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui;
     --font-segoe: 'Segoe UI', 'Segoe UI Variable', Roboto, system-ui;
     --font-optimistic: 'Optimistic Display', -apple-system, system-ui;
+    
+    /* new font stacks */
+    --font-libre-baskerville: var(--font-libre-baskerville), 'Libre Baskerville', Georgia, serif;
+    --font-lora: var(--font-lora), 'Lora', Georgia, serif;
+    --font-manrope: var(--font-manrope), 'Manrope', ui-sans-serif, system-ui;
+    --font-jetbrains-mono: var(--font-jetbrains-mono), 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    --font-fira-code: var(--font-fira-code), 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 
     /* type roles */
     --type-primary: var(--size-2);

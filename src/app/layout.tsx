@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, IBM_Plex_Sans, Inter, Work_Sans, Space_Grotesk, DM_Sans } from "next/font/google";
+import { Geist, Geist_Mono, IBM_Plex_Sans, Inter, Work_Sans, Space_Grotesk, DM_Sans, Libre_Baskerville, Lora, Manrope, JetBrains_Mono, Fira_Code } from "next/font/google";
 import { Nav } from "./components/Nav";
 import { LightboxProvider } from "./components/Lightbox";
 import Script from "next/script";
@@ -41,6 +41,35 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
+const libreBaskerville = Libre_Baskerville({
+  variable: "--font-libre-baskerville",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "mhsenkow — portfolio",
   description: "lower case portfolio by mhsenkow",
@@ -65,7 +94,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${libreBaskerville.variable} ${lora.variable} ${manrope.variable} ${jetBrainsMono.variable} ${firaCode.variable}`}>
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function(){try{var t=localStorage.getItem('theme');var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);}catch(e){}})();`}
         </Script>
