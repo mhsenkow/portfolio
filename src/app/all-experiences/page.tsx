@@ -11,7 +11,6 @@ export default function AllExperiencesPage() {
 	return (
 		<main id="content">
 			<section className="container" style={{ padding: 'var(--space-16) 0' }}>
-				<h1 style={{ fontSize: 'var(--size-6)', lineHeight: 1.1 }}>grid view</h1>
 				<GridWithHoverPanel items={projects} />
 			</section>
 		</main>

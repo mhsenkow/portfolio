@@ -16,8 +16,9 @@ export function ContactForm() {
     const message = String(data.get('message') || '');
     try {
       const res = await fetch('/api/contact', { method: 'POST', body: data });
-      const json = await res.json().catch(() => ({}));
-      if (res.ok && json && (json as any).ok) {
+      const json: unknown = await res.json().catch(() => ({}));
+      const isOk = typeof json === 'object' && json !== null && 'ok' in (json as { ok?: unknown }) && (json as { ok?: unknown }).ok === true;
+      if (res.ok && isOk) {
         setStatus('sent');
         form.reset();
         return;

@@ -53,20 +53,31 @@ export function initThemeOnLoad() {
 }
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
   const [font, setFont] = useState<Font>('geist');
 
   useEffect(() => {
+    // Read the theme that was already applied by the inline script
+    const currentTheme = document.documentElement.getAttribute('data-theme') as Theme;
     const stored = getStoredTheme();
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initial: Theme = stored ?? (prefersDark ? 'dark' : 'light');
+    const initial: Theme = currentTheme || stored || (prefersDark ? 'dark' : 'light');
     setTheme(initial);
-    applyTheme(initial);
+    
+    // Only apply theme if it's not already set
+    if (!currentTheme) {
+      applyTheme(initial);
+    }
     
     const storedFont = getStoredFont();
-    const initialFont: Font = storedFont ?? 'geist';
+    const currentFont = document.documentElement.getAttribute('data-font') as Font;
+    const initialFont: Font = currentFont || storedFont || 'geist';
     setFont(initialFont);
-    applyFont(initialFont);
+    
+    // Only apply font if it's not already set
+    if (!currentFont) {
+      applyFont(initialFont);
+    }
   }, []);
 
   useEffect(() => {

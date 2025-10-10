@@ -3,8 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { Project } from '@/content/projects';
 import { LightboxImage } from '@/app/components/Lightbox';
+import { SortFilterBar, sortProjects, filterProjects, getFilterCounts, type SortOption, type FilterOption } from '@/app/components/SortFilterBar';
+import styles from './GridWithHoverPanel.module.css';
 
 type Props = { items: Project[] };
 
@@ -15,6 +18,18 @@ export function GridWithHoverPanel({ items }: Props) {
     if (typeof window === 'undefined') return true;
     return window.matchMedia && window.matchMedia('(max-width: 900px)').matches ? false : true;
   });
+  
+  // Sort and filter state
+  const [sort, setSort] = useState<SortOption>('year-desc');
+  const [filter, setFilter] = useState<FilterOption>('all');
+  
+  // Process items based on sort and filter
+  const processedItems = useMemo(() => {
+    const filtered = filterProjects(items, filter);
+    return sortProjects(filtered, sort);
+  }, [items, sort, filter]);
+  
+  const filterCounts = useMemo(() => getFilterCounts(items), [items]);
 
   useEffect(() => { setMountNode(document.getElementById('overlays')); }, []);
   useEffect(() => {
@@ -64,23 +79,153 @@ export function GridWithHoverPanel({ items }: Props) {
 
   return (
     <div>
+      {/* Title and toolbar in horizontal layout */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-        gap: 'var(--space-4)',
-        marginTop: 'var(--space-8)'
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 'var(--space-6)',
+        flexWrap: 'wrap',
+        gap: 'var(--space-4)'
       }}>
-        {items.map((p) => (
-          <Link key={p.slug} href={`/projects/${p.slug}`} className="card" onMouseEnter={() => setHovered(p)} onFocus={() => setHovered(p)}>
-            {p.image && (
-              <div className="card-image" style={{ marginBottom: 'var(--space-2)' }}>
-                <Image src={p.image.src} alt={p.image.alt} fill sizes="(max-width: 600px) 50vw, 200px" />
-              </div>
-            )}
-            <h3 style={{ margin: 0, fontSize: 'var(--size-2)' }}>{p.title}</h3>
-          </Link>
-        ))}
+        <h1 style={{ 
+          fontSize: 'var(--size-6)', 
+          lineHeight: 1.1, 
+          margin: 0,
+          flex: '1 1 auto',
+          minWidth: '200px'
+        }}>
+          grid view
+        </h1>
+        
+        <div style={{ flex: '0 0 auto' }}>
+          <SortFilterBar
+            onSortChange={setSort}
+            onFilterChange={setFilter}
+            currentSort={sort}
+            currentFilter={filter}
+            itemCount={processedItems.length}
+            filterCounts={filterCounts}
+          />
+        </div>
       </div>
+      
+      <motion.div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+          gap: 'var(--space-4)'
+        }}
+        layout
+      >
+        <AnimatePresence mode="popLayout">
+          {processedItems.map((p, index) => (
+            <motion.div
+              key={p.slug}
+              layout
+              initial={{ 
+                opacity: 0, 
+                scale: 0.85, 
+                y: 30,
+                rotateX: -15,
+                rotateY: 5
+              }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1, 
+                y: 0,
+                rotateX: 0,
+                rotateY: 0
+              }}
+              exit={{ 
+                opacity: 0, 
+                scale: 0.85, 
+                y: -30,
+                rotateX: 15,
+                rotateY: -5,
+                transition: {
+                  duration: 0.25,
+                  ease: [0.4, 0.0, 1, 1]
+                }
+              }}
+              transition={{ 
+                duration: 0.4,
+                delay: index * 0.02,
+                ease: [0.25, 0.46, 0.45, 0.94],
+                type: "spring",
+                stiffness: 260,
+                damping: 20
+              }}
+              whileHover={{ 
+                scale: 1.03,
+                y: -2,
+                rotateX: -2,
+                transition: { 
+                  duration: 0.2,
+                  ease: [0.4, 0.0, 0.2, 1]
+                }
+              }}
+              whileTap={{ 
+                scale: 0.98,
+                transition: { duration: 0.1 }
+              }}
+              style={{
+                transformStyle: 'preserve-3d',
+                perspective: 1000
+              }}
+            >
+              <Link 
+                href={`/projects/${p.slug}`} 
+                className={`${styles.card} card`} 
+                onMouseEnter={() => setHovered(p)} 
+                onFocus={() => setHovered(p)}
+                style={{
+                  display: 'block',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)',
+                  borderRadius: 'var(--radius-lg)',
+                  background: 'var(--surface-card)',
+                  border: '1px solid var(--color-border)',
+                  padding: 'var(--space-4)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06)',
+                  transformStyle: 'preserve-3d'
+                }}
+              >
+                {p.image && (
+                  <div className={`${styles.cardImage} card-image`} style={{ 
+                    marginBottom: 'var(--space-3)',
+                    borderRadius: 'var(--radius-md)',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    height: '120px',
+                    background: 'var(--surface-elev)'
+                  }}>
+                    <Image 
+                      src={p.image.src} 
+                      alt={p.image.alt} 
+                      fill 
+                      sizes="(max-width: 600px) 50vw, 200px"
+                      style={{
+                        objectFit: 'cover',
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)'
+                      }}
+                    />
+                  </div>
+                )}
+                <h3 style={{ 
+                  margin: 0, 
+                  fontSize: 'var(--size-2)',
+                  fontWeight: '600',
+                  lineHeight: 1.3,
+                  transition: 'color 0.2s ease'
+                }}>{p.title}</h3>
+              </Link>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
+      
       {mountNode ? createPortal(panel, mountNode) : panel}
     </div>
   );

@@ -163,7 +163,7 @@ export const projects: Project[] = [
 		stack: ['Meta', 'Notebooks', 'AI'],
 		details: {
       role: 'Product Designer',
-			entity: 'Meta',
+      entity: 'Meta',
 			years: '2020–2023',
       team: 'Collaborated with engineers, PMs, and other designers.',
 			headerImage: { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-12-00.png', alt: 'Da(i)query notebook — SQL cells' },
@@ -252,7 +252,7 @@ export const projects: Project[] = [
     image: { src: '/images/projects/ae/Pie chart.png', alt: 'AI infographic pie chart' },
 		stack: ['AI', 'Prototyping'],
 		details: {
-			role: 'Product Designer',
+				role: 'Product Designer',
 				entity: 'Supio, Microsoft Cloud, Mars Data Suite; supporting ComfyUI / Pincites / Zeplyn / Peopled',
 				location: 'Seattle / remote / in person',
 				years: '2024–2025',
@@ -1184,11 +1184,24 @@ export const projects: Project[] = [
 		title: 'Icon creation',
 		description: 'Vector icon explorations and logo concepts; experiments with AI-assisted vectorization.',
 		category: 'creative',
-		image: { src: '/images/projects/icon-creation/card.jpg', alt: 'Icon creation thumbnail' },
+		links: [
+			{ label: 'Noun Project Profile', href: 'https://thenounproject.com/creator/mhsenkow/' }
+		],
+		image: { src: '/images/projects/icon-creation/ai-vectorize-example-2.png', alt: 'Icon creation - AI vectorization example' },
+		gallery: [
+			{ src: '/images/projects/icon-creation/icons-screenshot-2.png', alt: 'Icon collection showcase 1' },
+			{ src: '/images/projects/icon-creation/icons-screenshot-1.png', alt: 'Icon collection showcase 2' },
+			{ src: '/images/projects/icon-creation/icons-screenshot-3.png', alt: 'Icon collection showcase 3' },
+			{ src: '/images/projects/icon-creation/icons-screenshot-4.png', alt: 'Icon collection showcase 4' },
+			{ src: '/images/projects/icon-creation/icons-screenshot-5.png', alt: 'Icon collection showcase 5' },
+			{ src: '/images/projects/icon-creation/ai-vectorize-example-1.png', alt: 'AI-assisted vectorization example 1' },
+			{ src: '/images/projects/icon-creation/ai-vectorize-example-2.png', alt: 'AI-assisted vectorization example 2' }
+		],
 		details: {
 			synopsis: [
-				"I periodically create icons as a way to stretch visual craft and explore metaphor.",
-				"Recent work includes tests of AI-assisted raster-to-vector workflows and refinements by hand."
+				"I'll make vector icons for the noun project every so often as a way to stretch those visual / exploration skills. I've tried a few recently around the 'quickly get an image with ai-vectorize it' route to see how that pathway goes.",
+				"For UX and product design, it is often helpful to ponder a new icon or have a logo to represent a concept.",
+				"Somehow my wood finish one is the most downloaded at about 5000."
 			]
 		}
 	},
@@ -1211,10 +1224,31 @@ export const projects: Project[] = [
 		description: 'Small coded pieces — headers, backgrounds, loaders — and purely artistic experiments.',
 		category: 'creative',
 		image: { src: '/images/projects/generative-web-code-art/card.png', alt: 'Generative web-code art' },
+		gallery: [
+			{ src: '/images/projects/generative-web-code-art/voice-visualizer.png', alt: 'Voice Visualizer' },
+			{ src: '/images/projects/generative-web-code-art/music-sound-experiment.png', alt: 'Music Sound experiment 2' },
+			{ src: '/images/projects/generative-web-code-art/header-concept.png', alt: 'Piece 1: Header concept for cards' },
+			{ src: '/images/projects/generative-web-code-art/artistic-loader-1.png', alt: 'Piece 2: Artistic loader concept' },
+			{ src: '/images/projects/generative-web-code-art/artistic-loader-2.png', alt: 'Piece 3: Artistic loader concept' },
+			{ src: '/images/projects/generative-web-code-art/chaotic-circle-generator.png', alt: 'Piece 4: Random chaotic circle generator' },
+			{ src: '/images/projects/generative-web-code-art/slow-moving-background.png', alt: 'Piece 5: Slow moving background art' },
+			{ src: '/images/projects/generative-web-code-art/background-concept.png', alt: 'Piece 7: Background concept' }
+		],
 		details: {
 			synopsis: [
-				"A collection of browser-based generative sketches.",
-				"Pieces range from UI-adjacent concepts (headers/loaders) to purely artistic explorations."
+				"I'm not fully sure how to group these. In relation to direct work, these experiments could inform smart headers, backgrounds, loaders, etc. In relation to artwork elsewhere…I'm always game for a challenge.",
+				"A collection of browser-based generative sketches. Pieces range from UI-adjacent concepts (headers/loaders) to purely artistic explorations."
+			],
+			prototypes: [
+				{ label: 'Voice Visualizer', href: 'https://mhsenkow.org/experiments/AliceSong/' },
+				{ label: 'Music Sound experiment 2', href: 'https://mhsenkow.org/experiments/CAL/' },
+				{ label: 'Piece 1: Header concept for cards', href: 'https://codepen.io/mhsenkow/full/YpjGBp' },
+				{ label: 'Piece 2: Artistic loader concept', href: 'https://codepen.io/mhsenkow/full/yJkEqR' },
+				{ label: 'Piece 3: Artistic loader concept', href: 'https://codepen.io/mhsenkow/full/RWQZRY' },
+				{ label: 'Piece 4: Random chaotic circle generator', href: 'https://codepen.io/mhsenkow/full/avqLQr' },
+				{ label: 'Piece 5: Slow moving background art', href: 'https://codepen.io/mhsenkow/full/EKEObd' },
+				{ label: 'Piece 6: Purely artistic', href: 'https://codepen.io/mhsenkow/full/aZBgWd' },
+				{ label: 'Piece 7: Background concept', href: 'https://codepen.io/mhsenkow/full/RWRKjB' }
 			]
 		}
 	},
@@ -1224,8 +1258,14 @@ export const projects: Project[] = [
 		description: 'Selected graphic design examples from various roles.',
 		category: 'creative',
 		image: { src: '/images/projects/graphic-design-work/card.PNG', alt: 'Graphic design work' },
+		gallery: [
+			{ src: '/images/projects/graphic-design-work/marcom10.png', alt: 'Marketing communications design 1' },
+			{ src: '/images/projects/graphic-design-work/marcom11.png', alt: 'Marketing communications design 2' },
+			{ src: '/images/projects/graphic-design-work/marcom12.png', alt: 'Marketing communications design 3' },
+			{ src: '/images/projects/graphic-design-work/marcom13.png', alt: 'Marketing communications design 4' }
+		],
 		details: {
-			synopsis: "A sampling of graphics and visual compositions created alongside product design work."
+			synopsis: "Providing some examples of the more purely graphic design work from old roles. A sampling of graphics and visual compositions created alongside product design work."
 		}
 	},
 	{
@@ -1233,12 +1273,45 @@ export const projects: Project[] = [
 		title: '3D printer experimentation',
 		description: 'Explorations across Rhino/Grasshopper and node-based modeling; printed studies.',
 		category: 'creative',
+		links: [
+			{ label: 'Original', href: 'https://www.mhsenkow.work/other-design-work#/3d-printer-experimentation/' }
+		],
 		image: { src: '/images/projects/3d-printer-experimentation/card.png', alt: '3D printer experimentation' },
+		stack: ['Rhino', 'Grasshopper', 'Blender', '3D Printing', 'Parametric Design'],
+		gallery: [
+			{ src: '/images/projects/3d-printer-experimentation/print.png', alt: '3D print example 1' },
+			{ src: '/images/projects/3d-printer-experimentation/print1.png', alt: '3D print example 2' },
+			{ src: '/images/projects/3d-printer-experimentation/print2.png', alt: '3D print example 3' },
+			{ src: '/images/projects/3d-printer-experimentation/print3.png', alt: '3D print example 4' },
+			{ src: '/images/projects/3d-printer-experimentation/print4.png', alt: '3D print example 5' },
+			{ src: '/images/projects/3d-printer-experimentation/print5.png', alt: '3D print example 6' },
+			{ src: '/images/projects/3d-printer-experimentation/print7.png', alt: '3D print example 7' },
+			{ src: '/images/projects/3d-printer-experimentation/print8.png', alt: '3D print example 8' },
+			{ src: '/images/projects/3d-printer-experimentation/print9.png', alt: '3D print example 9' },
+			{ src: '/images/projects/3d-printer-experimentation/print10.png', alt: '3D print example 10' },
+			{ src: '/images/projects/3d-printer-experimentation/print11.png', alt: '3D print example 11' },
+			{ src: '/images/projects/3d-printer-experimentation/print12.png', alt: '3D print example 12' },
+			{ src: '/images/projects/3d-printer-experimentation/print13.png', alt: '3D print example 13' },
+			{ src: '/images/projects/3d-printer-experimentation/print14.png', alt: '3D print example 14' },
+			{ src: '/images/projects/3d-printer-experimentation/print15.png', alt: '3D print example 15' },
+			{ src: '/images/projects/3d-printer-experimentation/print16.png', alt: '3D print example 16' },
+			{ src: '/images/projects/3d-printer-experimentation/3d-print-photo-1.jpg', alt: '3D printed object photo 1' },
+			{ src: '/images/projects/3d-printer-experimentation/3d-print-photo-2.jpg', alt: '3D printed object photo 2' },
+			{ src: '/images/projects/3d-printer-experimentation/3d-print-photo-3.jpg', alt: '3D printed object photo 3' },
+			{ src: '/images/projects/3d-printer-experimentation/3d-print-photo-4.jpg', alt: '3D printed object photo 4' },
+			{ src: '/images/projects/3d-printer-experimentation/3d-print-photo-5.jpg', alt: '3D printed object photo 5' },
+			{ src: '/images/projects/3d-printer-experimentation/3d-print-photo-6.jpg', alt: '3D printed object photo 6' },
+			{ src: '/images/projects/3d-printer-experimentation/3d-print-photo-7.jpg', alt: '3D printed object photo 7' }
+		],
 		details: {
+			role: 'Digital Fabrication Researcher',
+			entity: 'Personal Project',
+			years: '2019 – Present',
 			synopsis: [
-				"Mechanical engineering and architecture background applied to 3D printing.",
-				"Focus on parametric modeling and process to produce repeatable, tunable results."
-			]
+				"Mechanical engineering and architecture provided me with a pretty extensive background across a number of 3d modeling tools. IDEAS, Solidworks, Sketchup, Shapelab, I've used a range.",
+				"Rhino and grasshopper or blenders node based modeling systems are my favorite areas to explore in and I look at a how those system enable a number of complex 3d modeling results."
+			],
+			skills: ['3D Modeling', 'Parametric Design', 'Digital Fabrication', 'Rhino/Grasshopper', 'Blender', '3D Printing', 'Prototyping']
 		}
 	},
 	{
@@ -1265,6 +1338,6 @@ export const projects: Project[] = [
 				"A set of AI-generated video explorations: motion, texture, and emergent composition.",
 				"Heavily edited after initial generation to push toward desired aesthetic and rhythm."
 			]
-    }
+		}
 	},
 ];

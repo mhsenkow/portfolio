@@ -1,0 +1,118 @@
+/* Enhanced card hover effects */
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card:hover h3 {
+  color: var(--color-accent);
+}
+
+/* Realistic shadow effects */
+.card {
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Subtle glow effect */
+.card:hover {
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.08), 
+    0 4px 12px rgba(0,0,0,0.06),
+    0 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* Smooth image transitions */
+.card-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.1) 0%,
+    transparent 50%,
+    rgba(0,0,0,0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:hover .card-image::after {
+  opacity: 1;
+}
+
+/* Animation for filter panel */
+.filter-panel {
+  animation: slideDown 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced button interactions */
+.filter-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.filter-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Realistic physics for cards */
+.card-physics {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-physics:hover {
+  transform: translateZ(10px);
+}

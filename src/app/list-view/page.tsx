@@ -13,14 +13,15 @@ export default function ListViewPage() {
 		<main id="content">
 			<section className="container" style={{ padding: 'var(--space-16) 0' }}>
 				<h1 style={{ fontSize: 'var(--size-6)', lineHeight: 1.1 }}>full list</h1>
-				<ul style={{ marginTop: 'var(--space-8)', padding: 0, listStyle: 'none', display: 'grid', gap: 'var(--space-4)' }}>
+				<ul className="timeline">
 					{sorted.map((p) => (
-						<li key={p.slug} style={{ borderBottom: 'var(--border-weak)', paddingBottom: 'var(--space-4)' }}>
-							<div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'baseline', flexWrap: 'wrap' }}>
-								<span style={{ color: 'var(--color-muted)', minWidth: 60 }}>{p.year ?? ''}</span>
+						<li key={p.slug} className="timeline-item">
+							<div className="timeline-year">{p.year ?? ''}</div>
+							<div className="timeline-dot" aria-hidden="true" />
+							<div className="timeline-content">
 								<Link href={`/projects/${p.slug}`}>{p.title}</Link>
+								<p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{p.description}</p>
 							</div>
-							<p style={{ marginTop: 'var(--space-2)', color: 'var(--color-muted)' }}>{p.description}</p>
 						</li>
 					))}
 				</ul>

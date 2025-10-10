@@ -14,7 +14,7 @@ export default function ProjectsPage() {
 			<section className="container" style={{ padding: 'var(--space-16) 0' }}>
                 <h1 style={{ fontSize: 'var(--size-6)', lineHeight: 1.1 }}>key projects</h1>
 				<p style={{ marginTop: 'var(--space-4)', color: 'var(--color-muted)', maxWidth: 820 }}>
-					Staff Product Designer — passionate about crafting cutting‑edge complex tooling, AI workflows, and digital craft being used creatively.
+					I have a fairly large number of projects I like to show off, this is a sub-sampling. 
 				</p>
 				<ProjectsGrid />
 			</section>
