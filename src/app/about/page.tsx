@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { ContactForm } from '@/app/components/ContactForm';
 
 export const metadata: Metadata = {
 	title: 'about — mhsenkow',
@@ -21,13 +22,13 @@ export default function AboutPage() {
 				<div style={{ color: 'var(--color-text)', maxWidth: 820, display: 'grid', gap: 'var(--space-3)' }}>
 					<p><strong>Hello!</strong></p>
 					<p>
-						I'm Michael, a product designer passionate about the intersection of artificial intelligence, human-centered design, big data, and software development. I thrive where DESIGN and TECHNOLOGY meet, whether it's using 3D printers and CNC-controlled robots to create art or reimagining enterprise applications to enhance our work-life balance. I love exploring big-picture ideas and diving into the details that make applications not just functional but delightful.
+						I&apos;m Michael, a product designer passionate about the intersection of artificial intelligence, human-centered design, big data, and software development. I thrive where DESIGN and TECHNOLOGY meet, whether it&apos;s using 3D printers and CNC-controlled robots to create art or reimagining enterprise applications to enhance our work-life balance. I love exploring big-picture ideas and diving into the details that make applications not just functional but delightful.
 					</p>
 					<p>
-						I hold a Master's in Information Science, focusing on Human-Computer Interaction, from the University of Michigan, and a dual Bachelor's in Mechanical Engineering and Technical Communications from Michigan Technological University. My early career included technical roles at startups in Boston, design research for Architecture professors during grad school, and an internship at Apple in Cupertino.
+						I hold a Master&apos;s in Information Science, focusing on Human-Computer Interaction, from the University of Michigan, and a dual Bachelor&apos;s in Mechanical Engineering and Technical Communications from Michigan Technological University. My early career included technical roles at startups in Boston, design research for Architecture professors during grad school, and an internship at Apple in Cupertino.
 					</p>
 					<p>
-						Currently I'm freelancing and looking for that next big step.
+						Currently I&apos;m freelancing and looking for that next big step.
 					</p>
 					<p>
 						Most recently I was providing initial design guidance and branding for a start-up Supio, and working in Meta’s internal applications covering Analysis workflows across Daiquery, Bento, Data Explorer and frameworks for Data-viz systems.
@@ -61,6 +62,12 @@ export default function AboutPage() {
 						</div>
 					</section>
 				</div>
+				</div>
+			</section>
+			<section className="container" style={{ padding: '0 0 var(--space-16) 0' }}>
+				<h2 className="h2">contact</h2>
+				<div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 'var(--space-6)', maxWidth: 820, marginTop: 'var(--space-6)' }}>
+					<ContactForm />
 				</div>
 			</section>
 		</main>

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { projects } from '@/content/projects';
+import { LinkToken } from '@/app/components/LinkToken';
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -15,14 +16,11 @@ export default function Home() {
           <p>Focus Time moments I’ve helped create are on millions of PCs. The Daiquery Notebook work enabled almost everyone at Meta to make decisions better with AI‑enabled workflows. I’ve helped build such projects as Cognos Analytics powered by Watson, early steps of IBM’s Carbon Design System, and the early days of Viva Insights.</p>
           <p>You’re looking at a sampling of my work across tech. There’s a <Link href="/list-view">full list</Link> at the top and a more exploratory <Link href="/all-experiences">grid view</Link> as well.</p>
           <p>Each of these cards leads to a main project from one of my eras of work. I’m currently doing a revamp in code and exploring what I can make — check it out.</p>
-          <div style={{ marginTop: 'var(--space-2)' }}>
-            <a href="https://www.figma.com/proto/SS9PFTPBKoUEmOhn1f5GJt/presentation?node-id=376-3&t=97fqkQd8qUt8cyQY-1&starting-point-node-id=376%3A3" target="_blank" rel="noreferrer noopener" style={{
-              display: 'inline-block',
-              padding: '8px 12px',
-              borderRadius: '8px',
-              border: 'var(--border-strong)',
-              background: 'var(--surface-card)'
-            }}>View AI work deck ↗</a>
+          <div style={{ marginTop: 'var(--space-3)', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <LinkToken href="https://webgl-portfolio-jbxw.vercel.app/" label="WebGL portfolio" />
+            <LinkToken href="https://portfolio-site-tau-ten-35.vercel.app/" label="Particle narrative portfolio" />
+            <LinkToken href="https://mhsenkow.squarespace.com/" label="Old Squarespace portfolio" />
+            <LinkToken href="https://www.figma.com/proto/SS9PFTPBKoUEmOhn1f5GJt/presentation?node-id=376-3&t=97fqkQd8qUt8cyQY-1&starting-point-node-id=376%3A3" label="AI work deck" />
           </div>
         </motion.div>
       </section>

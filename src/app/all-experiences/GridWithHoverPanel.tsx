@@ -2,9 +2,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { createPortal } from 'react-dom';
 import type { Project } from '@/content/projects';
+import { LightboxImage } from '@/app/components/Lightbox';
 
 type Props = { items: Project[] };
 
@@ -28,7 +28,15 @@ export function GridWithHoverPanel({ items }: Props) {
   const panel = useMemo(() => (
     <aside className="overlay-panel--right" aria-label="Details" data-state={open ? 'open' : 'closed'}>
       <button type="button" className="panel-handle" aria-label={open ? 'Close details' : 'Open details'} onClick={() => setOpen((v) => !v)}>
-        {open ? <ChevronRightIcon width={20} height={20} /> : <ChevronLeftIcon width={20} height={20} />}
+        {open ? (
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path fill="currentColor" d="M9.29 6.71a1 1 0 0 0 0 1.41L13.17 12l-3.88 3.88a1 1 0 1 0 1.42 1.41l4.59-4.59a1 1 0 0 0 0-1.41L10.71 6.7a1 1 0 0 0-1.42 0Z"/>
+          </svg>
+        ) : (
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path fill="currentColor" d="M14.71 17.29a1 1 0 0 0 0-1.41L10.83 12l3.88-3.88a1 1 0 1 0-1.42-1.41L8.7 11.3a1 1 0 0 0 0 1.41l4.59 4.59a1 1 0 0 0 1.42 0Z"/>
+          </svg>
+        )}
       </button>
       <div className="project-card" style={{ height: '100%', overflow: 'auto' }}>
         {hovered ? (
@@ -37,7 +45,7 @@ export function GridWithHoverPanel({ items }: Props) {
             <p style={{ marginTop: 'var(--space-3)', color: 'var(--color-muted)' }}>{hovered.description}</p>
             {hovered.image && (
               <div style={{ marginTop: 'var(--space-4)' }}>
-                <Image src={hovered.image.src} alt={hovered.image.alt} width={1200} height={800} unoptimized style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-md)' }} />
+                <LightboxImage src={hovered.image.src} alt={hovered.image.alt} group={[{ src: hovered.image.src, alt: hovered.image.alt }]} index={0} width={1200} height={800} style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-md)' }} />
               </div>
             )}
             <div style={{ marginTop: 'var(--space-4)' }}>

@@ -41,6 +41,13 @@
     --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
     --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
+    /* font stacks per company */
+    --font-geist: var(--font-geist-sans), ui-sans-serif, system-ui;
+    --font-ibm-plex: var(--font-ibm-plex), 'IBM Plex Sans', ui-sans-serif, system-ui;
+    --font-sf-pro: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui;
+    --font-segoe: 'Segoe UI', 'Segoe UI Variable', Roboto, system-ui;
+    --font-optimistic: 'Optimistic Display', -apple-system, system-ui;
+
     /* type roles */
     --type-primary: var(--size-2);
     --type-secondary: var(--size-1);

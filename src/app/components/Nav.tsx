@@ -13,7 +13,6 @@ export function Nav() {
         { href: '/all-experiences', label: 'grid view' },
         { href: '/other-design-work', label: 'other creative work' },
         { href: '/list-view', label: 'full list' },
-        { href: '/contact', label: 'contact' },
     ];
 
     return (

@@ -19,6 +19,7 @@ export type Project = {
     skills?: string[];
     prototypes?: { label: string; href: string }[];
     headerImage?: { src: string; alt: string; width?: number; height?: number };
+    headerEmbed?: { html: string; title?: string; link?: string };
     sections?: {
       title: string;
       body?: string | string[];
@@ -89,7 +90,7 @@ export const projects: Project[] = [
       { label: 'Prototype 2 — Display of Specifics', href: 'https://codepen.io/mhsenkow/full/MjWGdP' },
       { label: 'Prototype 3 — NN highlight', href: 'https://codepen.io/mhsenkow/full/apwZxz' },
 		],
-    image: { src: '/images/projects/ibm-spss-modeler/SPSS.png', alt: 'SPSS Modeler redesign' },
+		image: { src: '/images/projects/ae/SPSS.png', alt: 'SPSS Modeler redesign' },
     gallery: [],
 		stack: ['IBM Design', 'Data Tools'],
 		details: {
@@ -162,7 +163,7 @@ export const projects: Project[] = [
 		stack: ['Meta', 'Notebooks', 'AI'],
 		details: {
       role: 'Product Designer',
-      entity: 'Meta',
+			entity: 'Meta',
 			years: '2020–2023',
       team: 'Collaborated with engineers, PMs, and other designers.',
 			headerImage: { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-12-00.png', alt: 'Da(i)query notebook — SQL cells' },
@@ -251,7 +252,7 @@ export const projects: Project[] = [
     image: { src: '/images/projects/ae/Pie chart.png', alt: 'AI infographic pie chart' },
 		stack: ['AI', 'Prototyping'],
 		details: {
-				role: 'Product Designer',
+			role: 'Product Designer',
 				entity: 'Supio, Microsoft Cloud, Mars Data Suite; supporting ComfyUI / Pincites / Zeplyn / Peopled',
 				location: 'Seattle / remote / in person',
 				years: '2024–2025',
@@ -341,44 +342,82 @@ export const projects: Project[] = [
     }
   },
   {
-    slug: 'teams-admin-center-2019-hackathon',
-    title: 'Following — Microsoft Design (2019 hackathon)',
-    description: 'Quick visual experimentation and front‑end prototyping with data scientists, PMs, and engineers during FHL.',
-    year: 2019,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences' },
-    ],
-    image: { src: '/images/projects/ae/TrustedNews (1).png', alt: 'Hackathon prototypes' },
-    stack: ['Hackathon', 'Prototype'],
-    details: {
-      role: 'Sole designer',
-      entity: 'Microsoft',
-      years: '2019',
-      synopsis:
-        'Fast project to explore concepts and produce a functional prototype; iterative design with agile practices.',
-      skills: ['Visual exploration', 'Front‑end', 'Agile iteration']
-    }
-  },
-  {
     slug: 're-envisioning-my-primary-product',
-    title: 'Re‑envisioning my primary product',
+    title: 'Re-envisioning my primary product',
     description: 'Design system improvements and interaction ownership for MyAnalytics/Workplace Analytics; led across team shifts.',
     year: 2018,
+    featured: true,
     links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences' },
+      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/re-envisioning-my-primary-product/' },
     ],
-    image: { src: '/images/projects/ae/Redsign.png', alt: 'Re‑envisioning core product' },
+    image: { src: '/images/projects/ae/Redsign.png', alt: 'Re-envisioning core product' },
     stack: ['Microsoft', 'Design System', 'Product'],
     details: {
       role: 'Primary Designer for Interactions',
-      entity: 'Microsoft — MyAnalytics / Workplace Analytics',
-      location: 'Redmond, WA',
+      entity: 'Microsoft',
+      location: 'Redmond, WA (MyAnalytics – Workplace Analytics team)',
       years: '2018',
-      team:
-        'Began with a design lead and another FTE; later became sole US FTE designer leading 4 contractors and remote FTEs; onboarded new manager and designers.',
-      synopsis:
-        'Spearheaded an improved design system adopted by sister products. Conducted stakeholder interviews and internal research, delivered extensive visual design, and partnered with PM/engineering to drive adoption through org changes.',
-      skills: ['Stakeholder interviews', 'Internal research', 'Visual design', 'Systemization']
+      team: 'Initially worked with a design lead and another FTE designer. Later became the sole FTE designer in the US, leading 4 contractors and remote FTE designers in India. Eventually helped onboard and support a new manager and additional FTE designers.',
+      headerImage: { src: '/images/projects/re-envisioning-my-primary-product/design-system-update.png', alt: 'Design system update overview' },
+      synopsis: [
+        'Alongside other IC work, I spearheaded the design and implementation of an improved design system now utilized by the sister products MyAnalytics and Workplace Analytics. This initiative involved conducting stakeholder interviews, performing internal research, and extensive visual design work. Engaging in numerous discussions with PMs and engineers, I emphasized the importance of this process and ensured its successful adoption.',
+        'Starting with a small team, I led the design efforts through various team changes, becoming the de-facto design lead. My role evolved to manage multiple contractors and remote designers, culminating in onboarding a new manager and additional FTE designers. I ensured they were well-integrated and organized with the existing design files and systems.'
+      ],
+      skills: ['Stakeholder Interviews', 'Internal Research', 'Visual Design', 'Advocacy and Collaboration with PMs and Engineers', 'Team Leadership'],
+      sections: [
+        {
+          title: 'Understanding what existed',
+          body: 'Documented the existing design patterns and identified inconsistencies across the product suite.',
+          images: [
+            { src: '/images/projects/re-envisioning-my-primary-product/prior-system.png', alt: 'Prior system documentation' },
+            { src: '/images/projects/re-envisioning-my-primary-product/what-existed-here.png', alt: 'What existed — component inventory' }
+          ]
+        },
+        {
+          title: 'Design system foundation',
+          body: 'Established core design principles, color systems, and foundational components to ensure consistency.',
+          images: [
+            { src: '/images/projects/re-envisioning-my-primary-product/wpa-color-copy.png', alt: 'Workplace Analytics color system' },
+            { src: '/images/projects/re-envisioning-my-primary-product/refined-palette.png', alt: 'Refined color palette' },
+            { src: '/images/projects/re-envisioning-my-primary-product/text-usage.png', alt: 'Text usage guidelines' }
+          ]
+        },
+        {
+          title: 'Component library development',
+          body: 'Designed and documented reusable components including buttons, dropdowns, and toggles.',
+          images: [
+            { src: '/images/projects/re-envisioning-my-primary-product/buttons.png', alt: 'Button component specifications' },
+            { src: '/images/projects/re-envisioning-my-primary-product/buttons-copy.png', alt: 'Button variants and states' },
+            { src: '/images/projects/re-envisioning-my-primary-product/drop-downs.png', alt: 'Dropdown component specs' },
+            { src: '/images/projects/re-envisioning-my-primary-product/toggles.png', alt: 'Toggle component specifications' }
+          ]
+        },
+        {
+          title: 'Layout system iterations',
+          body: 'Developed flexible layout patterns and grid systems for consistent page structures across products.',
+          images: [
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.5.png', alt: 'Layout iteration 4.5' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.13.png', alt: 'Layout iteration 4.13' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.14.png', alt: 'Layout iteration 4.14' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.16.png', alt: 'Layout iteration 4.16' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.17.png', alt: 'Layout iteration 4.17' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.18.png', alt: 'Layout iteration 4.18' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.27.png', alt: 'Layout iteration 4.27' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.29.png', alt: 'Layout iteration 4.29' }
+          ]
+        },
+        {
+          title: 'Implementation and validation',
+          body: 'Tested the design system in production contexts, gathered feedback, and refined patterns based on real-world usage.',
+          images: [
+            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-4.45.20-pm.png', alt: 'Implementation example 1' },
+            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-4.45.31-pm.png', alt: 'Implementation example 2' },
+            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-4.45.40-pm.png', alt: 'Implementation example 3' },
+            { src: '/images/projects/re-envisioning-my-primary-product/experiment.png', alt: 'Experimental features' },
+            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-5.06.55-pm.png', alt: 'Final implementation' }
+          ]
+        }
+      ]
     }
   },
   {
@@ -423,26 +462,66 @@ export const projects: Project[] = [
   {
     slug: 'researching-silence',
     title: 'Researching silence',
-    description: 'Study for “Silence Mode” across Office; London and Paris client visits, rapid iteration into today’s focus time concepts.',
+    description: 'Study for "Silence Mode" across Office; London and Paris client visits, rapid iteration into today\'s focus time concepts.',
     year: 2018,
+    featured: true,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/researching-silence/' },
     ],
     image: { src: '/images/projects/ae/Silence Mode.png', alt: 'Silence mode research' },
     gallery: [
-      { src: '/images/projects/ae/Silence Mode.png', alt: 'Researching Silence visuals' }
+      { src: '/images/projects/researching-silence/screenshot-11.36.21-am.png', alt: 'Early silence mode concepts' },
+      { src: '/images/projects/researching-silence/screenshot2-11.36.21-am.png', alt: 'Silence mode wireframes' },
+      { src: '/images/projects/researching-silence/screenshot-12.15.11-pm.png', alt: 'Focus time interface' },
+      { src: '/images/projects/researching-silence/screenshot-12.31.18-pm.jpg', alt: 'Client feedback session' },
+      { src: '/images/projects/researching-silence/screenshot-12.32.35-pm.png', alt: 'Iteration during trip' },
+      { src: '/images/projects/researching-silence/screenshot-1.04.30-pm.png', alt: 'Design refinements' },
+      { src: '/images/projects/researching-silence/screenshot-2.55.22-pm.png', alt: 'Concept explorations' },
+      { src: '/images/projects/researching-silence/screenshot-3.14.04-pm.png', alt: 'Final proposal design' },
+      { src: '/images/projects/researching-silence/focus.png', alt: 'Focus time final concept' }
     ],
-    stack: ['Microsoft', 'Research'],
+    stack: ['Microsoft', 'Research', 'UX'],
     details: {
       role: 'User Experience Designer/Researcher',
-      entity: 'Microsoft',
+      entity: 'Microsoft — Office Suite',
       location: 'London, Paris, and Redmond, WA',
       years: '2018',
-      team:
-        'Collaborated with a principal researcher, a senior designer, a fellow designer, multiple PMs, and engineers.',
-      synopsis:
-        'Visited 8 clients in London and Paris, iterating on designs in‑situ. Culminated in a proposal that evolved into current focus time concepts in Office. Led in‑person interviews, rapid design and prototyping, and stakeholder alignment back in the US.',
-      skills: ['In‑person interviews', 'Rapid prototyping', 'Stakeholder management']
+      team: 'Collaborated with a principal researcher, a senior designer, a fellow designer, multiple PMs, and engineers.',
+      headerImage: { src: '/images/projects/researching-silence/focus-widget-interface.png', alt: 'Focus time widget interface' },
+      synopsis: [
+        'In a collaborative study focused on developing a "Silence Mode" for the Office suite, I worked alongside a principal researcher, a senior designer, and a fellow designer. We visited 8 clients in London and Paris, iterating on designs based on real-time feedback and insights gathered during the trip. This hands-on approach allowed us to refine our concepts continuously.',
+        'The project concluded with a comprehensive proposal, which has since evolved into the current focus time concepts within the Office suite. My role involved conducting in-person interviews, rapid design conception, and prototyping. Upon returning to the States, I also played a crucial role in aligning stakeholders and ensuring the project\'s objectives were met.'
+      ],
+      skills: ['In-Person Interviews', 'Quick Design Conception', 'Prototyping', 'Stakeholder Management', 'User Research'],
+      sections: [
+        {
+          title: 'Client research and rapid iteration',
+          body: 'Visited 8 clients across London and Paris, conducting in-person interviews and iterating on designs based on real-time feedback during the trip.',
+          images: [
+            { src: '/images/projects/researching-silence/screenshot-11.36.21-am.png', alt: 'Early silence mode concepts' },
+            { src: '/images/projects/researching-silence/screenshot2-11.36.21-am.png', alt: 'Initial wireframes' },
+            { src: '/images/projects/researching-silence/screenshot-12.31.18-pm.jpg', alt: 'Client feedback session documentation' }
+          ]
+        },
+        {
+          title: 'Design iteration and refinement',
+          body: 'Rapidly iterated on concepts during the research trip, refining the silence mode features based on user insights and needs.',
+          images: [
+            { src: '/images/projects/researching-silence/screenshot-12.32.35-pm.png', alt: 'Iteration during client visits' },
+            { src: '/images/projects/researching-silence/screenshot-1.04.30-pm.png', alt: 'Design refinements' },
+            { src: '/images/projects/researching-silence/screenshot-2.55.22-pm.png', alt: 'Concept explorations' }
+          ]
+        },
+        {
+          title: 'Final proposal and stakeholder alignment',
+          body: 'Developed comprehensive proposal that evolved into current focus time concepts in Office. Led stakeholder alignment upon returning to the US.',
+          images: [
+            { src: '/images/projects/researching-silence/screenshot-12.15.11-pm.png', alt: 'Focus time interface proposal' },
+            { src: '/images/projects/researching-silence/screenshot-3.14.04-pm.png', alt: 'Final proposal design' },
+            { src: '/images/projects/researching-silence/focus.png', alt: 'Focus time final concept' }
+          ]
+        }
+      ]
     }
   },
   {
@@ -476,13 +555,65 @@ export const projects: Project[] = [
       sections: [
         {
           title: 'Initial set of designs',
+          body: 'Working as the design-lead/consultant for first implementation — ensured the contractor\'s work matched component system constraints, fit PM/Engineering needs, and addressed interaction issues found in research.',
           images: [
             { src: '/images/projects/topic-keyword-analysis/first_wireframe.png', alt: 'Earliest wireframe of topic selection process' },
-            { src: '/images/projects/topic-keyword-analysis/topics_list_page.png', alt: 'Topics list page' }
+            { src: '/images/projects/topic-keyword-analysis/topics_list_page.png', alt: 'Topics list page' },
+            { src: '/images/projects/topic-keyword-analysis/topics-list-page-1.png', alt: 'Topics list page variant 1' },
+            { src: '/images/projects/topic-keyword-analysis/topics-list-page-2.png', alt: 'Topics list page variant 2' }
+          ]
+        },
+        {
+          title: 'Push for integration with Meeting Exclusions',
+          body: 'Took preliminary designs and updated them for another section (Meeting exclusion keyword selection) in conjunction with PM/Engineering, pushing interaction implementation through.',
+          images: [
+            { src: '/images/projects/topic-keyword-analysis/meeting-exclusion-overflow-2x.png', alt: 'Meeting exclusion overflow menu' },
+            { src: '/images/projects/topic-keyword-analysis/draft-saved-2x.png', alt: 'Save as draft — saved state' },
+            { src: '/images/projects/topic-keyword-analysis/blank-filename-error-2x.png', alt: 'Blank file name error state' },
+            { src: '/images/projects/topic-keyword-analysis/exclusion-save-failure-2x.png', alt: 'Save failure warning' }
+          ]
+        },
+        {
+          title: 'Learnings from initial implementation',
+          body: 'Too many steps left users unsure of progress; users wanted to see all steps in one place without scrolling. Goal shifted toward a tool feel rather than a linear wizard.',
+          images: [
+            { src: '/images/projects/topic-keyword-analysis/old-step-1.png', alt: 'Original step 1 — select topic' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-2.png', alt: 'Original step 2 — configure' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-3.png', alt: 'Original step 3 — add keywords' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-4.png', alt: 'Original step 4 — review' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-5.png', alt: 'Original step 5 — exclusions' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-6.png', alt: 'Original step 6 — finalize' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-7.png', alt: 'Original step 7 — save' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-8.png', alt: 'Original step 8 — additional options' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-9.png', alt: 'Original step 9 — preview' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-10.png', alt: 'Original step 10 — advanced settings' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-11.png', alt: 'Original step 11 — confirmation' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-12.png', alt: 'Original step 12 — complete' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-13.png', alt: 'Original step 13 — summary' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-13-responsive.png', alt: 'Original step 13 — responsive layout' }
+          ]
+        },
+        {
+          title: 'Multiple layout iterations',
+          body: 'Provided options emphasizing a denser layout, table focus, and clearer placement of keyword selection; iterated based on feedback and sizing.',
+          images: [
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5.png', alt: 'Iteration 1.5 — initial dense layout' },
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-1.png', alt: 'Iteration 1.5-1 — table focus' },
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-2.png', alt: 'Iteration 1.5-2 — keyword placement' },
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-3.png', alt: 'Iteration 1.5-3 — refined layout' },
+            { src: '/images/projects/topic-keyword-analysis/option-1.png', alt: 'Layout option 1' },
+            { src: '/images/projects/topic-keyword-analysis/option-2.png', alt: 'Layout option 2' },
+            { src: '/images/projects/topic-keyword-analysis/option-2.1.png', alt: 'Layout option 2.1 — variant' },
+            { src: '/images/projects/topic-keyword-analysis/option-3.png', alt: 'Layout option 3' },
+            { src: '/images/projects/topic-keyword-analysis/option-4.png', alt: 'Layout option 4' },
+            { src: '/images/projects/topic-keyword-analysis/option-4.1.png', alt: 'Layout option 4.1 — variant' },
+            { src: '/images/projects/topic-keyword-analysis/option-5.png', alt: 'Layout option 5' },
+            { src: '/images/projects/topic-keyword-analysis/option-5.1.png', alt: 'Layout option 5.1 — variant' }
           ]
         },
         {
           title: 'Final flow and specifics for responsive layout',
+          body: 'Consolidated steps into a single screen, reduced superfluous data-viz, and documented responsive behavior across sections. Template selection aligned with broader application patterns for component reuse.',
           images: [
             { src: '/images/projects/topic-keyword-analysis/home-2x.png', alt: 'Template home' },
             { src: '/images/projects/topic-keyword-analysis/more-templates-2x.png', alt: 'More templates' },
@@ -508,19 +639,86 @@ export const projects: Project[] = [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/navigation-update-leads-to-better-component-system/' },
     ],
     image: { src: '/images/projects/ae/Redsign.png', alt: 'Navigation/component redesign' },
-    gallery: [
-      { src: '/images/projects/ae/Redsign.png', alt: 'Navigation and components' }
-    ],
+    gallery: [],
     stack: ['Microsoft', 'Design System'],
     details: {
       role: 'Product Designer, prototypes for specifics',
       entity: 'Microsoft',
       location: 'Seattle, WA',
       years: '2019',
-      team: 'Sole designer with one PM and multiple developers.',
-      synopsis:
-        'Became de‑facto design lead during transition. Delivered comparison studies, wireframes, and coded prototypes to drive a better component system.',
-      skills: ['Wireframing', 'Prototyping', 'Component systems']
+      team: 'Sole designer for this project; collaborated with one primary PM and multiple developers.',
+      headerImage: { src: '/images/projects/navigation-update-component-system/final-form.png', alt: 'Final navigation form' },
+      synopsis: [
+        'During a transition period, I became the de-facto Design Lead for our Seattle group after the main design lead left. I managed contractors and remote designers while keeping work aligned.',
+        'For this project I led comparison analysis, UX wireframing, and coded prototypes to push the navigation update that ultimately informed a better component system.',
+        'Work centered on bringing consistency, simplifying choices, and producing concrete, coded examples that helped engineering validate edge cases and implementation details.'
+      ],
+      skills: [
+        'UX Design',
+        'Visual Design',
+        'Wireframing',
+        'Coded & Figma Prototyping',
+        'Stakeholder Interviews',
+        'User Research',
+        'Component Systems'
+      ],
+      prototypes: [
+        { label: 'Tooltip Exploration', href: 'https://codepen.io/mhsenkow/full/KYrNZP' }
+      ],
+      sections: [
+        {
+          title: 'Comparison analysis',
+          body: [
+            'Audited existing navigation patterns and adjacent products to identify inconsistencies and opportunities.',
+            'Framed options that balanced clarity, density, and reuse across the application.'
+          ],
+          images: [
+            { src: '/images/projects/navigation-update-component-system/old.png', alt: 'Old navigation pattern' },
+            { src: '/images/projects/navigation-update-component-system/comparison-image.png', alt: 'Navigation comparison analysis' },
+            { src: '/images/projects/navigation-update-component-system/screenshot-2.29.58-pm.png', alt: 'Comparison of navigation options' }
+          ]
+        },
+        {
+          title: 'Navigation iterations',
+          body: [
+            'Explored multiple navigation approaches balancing information density, hierarchy, and user familiarity.',
+            'Developed variations to test different interaction patterns and visual treatments.'
+          ],
+          images: [
+            { src: '/images/projects/navigation-update-component-system/nav1.png', alt: 'Navigation option 1' },
+            { src: '/images/projects/navigation-update-component-system/nav2.png', alt: 'Navigation option 2' },
+            { src: '/images/projects/navigation-update-component-system/nav3.png', alt: 'Navigation option 3' },
+            { src: '/images/projects/navigation-update-component-system/nav4.png', alt: 'Navigation option 4' },
+            { src: '/images/projects/navigation-update-component-system/nav5.png', alt: 'Navigation option 5' },
+            { src: '/images/projects/navigation-update-component-system/nav6.png', alt: 'Navigation option 6' },
+            { src: '/images/projects/navigation-update-component-system/nav7.png', alt: 'Navigation option 7' }
+          ]
+        },
+        {
+          title: 'Wireframes and prototypes',
+          body: [
+            'Produced wireframes that explored layout density, information hierarchy, and interaction seams.',
+            'Built small coded prototypes to validate behavior and clarify implementation details with engineers.'
+          ],
+          images: [
+            { src: '/images/projects/navigation-update-component-system/screenshot-3.00.28-pm.png', alt: 'Wireframe explorations' },
+            { src: '/images/projects/navigation-update-component-system/screenshot-3.27.04-pm.png', alt: 'Prototype iterations' },
+            { src: '/images/projects/navigation-update-component-system/screenshot-3.35.56-pm.png', alt: 'Interactive prototype 1' },
+            { src: '/images/projects/navigation-update-component-system/screenshot-3.36.27-pm.png', alt: 'Interactive prototype 2' }
+          ]
+        },
+        {
+          title: 'System outcomes',
+          body: [
+            'Codified navigation decisions into clearer component guidelines and starting points.',
+            'Improved cohesion and speed to implement through a tighter component system.'
+          ],
+          images: [
+            { src: '/images/projects/navigation-update-component-system/text-hierarchy-change.png', alt: 'Text hierarchy improvements' },
+            { src: '/images/projects/navigation-update-component-system/final-form.png', alt: 'Final navigation form' }
+          ]
+        }
+      ]
     }
   },
   {
@@ -547,46 +745,90 @@ export const projects: Project[] = [
   },
   {
     slug: 'improving-work-life-balance',
-    title: 'Improving work life balance within Office 365',
-    description: 'Evolving MyAnalytics with actionable insights and improved visuals; metrics redesign and animations.',
+    title: 'Improving your work life balance within Office 365',
+    description: 'Evolving MyAnalytics from analytics tool to self-help platform; metrics redesign, animations, and sharing.',
     year: 2018,
+    featured: true,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/improving-your-work-life-balance-within-office-365/' },
     ],
-    image: { src: '/images/projects/ae/Adler.png', alt: 'Work-life balance concepts' },
-    gallery: [
-      { src: '/images/projects/ae/Adler.png', alt: 'MyAnalytics visuals' }
-    ],
-    stack: ['Microsoft', 'Product'],
+    image: { src: '/images/projects/ae/Data-Viz.png', alt: 'MyAnalytics top four metrics' },
+    stack: ['Microsoft', 'Product', 'Animation'],
     details: {
-      role: 'Designer 2 (UX with prototyping and FE collaboration)',
-      entity: 'Microsoft',
-      years: '2017–2018',
-      synopsis:
-        'Evolved MyAnalytics from analytics to self‑help; redesigned top metrics with animation and sharing experiences.',
-      skills: ['Motion guidelines', 'Metrics redesign']
+      role: 'Designer 2 (UX with prototyping and Front-End collaboration)',
+      entity: 'Microsoft — MyAnalytics',
+      years: 'Early 2017 – 2018',
+      headerImage: { src: '/images/projects/improving-work-life-balance/top-four.png', alt: 'Top four metrics redesign' },
+      synopsis: [
+        'MyAnalytics leverages the analytics of Office365 to provide users with insights into how they spend their time across meetings, emails, and focus time. The goal is to help users better navigate and manage their schedules. Since joining the team, I\'ve been instrumental in evolving MyAnalytics from a straightforward analytics tool into a self-help tool.',
+        'My contributions focused on making data more accessible and actionable through intuitive design, animations, and comprehensive onboarding experiences. I worked closely with front-end developers to bring these designs to life, while diplomatically navigating through multiple iterations with PMs and stakeholders.'
+      ],
+      skills: ['UX Design', 'Prototyping', 'Front-End Development', 'Animation Design', 'Diplomacy in Design Iterations', 'Process Improvement'],
+      prototypes: [
+        { label: 'Top Four Redesign and Animations', href: 'https://codepen.io/mhsenkow/pen/PmbJRz' },
+        { label: 'Sharing Button Concept', href: 'https://codepen.io/mhsenkow/full/QQGBOX/' },
+        { label: 'Motion Concept', href: 'https://codepen.io/mhsenkow/full/eRYzoW/' }
+      ],
+      sections: [
+        {
+          title: 'Redesign of top four metrics',
+          body: 'Revamped the core metrics to make data more accessible and actionable for users. Developed animations to guide users through the metrics and help them understand their work patterns.',
+          images: [
+            { src: '/images/projects/improving-work-life-balance/top-four.png', alt: 'Top four metrics — initial concepts' },
+            { src: '/images/projects/improving-work-life-balance/iterations.png', alt: 'Metric iterations and refinements' },
+            { src: '/images/projects/improving-work-life-balance/ideal-version.png', alt: 'Ideal version of metrics display' }
+          ]
+        },
+        {
+          title: 'Initial sharing experience',
+          body: 'Designed an intuitive sharing feature to enhance user engagement and collaboration, allowing users to share their work-life balance insights with colleagues.',
+          images: [
+            { src: '/images/projects/improving-work-life-balance/final-design.png', alt: 'Final sharing experience design' }
+          ]
+        },
+        {
+          title: 'Onboarding experience',
+          body: 'Created a comprehensive onboarding process to educate users about the source of their data and how to utilize it effectively. This included multiple iterations from the initial design through PM alterations to the final coded design.',
+          images: [
+            { src: '/images/projects/improving-work-life-balance/final-code.png', alt: 'Final coded onboarding implementation' }
+          ]
+        }
+      ]
     }
   },
   {
     slug: 'trusted-news-chrome-extension',
-    title: 'Trusted News — Chrome extension',
+    title: 'Trusted News — AI Chrome extension',
     description: '2019 FHL hackathon: rapid UX/visual iterations and front-end prototyping with data scientists and engineers.',
     year: 2019,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/trusted-news-ai-chrome-extension/' },
+      { label: 'Final prototype', href: 'https://codepen.io/mhsenkow/full/xvVGWj' },
     ],
-    image: { src: '/images/projects/ae/TrustedNews%20(1).png', alt: 'Trusted News' },
+    image: { src: '/images/projects/ae/TrustedNews (1).png', alt: 'Trusted News' },
     gallery: [
-      { src: '/images/projects/ae/TrustedNews (1).png', alt: 'Trusted News chrome extension' }
+      { src: '/images/projects/trusted-news-chrome-extension/final-layout.png', alt: 'Final layout, displaying the regions of the extension' },
+      { src: '/images/projects/trusted-news-chrome-extension/screenshot-1.png', alt: 'Extension screenshot 1' },
+      { src: '/images/projects/trusted-news-chrome-extension/screenshot-2.png', alt: 'Extension screenshot 2' },
+      { src: '/images/projects/trusted-news-chrome-extension/image-asset.png', alt: 'Extension UI detail' },
+      { src: '/images/projects/trusted-news-chrome-extension/screenshot-3.png', alt: 'Extension screenshot 3' }
     ],
-    stack: ['Hackathon', 'Prototype'],
+    stack: ['Hackathon', 'Prototype', 'Chrome Extension'],
     details: {
-      role: 'Sole designer',
+      role: 'User Experience Designer/Researcher',
       entity: 'Microsoft',
+      location: '2019 Hackathon (FHL)',
       years: '2019',
-      synopsis:
-        'Fast‑paced hackathon; quick visual exploration, front‑end coding, UX and visual design with data scientists, PMs and engineers.',
-      skills: ['Rapid prototyping', 'Front‑end', 'Data']
+      team: 'Sole designer working with multiple data scientists, PMs, and engineers.',
+      headerImage: { src: '/images/projects/trusted-news-chrome-extension/final-layout.png', alt: 'Final layout of the Trusted News extension' },
+      synopsis: [
+        'During the 2019 Microsoft FHL hackathon, I served as the sole designer on a fast-paced project. My responsibilities included quick visual experimentation, front-end coding, and both UX and visual design. Collaborating closely with data scientists, PMs, and engineers, we rapidly developed and refined our project.',
+        'I played a key role in transforming initial concepts into a functional prototype, which involved iterative design processes and agile development practices. My contributions culminated in a final set of designs and front-end code, effectively demonstrating the project\'s potential and usability.'
+      ],
+      skills: ['Quick Visual Experimentation', 'Front-End Coding', 'UX Design', 'Visual Design'],
+      prototypes: [
+        { label: 'Final set of design and front-end code', href: 'https://codepen.io/mhsenkow/full/xvVGWj' }
+      ]
     }
   },
   {
@@ -597,26 +839,50 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/meta-infra-data-viz-framework-and-ai-infographics/' },
     ],
-    image: { src: '/images/projects/ae/Data-Viz.png', alt: 'Data viz framework' },
+    image: { src: '/images/projects/ae/Pie chart.png', alt: 'Data viz framework' },
     gallery: [
-      { src: '/images/projects/ae/Data-Viz.png', alt: 'Meta Infra data viz framework' }
+      { src: '/images/projects/data-viz-framework-meta/Axis_and_Legend.png', alt: 'Axis and Legend' },
+      { src: '/images/projects/data-viz-framework-meta/Line_Chart.png', alt: 'Line Chart' },
+      { src: '/images/projects/data-viz-framework-meta/Line_Chart_(1).png', alt: 'Line Chart variant' },
+      { src: '/images/projects/data-viz-framework-meta/Slope_Chart.png', alt: 'Slope Chart' },
+      { src: '/images/projects/data-viz-framework-meta/Barbell_Chart.png', alt: 'Barbell Chart' },
+      { src: '/images/projects/data-viz-framework-meta/Funnel_Chart.png', alt: 'Funnel Chart' },
+      { src: '/images/projects/data-viz-framework-meta/Bullet_Chart.png', alt: 'Bullet Chart' },
+      { src: '/images/projects/data-viz-framework-meta/Box_Plot.png', alt: 'Box Plot' },
+      { src: '/images/projects/data-viz-framework-meta/Parallel_Coordinates.png', alt: 'Parallel Coordinates' },
+      { src: '/images/projects/data-viz-framework-meta/Scatter_Plot.png', alt: 'Scatter Plot' },
+      { src: '/images/projects/data-viz-framework-meta/Axis_and_Legend_(1).png', alt: 'Axis and Legend variant' },
+      { src: '/images/projects/data-viz-framework-meta/image_115.png', alt: 'Data visualization example' },
+      { src: '/images/projects/data-viz-framework-meta/Group_625888.png', alt: 'Chart group' },
+      { src: '/images/projects/data-viz-framework-meta/Colors.png', alt: 'Color palette' },
+      { src: '/images/projects/data-viz-framework-meta/All_Palettes.png', alt: 'All color palettes' },
+      { src: '/images/projects/data-viz-framework-meta/Presentation.png', alt: 'Presentation' },
+      { src: '/images/projects/data-viz-framework-meta/Concept.png', alt: 'Concept design' }
     ],
     stack: ['Meta', 'Vega', 'Data Viz'],
     details: {
       role: 'Product Designer',
       entity: 'Meta',
-      location: 'Seattle; talks in MPK, London, Tel‑Aviv',
+      location: 'Seattle but with talks in MPK, London and Tel-aviv',
       years: '2022–2023',
-      team:
-        'Myself, a main FE dev, a PM, 5–8 engineers in training, additional engineers for related work, and a researcher.',
-      synopsis:
-        'Created a data visualization framework for Meta Infra. Coded Vega examples, set guidance and documentation, collaborated across roles, and validated with research. Included AI‑infographic explorations.',
-      skills: ['Vega', 'Data visualization', 'Documentation', 'Research validation']
+      team: 'The team consisted of myself, a main front-end developer, a main PM, 5-8 engineers involved in training, additional engineers brought in for related work, and a researcher helping confirm the results.',
+      headerEmbed: { 
+        html: '<iframe src="https://www.slideshare.net/slideshow/embed_code/key/q3WcAhjVafouPW" width="610" height="515" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border: var(--border-1) solid #CCC; border-width:1px; margin-bottom:5px; max-width:100%;" allowfullscreen></iframe>',
+        title: 'AI-Imagen for Data Storytelling Infographics',
+        link: 'https://www.slideshare.net/slideshow/ai-imagen-for-data-storytelling-infographics-pdf/268972473'
+      },
+      synopsis: [
+        'Over the past two years, I led a significant project at Meta focused on creating a Data Visualization framework for Meta Infra. As a Product Designer, I was instrumental in also coding prototypes using Vega, an open-source visualization grammar, to flesh out what our visual capabilities and options were.',
+        'I championed the need for structured guidance in this area, overseeing the visuals, documentation, and prototypes. My responsibilities included working closely with engineering in Vega to develop coded examples of various chart types and ensure their implementation met our high standards.',
+        'Collaborating with a front-end developer, the main PM, and a team of engineers, I pushed for innovative and intuitive solutions that elevated our data visualization capabilities. Additionally, I worked with a researcher to validate our results, ensuring the framework was both effective and user-friendly.',
+        'This work was integrated alongside the design system I was building out, ensuring consistency and coherence across the platform.'
+      ],
+      skills: ['UX Design', 'Visual Design', 'Prototyping (Vega)', 'Documentation', 'Collaboration with PMs and Engineers', 'Research Validation']
     }
   },
   {
     slug: 'design-guide-thousands-users',
-    title: 'Design guide used across thousands of users',
+    title: 'The creation of a design guide used across thousands of users',
     description: 'IBM Watson Data Platform guide; coded components with dev lead, integrated across products.',
     year: 2017,
     links: [
@@ -624,18 +890,33 @@ export const projects: Project[] = [
     ],
     image: { src: '/images/projects/ae/DesignGuide.png', alt: 'Design guide' },
     gallery: [
-      { src: '/images/projects/ae/DesignGuide.png', alt: 'Design guide components' }
+      { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'Design guide component examples' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-02.png', alt: 'Component documentation' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-03.png', alt: 'Visual design system' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-04.png', alt: 'Component specifications' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-05.png', alt: 'Design patterns' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-06.png', alt: 'Component library' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-07.png', alt: 'Implementation examples' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-08.png', alt: 'Component variations' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-09.png', alt: 'Design guide overview' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-10.png', alt: 'Component interactions' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-11.png', alt: 'System architecture' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-12.png', alt: 'Usage guidelines' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-13.png', alt: 'Component details' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-14.png', alt: 'Final implementation' }
     ],
     stack: ['IBM', 'Design System'],
     details: {
       role: 'UX Designer / Design Developer',
-      entity: 'IBM Design, Watson Data Platform',
+      entity: 'IBM Design, Watson Data Platform (formerly Analytics Platform)',
       years: '2016–2017',
-      team:
-        'Highly collaborative team with design, dev, and PM; partnered closely with a dev lead to build components.',
-      synopsis:
-        'Built and coded a comprehensive guide used across products; integrated components and gathered feedback from real usage.',
-      skills: ['Design systems', 'Component engineering']
+      team: 'Very healthy leadership combo of design, dev and management with PM. For direct work I was doing a mix of UX concepts and coding to see how these components played out.',
+      headerImage: { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'IBM Watson Data Platform design guide' },
+      synopsis: [
+        'My last main group at IBM was the Watson Data Platform team, a position that was incredibly hard to leave. My role blended design, development, and asset and product management in the creation of a comprehensive guide used across multiple products. Although it was a team effort, we worked highly collaboratively to achieve our goals.',
+        'I was deeply involved in both the coding and UX aspects of the guide. Everything in the guide was built and coded between myself and my dev lead, while I also engaged in UX work with our visual designers and Design Lead. The final implementation of the guide into products was incredibly gratifying, and it was rewarding to gather feedback on the components as they were used in real-world applications.'
+      ],
+      skills: ['Design', 'Development', 'Asset and Product Management', 'UX Design', 'Collaboration with Visual Designers and Design Lead']
     }
   },
   {
@@ -647,17 +928,83 @@ export const projects: Project[] = [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/watson-analytics-early-work/' },
     ],
     image: { src: '/images/projects/ae/WatsonAnalytics.png', alt: 'Watson Analytics' },
-    gallery: [
-      { src: '/images/projects/ae/WatsonAnalytics.png', alt: 'Watson Analytics early work' }
-    ],
+    gallery: [],
     stack: ['IBM', 'Analytics'],
     details: {
       role: 'UX Designer / Researcher / Prototyper',
       entity: 'IBM Design, Watson Analytics',
       years: '2013–2014',
-      synopsis:
-        'Initial research that grew into Watson Analytics. Prototyped social media analytics to sell the concept. Explored blue‑sky AI‑powered dashboards.',
-      skills: ['Research', 'Prototyping', 'Concept development']
+      team: 'Collaborated with researchers, designers, developers, and PMs.',
+      headerImage: { src: '/images/projects/watson-analytics-early-work/overview.png', alt: 'Watson Analytics early work overview' },
+      synopsis: [
+        'During my tenure at IBM, I initially focused on conducting research for what would eventually grow into Watson Analytics. This foundational work set the stage for the development of powerful analytics tools.',
+        'In the same group, my role evolved to include creating numerous prototypes to help sell the concept of social media analytics, demonstrating the potential and value of these tools to stakeholders and clients.',
+        'In addition to these practical applications, I also developed blue-sky concepts for the future of AI-powered dashboards. These visionary designs aimed to showcase the potential of AI to transform data visualization and user interaction, pushing the boundaries of what analytics platforms could achieve.'
+      ],
+      skills: ['Research', 'Prototyping', 'UX Design', 'Concept Development', 'Stakeholder Engagement'],
+      sections: [
+        {
+          title: 'Initial Research',
+          body: 'Conducted extensive research to lay the groundwork for Watson Analytics.',
+          images: [
+            { src: '/images/projects/watson-analytics-early-work/gem-01.png', alt: 'Research visualization 1' },
+            { src: '/images/projects/watson-analytics-early-work/gem-02.png', alt: 'Research visualization 2' },
+            { src: '/images/projects/watson-analytics-early-work/gem-03.png', alt: 'Research visualization 3' },
+            { src: '/images/projects/watson-analytics-early-work/gem-04.png', alt: 'Research visualization 4' },
+            { src: '/images/projects/watson-analytics-early-work/gem-05.png', alt: 'Research visualization 5' },
+            { src: '/images/projects/watson-analytics-early-work/gem-06.png', alt: 'Research visualization 6' },
+            { src: '/images/projects/watson-analytics-early-work/gem-07.png', alt: 'Research visualization 7' },
+            { src: '/images/projects/watson-analytics-early-work/gem-08.png', alt: 'Research visualization 8' },
+            { src: '/images/projects/watson-analytics-early-work/gem-09.png', alt: 'Research visualization 9' },
+            { src: '/images/projects/watson-analytics-early-work/gem-10.png', alt: 'Research visualization 10' },
+            { src: '/images/projects/watson-analytics-early-work/gem-11.png', alt: 'Research visualization 11' },
+            { src: '/images/projects/watson-analytics-early-work/gem-12.png', alt: 'Research visualization 12' },
+            { src: '/images/projects/watson-analytics-early-work/gem-13.png', alt: 'Research visualization 13' },
+            { src: '/images/projects/watson-analytics-early-work/gem-14.png', alt: 'Research visualization 14' },
+            { src: '/images/projects/watson-analytics-early-work/gem-15.png', alt: 'Research visualization 15' }
+          ]
+        },
+        {
+          title: 'Prototyping Social Media Analytics',
+          body: 'Created a series of prototypes to demonstrate and sell the concept of social media analytics.',
+          images: [
+            { src: '/images/projects/watson-analytics-early-work/sm-01.png', alt: 'Social media analytics prototype 1' },
+            { src: '/images/projects/watson-analytics-early-work/sm-02.png', alt: 'Social media analytics prototype 2' },
+            { src: '/images/projects/watson-analytics-early-work/sm-03.png', alt: 'Social media analytics prototype 3' },
+            { src: '/images/projects/watson-analytics-early-work/sm-04.png', alt: 'Social media analytics prototype 4' }
+          ]
+        },
+        {
+          title: 'AI-Powered Dashboards',
+          body: 'Developed innovative blue-sky concepts for future AI-powered dashboards, highlighting the potential for advanced data visualization and user interaction.',
+          images: [
+            { src: '/images/projects/watson-analytics-early-work/wa-01.png', alt: 'AI dashboard concept 1' },
+            { src: '/images/projects/watson-analytics-early-work/wa-02.png', alt: 'AI dashboard concept 2' },
+            { src: '/images/projects/watson-analytics-early-work/wa-03.png', alt: 'AI dashboard concept 3' },
+            { src: '/images/projects/watson-analytics-early-work/wa-04.png', alt: 'AI dashboard concept 4' },
+            { src: '/images/projects/watson-analytics-early-work/wa-05.png', alt: 'AI dashboard concept 5' },
+            { src: '/images/projects/watson-analytics-early-work/wa-06.png', alt: 'AI dashboard concept 6' },
+            { src: '/images/projects/watson-analytics-early-work/wa-07.png', alt: 'AI dashboard concept 7' },
+            { src: '/images/projects/watson-analytics-early-work/wa-08.png', alt: 'AI dashboard concept 8' },
+            { src: '/images/projects/watson-analytics-early-work/wa-09.png', alt: 'AI dashboard concept 9' },
+            { src: '/images/projects/watson-analytics-early-work/wa-10.png', alt: 'AI dashboard concept 10' },
+            { src: '/images/projects/watson-analytics-early-work/wa-12.png', alt: 'AI dashboard concept 12' }
+          ]
+        },
+        {
+          title: 'Analytics Explorations',
+          body: 'Additional explorations and concepts for analytics visualization.',
+          images: [
+            { src: '/images/projects/watson-analytics-early-work/az-03.png', alt: 'Analytics exploration 3' },
+            { src: '/images/projects/watson-analytics-early-work/az-04.png', alt: 'Analytics exploration 4' },
+            { src: '/images/projects/watson-analytics-early-work/az-05.png', alt: 'Analytics exploration 5' },
+            { src: '/images/projects/watson-analytics-early-work/az-06.png', alt: 'Analytics exploration 6' },
+            { src: '/images/projects/watson-analytics-early-work/az-07.png', alt: 'Analytics exploration 7' },
+            { src: '/images/projects/watson-analytics-early-work/az-08.png', alt: 'Analytics exploration 8' },
+            { src: '/images/projects/watson-analytics-early-work/az-09.png', alt: 'Analytics exploration 9' }
+          ]
+        }
+      ]
     }
   },
   {
@@ -694,21 +1041,50 @@ export const projects: Project[] = [
     year: 2013,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/grad-school-data-visualization-work/' },
+      { label: 'First project Video', href: 'https://youtu.be/cNAjJkotTjo' },
     ],
-    image: { src: '/images/projects/ae/Adler.png', alt: 'Grad school data viz' },
+    image: { src: '/images/projects/ae/Data-Viz.png', alt: 'Grad school data viz' },
     gallery: [
-      { src: '/images/projects/ae/Adler.png', alt: 'Data viz experiments' }
+      { src: '/images/projects/grad-school-data-viz/viz.png', alt: 'Visualization experiment 1' },
+      { src: '/images/projects/grad-school-data-viz/viz1.png', alt: 'Visualization experiment 2' },
+      { src: '/images/projects/grad-school-data-viz/viz2.png', alt: 'Visualization experiment 3' },
+      { src: '/images/projects/grad-school-data-viz/vizb.png', alt: 'Visualization experiment 4' },
+      { src: '/images/projects/grad-school-data-viz/final1.png', alt: 'Final visualization 1' },
+      { src: '/images/projects/grad-school-data-viz/final2.png', alt: 'Final visualization 2' },
+      { src: '/images/projects/grad-school-data-viz/final3.png', alt: 'Final visualization 3' },
+      { src: '/images/projects/grad-school-data-viz/final3-alt.png', alt: 'Final visualization 3 variant' },
+      { src: '/images/projects/grad-school-data-viz/final4.png', alt: 'Final visualization 4' },
+      { src: '/images/projects/grad-school-data-viz/final5.png', alt: 'Final visualization 5' },
+      { src: '/images/projects/grad-school-data-viz/final6.png', alt: 'Final visualization 6' },
+      { src: '/images/projects/grad-school-data-viz/final7.png', alt: 'Final visualization 7' },
+      { src: '/images/projects/grad-school-data-viz/final8.png', alt: 'Final visualization 8' },
+      { src: '/images/projects/grad-school-data-viz/final9.png', alt: 'Final visualization 9' },
+      { src: '/images/projects/grad-school-data-viz/final10.png', alt: 'Final visualization 10' },
+      { src: '/images/projects/grad-school-data-viz/example-video.png', alt: 'Video example screenshot' },
+      { src: '/images/projects/grad-school-data-viz/screenshot-12.36.59-pm.png', alt: 'Processing sketch 1' },
+      { src: '/images/projects/grad-school-data-viz/screenshot2-12.36.59-pm.png', alt: 'Processing sketch 2' },
+      { src: '/images/projects/grad-school-data-viz/screenshot-12.46.15-pm.png', alt: 'D3 visualization 1' },
+      { src: '/images/projects/grad-school-data-viz/screenshot-12.46.22-pm.png', alt: 'D3 visualization 2' },
+      { src: '/images/projects/grad-school-data-viz/screenshot-12.46.30-pm.png', alt: 'D3 visualization 3' },
+      { src: '/images/projects/grad-school-data-viz/screenshot-12.46.36-pm.png', alt: 'D3 visualization 4' }
     ],
     category: 'creative',
-    stack: ['Processing', 'D3'],
+    stack: ['Processing', 'D3.js', 'Data Viz'],
     details: {
-      role: 'UX Designer / Visual Designer / Programmer',
-      entity: 'University of Michigan',
+      role: 'User Experience Designer / Visual Designer / Programmer',
+      entity: 'University of Michigan Graduate School',
       location: 'Ann Arbor, MI',
       years: '2013',
-      synopsis:
-        'Experimental visualization projects combining information visualization, graphic design, and scripting (Processing, D3).',
-      skills: ['Information Visualization', 'Processing', 'D3']
+      team: 'Collaborated with 3 UX peers',
+      synopsis: [
+        'This represents my earliest portfolio-kept work on data-visualization projects, undertaken during my time at the University of Michigan. These experimental classwork projects were among the initial sparks that ignited my interest in the field of data visualization and I like to keep around as comparison.',
+        'As a UX Designer, Visual Designer, and Programmer, I engaged in creating innovative visualizations using tools such as Processing and D3.js. This work involved combining information visualization techniques with graphic design principles and scripting to produce compelling and insightful visual representations of data.',
+        'Various experiments were made, and the final piece allows a user to look through pay scales of different departments and quickly compare them, changing scale when departments have too many people or too few to work with the current view. I enjoy looking back on this project just in that it started my interest in really trying to finesse the details of a project.'
+      ],
+      skills: ['Information Visualization', 'Graphic Design', 'Processing Programming', 'D3.js', 'Scripting'],
+      prototypes: [
+        { label: 'First project Video', href: 'https://www.youtube.com/watch?v=cNAjJkotTjo' }
+      ]
     }
   },
   {
@@ -745,17 +1121,27 @@ export const projects: Project[] = [
     ],
     image: { src: '/images/projects/ae/Morphfaux.png', alt: 'Morphfaux' },
     gallery: [
-      { src: '/images/projects/ae/Morphfaux.png', alt: 'Morphfaux research' }
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-1.jpg', alt: 'Morphfaux — 3D model rendering' },
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-2.jpg', alt: 'Morphfaux — detail study' },
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-3.jpg', alt: 'Morphfaux — plaster pattern 1' },
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-4.jpg', alt: 'Morphfaux — plaster pattern 2' },
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-5.png', alt: 'Morphfaux — technical diagram' },
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-6.jpg', alt: 'Morphfaux — KUKA robot setup' },
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-7.jpg', alt: 'Morphfaux — plaster deposition test' },
+      { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-8.jpg', alt: 'Morphfaux — fabrication result' }
     ],
     category: 'creative',
-    stack: ['KUKA', 'Rhino', 'Arduino'],
+    stack: ['KUKA', 'Rhino', 'Arduino', 'Grasshopper'],
     details: {
       role: 'Design Research Assistant',
-      entity: 'Taubman Architecture',
+      entity: 'Taubman Architecture — University of Michigan',
       location: 'Ann Arbor, MI',
-      synopsis:
-        'Explored plaster enhancements via modern fabrication. Attempted scripting and machine control of a moving head for KUKA; produced models and illustrations.',
-      skills: ['Rhinoscripting', 'Grasshopper', 'Arduino', 'Machine control']
+      years: '2011–2012 (off and on)',
+      synopsis: [
+        'Off and on in 2011 and 2012 I aided Joshua Bard, a professor within the University of Michigan\'s Architecture school, currently a professor at Carnegie Mellon. The Morphfaux titled project was meant to explore methods in which plaster could be enhanced through modern fabrication techniques.',
+        'My primary input was through attempted scripting and then machine control of a moving head for the KUKA robot, for laying plaster, alongside creating presentation materials (see the 3D models and 2D illustrations) for this work. This project combined computational design with physical fabrication, exploring the intersection of digital control and material behavior.'
+      ],
+      skills: ['Design Research', 'Rhinoscripting', 'Grasshopper (3D modeling Software)', 'Arduino Control of Stepper Motors', 'KUKA Robot Programming', 'Fabrication']
     }
   },
   {
@@ -768,12 +1154,28 @@ export const projects: Project[] = [
     ],
     image: { src: '/images/projects/ae/Architecture.png', alt: 'Architecture projects' },
     gallery: [
-      { src: '/images/projects/ae/Architecture.png', alt: 'Architecture work' }
+      { src: '/images/projects/architecture-graduate-projects/menil-1.png', alt: 'Menil Collection — exterior perspective' },
+      { src: '/images/projects/architecture-graduate-projects/menil-2.png', alt: 'Menil Collection — interior space' },
+      { src: '/images/projects/architecture-graduate-projects/menil-3.png', alt: 'Menil Collection — detail view 1' },
+      { src: '/images/projects/architecture-graduate-projects/menil-4.png', alt: 'Menil Collection — detail view 2' },
+      { src: '/images/projects/architecture-graduate-projects/menil-5.png', alt: 'Menil Collection — structural detail' },
+      { src: '/images/projects/architecture-graduate-projects/menil-6.png', alt: 'Menil Collection — site plan' },
+      { src: '/images/projects/architecture-graduate-projects/menil-7.png', alt: 'Menil Collection — section drawing' },
+      { src: '/images/projects/architecture-graduate-projects/menil-8.png', alt: 'Menil Collection — rendering study' },
+      { src: '/images/projects/architecture-graduate-projects/menil-9.png', alt: 'Menil Collection — materiality study' },
+      { src: '/images/projects/architecture-graduate-projects/menil-10.png', alt: 'Menil Collection — final rendering' }
     ],
     category: 'creative',
-    stack: ['Architecture'],
+    stack: ['Architecture', '3D Modeling', 'Rendering'],
     details: {
-      synopsis: 'A selection of architecture course work across modeling and rendering; early foundations of visual craft.'
+      entity: 'Taubman College of Architecture',
+      location: 'Ann Arbor, MI',
+      years: '2011–2013',
+      synopsis: [
+        'Generally lumping a number of architecture course projects here. This represents work across advanced graphic design, 3D modeling, rendering, and various modeling explorations during my time at the University of Michigan\'s Taubman College.',
+        'These projects showcase the foundational visual craft and spatial thinking that continues to influence my design work today — from understanding structure and hierarchy to communicating complex ideas through visual representation.'
+      ],
+      skills: ['Advanced Graphic Design', '3D Modeling', 'Rendering', 'Spatial Design', 'Visual Communication']
     }
 	},
 	// Additional creative sections mirrored from Other Creative Work
@@ -863,6 +1265,6 @@ export const projects: Project[] = [
 				"A set of AI-generated video explorations: motion, texture, and emergent composition.",
 				"Heavily edited after initial generation to push toward desired aesthetic and rhythm."
 			]
-		}
+    }
 	},
 ];
