@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light' | 'hc';
+type Theme = 'dark' | 'light' | 'hc' | 'electric' | 'paper';
 type Font = 'geist' | 'ibm-plex' | 'inter' | 'work-sans' | 'space-grotesk' | 'dm-sans';
 
 function getStoredTheme(): Theme | null {
@@ -130,6 +130,34 @@ export default function ThemeToggle() {
             <circle cx="7" cy="12" r="3"/>
             <circle cx="12" cy="12" r="3"/>
             <circle cx="17" cy="12" r="3"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          aria-pressed={theme === 'electric'}
+          aria-label="80's electric theme"
+          onClick={() => setTheme('electric')}
+          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+        >
+          {/* lightning bolt icon */}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          aria-pressed={theme === 'paper'}
+          aria-label="Classic paper theme"
+          onClick={() => setTheme('paper')}
+          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+        >
+          {/* file/paper icon */}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M16 13H8"/>
+            <path d="M16 17H8"/>
+            <path d="M10 9H8"/>
           </svg>
         </button>
       </div>

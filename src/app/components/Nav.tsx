@@ -30,7 +30,7 @@ export function Nav() {
 
     return (
         <>
-        <ul className="nav">
+        <ul className="nav" style={{ backdropFilter: 'var(--glass-blur-1)' }}>
             {items.map((i, idx) => (
                 <li key={i.href} style={idx === 0 ? { marginRight: 'auto' } : undefined}>
                     <Link href={i.href} aria-current={pathname === i.href ? 'page' : undefined} aria-label={i.label} className="nav-link">

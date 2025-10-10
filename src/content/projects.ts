@@ -163,7 +163,7 @@ export const projects: Project[] = [
 		stack: ['Meta', 'Notebooks', 'AI'],
 		details: {
       role: 'Product Designer',
-      entity: 'Meta',
+			entity: 'Meta',
 			years: '2020–2023',
       team: 'Collaborated with engineers, PMs, and other designers.',
 			headerImage: { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-12-00.png', alt: 'Da(i)query notebook — SQL cells' },
@@ -252,7 +252,7 @@ export const projects: Project[] = [
     image: { src: '/images/projects/ae/Pie chart.png', alt: 'AI infographic pie chart' },
 		stack: ['AI', 'Prototyping'],
 		details: {
-				role: 'Product Designer',
+			role: 'Product Designer',
 				entity: 'Supio, Microsoft Cloud, Mars Data Suite; supporting ComfyUI / Pincites / Zeplyn / Peopled',
 				location: 'Seattle / remote / in person',
 				years: '2024–2025',
@@ -1338,6 +1338,6 @@ export const projects: Project[] = [
 				"A set of AI-generated video explorations: motion, texture, and emergent composition.",
 				"Heavily edited after initial generation to push toward desired aesthetic and rhythm."
 			]
-		}
+    }
 	},
 ];
