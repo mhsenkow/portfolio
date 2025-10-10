@@ -173,12 +173,20 @@ export function GridWithHoverPanel({ items }: Props) {
                 transformStyle: 'preserve-3d',
                 perspective: 1000
               }}
+              onMouseEnter={() => setHovered(p)}
+              onPointerEnter={() => setHovered(p)}
+              onFocus={() => setHovered(p)}
+              onBlur={() => setHovered((cur) => (cur?.slug === p.slug ? null : cur))}
             >
               <Link 
                 href={`/projects/${p.slug}`} 
                 className={`${styles.card} card`} 
-                onMouseEnter={() => setHovered(p)} 
+                onMouseEnter={() => setHovered(p)}
+                onMouseOver={() => setHovered(p)}
+                onPointerEnter={() => setHovered(p)}
                 onFocus={() => setHovered(p)}
+                onTouchStart={() => setHovered(p)}
+                onBlur={() => setHovered((cur) => (cur?.slug === p.slug ? null : cur))}
                 style={{
                   display: 'block',
                   textDecoration: 'none',
@@ -205,6 +213,7 @@ export function GridWithHoverPanel({ items }: Props) {
                       src={p.image.src} 
                       alt={p.image.alt} 
                       fill 
+                      priority={index < 6}
                       sizes="(max-width: 600px) 50vw, 200px"
                       style={{
                         objectFit: 'cover',
