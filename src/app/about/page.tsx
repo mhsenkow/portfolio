@@ -31,7 +31,7 @@ export default function AboutPage() {
 						Currently I&apos;m freelancing and looking for that next big step.
 					</p>
 					<p>
-						Most recently I was providing initial design guidance and branding for a start-up Supio, and working in Meta’s internal applications covering Analysis workflows across Daiquery, Bento, Data Explorer and frameworks for Data-viz systems.
+						Most recently I was providing initial design guidance and branding for a few start-ups all around the &apos;private data source, notebook&apos; realm, and working in Meta&apos;s internal applications covering Analysis workflows across Daiquery, Bento, Data Explorer and frameworks for Data-viz systems.
 					</p>
 					<p>
 						Before that I was at Microsoft working on Teams and MyAnalytics and Workplace Analytics (now branded Viva Insights) as a mixture of design lead and individual contributor designer. At IBM I was in the first group of 60 that was at the start of the Design movement at IBM and had been with the company for four years, priorly working on Watson Analytics projects and aided in building Data-Viz and both the UX and Technical sides of the Watson Data Platform Design Guide that folded into their current Carbon Blue design system.

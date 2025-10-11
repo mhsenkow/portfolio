@@ -34,7 +34,7 @@ export function ContactForm() {
       a.click();
       a.remove();
       setStatus('opened-mail');
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please email me directly.');
       setStatus('error');
     }

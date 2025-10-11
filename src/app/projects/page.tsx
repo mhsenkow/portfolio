@@ -1,6 +1,4 @@
 import { ProjectsGrid } from './ProjectsGrid';
-import { projects } from '@/content/projects';
-import styles from './page.module.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

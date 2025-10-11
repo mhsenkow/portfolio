@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link';
+import Image from 'next/image';
 
 type Props = {
   href: string;
@@ -15,12 +16,12 @@ export function LinkToken({ href, label }: Props) {
       const domain = new URL(href).hostname;
       icon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
     }
-  } catch (_) {
+  } catch {
     icon = null;
   }
   return (
     <Link href={href} target="_blank" rel="noreferrer noopener" className="link-token">
-      {icon && <img src={icon} alt="" width={16} height={16} loading="lazy" />}
+      {icon && <Image src={icon} alt="" width={16} height={16} unoptimized />}
       <span>{label}</span>
     </Link>
   );

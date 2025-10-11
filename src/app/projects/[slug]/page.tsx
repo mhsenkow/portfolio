@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { LightboxImage } from '@/app/components/Lightbox';
 import type { Metadata } from 'next';
 import { projects } from '@/content/projects';
@@ -46,7 +45,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         autoGallery = files
             .filter((f) => /\.(png|jpe?g|webp|gif|avif)$/i.test(f))
             .map((f) => ({ src: `/images/projects/${slug}/${f}`, alt: project.title }));
-    } catch (_) {
+    } catch {
         // ignore missing directory
     }
 
