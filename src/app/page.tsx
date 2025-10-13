@@ -22,6 +22,7 @@ export default function Home() {
             <LinkToken href="https://webgl-portfolio-jbxw.vercel.app/" label="WebGL portfolio" />
             <LinkToken href="https://portfolio-site-tau-ten-35.vercel.app/" label="Particle narrative portfolio" />
             <LinkToken href="https://mhsenkow.squarespace.com/" label="Old Squarespace portfolio" />
+            <LinkToken href="https://www.mhsenkow.org/Older/old/portfolio/" label="Original 2013 portfolio" />
             <LinkToken href="https://www.figma.com/proto/SS9PFTPBKoUEmOhn1f5GJt/presentation?node-id=376-3&t=97fqkQd8qUt8cyQY-1&starting-point-node-id=376%3A3" label="AI work deck" />
           </div>
         </motion.div>

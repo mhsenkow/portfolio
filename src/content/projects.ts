@@ -163,7 +163,7 @@ export const projects: Project[] = [
 		stack: ['Meta', 'Notebooks', 'AI'],
 		details: {
       role: 'Product Designer',
-			entity: 'Meta',
+      entity: 'Meta',
 			years: '2020–2023',
       team: 'Collaborated with engineers, PMs, and other designers.',
 			headerImage: { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-12-00.png', alt: 'Da(i)query notebook — SQL cells' },
@@ -252,7 +252,7 @@ export const projects: Project[] = [
     image: { src: '/images/projects/ae/Pie chart.png', alt: 'AI infographic pie chart' },
 		stack: ['AI', 'Prototyping'],
 		details: {
-			role: 'Product Designer',
+				role: 'Product Designer',
 				entity: 'Supio, Microsoft Cloud, Mars Data Suite; supporting ComfyUI / Pincites / Zeplyn / Peopled',
 				location: 'Seattle / remote / in person',
 				years: '2024–2025',
@@ -723,24 +723,139 @@ export const projects: Project[] = [
   },
   {
     slug: 'workplace-analytics-programs',
-    title: 'Workplace Analytics — programs & nudges',
+    title: 'Workplace Analytics — programs, analytics, and nudges',
     description: 'Bridge between Workplace Analytics and MyAnalytics via programs; multi‑year design leadership and systemization.',
     year: 2018,
+    featured: true,
     links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/programs-bridge-between-products/' },
+      { label: 'Original', href: 'https://mhsenkow.squarespace.com/all-experiences#/workplace-analytics-programs-analytics-and-nudges/' },
     ],
-    image: { src: '/images/projects/ae/Redsign (1).png', alt: 'Programs' },
+    image: { src: '/images/projects/workplace-analytics-programs/card.png', alt: 'Workplace Analytics Programs' },
     gallery: [
-      { src: '/images/projects/ae/Redsign (1).png', alt: 'Programs visuals' }
+      // Key project overview images
+      { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard interface' },
+      { src: '/images/projects/workplace-analytics-programs/analytics-overview.png', alt: 'Analytics overview screen' },
+      { src: '/images/projects/workplace-analytics-programs/nudges-system.png', alt: 'Nudges and behavioral prompts system' },
+      { src: '/images/projects/workplace-analytics-programs/bridge-integration.png', alt: 'Bridge between products integration' },
+      { src: '/images/projects/workplace-analytics-programs/wpa-01.jpg', alt: 'Workplace Analytics interface' },
+      { src: '/images/projects/workplace-analytics-programs/wf-01.jpg', alt: 'Workplace Focus interface' }
     ],
-    stack: ['Microsoft', 'Behavioral'],
+    stack: ['Microsoft', 'Workplace Analytics', 'MyAnalytics', 'Behavioral Design', 'UX Design'],
     details: {
       role: 'Product Designer / Design Lead',
-      entity: 'Microsoft',
+      entity: 'Microsoft — Workplace Analytics team',
+      location: 'Redmond, WA',
       years: '2017–2019',
-      synopsis:
-        'Integrated Workplace Analytics and MyAnalytics via programs. Managed contractors and remote designers; later onboarded new manager and FTEs while systemizing design work.',
-      skills: ['Design leadership', 'Systemization']
+      team: 'Initially worked with a design lead and another FTE designer. Later became the sole FTE designer in the US, leading 4 contractors and remote FTE designers in India. Eventually helped onboard and support a new manager and additional FTE designers.',
+      headerImage: { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard interface' },
+      synopsis: [
+        'This was one of two sister programs that were my primary focus for 2.5 years at Microsoft. My work centered around integrating Workplace Analytics and MyAnalytics through the bridging component of programs, which tied the two products together. Additionally, I led a wide range of design changes, including improving data visualizations, refining navigation systems, and driving a visual design refresh.',
+        'As the de-facto design lead during a transitional period, I managed contractors and ensured their work aligned with the broader design system. My role encompassed wireframing, research, coding, content writing, visual design, and data visualization consulting—essentially handling all design-related needs for the team.',
+        'Starting with a small team, I led the design efforts through various team changes, becoming the de-facto design lead. My role evolved to manage multiple contractors and remote designers, culminating in onboarding a new manager and additional FTE designers. I ensured they were well-integrated and organized with the existing design files and systems.'
+      ],
+      skills: ['Wireframing', 'Research', 'Coding', 'Visual Design', 'Data Visualization', 'Content Writing', 'Statistics Consulting', 'Stakeholder Interviews', 'Internal Research', 'Advocacy and Collaboration with PMs and Engineers', 'Team Leadership', 'Design System Development', 'Program Management', 'Contractor Management', 'Remote Team Coordination'],
+      prototypes: [
+        { label: 'Top Four Redesign and Animations', href: 'https://codepen.io/mhsenkow/full/eRYzoW/' },
+        { label: 'Email Usage Redesign and Animations', href: 'https://codepen.io/mhsenkow/full/XgVYyj/' },
+        { label: 'Sharing Button Concept', href: 'https://codepen.io/mhsenkow/pen/PmbJRz' },
+        { label: 'Motion Concept', href: 'https://codepen.io/mhsenkow/full/QQGBOX/' }
+      ],
+      sections: [
+        {
+          title: 'Programs Dashboard Overview',
+          body: 'The central hub that connected Workplace Analytics and MyAnalytics, providing users with a unified view of their workplace insights and productivity programs.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard interface' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-01.jpg', alt: 'Programs dashboard detail view' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-02.jpg', alt: 'Program management interface' }
+          ]
+        },
+        {
+          title: 'Workplace Analytics Integration',
+          body: 'Comprehensive analytics dashboards that provided meaningful insights to users while maintaining privacy and security standards. These interfaces show the evolution of data visualization and user experience design.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/analytics-overview.png', alt: 'Analytics overview screen' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-03.jpg', alt: 'Analytics dashboard 1' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-04.jpg', alt: 'Analytics dashboard 2' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-05.jpg', alt: 'Analytics dashboard 3' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-06.jpg', alt: 'Analytics dashboard 4' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-07.jpg', alt: 'Analytics dashboard 5' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-08.jpg', alt: 'Analytics dashboard 6' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-09.jpg', alt: 'Analytics dashboard 7' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-10.jpg', alt: 'Analytics dashboard 8' }
+          ]
+        },
+        {
+          title: 'Workplace Focus & Nudges System',
+          body: 'Designed and implemented a nudges system that provided gentle behavioral prompts to help users improve their work habits and productivity without being intrusive. The Workplace Focus component integrated seamlessly with the analytics platform.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/nudges-system.png', alt: 'Nudges and behavioral prompts system' },
+            { src: '/images/projects/workplace-analytics-programs/wf-01.jpg', alt: 'Workplace Focus interface 1' },
+            { src: '/images/projects/workplace-analytics-programs/wf-02.jpg', alt: 'Workplace Focus interface 2' },
+            { src: '/images/projects/workplace-analytics-programs/wf-03.jpg', alt: 'Workplace Focus interface 3' },
+            { src: '/images/projects/workplace-analytics-programs/wf-04.jpg', alt: 'Workplace Focus interface 4' },
+            { src: '/images/projects/workplace-analytics-programs/wf-05.jpg', alt: 'Workplace Focus interface 5' },
+            { src: '/images/projects/workplace-analytics-programs/wf-06.jpg', alt: 'Workplace Focus interface 6' },
+            { src: '/images/projects/workplace-analytics-programs/wf-07.jpg', alt: 'Workplace Focus interface 7' },
+            { src: '/images/projects/workplace-analytics-programs/wf-08.jpg', alt: 'Workplace Focus interface 8' }
+          ]
+        },
+        {
+          title: 'Bridge Integration & Data Flow',
+          body: 'Created the bridge between Workplace Analytics and MyAnalytics through a programs system that enabled seamless data flow and user experience continuity across both platforms.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/bridge-integration.png', alt: 'Bridge between products integration' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-11.jpg', alt: 'Integration interface 1' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-12.jpg', alt: 'Integration interface 2' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-13.jpg', alt: 'Integration interface 3' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-14.png', alt: 'Integration interface 4' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-15.png', alt: 'Integration interface 5' }
+          ]
+        },
+        {
+          title: 'Advanced Analytics & Insights',
+          body: 'Continued development of sophisticated analytics interfaces that provided deeper insights into workplace patterns and productivity metrics.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/wpa-16.jpg', alt: 'Advanced analytics 1' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-17.jpg', alt: 'Advanced analytics 2' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-18.jpg', alt: 'Advanced analytics 3' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-19.png', alt: 'Advanced analytics 4' },
+            { src: '/images/projects/workplace-analytics-programs/wpa-20.png', alt: 'Advanced analytics 5' },
+            { src: '/images/projects/workplace-analytics-programs/wf-09.png', alt: 'Focus analytics 1' },
+            { src: '/images/projects/workplace-analytics-programs/wf-10.jpg', alt: 'Focus analytics 2' },
+            { src: '/images/projects/workplace-analytics-programs/wf-11.jpg', alt: 'Focus analytics 3' }
+          ]
+        },
+        {
+          title: 'Management & Interface Controls',
+          body: 'Interface management tools that allowed administrators to configure and customize the analytics experience for different user groups and organizational needs.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/interface-01.jpg', alt: 'Identify interface' },
+            { src: '/images/projects/workplace-analytics-programs/interface-02.jpg', alt: 'Manage page interface' },
+            { src: '/images/projects/workplace-analytics-programs/interface-03.jpg', alt: 'Manage panel interface' },
+            { src: '/images/projects/workplace-analytics-programs/wf-12.jpg', alt: 'Management interface 1' },
+            { src: '/images/projects/workplace-analytics-programs/wf-13.jpg', alt: 'Management interface 2' },
+            { src: '/images/projects/workplace-analytics-programs/wf-14.jpg', alt: 'Management interface 3' },
+            { src: '/images/projects/workplace-analytics-programs/wf-15.jpg', alt: 'Management interface 4' },
+            { src: '/images/projects/workplace-analytics-programs/wf-16.jpg', alt: 'Management interface 5' },
+            { src: '/images/projects/workplace-analytics-programs/wf-17.jpg', alt: 'Management interface 6' }
+          ]
+        },
+        {
+          title: 'Project Documentation & Evolution',
+          body: 'Screenshots documenting the evolution of the project over time, showing the iterative design process and the refinement of interfaces based on user feedback and testing.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/screenshot-01.png', alt: 'Early project screenshot' },
+            { src: '/images/projects/workplace-analytics-programs/screenshot-02.png', alt: 'Mid-project screenshot' },
+            { src: '/images/projects/workplace-analytics-programs/screenshot-03.png', alt: 'Late project screenshot' },
+            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-01.png', alt: 'Final project screenshot 1' },
+            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-02.png', alt: 'Final project screenshot 2' },
+            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-03.png', alt: 'Final project screenshot 3' },
+            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-04.png', alt: 'Final project screenshot 4' },
+            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-05.png', alt: 'Final project screenshot 5' }
+          ]
+        }
+      ]
     }
   },
   {
@@ -888,24 +1003,13 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/the-creation-of-a-design-guide-used-across-thousands-of-users/' },
     ],
-    image: { src: '/images/projects/ae/DesignGuide.png', alt: 'Design guide' },
+    image: { src: '/images/projects/design-guide-thousands-users/card.png', alt: 'Design guide' },
     gallery: [
-      { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'Design guide component examples' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-02.png', alt: 'Component documentation' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-03.png', alt: 'Visual design system' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-04.png', alt: 'Component specifications' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-05.png', alt: 'Design patterns' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-06.png', alt: 'Component library' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-07.png', alt: 'Implementation examples' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-08.png', alt: 'Component variations' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-09.png', alt: 'Design guide overview' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-10.png', alt: 'Component interactions' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-11.png', alt: 'System architecture' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-12.png', alt: 'Usage guidelines' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-13.png', alt: 'Component details' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-14.png', alt: 'Final implementation' }
+      // Key overview images
+      { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'Design guide overview' },
+      { src: '/images/projects/design-guide-thousands-users/screenshot-06.png', alt: 'Component library showcase' }
     ],
-    stack: ['IBM', 'Design System'],
+    stack: ['IBM', 'Design System', 'Component Library', 'UX Design', 'Frontend Development'],
     details: {
       role: 'UX Designer / Design Developer',
       entity: 'IBM Design, Watson Data Platform (formerly Analytics Platform)',
@@ -916,7 +1020,46 @@ export const projects: Project[] = [
         'My last main group at IBM was the Watson Data Platform team, a position that was incredibly hard to leave. My role blended design, development, and asset and product management in the creation of a comprehensive guide used across multiple products. Although it was a team effort, we worked highly collaboratively to achieve our goals.',
         'I was deeply involved in both the coding and UX aspects of the guide. Everything in the guide was built and coded between myself and my dev lead, while I also engaged in UX work with our visual designers and Design Lead. The final implementation of the guide into products was incredibly gratifying, and it was rewarding to gather feedback on the components as they were used in real-world applications.'
       ],
-      skills: ['Design', 'Development', 'Asset and Product Management', 'UX Design', 'Collaboration with Visual Designers and Design Lead']
+      skills: ['Design System Architecture', 'Component Library Development', 'Frontend Development', 'UX Design', 'Asset and Product Management', 'Technical Documentation', 'Cross-functional Collaboration', 'Design-to-Code Implementation', 'User Experience Research', 'Visual Design', 'Design Patterns', 'System Integration'],
+      sections: [
+        {
+          title: 'Design Guide Foundation',
+          body: 'The comprehensive design guide served as the foundation for consistent user experiences across the Watson Data Platform. This system enabled thousands of users to have a cohesive experience while working across multiple products.',
+          images: [
+            { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'Design guide overview and navigation' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-02.png', alt: 'Component documentation structure' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-03.png', alt: 'Visual design system principles' }
+          ]
+        },
+        {
+          title: 'Component Library Development',
+          body: 'Working closely with the dev lead, I coded and designed comprehensive component libraries that could be easily implemented across different products. Each component included detailed specifications and usage guidelines.',
+          images: [
+            { src: '/images/projects/design-guide-thousands-users/screenshot-04.png', alt: 'Component specifications and properties' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-05.png', alt: 'Design patterns and variations' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-06.png', alt: 'Comprehensive component library showcase' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-07.png', alt: 'Implementation examples and code snippets' }
+          ]
+        },
+        {
+          title: 'Interactive Components & Patterns',
+          body: 'The guide included detailed documentation of interactive components, showing different states, variations, and usage patterns that designers and developers could reference when building new features.',
+          images: [
+            { src: '/images/projects/design-guide-thousands-users/screenshot-08.png', alt: 'Component variations and states' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-09.png', alt: 'Design guide navigation and structure' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-11.png', alt: 'System architecture and relationships' }
+          ]
+        },
+        {
+          title: 'Implementation & Usage Guidelines',
+          body: 'The final sections of the guide provided clear usage guidelines, implementation details, and real-world examples that helped teams successfully integrate the design system into their products.',
+          images: [
+            { src: '/images/projects/design-guide-thousands-users/screenshot-12.png', alt: 'Usage guidelines and best practices' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-13.png', alt: 'Detailed component specifications' },
+            { src: '/images/projects/design-guide-thousands-users/screenshot-14.png', alt: 'Final implementation showcase' }
+          ]
+        }
+      ]
     }
   },
   {
@@ -1013,24 +1156,81 @@ export const projects: Project[] = [
     description: 'Glow Workshop installation in Flint, MI; early physical interaction explorations.',
     year: 2013,
     links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/vaporize-product-design-art-installation/' },
+      { label: 'Original', href: 'https://mhsenkow.squarespace.com/all-experiences#/vaporize/' },
     ],
-    image: { src: '/images/projects/ae/Vaporize.png', alt: 'Vaporize installation' },
+    image: { src: '/images/projects/vaporize-art-installation/card.png', alt: 'Vaporize installation' },
     gallery: [
-      { src: '/images/projects/ae/Vaporize.png', alt: 'Vaporize installation overview' }
+      { src: '/images/projects/vaporize-art-installation/vaporized-01.png', alt: 'Vaporize installation overview' },
+      { src: '/images/projects/vaporize-art-installation/vaporized-06.png', alt: 'Installation detail view' },
+      { src: '/images/projects/vaporize-art-installation/vaporized-21.png', alt: 'Project documentation' }
     ],
     category: 'creative',
-    stack: ['Installation'],
+    stack: ['Physical Interaction Design', 'Art Installation', 'LED Design', 'CNC Machining', 'Thermoforming'],
     details: {
-      role: 'Machining, Electrical, Product conception',
-      entity: 'Glow Workshop',
+      role: 'Machining, Electrical work, Product Conception (Design)',
+      entity: 'Glow Workshop, installation in an open storefront',
       location: 'Flint, MI',
-      synopsis:
-        "Designed as part of the Glow Workshop led by Cathlyn Newell. The workshop took a shop space in downtown Flint and designed projects based on the concept of 'Glow'. I worked alongside Beatrice Lau and William Liow and created the final project you can see below. This was one of my first projects that started to toe the line of physical interaction design, looking into how objects can directly shape users' connection to a space.",
-      skills: ['3D modeling', 'LED wiring', 'CNC machining', 'Thermoforming', 'dry-ice'],
+      synopsis: [
+        "Designed as part of the Glow Workshop led by Cathlyn Newell the workshop took a shop space in downtown Flint and designed projects based upon the concept of 'Glow'. I worked alongside Beatrice Lau and William Liow and created the final project you can see below. This was one of my first projects that started to toe the line of physical interaction design, looking into how objects can directly shape users connection to a space.",
+        "The core concept was that the hanging pendants developed used a combination of CNC framework, thermoforming, LED-lighting, and creative set-ups with dry-ice and a water pump to create objects that dramatically altered the atmosphere of the space. A step-by-step process of the work that led up the final piece is viewable in the connected images.",
+        "I keep this project around (2012 creation now) as I love this space. This was more of an art installation but it really pushed me to think about space and place in relation to interactive mediums."
+      ],
+      skills: ['3D modeling', 'LED wiring', 'CNC machining', 'Thermoforming', 'Dry-ice', 'Physical Interaction Design', 'Product Conception', 'Electrical Work', 'Machining'],
       prototypes: [
-        { label: 'Video 1', href: '#' },
-        { label: 'Video 2', href: '#' }
+        { label: 'Video 1', href: 'https://vimeo.com/25918570' },
+        { label: 'Video 2', href: 'https://vimeo.com/21954111' }
+      ],
+      headerEmbed: {
+        html: '<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); box-shadow: var(--shadow-1);"><iframe src="https://player.vimeo.com/video/25918570?title=0&byline=0&portrait=0&responsive=1" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>',
+        title: 'Vaporize Installation Video',
+        link: 'https://vimeo.com/25918570'
+      },
+      sections: [
+        {
+          title: 'Installation Overview',
+          body: 'The Vaporize installation explored the concept of "Glow" through physical interaction design, creating an immersive experience that connected users to the space through interactive elements.',
+          images: [
+            { src: '/images/projects/vaporize-art-installation/vaporized-01.png', alt: 'Installation overview' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-02.png', alt: 'Installation detail 1' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-03.png', alt: 'Installation detail 2' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-04.png', alt: 'Installation detail 3' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-05.png', alt: 'Installation detail 4' }
+          ]
+        },
+        {
+          title: 'Technical Implementation',
+          body: 'The project involved sophisticated technical implementation including LED wiring, CNC machining, thermoforming, and dry-ice effects to create the desired atmospheric and interactive experience.',
+          images: [
+            { src: '/images/projects/vaporize-art-installation/vaporized-06.png', alt: 'Technical detail 1' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-07.png', alt: 'Technical detail 2' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-08.png', alt: 'Technical detail 3' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-09.png', alt: 'Technical detail 4' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-10.png', alt: 'Technical detail 5' }
+          ]
+        },
+        {
+          title: 'Physical Interaction Design',
+          body: 'The installation explored how physical objects could directly shape users\' connection to a space, representing early work in physical interaction design and environmental experience.',
+          images: [
+            { src: '/images/projects/vaporize-art-installation/vaporized-11.png', alt: 'Interaction design 1' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-12.png', alt: 'Interaction design 2' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-13.png', alt: 'Interaction design 3' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-14.png', alt: 'Interaction design 4' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-15.png', alt: 'Interaction design 5' }
+          ]
+        },
+        {
+          title: 'Final Installation & Documentation',
+          body: 'The completed installation in the downtown Flint storefront space, showcasing the final implementation and documenting the collaborative process with Beatrice Lau and William Liow.',
+          images: [
+            { src: '/images/projects/vaporize-art-installation/vaporized-16.png', alt: 'Final installation 1' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-17.png', alt: 'Final installation 2' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-18.png', alt: 'Final installation 3' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-19.png', alt: 'Final installation 4' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-20.png', alt: 'Final installation 5' },
+            { src: '/images/projects/vaporize-art-installation/vaporized-21.png', alt: 'Project documentation screenshot' }
+          ]
+        }
       ]
     }
   },
@@ -1225,6 +1425,7 @@ export const projects: Project[] = [
 		category: 'creative',
 		image: { src: '/images/projects/generative-web-code-art/card.png', alt: 'Generative web-code art' },
 		gallery: [
+			{ src: '/images/projects/generative-web-code-art/isovox-aquarium.png', alt: 'Isovox Aquarium - 3D voxel aquarium ecosystem' },
 			{ src: '/images/projects/generative-web-code-art/voice-visualizer.png', alt: 'Voice Visualizer' },
 			{ src: '/images/projects/generative-web-code-art/music-sound-experiment.png', alt: 'Music Sound experiment 2' },
 			{ src: '/images/projects/generative-web-code-art/header-concept.png', alt: 'Piece 1: Header concept for cards' },
@@ -1237,9 +1438,11 @@ export const projects: Project[] = [
 		details: {
 			synopsis: [
 				"I'm not fully sure how to group these. In relation to direct work, these experiments could inform smart headers, backgrounds, loaders, etc. In relation to artwork elsewhere…I'm always game for a challenge.",
-				"A collection of browser-based generative sketches. Pieces range from UI-adjacent concepts (headers/loaders) to purely artistic explorations."
+				"A collection of browser-based generative sketches. Pieces range from UI-adjacent concepts (headers/loaders) to purely artistic explorations.",
+				"Recent additions include interactive 3D voxel environments like the Isovox Aquarium — a real-time ecosystem simulation with customizable tank shapes, brush tools, and dynamic fish behavior."
 			],
 			prototypes: [
+				{ label: 'Isovox Aquarium', href: 'https://isovox-aquarium.vercel.app/' },
 				{ label: 'Voice Visualizer', href: 'https://mhsenkow.org/experiments/AliceSong/' },
 				{ label: 'Music Sound experiment 2', href: 'https://mhsenkow.org/experiments/CAL/' },
 				{ label: 'Piece 1: Header concept for cards', href: 'https://codepen.io/mhsenkow/full/YpjGBp' },
@@ -1338,6 +1541,6 @@ export const projects: Project[] = [
 				"A set of AI-generated video explorations: motion, texture, and emergent composition.",
 				"Heavily edited after initial generation to push toward desired aesthetic and rhythm."
 			]
-    }
+		}
 	},
 ];
