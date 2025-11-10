@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
 import UtilityMenu from './UtilityMenu';
 
+const RESUME_FALLBACK_URL = 'https://drive.google.com/file/d/1AOqIET8BF5kRcZuXYrEYPFMxweFE4GPZ/view?usp=sharing';
+const RESUME_URL = process.env.NEXT_PUBLIC_RESUME_URL ?? RESUME_FALLBACK_URL;
+
 export function Nav() {
     const pathname = usePathname();
     const items = [
@@ -40,7 +43,7 @@ export function Nav() {
                 </li>
             ))}
             <li>
-                <a href="https://drive.google.com/file/d/1IdDaH5JjNUhu-zDPeUTS1hXH8_w2CpRs/view?usp=sharing" target="_blank" rel="noreferrer noopener" className="nav-link" aria-label="resume">
+                <a href={RESUME_URL} target="_blank" rel="noreferrer noopener" className="nav-link" aria-label="resume">
                     <span className="nav-icon" aria-hidden>
                         <svg viewBox="0 0 24 24" width={18} height={18}><path fill="currentColor" d="M7 2h7l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V8h4.5L14 3.5ZM8 12h8v2H8Zm0 4h8v2H8Z"/></svg>
                     </span>
