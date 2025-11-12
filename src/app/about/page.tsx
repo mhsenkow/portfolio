@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { ContactForm } from '@/app/components/ContactForm';
 
 export const metadata: Metadata = {
 	title: 'about — mhsenkow',
@@ -66,8 +65,23 @@ export default function AboutPage() {
 			</section>
 			<section className="container" style={{ padding: '0 0 var(--space-16) 0' }}>
 				<h2 className="h2">contact</h2>
-				<div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 'var(--space-6)', maxWidth: 820, marginTop: 'var(--space-6)' }}>
-					<ContactForm />
+				<div style={{ maxWidth: 820, marginTop: 'var(--space-6)' }}>
+					<p style={{ fontSize: 'var(--size-3)', marginBottom: 'var(--space-3)' }}>
+						Feel free to reach out via email:
+					</p>
+					<a href="mailto:mhsenkow@gmail.com" style={{ 
+						fontSize: 'var(--size-4)', 
+						color: 'var(--color-accent)', 
+						textDecoration: 'none',
+						display: 'inline-block',
+						padding: 'var(--space-3) var(--space-5)',
+						background: 'var(--surface-card)',
+						border: '1px solid var(--color-border)',
+						borderRadius: 'var(--radius-lg)',
+						transition: 'all 0.2s ease'
+					}}>
+						mhsenkow@gmail.com
+					</a>
 				</div>
 			</section>
 		</main>

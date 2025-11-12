@@ -12,12 +12,12 @@ export default function Home() {
       <section className="container" style={{ padding: "var(--space-16) 0" }}>
         <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} style={{ fontSize: "var(--size-7)", lineHeight: 1.1 }}>Michael Senkow – Staff Product Designer</motion.h1>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.4 }} style={{ marginTop: "var(--space-4)", color: "var(--color-muted)", maxWidth: 820, display: 'grid', gap: 'var(--space-3)' }}>
-          <p>Hey hey! I’m a Staff Product Designer — passionate about crafting cutting‑edge complex tooling, AI workflows, and digital craft being used creatively.</p>
-          <p>Focus Time moments I’ve helped create are on millions of PCs. The Daiquery Notebook work enabled almost everyone at Meta to make decisions better with AI‑enabled workflows. I’ve helped build such projects as Cognos Analytics powered by Watson, early steps of IBM’s Carbon Design System, and the early days of Viva Insights.</p>
+        <p>Hey hey! I’m a <strong>Staff Product Designer</strong> — passionate about crafting <strong>cutting‑edge complex tooling</strong>   , <strong>AI workflows</strong>, and <strong>digital–craft being used creatively</strong>.</p>
+          <p><strong>Focus Time</strong> moments I’ve helped create are on millions of PCs. The <strong>Daiquery Notebook</strong> work enabled almost everyone at Meta to make decisions better with AI‑enabled workflows. I’ve helped build such projects as <strong>Cognos Analytics powered by Watson</strong>, early steps of IBM’s <strong>Carbon Design System</strong>, and the early days of <strong>Viva Insights</strong>.</p>
           <p>You’re looking at a sampling of my work across tech. There’s a <Link href="/list-view">full list</Link> at the top and a more exploratory <Link href="/all-experiences">grid view</Link> as well.</p>
           <p>Each of these cards leads to a main project from one of my eras of work. I’m currently doing a revamp in code and exploring what I can make — check it out.</p>
 
-          <p>The focus has been software design but I have degrees in Mechanical Engineering and Technical Communications, Information Science HCI, and some Architecture work.</p>
+          <p>The focus has been software design but I have bachelor degrees in Mechanical Engineering and Technical Communications, a Master of Science in Information Science Human-Computer Interaction, and some Master of Architecture and Master of Science In Digital Fabrication work.</p>
           <div style={{ marginTop: 'var(--space-3)', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <LinkToken href="https://webgl-portfolio-jbxw.vercel.app/" label="WebGL portfolio" />
             <LinkToken href="https://portfolio-site-tau-ten-35.vercel.app/" label="Particle narrative portfolio" />

@@ -81,28 +81,63 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 		<main id="content">
 			<section className="container--fluid" style={{ padding: 'var(--space-16) 0' }}>
         <SidePanelLayout panel={
-          <div className="project-card">
-              <div className="eyebrow">project</div>
-              <h1 className="h3" style={{ marginTop: '6px' }}>{project.title}</h1>
-              <p className="type-secondary" style={{ marginTop: 'var(--space-3)' }}>{project.description}</p>
-              {project.details && (
-                <dl className="project-meta">
-                  {project.details.role && (<><dt>Role</dt><dd>{project.details.role}</dd></>)}
-                  {project.details.entity && (<><dt>Entity</dt><dd>{project.details.entity}</dd></>)}
-                  {project.details.location && (<><dt>Location</dt><dd>{project.details.location}</dd></>)}
-                  {project.details.years && (<><dt>Years</dt><dd>{project.details.years}</dd></>)}
-                  {project.details.team && (<><dt>Team make-up</dt><dd>{project.details.team}</dd></>)}
-                  {project.details.skills && project.details.skills.length > 0 && (<><dt>Skills used</dt><dd>{project.details.skills.join(', ')}</dd></>)}
-                </dl>
-              )}
-              {project.details?.prototypes && project.details.prototypes.length > 0 && (
-                <div className="project-links" style={{ gridAutoFlow: 'row', gap: '8px' }}>
-                  {project.details.prototypes.map((p) => (
-                    <LinkToken key={p.href} href={p.href} label={p.label} />
-                  ))}
-                </div>
-              )}
-          </div>
+          <>
+            <div className="project-card">
+                <div className="eyebrow">project</div>
+                <h1 className="h3" style={{ marginTop: '6px' }}>{project.title}</h1>
+                <p className="type-secondary" style={{ marginTop: 'var(--space-3)' }}>{project.description}</p>
+                {project.details && (
+                  <dl className="project-meta">
+                    {project.details.role && (<><dt>Role</dt><dd>{project.details.role}</dd></>)}
+                    {project.details.entity && (<><dt>Entity</dt><dd>{project.details.entity}</dd></>)}
+                    {project.details.location && (<><dt>Location</dt><dd>{project.details.location}</dd></>)}
+                    {project.details.years && (<><dt>Years</dt><dd>{project.details.years}</dd></>)}
+                    {project.details.team && (<><dt>Team make-up</dt><dd>{project.details.team}</dd></>)}
+                    {project.details.skills && project.details.skills.length > 0 && (<><dt>Skills used</dt><dd>{project.details.skills.join(', ')}</dd></>)}
+                  </dl>
+                )}
+                {project.details?.prototypes && project.details.prototypes.length > 0 && (
+                  <div className="project-links" style={{ gridAutoFlow: 'row', gap: '8px' }}>
+                    {project.details.prototypes.map((p) => (
+                      <LinkToken key={p.href} href={p.href} label={p.label} />
+                    ))}
+                  </div>
+                )}
+            </div>
+            {(project.details?.goals || project.details?.results) && (
+              <div className="project-card" style={{ marginTop: 'var(--space-6)' }}>
+                <div className="eyebrow">Goals and results</div>
+                {project.details.goals && (
+                  <div style={{ marginTop: 'var(--space-3)' }}>
+                    <h3 className="h4" style={{ marginBottom: 'var(--space-2)' }}>Initial goals</h3>
+                    {Array.isArray(project.details.goals) ? (
+                      <ul className="type-secondary" style={{ margin: 0, paddingLeft: 'var(--space-4)', listStyle: 'disc' }}>
+                        {project.details.goals.map((goal, i) => (
+                          <li key={i} style={{ marginTop: i === 0 ? 0 : 'var(--space-1)' }}>{goal}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="type-secondary">{project.details.goals}</p>
+                    )}
+                  </div>
+                )}
+                {project.details.results && (
+                  <div style={{ marginTop: project.details.goals ? 'var(--space-4)' : 'var(--space-3)' }}>
+                    <h3 className="h4" style={{ marginBottom: 'var(--space-2)' }}>Long term results</h3>
+                    {Array.isArray(project.details.results) ? (
+                      <ul className="type-secondary" style={{ margin: 0, paddingLeft: 'var(--space-4)', listStyle: 'disc' }}>
+                        {project.details.results.map((result, i) => (
+                          <li key={i} style={{ marginTop: i === 0 ? 0 : 'var(--space-1)' }}>{result}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="type-secondary">{project.details.results}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         }>
           <div className="project-content-scroll">
             <section>
@@ -156,13 +191,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                           {rest && <p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{rest}</p>}
                           {/* mini gallery if sections mapping provided */}
                           {project.details?.sections && project.details.sections.find((sec) => sec.title.toLowerCase() === title.toLowerCase())?.images && (
-                            <div style={{ marginTop: 'var(--space-3)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
+                            <div style={{ marginTop: 'var(--space-4)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
                               {(() => {
                                 const sec = project.details!.sections!.find((sec) => sec.title.toLowerCase() === title.toLowerCase())!;
                                 const group = sec.images!.map((i) => ({ src: i.src, alt: i.alt }));
                                 return sec.images!.map((img, idx) => (
-                                  <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '6px' }}>
-                                    <LightboxImage src={img.src} alt={img.alt} group={group} index={idx} width={800} height={600} sizes="(max-width: 600px) 100vw, 800px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 6px)', display: 'block' }} />
+                                  <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px', overflow: 'hidden' }}>
+                                    <LightboxImage src={img.src} alt={img.alt} group={group} index={idx} width={1200} height={800} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
                                   </div>
                                 ));
                               })()}
@@ -171,7 +206,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                         </div>
                       );
                     }
-                    return <p key={i} className="type-secondary">{s}</p>;
+                    return <p key={i} className="type-secondary" style={{ marginTop: i === 0 ? 0 : 'var(--space-3)' }}>{s}</p>;
                   })
                 ) : (
                   <p className="type-secondary">{project.details.synopsis}</p>
@@ -196,12 +231,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 									<p key={i} className="type-secondary" style={{ marginTop: i === 0 ? 'var(--space-2)' : 'var(--space-1)' }}>{b}</p>
 								)) : <p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{sec.body}</p>)}
                                 {sec.images && (
-									<div style={{ marginTop: 'var(--space-3)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--space-3)' }}>
+									<div style={{ marginTop: 'var(--space-4)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
                                         {(() => {
                                           const group = sec.images!.map((i) => ({ src: i.src, alt: i.alt }));
                                           return sec.images!.map((img, idx) => (
-                                            <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '6px' }}>
-                                              <LightboxImage src={img.src} alt={img.alt} group={group} index={idx} width={800} height={600} sizes="(max-width: 600px) 100vw, 800px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 6px)', display: 'block' }} />
+                                            <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px', overflow: 'hidden' }}>
+                                              <LightboxImage src={img.src} alt={img.alt} group={group} index={idx} width={1200} height={800} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
                                             </div>
                                           ));
                                         })()}
@@ -215,12 +250,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {galleryFiltered.length > 0 ? (
               <section className="project-section">
                 <h3 className="h3">gallery</h3>
-                <div style={{ marginTop: 'var(--space-3)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
+                <div style={{ marginTop: 'var(--space-4)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
                 {(() => {
                   const group = galleryFiltered.map((g) => ({ src: g.src, alt: g.alt }));
                   return galleryFiltered.map((g, i) => (
-                    <div key={g.src + i} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px' }}>
-                      <LightboxImage src={g.src} alt={g.alt} group={group} index={i} width={1600} height={900} sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 1200px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
+                    <div key={g.src + i} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px', overflow: 'hidden' }}>
+                      <LightboxImage src={g.src} alt={g.alt} group={group} index={i} width={1600} height={900} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
                     </div>
                   ));
                 })()}
@@ -233,7 +268,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ) : null}
             {embedSrc && (
               <section className="project-section">
-                <h3 className="h3">login concept video</h3>
+                <h3 className="h3">Login concept video</h3>
                 <div style={{ marginTop: 'var(--space-3)' }}>
                 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-1)' }}>
                   <iframe src={embedSrc} title="YouTube video" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />

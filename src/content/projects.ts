@@ -20,6 +20,8 @@ export type Project = {
     prototypes?: { label: string; href: string }[];
     headerImage?: { src: string; alt: string; width?: number; height?: number };
     headerEmbed?: { html: string; title?: string; link?: string };
+    goals?: string | string[];
+    results?: string | string[];
     sections?: {
       title: string;
       body?: string | string[];
@@ -48,15 +50,29 @@ export const projects: Project[] = [
 			years: '2012; summer',
 			headerImage: { src: '/images/projects/apple-accessibility/ipad_login_concept.png', alt: 'iPad login concept — flow map' },
 			synopsis: [
+				"My first professional experience in UX was with Apple's IS&T (Information Systems & Technology) UX group, focusing on internal software. I worked across multiple efforts, with a primary focus on Accessibility — a passion that continues to influence my design work today.",
 				"Team make‑up: Group of designers situated in a heavy eng‑pm area of Apple; guidance from a manager but mostly me wrangling projects on my own with minimal guidance.",
-				"My first professional experience in UX was with Apple’s IS&T (Information Systems & Technology) UX group, focusing on internal software. I worked across multiple efforts, with a primary focus on Accessibility — a passion that continues to influence my design work today.",
-				"Apple’s design philosophy — meticulous attention to detail and a seamless user experience — stood out compared to later experiences at Microsoft, IBM, and Meta. I also joined a marketing team challenge around app bundles; our team ranked in the top three.",
+				"Apple's design philosophy — meticulous attention to detail and a seamless user experience — stood out compared to later experiences at Microsoft, IBM, and Meta. This foundation shaped how I approached each project.",
 				"Wireframes: Early work centered on quick, direct asks that needed concepts. One was an iPad login concept that needed an MVP UI. I followed my typical pattern: connect with stakeholders, locate available resources (at the time PDF-based design language assets), iterate on variations and states (including motion examples), and partner with engineering early to ensure feasibility.",
-				"Accessibility: The internship’s main thrust became a deep focus on Accessibility in internal tooling. I audited existing software, leveled up on accessibility standards, and partnered with leads to recenter discussion around Universal Access — fixes that improve both edge cases and the in‑between states. This included prototypes to explore improved interactions and research with customers using assistive tech.",
-				"End results: A set of thorough documentation artifacts left with IS&T — immediate recommendations across tools, coded interaction examples for accessibility, guidance for designers moving forward, and a touch of blue‑sky (e.g., making the login experience more enjoyable).",
-				"Side contests: I also took part in two small concept projects (including app bundles) by interviewing across the company, finding missing interaction points, and producing visuals to sell the story. The ‘bushel’ concept presaged the App Store’s eventual App Bundle feature."
+				"Accessibility: The internship's main thrust became a deep focus on Accessibility in internal tooling. I audited existing software, leveled up on accessibility standards, and partnered with leads to recenter discussion around Universal Access — fixes that improve both edge cases and the in‑between states. This included prototypes to explore improved interactions and research with customers using assistive tech.",
+				"End results: A set of thorough documentation artifacts left with IS&T — immediate recommendations across tools, coded interaction examples for accessibility, guidance for designers moving forward, and a touch of blue‑sky for login potentials (e.g., making the login experience more enjoyable).",
+				"Side contests: I also took part in two small concept projects (including app bundles) by interviewing across the company, finding missing interaction points, and producing visuals to sell the story. The 'bushel' concept presaged the App Store's eventual App Bundle feature."
 			],
 			skills: ['Accessibility', 'UX/UI', 'Documentation', 'Prototyping', 'User research'],
+			goals: [
+				'Ensure internal tools work for everyone, including users with assistive technologies',
+				'Shift the conversation from compliance to Universal Access — improvements that benefit all users',
+				'Learn accessibility standards deeply and apply them meaningfully',
+				'Create concepts that make login experiences more enjoyable and accessible',
+				'Leave behind actionable guidance so accessibility work continues after the internship'
+			],
+			results: [
+				'Internal tools became more usable for employees with assistive technologies',
+				'Universal Access principles became part of ongoing design discussions at IS&T',
+				'Designers gained practical guidance and coded examples to build on',
+				'App bundle concept helped shape what became an App Store feature',
+				'Accessibility became a foundational lens that continues to shape design work today'
+			],
 			prototypes: [
 				{ label: 'Login concept video', href: 'https://www.youtube.com/watch?v=Q4RT9MrK3F0&feature=youtu.be' }
 			],
@@ -64,24 +80,38 @@ export const projects: Project[] = [
 				{
 					title: 'Wireframes',
 					images: [
-						{ src: '/images/projects/apple-accessibility/ipad_login_concept.png', alt: 'iPad login concept — flow map' }
+						{ src: '/images/projects/apple-accessibility/ipad_login_concept.png', alt: 'iPad login concept wireframes and flow map' }
+					]
+				},
+				{
+					title: 'Accessibility',
+					images: [
+            { src: '/images/projects/apple-accessibility/accessibility-documentation-artifacts.png', alt: 'Documentation artifacts including design guidance, coded interaction examples, and accessibility recommendations' }
+          ]
+				},
+				{
+					title: 'End results',
+					images: [
+						{ src: '/images/projects/apple-accessibility/end-results-documentation-collage.png', alt: 'End results documentation collage showing accessibility research photos, user testing sessions, and design recommendations' }
+						
 					]
 				},
 				{
 					title: 'Side contests',
 					images: [
-						{ src: '/images/projects/apple-accessibility/apple5.png', alt: 'Prototypes and interaction examples' },
-						{ src: '/images/projects/apple-accessibility/apple7.png', alt: 'Accessibility field research — devices and setups' }
-					]
+						{ src: '/images/projects/apple-accessibility/bushel-apps-visualization.png', alt: 'Bushel of apps concept — app bundle visualization for marketing team challenge' },
+						{ src: '/images/projects/apple-accessibility/bushel-apps-wireframes-flow.png', alt: 'A Bushel of apps concept wireframes and flow map' }
+					],
+					body: "I also took part in two small concept projects (including app bundles) by interviewing across the company, finding missing interaction points, and producing visuals to sell the story. The 'bushel' concept presaged the App Store's eventual App Bundle feature."
 				}
 			]
 		},
 	},
 	{
 		slug: 'ibm-spss-modeler',
-		title: 'IBM — Watson Analytics, Carbon System, and SPSS Modeler redesign',
+		title: 'IBM — Carbon Design System integration and SPSS Modeler redesign',
 		description:
-			'Product Designer/Front‑end across Watson Analytics and Data Platform; SPSS Modeler redesign, AP design system, early Watson Analytics.',
+			'Integrating Carbon Design System into SPSS Modeler to make data visualization clearer and more intuitive for data scientists.',
 		year: 2016,
     featured: true,
 		links: [
@@ -98,19 +128,31 @@ export const projects: Project[] = [
 			entity: 'IBM Design',
       location: 'Austin, TX',
 			years: '2016–2017',
-			headerImage: { src: '/images/projects/ibm-spss-modeler/SPSS_Modeler.png', alt: 'SPSS Modeler overview' },
+			headerImage: { src: '/images/projects/ibm-spss-modeler/SPSS_Modeler.png', alt: 'SPSS Modeler overview showing Carbon Design System integration' },
       synopsis: [
+        'This work focused on integrating the Carbon Design System (formerly Analytics Platform) into SPSS Modeler, redesigning charts and interactions to make data visualization clearer and more usable for data scientists.',
         'Team make-up: Collaborative work with engineers, PMs, and data scientists at IBM. Main design lead for this area of work. Management/leadership work w/ newer designers and cross-org communication.',
-        'Overview: This set of work focused on the interaction and visual redesign of SPSS Modeler — data scientists can create flows to discover, prepare and blend data, develop and manage models, and visualize the results. No coding is required.',
-        'Approach: Initial discovery and research; connect with stakeholders and cross-collaborators as visuals were made; confirm throughout and at the end with research and feedback mechanisms.',
-        'Understanding the space: Determined the full corpus of charts to overhaul, cataloged usage, and interviewed users to uncover edge cases.',
-        'Competitive audit: Looked across the field for must‑haves and “nice to haves”; discoveries included mini‑maps, deeper drill‑ins, and motion helping comprehension.',
+        'Understanding the space: Determined the full corpus of charts to overhaul, cataloged usage, and interviewed users to uncover edge cases. Competitive audit revealed must‑haves like mini‑maps, deeper drill‑ins, and motion helping comprehension.',
         'Wireframes and prototypes: Shared wireframes with stakeholders and built coded prototypes to explore responsive behavior. Visual experimentation surfaced that users primarily sought the key number; later designs emphasized a clearer data‑input region.',
-        'Finalization: Iterations converged to match and connect with the Analytics Platform design language. Built coded prototypes of specific interactions; worked closely with dev on edge cases (too few/too many values), tooltips, help states, and clarity affordances.',
+        'Finalization: Iterations converged to match and connect with the Carbon Design System. Built coded prototypes of specific interactions; worked closely with dev on edge cases (too few/too many values), tooltips, help states, and clarity affordances.',
         'Advanced work: Progressed to more advanced chart types (e.g., neural networks) and deeper interaction patterns. Predictor chart learnings informed brusher concepts to expose full value ranges adjacent to tables.',
-        'Outcome: Patterns from this redesign still appear in product checks years later.'
+        'Outcome: Patterns from this redesign still appear in product checks years later, demonstrating the lasting impact of the Carbon Design System integration.'
       ],
       skills: ['UX', 'Front‑end', 'Design systems', 'Data viz'],
+      goals: [
+        'Help data scientists understand their data more intuitively through better visualization',
+        'Reduce cognitive load when exploring complex data relationships',
+        'Create a design system that feels cohesive and trustworthy across the platform',
+        'Ensure the tools work for real people doing real work, not just ideal scenarios',
+        'Make advanced analytics accessible to more users, not just experts'
+      ],
+      results: [
+        'Redesigned charts surface key insights faster, reducing time to find critical numbers',
+        'Motion and interaction patterns measurably improved comprehension of complex data relationships',
+        'Design patterns from this work continue to appear in product checks 5+ years later',
+        'Neural network and advanced chart types became usable by non-expert users',
+        'Brusher concepts and interaction patterns were adopted in future data visualization projects'
+      ],
       prototypes: [
         { label: 'Prototype 1: Tooltip Exploration', href: 'https://codepen.io/mhsenkow/full/dXRwqW' },
         { label: 'Prototype 2: Display of Specifics in Motion', href: 'https://codepen.io/mhsenkow/full/MjWGdP' },
@@ -118,29 +160,31 @@ export const projects: Project[] = [
       ],
       sections: [
         {
+          title: 'Understanding the space',
+          images: [
+            { src: '/images/projects/ibm-spss-modeler/prototype-tooltip-exploration.jpg', alt: 'Prototype exploration showing tooltip interactions and key number emphasis' },
+            { src: '/images/projects/ibm-spss-modeler/wireframe-chart-variations.jpg', alt: 'Wireframe variations for chart redesign with clearer data-input regions' }
+          ]
+        },
+        {
           title: 'Wireframes and prototypes',
           images: [
-            { src: '/images/projects/ibm-spss-modeler/SPSS1.jpg', alt: 'Wireframes and prototypes' },
-            { src: '/images/projects/ibm-spss-modeler/SPSS6.jpg', alt: 'Wireframes and prototypes' },
-            { src: '/images/projects/ibm-spss-modeler/SPSS13.jpg', alt: 'Wireframes and prototypes' }
+            { src: '/images/projects/ibm-spss-modeler/finalized-chart-carbon-design.jpg', alt: 'Finalized chart design with Carbon Design System integration' },
+            { src: '/images/projects/ibm-spss-modeler/chart-interactions-tooltips.jpg', alt: 'Chart interactions showing tooltips, help states, and clarity affordances' },
+            { src: '/images/projects/ibm-spss-modeler/data-visualization-edge-cases.jpg', alt: 'Finalized data visualization with edge case handling for too few/too many values' }
           ]
         },
         {
           title: 'Finalization',
           images: [
-            { src: '/images/projects/ibm-spss-modeler/SPSS15.jpg', alt: 'Finalization visuals' },
-            { src: '/images/projects/ibm-spss-modeler/SPSS16.jpg', alt: 'Finalization visuals' },
-            { src: '/images/projects/ibm-spss-modeler/SPSS24.jpg', alt: 'Finalization visuals' }
+            { src: '/images/projects/ibm-spss-modeler/neural-network-highlight.jpg', alt: 'Neural network diagram with highlight interactions' },
+            { src: '/images/projects/ibm-spss-modeler/predictor-chart-patterns.jpg', alt: 'Advanced chart types showing predictor chart patterns' },
+            { src: '/images/projects/ibm-spss-modeler/brusher-value-ranges.jpg', alt: 'Brusher concept exploring value ranges adjacent to data tables' }
           ]
         },
         {
           title: 'Advanced work',
-          images: [
-            { src: '/images/projects/ibm-spss-modeler/SPSS18.jpg', alt: 'Advanced work visuals' },
-            { src: '/images/projects/ibm-spss-modeler/SPSS27.jpg', alt: 'Advanced work visuals' },
-            { src: '/images/projects/ibm-spss-modeler/SPSS28.jpg', alt: 'Advanced work visuals' },
-            { src: '/images/projects/ibm-spss-modeler/02.png', alt: 'Advanced work visuals' }
-          ]
+          images: []
         }
       ]
 		},
@@ -150,7 +194,7 @@ export const projects: Project[] = [
 		slug: 'meta-daiquery-bento-notebooks',
 		title: 'Meta — Daiquery/Bento notebooks',
 		description:
-			'SQL and Python notebook creation and consolidation; data‑viz framework work; AI‑infographic hack project and augmented data workflows.',
+			'Creating unified SQL and Python notebooks to help data scientists and engineers work more efficiently with complex queries and data analysis.',
 		year: 2022,
     featured: true,
 		links: [
@@ -166,82 +210,79 @@ export const projects: Project[] = [
       entity: 'Meta',
 			years: '2020–2023',
       team: 'Collaborated with engineers, PMs, and other designers.',
-			headerImage: { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-12-00.png', alt: 'Da(i)query notebook — SQL cells' },
+			headerImage: { src: '/images/projects/meta-daiquery-bento-notebooks/daiquery-notebook-sql-cells.png', alt: 'Daiquery notebook interface showing SQL cells with file cell structure, query execution, and results visualization' },
       synopsis: [
-        'Focus: SQL notebooks work with outcomes that informed Meta AI image creation flows.',
-        'I spearheaded the initial creation and development of Daiquery notebooks, a concept involving a series of merged SQL query cells designed to enhance data analysis workflows. This approach allowed users to run and visualize SQL queries within a single interface, improving efficiency and usability.',
-        'This work laid the foundation for integrating these features with Bento notebooks, creating a cohesive and powerful data analysis tool. The merger involved extensive collaboration with engineers and PMs to harmonize functionality and provide a seamless user experience.',
-        'Throughout the project, I focused on both the interaction and visual design aspects, ensuring the notebooks were not only functional but also intuitive and visually appealing. Contributions included designing prototypes, conducting user research, and iterating on feedback to refine the final product.',
-        'Team dynamics: Worked closely with engineers to determine and implement the initial functionality around grouped cells. Presented and connected across the org to get the concept moving, and partnered with other designers to maintain consistency and enhance the user interface between this product space and others.'
+        'I spearheaded the creation of Daiquery notebooks, a SQL cell-based system designed to help data scientists and engineers better connect, store, and understand complex queries. This work evolved into unifying SQL and Python notebooks across Meta.',
+        'Team dynamics: Worked closely with engineers, PMs, and other designers. Presented and connected across the org to get concepts moving, and partnered to maintain consistency between product spaces.',
+        'Initial creation: Work began with discovering everyday problems across the org — connecting for feedback, interviewing users, and understanding similar products in the field. Cells became a major focus, with new types added and visual treatments evolving to accommodate them.',
+        'Discovery of common feature sets: As the product expanded, we discovered commonalities with Bento notebooks (Python-based). Daiquery had file cells while Bento had file panels, which shifted discussions about where functionality should live and how cells should be structured.',
+        'Expansion into additional concepts: Cross-functional discussions explored areas missing from both products: expandable plug-in/app store, education, sharing, and more. These explorations evolved into prototypes and narratives arguing for a universal shared notebook direction.',
+        'Company changes and focus shifts: Org shifts reduced scope; broader education/documentation goals were deferred. Focus returned to the technical audience while continuing to support users. Users also used notebooks for notes, which informed upgrading text cells toward a more doc-like cell type.',
+        'AI integration: AI entered almost every discussion — surfacing join recommendations or related data objects. Explored whether users preferred in-situ recommendations vs. a helpful bot, and whether they wanted to compare results or have code produce results and move on. This included exploring concepts for AI-driven autocode completion, intelligent chart creation, and augmented data analysis workflows.',
+        'Outcome: The notebook merging worked and was used by 10k+ monthly active users at Meta. Of the concepts laid out in the original story, about 40% were realized alongside work churn. Personally, I gained exposure to AI workflow concepts that are applicable across a range of spaces — invaluable experience that informed Meta AI image creation flows and established patterns for unified notebook experiences across SQL and Python workflows.'
       ],
       skills: ['UX Design', 'Interaction Design', 'Visual Design', 'Prototyping', 'User Research', 'SQL', 'Python'],
+      goals: [
+        'Help data scientists and engineers better connect and understand complex queries',
+        'Create a unified notebook experience that works for both SQL and Python users',
+        'Reduce friction in data analysis workflows by bringing queries and visualization together',
+        'Make notebooks accessible to more users, not just expert coders',
+        'Build a foundation that can evolve with user needs and organizational changes'
+      ],
+      results: [
+        'Daiquery notebooks enabled users to run and visualize SQL queries in a single interface, improving workflow efficiency',
+        'Unified notebook direction was established, connecting SQL and Python workflows across Meta',
+        'Cell-based architecture became the foundation for future notebook development',
+        'Work informed Meta AI image creation flows and recommendation systems',
+        'Notebook patterns established here continue to influence data tool design at Meta'
+      ],
       sections: [
         {
-          title: 'Initial creation of daiquery notebooks, a collection of SQL cells for various reasons',
-          body: [
-            'The initial goals were focused around the creation of a SQL cell‑based notebook as a way to better connect complex queries for storage and understanding by Data Scientist / Data Eng / Software Eng users.',
-            'Work began with discovering everyday problems across the org: connecting for feedback over workplace groups, interviewing users around their issues, and understanding the product and similar ones in the field.',
-            "‘Cells’ became a major focus for the next few years, with new types added, visual treatment shifting to accommodate additions, and comparisons with analogous notebooks outside the company."
-          ],
+          title: 'Initial creation',
           images: [
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2025-05-01-08-33-40.png', alt: 'Deck slide — unified notebooks story' },
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2025-09-09-11-59-40.png', alt: 'Notebook exploration overview' }
+            { src: '/images/projects/meta-daiquery-bento-notebooks/daiquery-notebook-sql-cells.png', alt: 'Daiquery notebook interface with SQL cells, file cell structure, query execution, and results display' }
           ]
         },
         {
-          title: 'discovery of common feature sets with nearby applications',
-          body: [
-            'As the product expanded, we discovered commonalities with other infra product spaces. We were an SQL notebook, but there was already a Python‑based notebook with similar features (Bento).',
-            'Daiquery came with a file cell while Bento had a file panel; this shifted discussions across the product: structure of cells, interactions around them, and where functionality should live (panel vs. cell).'
-          ],
+          title: 'Discovery of common feature sets',
           images: [
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-12-00.png', alt: 'SQL cells exploration 1' },
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-13-50.png', alt: 'SQL cells exploration 2' },
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-13-58.png', alt: 'SQL cells exploration 3' },
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-14-12.png', alt: 'SQL cells exploration 4' }
+            { src: '/images/projects/meta-daiquery-bento-notebooks/daiquery-bento-comparison.png', alt: 'Side-by-side comparison view showing cell interactions, panel differences, and feature parity between Daiquery SQL notebooks and Bento Python notebooks' },
+            { src: '/images/projects/meta-daiquery-bento-notebooks/cell-vs-panel-exploration.png', alt: 'Notebook structure exploration comparing cell-based architecture versus panel-based approaches, showing trade-offs and interaction patterns' },
+            { src: '/images/projects/meta-daiquery-bento-notebooks/cell-type-variations.png', alt: 'Cell type variations exploring different functionality placement options, including SQL cells, file cells, markdown cells, and visualization cells' }
           ]
         },
         {
-          title: 'expansion into additional application concepts',
-          body: [
-            'Early cross‑functional discussions (PM/ENG/DS) explored areas missing from both products that could benefit the workflow: an expandable plug‑in/app store, education, sharing, and more.'
-          ],
+          title: 'Expansion into additional concepts',
           images: [
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-15-59.png', alt: 'Exploration — app store and extensions' },
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-16-10.png', alt: 'Exploration — education concepts' },
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-16-40.png', alt: 'Exploration — sharing patterns' }
+            { src: '/images/projects/meta-daiquery-bento-notebooks/notebook-app-store-concept.png', alt: 'Concept exploration for notebook app store with expandable plugin system, showing extensibility and third-party integration opportunities' },
+            { src: '/images/projects/meta-daiquery-bento-notebooks/education-onboarding-concepts.png', alt: 'Education and onboarding concepts for notebook users, including tutorials, guided workflows, and learning resources' },
+            { src: '/images/projects/meta-daiquery-bento-notebooks/sharing-collaboration-patterns.png', alt: 'Sharing and collaboration patterns for notebook workflows, showing permissions, commenting, and team collaboration features' },
+            { src: '/images/projects/meta-daiquery-bento-notebooks/universal-notebook-vision-slide.png', alt: 'Story deck slide presenting the universal shared notebook direction and vision, outlining the unified SQL and Python notebook strategy' },
+            { src: '/images/projects/meta-daiquery-bento-notebooks/unified-notebooks-architecture.png', alt: 'Story deck showing user flows, component architecture, and system design for unified notebooks across SQL and Python workflows' }
           ]
         },
         {
-          title: 'crafting and selling the org on a universal shared notebook',
-          body: [
-            'These explorations evolved into final prototypes and a narrative that connected groups and planning for the next half, arguing for a universal shared notebook direction.'
-          ],
+          title: 'Company changes and focus shifts',
           images: [
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-30-16-22-42.png', alt: 'Story deck — shared notebook direction' },
-            { src: '/images/projects/meta-daiquery-bento-notebooks/screenshot-2024-05-31-11-08-38.png', alt: 'Story deck — flows and components' }
+            { src: '/images/projects/meta-daiquery-bento-notebooks/unified-notebooks-vision-slide.png', alt: 'Presentation slide showing unified notebooks vision and Daiquery concept overview, reflecting organizational priorities and scope adjustments' },
+            { src: '/images/projects/meta-daiquery-bento-notebooks/notebook-interface-exploration.png', alt: 'Notebook interface exploration with multiple SQL cell types and query results, showing continued refinement of core functionality' }
           ]
         },
-        {
-          title: 'company changes, shift of focus while continuing to support users',
-          body: [
-            'Org shifts reduced scope; broader education/documentation goals were deferred. Focus returned to the technical audience while continuing to support users.',
-            'Users also used notebooks for notes, which informed a workflow to upgrade text cells toward a more doc‑like cell type.'
-          ]
-        },
-        {
-          title: 'ai as a chatbot vs ai as a static cell type',
-          body: [
-            'AI entered almost every discussion: surfacing join recommendations or related data objects for SQL/Python users.',
-            'Explored whether users preferred in‑situ recommendations vs. a helpful bot, and whether they wanted to compare results or have code produce results and move on.'
-          ]
-        }
+         {
+           title: 'AI integration',
+           images: [
+             { src: '/images/projects/meta-daiquery-bento-notebooks/native-analytics-flow.png', alt: 'Flow diagram showing Native Analytics existing flow for Data Explorer with dashboard states, analysis views, period selection, and view toggling interactions' },
+             { src: '/images/projects/meta-daiquery-bento-notebooks/forecasting-dashboard.png', alt: 'Data visualization dashboard with AI-powered forecasting showing time series analysis, confidence bands, and forecast controls for Meaningful QAT metrics' },
+             { src: '/images/projects/meta-daiquery-bento-notebooks/progressive-disclosure.png', alt: 'Progressive information disclosure showing componentization of data objects with three states: simple notification, action-enabled card, and expanded detail view with metadata and actions' },
+             { src: '/images/projects/meta-daiquery-bento-notebooks/ai-workflow-concepts.png', alt: 'AI workflow concepts for data tools showing query interface, prompt-to-visualization workflows, query generation, and relationships between conversations, notebooks, and dashboards' }
+           ]
+         }
       ]
 		},
 	},
 	{
 		slug: 'contracts-2024-2025',
-		title: 'Contracts — 2024–2025',
+		title: 'Freelancing — 2024–2025',
 		description:
 			'AI Law notebooks and recommendation bot, Finance recommendation notebook, Imagen‑node app work, Data Suite concepts, Windows Cloud errors.',
 		year: 2025,
@@ -267,19 +308,37 @@ export const projects: Project[] = [
 					"Mars Data Suite work: Foundation explorations toward a data suite — brand, UX flows, early component framing."
 				],
 				skills: ['Brand', 'UX', 'Wireframing', 'Prototyping', 'Components', 'AI workflows'],
+				goals: [
+					'Help startups quickly establish design systems and processes that scale',
+					'Validate interaction patterns early through rapid prototyping',
+					'Bridge the gap between exploration and implementation with concrete examples',
+					'Apply learnings from enterprise design to fast-moving startup environments',
+					'Create reusable patterns that work across different domains and use cases'
+				],
+				results: [
+					'Established Figma systems and design processes for multiple startups',
+					'Validated interaction patterns through coded prototypes before full implementation',
+					'Created reusable component systems that accelerated development timelines',
+					'Explored and documented patterns across Legal, Finance, Images, HR, and Data domains',
+					'Delivered foundation work for data suite products including brand and UX flows'
+				],
 				sections: [
 					{
 						title: 'Similar patterns',
 						body: [
 							'Secure, localized data → chat/diagram sessions.',
 							'Domains: Legal, Finance, Images, HR, general Data.'
+						],
+						images: [
+							
 						]
 					},
 					{
 						title: 'Processes',
 						body: [
 							'Stand up Figma, establish exploration cadence.',
-							'Blue‑sky map, converge on frameworks and reusable patterns.'
+							'Blue‑sky map, converge on frameworks and reusable patterns.',
+							'Part of the effort was surveying the space to see what existed and what resonated with users and stakeholders.'
 						]
 					},
 					{
@@ -287,6 +346,10 @@ export const projects: Project[] = [
 						body: [
 							'Coded prototype to complement the Figma system.',
 							'Validated interaction details and component seams early.'
+						],
+            images: [
+							{ src: '/images/projects/contracts-2024-2025/windows-app-interstitial-error-state.png', alt: 'Coded prototype showing Windows app error interstitial with detailed error message, recovery action buttons, and clear user guidance for resolving the issue' },
+							{ src: '/images/projects/contracts-2024-2025/windows-app-interstitial-selection-update.png', alt: 'Coded prototype displaying Windows app selection update interstitial with confirmation dialog, state change indicators, and user feedback for selection modifications' }
 						]
 					},
 					{
@@ -296,27 +359,19 @@ export const projects: Project[] = [
 							'Samples from interstitials work and option evaluation.'
 						],
 						images: [
-							{ src: '/images/projects/contracts-2024-2025/windows-interstitial-1.png', alt: 'Windows app interstitial — error state' },
-							{ src: '/images/projects/contracts-2024-2025/windows-interstitial-2.png', alt: 'Windows app interstitial — selection update' }
-						]
-					},
-					{
-						title: 'Board sample',
-						body: [
-							'Exploration board used to survey patterns and options before narrowing.'
-						],
-						images: [
-							{ src: '/images/projects/contracts-2024-2025/board-1.png', alt: 'Exploration board sample 1' },
-							{ src: '/images/projects/contracts-2024-2025/board-2.png', alt: 'Exploration board sample 2' },
-							{ src: '/images/projects/contracts-2024-2025/board-3.png', alt: 'Exploration board sample 3' },
-							{ src: '/images/projects/contracts-2024-2025/board-4.png', alt: 'Exploration board sample 4' },
-							{ src: '/images/projects/contracts-2024-2025/board-5.png', alt: 'Exploration board sample 5' }
+              { src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-2.png', alt: 'Figma exploration board showing multiple design direction options with wireframes, mockups, and concept variations being evaluated during initial blue-sky mapping phase' },
+							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-1.png', alt: 'Pattern research board documenting secure data connection patterns across Legal, Finance, Images, HR, and Data domains with annotated examples and use case mappings' },
+							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-3.png', alt: 'Interaction pattern comparison board showing side-by-side analysis of chat and diagram session patterns across different domains with evaluation notes and design recommendations' }
 						]
 					},
 					{
 						title: 'Mars Data Suite work',
 						body: [
 							'Explorations toward a data suite basis: brand, UX flows, early components.'
+						],
+            images: [
+							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-4.png', alt: 'Exploration board displaying component library variations including button styles, form inputs, navigation patterns, and layout options as design frameworks converge' },
+							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-5.png', alt: 'Final exploration board showing narrowed design direction with selected UI patterns, component specifications, and visual style decisions after stakeholder feedback and evaluation' }
 						]
 					}
 				]
@@ -364,57 +419,71 @@ export const projects: Project[] = [
         'Starting with a small team, I led the design efforts through various team changes, becoming the de-facto design lead. My role evolved to manage multiple contractors and remote designers, culminating in onboarding a new manager and additional FTE designers. I ensured they were well-integrated and organized with the existing design files and systems.'
       ],
       skills: ['Stakeholder Interviews', 'Internal Research', 'Visual Design', 'Advocacy and Collaboration with PMs and Engineers', 'Team Leadership'],
+      goals: [
+        'Create a unified design system that works consistently across MyAnalytics and Workplace Analytics',
+        'Reduce design debt and inconsistencies that were slowing down development',
+        'Establish clear design patterns that designers and engineers could rely on',
+        'Improve the visual quality and cohesiveness of the product experience',
+        'Build a foundation that could scale as the team and products grew'
+      ],
+      results: [
+        'Design system was successfully adopted across both MyAnalytics and Workplace Analytics products',
+        'Reduced design inconsistencies and improved visual cohesion across the product suite',
+        'Component library enabled faster development cycles and reduced design-to-code handoff time',
+        'Design patterns became the standard for future feature development',
+        'System supported team growth and onboarding of new designers and contractors'
+      ],
       sections: [
         {
           title: 'Understanding what existed',
           body: 'Documented the existing design patterns and identified inconsistencies across the product suite.',
           images: [
-            { src: '/images/projects/re-envisioning-my-primary-product/prior-system.png', alt: 'Prior system documentation' },
-            { src: '/images/projects/re-envisioning-my-primary-product/what-existed-here.png', alt: 'What existed — component inventory' }
+            { src: '/images/projects/re-envisioning-my-primary-product/prior-system.png', alt: 'Prior system documentation showing existing design patterns and inconsistencies across MyAnalytics and Workplace Analytics' },
+            { src: '/images/projects/re-envisioning-my-primary-product/what-existed-here.png', alt: 'Component inventory documenting existing UI elements, patterns, and design debt that needed addressing' }
           ]
         },
         {
           title: 'Design system foundation',
           body: 'Established core design principles, color systems, and foundational components to ensure consistency.',
           images: [
-            { src: '/images/projects/re-envisioning-my-primary-product/wpa-color-copy.png', alt: 'Workplace Analytics color system' },
-            { src: '/images/projects/re-envisioning-my-primary-product/refined-palette.png', alt: 'Refined color palette' },
-            { src: '/images/projects/re-envisioning-my-primary-product/text-usage.png', alt: 'Text usage guidelines' }
+            { src: '/images/projects/re-envisioning-my-primary-product/wpa-color-copy.png', alt: 'Workplace Analytics color system showing refined palette and usage guidelines for consistent brand application' },
+            { src: '/images/projects/re-envisioning-my-primary-product/refined-palette.png', alt: 'Refined color palette with accessibility considerations and semantic color definitions' },
+            { src: '/images/projects/re-envisioning-my-primary-product/text-usage.png', alt: 'Text usage guidelines establishing typography scale, hierarchy, and readability standards' }
           ]
         },
         {
           title: 'Component library development',
           body: 'Designed and documented reusable components including buttons, dropdowns, and toggles.',
           images: [
-            { src: '/images/projects/re-envisioning-my-primary-product/buttons.png', alt: 'Button component specifications' },
-            { src: '/images/projects/re-envisioning-my-primary-product/buttons-copy.png', alt: 'Button variants and states' },
-            { src: '/images/projects/re-envisioning-my-primary-product/drop-downs.png', alt: 'Dropdown component specs' },
-            { src: '/images/projects/re-envisioning-my-primary-product/toggles.png', alt: 'Toggle component specifications' }
+            { src: '/images/projects/re-envisioning-my-primary-product/buttons.png', alt: 'Button component specifications showing primary, secondary, and tertiary variants with states and usage guidelines' },
+            { src: '/images/projects/re-envisioning-my-primary-product/buttons-copy.png', alt: 'Button component variations including sizes, states, and interaction patterns for consistent implementation' },
+            { src: '/images/projects/re-envisioning-my-primary-product/drop-downs.png', alt: 'Dropdown component specifications with interaction states, accessibility considerations, and usage patterns' },
+            { src: '/images/projects/re-envisioning-my-primary-product/toggles.png', alt: 'Toggle component specifications showing on/off states, accessibility features, and implementation details' }
           ]
         },
         {
           title: 'Layout system iterations',
           body: 'Developed flexible layout patterns and grid systems for consistent page structures across products.',
           images: [
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.5.png', alt: 'Layout iteration 4.5' },
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.13.png', alt: 'Layout iteration 4.13' },
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.14.png', alt: 'Layout iteration 4.14' },
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.16.png', alt: 'Layout iteration 4.16' },
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.17.png', alt: 'Layout iteration 4.17' },
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.18.png', alt: 'Layout iteration 4.18' },
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.27.png', alt: 'Layout iteration 4.27' },
-            { src: '/images/projects/re-envisioning-my-primary-product/layout-4.29.png', alt: 'Layout iteration 4.29' }
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-1.png', alt: 'Layout iteration exploring grid system options and spacing patterns for consistent page structures' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-2.png', alt: 'Layout iteration refining column structures and responsive breakpoints' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-3.png', alt: 'Layout iteration testing information density and content hierarchy approaches' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-4.png', alt: 'Layout iteration exploring flexible container patterns and content alignment' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-5.png', alt: 'Layout iteration refining spacing systems and visual rhythm' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-6.png', alt: 'Layout iteration testing card-based layouts and component arrangements' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-7.png', alt: 'Layout iteration exploring dashboard layouts and data visualization containers' },
+            { src: '/images/projects/re-envisioning-my-primary-product/layout-iteration-grid-system-8.png', alt: 'Layout iteration finalizing responsive grid system and layout patterns' }
           ]
         },
         {
           title: 'Implementation and validation',
           body: 'Tested the design system in production contexts, gathered feedback, and refined patterns based on real-world usage.',
           images: [
-            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-4.45.20-pm.png', alt: 'Implementation example 1' },
-            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-4.45.31-pm.png', alt: 'Implementation example 2' },
-            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-4.45.40-pm.png', alt: 'Implementation example 3' },
-            { src: '/images/projects/re-envisioning-my-primary-product/experiment.png', alt: 'Experimental features' },
-            { src: '/images/projects/re-envisioning-my-primary-product/screenshot-5.06.55-pm.png', alt: 'Final implementation' }
+            { src: '/images/projects/re-envisioning-my-primary-product/implementation-example-1.png', alt: 'Implementation example showing design system components applied in MyAnalytics dashboard interface' },
+            { src: '/images/projects/re-envisioning-my-primary-product/implementation-example-2.png', alt: 'Implementation example displaying design system patterns in Workplace Analytics analytics views' },
+            { src: '/images/projects/re-envisioning-my-primary-product/implementation-example-3.png', alt: 'Implementation example showing consistent component usage across different product areas' },
+            { src: '/images/projects/re-envisioning-my-primary-product/experiment.png', alt: 'Experimental features exploring advanced design system capabilities and future enhancements' },
+            { src: '/images/projects/re-envisioning-my-primary-product/final-implementation.png', alt: 'Final implementation showing completed design system in production with consistent visual language across products' }
           ]
         }
       ]
@@ -470,15 +539,15 @@ export const projects: Project[] = [
     ],
     image: { src: '/images/projects/ae/Silence Mode.png', alt: 'Silence mode research' },
     gallery: [
-      { src: '/images/projects/researching-silence/screenshot-11.36.21-am.png', alt: 'Early silence mode concepts' },
-      { src: '/images/projects/researching-silence/screenshot2-11.36.21-am.png', alt: 'Silence mode wireframes' },
-      { src: '/images/projects/researching-silence/screenshot-12.15.11-pm.png', alt: 'Focus time interface' },
-      { src: '/images/projects/researching-silence/screenshot-12.31.18-pm.jpg', alt: 'Client feedback session' },
-      { src: '/images/projects/researching-silence/screenshot-12.32.35-pm.png', alt: 'Iteration during trip' },
-      { src: '/images/projects/researching-silence/screenshot-1.04.30-pm.png', alt: 'Design refinements' },
-      { src: '/images/projects/researching-silence/screenshot-2.55.22-pm.png', alt: 'Concept explorations' },
-      { src: '/images/projects/researching-silence/screenshot-3.14.04-pm.png', alt: 'Final proposal design' },
-      { src: '/images/projects/researching-silence/focus.png', alt: 'Focus time final concept' }
+      { src: '/images/projects/researching-silence/early-silence-mode-concepts.png', alt: 'Early silence mode concepts showing initial UI explorations for blocking notifications and managing interruptions' },
+      { src: '/images/projects/researching-silence/silence-mode-wireframes.png', alt: 'Silence mode wireframes exploring interface patterns for notification controls and time-based settings' },
+      { src: '/images/projects/researching-silence/focus-time-interface.png', alt: 'Focus time interface proposal evolved from silence mode research with scheduling and notification management' },
+      { src: '/images/projects/researching-silence/client-feedback-session.jpg', alt: 'Client feedback session documentation from in-person interviews in London or Paris' },
+      { src: '/images/projects/researching-silence/iteration-during-trip.png', alt: 'Design iteration work during client visits showing updated concepts based on real-time feedback' },
+      { src: '/images/projects/researching-silence/design-refinements.png', alt: 'Design refinements displaying improved silence mode interface with clearer controls and better visual hierarchy' },
+      { src: '/images/projects/researching-silence/concept-explorations.png', alt: 'Concept explorations showing multiple variations of silence mode features and interaction patterns' },
+      { src: '/images/projects/researching-silence/final-proposal-design.png', alt: 'Final proposal design presenting comprehensive silence mode concept with user flows and implementation recommendations' },
+      { src: '/images/projects/researching-silence/focus.png', alt: 'Focus time final concept displaying the refined interface that evolved into current Office focus time feature' }
     ],
     stack: ['Microsoft', 'Research', 'UX'],
     details: {
@@ -487,38 +556,51 @@ export const projects: Project[] = [
       location: 'London, Paris, and Redmond, WA',
       years: '2018',
       team: 'Collaborated with a principal researcher, a senior designer, a fellow designer, multiple PMs, and engineers.',
-      headerImage: { src: '/images/projects/researching-silence/focus-widget-interface.png', alt: 'Focus time widget interface' },
+      headerImage: { src: '/images/projects/researching-silence/focus-widget-interface.png', alt: 'Focus time widget interface showing the final design evolved from silence mode research, with scheduling controls and notification management for Office suite' },
       synopsis: [
         'In a collaborative study focused on developing a "Silence Mode" for the Office suite, I worked alongside a principal researcher, a senior designer, and a fellow designer. We visited 8 clients in London and Paris, iterating on designs based on real-time feedback and insights gathered during the trip. This hands-on approach allowed us to refine our concepts continuously.',
         'The project concluded with a comprehensive proposal, which has since evolved into the current focus time concepts within the Office suite. My role involved conducting in-person interviews, rapid design conception, and prototyping. Upon returning to the States, I also played a crucial role in aligning stakeholders and ensuring the project\'s objectives were met.'
       ],
       skills: ['In-Person Interviews', 'Quick Design Conception', 'Prototyping', 'Stakeholder Management', 'User Research'],
+      goals: [
+        'Understand how users want to manage interruptions and focus time in their workday',
+        'Create a "Silence Mode" that feels natural and helpful, not intrusive or controlling',
+        'Validate concepts with real users in their actual work environments',
+        'Iterate quickly based on live feedback during international client visits',
+        'Develop a proposal that could evolve into a meaningful feature for Office users'
+      ],
+      results: [
+        'Conducted in-person interviews with 8 clients across London and Paris',
+        'Rapidly iterated on designs during the research trip based on real-time feedback',
+        'Created comprehensive proposal that evolved into current focus time concepts in Office',
+        'Successfully aligned stakeholders upon returning to the US',
+        'Established research methodology for international user studies and rapid iteration'
+      ],
       sections: [
         {
           title: 'Client research and rapid iteration',
           body: 'Visited 8 clients across London and Paris, conducting in-person interviews and iterating on designs based on real-time feedback during the trip.',
           images: [
-            { src: '/images/projects/researching-silence/screenshot-11.36.21-am.png', alt: 'Early silence mode concepts' },
-            { src: '/images/projects/researching-silence/screenshot2-11.36.21-am.png', alt: 'Initial wireframes' },
-            { src: '/images/projects/researching-silence/screenshot-12.31.18-pm.jpg', alt: 'Client feedback session documentation' }
+            { src: '/images/projects/researching-silence/silence-mode-wireframes.png', alt: 'Initial wireframes exploring silence mode interface patterns including notification controls, time-based settings, and user preference options' },
+            { src: '/images/projects/researching-silence/client-feedback-session.jpg', alt: 'Client feedback session documentation showing in-person interview setup with Office users in London or Paris, capturing real-time reactions and insights' }
           ]
         },
         {
           title: 'Design iteration and refinement',
           body: 'Rapidly iterated on concepts during the research trip, refining the silence mode features based on user insights and needs.',
           images: [
-            { src: '/images/projects/researching-silence/screenshot-12.32.35-pm.png', alt: 'Iteration during client visits' },
-            { src: '/images/projects/researching-silence/screenshot-1.04.30-pm.png', alt: 'Design refinements' },
-            { src: '/images/projects/researching-silence/screenshot-2.55.22-pm.png', alt: 'Concept explorations' }
+            { src: '/images/projects/researching-silence/iteration-during-trip.png', alt: 'Design iteration work during client visits showing updated wireframes and concepts refined based on feedback from London and Paris interviews' },
+            { src: '/images/projects/researching-silence/design-refinements.png', alt: 'Design refinements displaying improved silence mode interface with clearer controls, better visual hierarchy, and more intuitive interaction patterns' },
+            { src: '/images/projects/researching-silence/concept-explorations.png', alt: 'Concept explorations showing multiple variations of silence mode features including different notification blocking approaches, scheduling interfaces, and user control options' }
           ]
         },
         {
           title: 'Final proposal and stakeholder alignment',
           body: 'Developed comprehensive proposal that evolved into current focus time concepts in Office. Led stakeholder alignment upon returning to the US.',
           images: [
-            { src: '/images/projects/researching-silence/screenshot-12.15.11-pm.png', alt: 'Focus time interface proposal' },
-            { src: '/images/projects/researching-silence/screenshot-3.14.04-pm.png', alt: 'Final proposal design' },
-            { src: '/images/projects/researching-silence/focus.png', alt: 'Focus time final concept' }
+            { src: '/images/projects/researching-silence/focus-time-interface.png', alt: 'Focus time interface proposal showing the evolved design from silence mode research, with scheduling controls, notification management, and user preference settings' },
+            { src: '/images/projects/researching-silence/final-proposal-design.png', alt: 'Final proposal design presenting comprehensive silence mode concept with user flows, interface mockups, and implementation recommendations for Office suite integration' },
+            { src: '/images/projects/researching-silence/focus.png', alt: 'Focus time final concept displaying the refined interface that evolved from silence mode research into the current focus time feature in Office applications' }
           ]
         }
       ]
@@ -541,7 +623,7 @@ export const projects: Project[] = [
       location: 'Redmond, WA',
 			years: '2017–2020',
       team: 'With this area, one main PM and one main Engineer were involved. My role evolved from consulting with a contracting designer, to primary designer and expansion of my design system into this space.',
-			headerImage: { src: '/images/projects/topic-keyword-analysis/topics_list_page.png', alt: 'Topics list page' },
+			headerImage: { src: '/images/projects/topic-keyword-analysis/topics_list_page.png', alt: 'Topics list page displaying available topics for keyword analysis with selection interface and navigation, showing the redesigned single-screen tool approach' },
       synopsis: [
         'Synopsis: Many of the projects I worked on for Workplace Analytics were extensive and ongoing. For this particular project, which focused on the topic keyword analysis section of the app, I took over a struggling initiative and transformed it into a success. Initially joining as a design lead, I provided direction to a contractor and then took over the redesign efforts as the project parameters changed. This study took place at the same time as expansion of the design system I’d been fleshing out and provided a good space to view this in.',
         'Initial set of designs: Working as the design‑lead/consultant for first implementation — ensured the contractor’s work matched component system constraints, fit PM/Engineering needs, and addressed interaction issues found in research.',
@@ -552,79 +634,93 @@ export const projects: Project[] = [
         'Outcome: A mild visual redesign integrated into the larger design framework; patterns moved the app toward a cohesive tool experience and were adopted by the team after transition.'
       ],
       skills: ['UX Design', 'Visual Design', 'Mentoring', 'Background in Analytics', 'Tool Creation'],
+      goals: [
+        'Transform a struggling initiative into a successful, usable feature',
+        'Reduce cognitive load by consolidating multiple steps into a single, clear interface',
+        'Create a tool-like experience rather than a linear wizard that confuses users',
+        'Expand the design system into new areas while maintaining consistency',
+        'Help users understand their progress and see all options without scrolling'
+      ],
+      results: [
+        'Redesigned topic keyword analysis from 13-step wizard to single-screen tool interface',
+        'Improved user comprehension by showing all steps in one place without scrolling',
+        'Successfully integrated patterns into Meeting Exclusions section',
+        'Design system expansion provided reusable components for future features',
+        'Patterns were adopted by the team and moved the app toward a cohesive tool experience'
+      ],
       sections: [
         {
           title: 'Initial set of designs',
           body: 'Working as the design-lead/consultant for first implementation — ensured the contractor\'s work matched component system constraints, fit PM/Engineering needs, and addressed interaction issues found in research.',
           images: [
-            { src: '/images/projects/topic-keyword-analysis/first_wireframe.png', alt: 'Earliest wireframe of topic selection process' },
-            { src: '/images/projects/topic-keyword-analysis/topics_list_page.png', alt: 'Topics list page' },
-            { src: '/images/projects/topic-keyword-analysis/topics-list-page-1.png', alt: 'Topics list page variant 1' },
-            { src: '/images/projects/topic-keyword-analysis/topics-list-page-2.png', alt: 'Topics list page variant 2' }
+            { src: '/images/projects/topic-keyword-analysis/first_wireframe.png', alt: 'Earliest wireframe of topic selection process showing initial concept for keyword analysis workflow' },
+            { src: '/images/projects/topic-keyword-analysis/home-2x.png', alt: 'Initial design showing template home screen for keyword analysis with template selection interface' },
+            { src: '/images/projects/topic-keyword-analysis/more-templates-2x.png', alt: 'Initial design displaying additional template options view for keyword analysis workflows' },
+            { src: '/images/projects/topic-keyword-analysis/new-topics-2x.png', alt: 'Initial design showing new topics interface for creating custom topic configurations' },
+            { src: '/images/projects/topic-keyword-analysis/start-1-2x.png', alt: 'Initial design showing start step interface with functionality visible' },
+            { src: '/images/projects/topic-keyword-analysis/step-2-make-exception-2x.png', alt: 'Initial design showing make exception interface with keyword exclusion controls' },
+            { src: '/images/projects/topic-keyword-analysis/keyword-details-table-2x.png', alt: 'Initial design displaying keyword details table with keyword information in tabular format' },
+            { src: '/images/projects/topic-keyword-analysis/step-2-add-to-keyword-list-2x.png', alt: 'Initial design showing add to keyword list interface for adding keywords' },
+            { src: '/images/projects/topic-keyword-analysis/step-4-enter-keyword-2x.png', alt: 'Initial design displaying enter keyword interface with keyword input controls' },
+            { src: '/images/projects/topic-keyword-analysis/strat-2-keyword-hover-2x.png', alt: 'Initial design showing keyword hover interaction with tooltip and detail information' },
+            { src: '/images/projects/topic-keyword-analysis/two-selected-2x.png', alt: 'Initial design displaying two selected keywords with multi-selection state and visual indicators' }
           ]
         },
         {
           title: 'Push for integration with Meeting Exclusions',
           body: 'Took preliminary designs and updated them for another section (Meeting exclusion keyword selection) in conjunction with PM/Engineering, pushing interaction implementation through.',
           images: [
-            { src: '/images/projects/topic-keyword-analysis/meeting-exclusion-overflow-2x.png', alt: 'Meeting exclusion overflow menu' },
-            { src: '/images/projects/topic-keyword-analysis/draft-saved-2x.png', alt: 'Save as draft — saved state' },
-            { src: '/images/projects/topic-keyword-analysis/blank-filename-error-2x.png', alt: 'Blank file name error state' },
-            { src: '/images/projects/topic-keyword-analysis/exclusion-save-failure-2x.png', alt: 'Save failure warning' }
+            { src: '/images/projects/topic-keyword-analysis/meeting-exclusion-overflow-2x.png', alt: 'Meeting exclusion overflow menu showing keyword selection interface with dropdown options and overflow handling' },
+            { src: '/images/projects/topic-keyword-analysis/draft-saved-2x.png', alt: 'Save as draft interface showing saved state confirmation with visual feedback for draft keyword configurations' },
+            { src: '/images/projects/topic-keyword-analysis/blank-filename-error-2x.png', alt: 'Error state displaying validation message when filename is left blank, showing inline error handling' },
+            { src: '/images/projects/topic-keyword-analysis/exclusion-save-failure-2x.png', alt: 'Save failure warning showing error notification when exclusion configuration cannot be saved, with recovery options' }
           ]
         },
         {
-          title: 'Learnings from initial implementation',
+          title: 'Learnings',
           body: 'Too many steps left users unsure of progress; users wanted to see all steps in one place without scrolling. Goal shifted toward a tool feel rather than a linear wizard.',
           images: [
-            { src: '/images/projects/topic-keyword-analysis/old-step-1.png', alt: 'Original step 1 — select topic' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-2.png', alt: 'Original step 2 — configure' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-3.png', alt: 'Original step 3 — add keywords' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-4.png', alt: 'Original step 4 — review' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-5.png', alt: 'Original step 5 — exclusions' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-6.png', alt: 'Original step 6 — finalize' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-7.png', alt: 'Original step 7 — save' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-8.png', alt: 'Original step 8 — additional options' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-9.png', alt: 'Original step 9 — preview' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-10.png', alt: 'Original step 10 — advanced settings' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-11.png', alt: 'Original step 11 — confirmation' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-12.png', alt: 'Original step 12 — complete' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-13.png', alt: 'Original step 13 — summary' },
-            { src: '/images/projects/topic-keyword-analysis/old-step-13-responsive.png', alt: 'Original step 13 — responsive layout' }
+            { src: '/images/projects/topic-keyword-analysis/old-step-1.png', alt: 'Original step 1 showing topic selection interface in the multi-step wizard approach' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-2.png', alt: 'Original step 2 displaying configuration options in the linear wizard flow' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-3.png', alt: 'Original step 3 showing keyword addition interface, demonstrating the fragmented multi-step process' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-4.png', alt: 'Original step 4 with review interface, showing how users had to navigate through many separate screens' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-5.png', alt: 'Original step 5 displaying exclusions configuration, part of the lengthy wizard that confused users' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-6.png', alt: 'Original step 6 showing finalization screen, illustrating the excessive number of steps required' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-7.png', alt: 'Original step 7 with save interface, demonstrating the linear wizard approach that users found confusing' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-8.png', alt: 'Original step 8 showing additional options, highlighting the complexity of the original multi-step design' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-9.png', alt: 'Original step 9 displaying preview interface, part of the wizard that left users unsure of their progress' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-10.png', alt: 'Original step 10 with advanced settings, showing how the wizard approach fragmented the workflow' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-11.png', alt: 'Original step 11 displaying confirmation screen, demonstrating the excessive number of steps in the original design' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-12.png', alt: 'Original step 12 showing completion screen, illustrating the lengthy process that needed to be consolidated' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-13.png', alt: 'Original step 13 displaying summary view, the final step in a 13-step wizard that users found overwhelming' },
+            { src: '/images/projects/topic-keyword-analysis/old-step-13-responsive.png', alt: 'Original step 13 responsive layout showing how the multi-step wizard appeared on different screen sizes' }
           ]
         },
         {
           title: 'Multiple layout iterations',
           body: 'Provided options emphasizing a denser layout, table focus, and clearer placement of keyword selection; iterated based on feedback and sizing.',
           images: [
-            { src: '/images/projects/topic-keyword-analysis/iteration-1.5.png', alt: 'Iteration 1.5 — initial dense layout' },
-            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-1.png', alt: 'Iteration 1.5-1 — table focus' },
-            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-2.png', alt: 'Iteration 1.5-2 — keyword placement' },
-            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-3.png', alt: 'Iteration 1.5-3 — refined layout' },
-            { src: '/images/projects/topic-keyword-analysis/option-1.png', alt: 'Layout option 1' },
-            { src: '/images/projects/topic-keyword-analysis/option-2.png', alt: 'Layout option 2' },
-            { src: '/images/projects/topic-keyword-analysis/option-2.1.png', alt: 'Layout option 2.1 — variant' },
-            { src: '/images/projects/topic-keyword-analysis/option-3.png', alt: 'Layout option 3' },
-            { src: '/images/projects/topic-keyword-analysis/option-4.png', alt: 'Layout option 4' },
-            { src: '/images/projects/topic-keyword-analysis/option-4.1.png', alt: 'Layout option 4.1 — variant' },
-            { src: '/images/projects/topic-keyword-analysis/option-5.png', alt: 'Layout option 5' },
-            { src: '/images/projects/topic-keyword-analysis/option-5.1.png', alt: 'Layout option 5.1 — variant' }
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5.png', alt: 'Iteration 1.5 showing initial dense layout approach consolidating multiple steps into a single screen' },
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-1.png', alt: 'Iteration 1.5-1 emphasizing table-focused layout with keyword data displayed in tabular format' },
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-2.png', alt: 'Iteration 1.5-2 exploring clearer placement of keyword selection controls within the consolidated interface' },
+            { src: '/images/projects/topic-keyword-analysis/iteration-1.5-3.png', alt: 'Iteration 1.5-3 displaying refined layout with improved information density and visual hierarchy' },
+            { src: '/images/projects/topic-keyword-analysis/option-1.png', alt: 'Layout option 1 exploring single-screen tool approach with all functionality visible at once' },
+            { src: '/images/projects/topic-keyword-analysis/option-2.png', alt: 'Layout option 2 testing alternative arrangement of keyword selection and configuration controls' },
+            { src: '/images/projects/topic-keyword-analysis/option-2.1.png', alt: 'Layout option 2.1 variant showing refined version of option 2 with adjusted spacing and component placement' },
+            { src: '/images/projects/topic-keyword-analysis/option-3.png', alt: 'Layout option 3 exploring different visual treatment and information architecture for keyword management' },
+            { src: '/images/projects/topic-keyword-analysis/option-4.png', alt: 'Layout option 4 testing table-centric design with enhanced keyword visibility and selection' },
+            { src: '/images/projects/topic-keyword-analysis/option-4.1.png', alt: 'Layout option 4.1 variant refining the table-focused approach based on user feedback' },
+            { src: '/images/projects/topic-keyword-analysis/option-5.png', alt: 'Layout option 5 exploring alternative component arrangements and interaction patterns' },
+            { src: '/images/projects/topic-keyword-analysis/option-5.1.png', alt: 'Layout option 5.1 variant showing final refinements to the consolidated single-screen tool interface' }
           ]
         },
         {
           title: 'Final flow and specifics for responsive layout',
           body: 'Consolidated steps into a single screen, reduced superfluous data-viz, and documented responsive behavior across sections. Template selection aligned with broader application patterns for component reuse.',
           images: [
-            { src: '/images/projects/topic-keyword-analysis/home-2x.png', alt: 'Template home' },
-            { src: '/images/projects/topic-keyword-analysis/more-templates-2x.png', alt: 'More templates' },
-            { src: '/images/projects/topic-keyword-analysis/new-topics-2x.png', alt: 'New topics' },
-            { src: '/images/projects/topic-keyword-analysis/start-1-2x.png', alt: 'Start step' },
-            { src: '/images/projects/topic-keyword-analysis/step-2-make-exception-2x.png', alt: 'Step 2 — make an exception' },
-            { src: '/images/projects/topic-keyword-analysis/keyword-details-table-2x.png', alt: 'Keyword details table' },
-            { src: '/images/projects/topic-keyword-analysis/step-2-add-to-keyword-list-2x.png', alt: 'Step 2 — add to keyword list' },
-            { src: '/images/projects/topic-keyword-analysis/step-4-enter-keyword-2x.png', alt: 'Step 4 — enter a keyword' },
-            { src: '/images/projects/topic-keyword-analysis/strat-2-keyword-hover-2x.png', alt: 'Strategy 2 — keyword hover' },
-            { src: '/images/projects/topic-keyword-analysis/two-selected-2x.png', alt: 'Two selected keywords' }
+            { src: '/images/projects/topic-keyword-analysis/topics_list_page.png', alt: 'Final topics list page displaying available topics for keyword analysis with selection interface and navigation, showing the consolidated responsive layout' },
+            { src: '/images/projects/topic-keyword-analysis/topics-list-page-1.png', alt: 'Final topics list page variant 1 showing the refined layout approach for topic selection and organization in the consolidated design' },
+            { src: '/images/projects/topic-keyword-analysis/topics-list-page-2.png', alt: 'Final topics list page variant 2 displaying the refined visual treatment and information hierarchy for topic management in the final responsive layout' }
           ]
         }
       ]
@@ -675,7 +771,7 @@ export const projects: Project[] = [
           images: [
             { src: '/images/projects/navigation-update-component-system/old.png', alt: 'Old navigation pattern' },
             { src: '/images/projects/navigation-update-component-system/comparison-image.png', alt: 'Navigation comparison analysis' },
-            { src: '/images/projects/navigation-update-component-system/screenshot-2.29.58-pm.png', alt: 'Comparison of navigation options' }
+            { src: '/images/projects/navigation-update-component-system/navigation-comparison-options.png', alt: 'Comparison of navigation options' }
           ]
         },
         {
@@ -701,10 +797,10 @@ export const projects: Project[] = [
             'Built small coded prototypes to validate behavior and clarify implementation details with engineers.'
           ],
           images: [
-            { src: '/images/projects/navigation-update-component-system/screenshot-3.00.28-pm.png', alt: 'Wireframe explorations' },
-            { src: '/images/projects/navigation-update-component-system/screenshot-3.27.04-pm.png', alt: 'Prototype iterations' },
-            { src: '/images/projects/navigation-update-component-system/screenshot-3.35.56-pm.png', alt: 'Interactive prototype 1' },
-            { src: '/images/projects/navigation-update-component-system/screenshot-3.36.27-pm.png', alt: 'Interactive prototype 2' }
+            { src: '/images/projects/navigation-update-component-system/wireframe-explorations.png', alt: 'Wireframe explorations' },
+            { src: '/images/projects/navigation-update-component-system/prototype-iterations.png', alt: 'Prototype iterations' },
+            { src: '/images/projects/navigation-update-component-system/interactive-prototype-1.png', alt: 'Interactive prototype 1' },
+            { src: '/images/projects/navigation-update-component-system/interactive-prototype-2.png', alt: 'Interactive prototype 2' }
           ]
         },
         {
@@ -731,15 +827,7 @@ export const projects: Project[] = [
       { label: 'Original', href: 'https://mhsenkow.squarespace.com/all-experiences#/workplace-analytics-programs-analytics-and-nudges/' },
     ],
     image: { src: '/images/projects/workplace-analytics-programs/card.png', alt: 'Workplace Analytics Programs' },
-    gallery: [
-      // Key project overview images
-      { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard interface' },
-      { src: '/images/projects/workplace-analytics-programs/analytics-overview.png', alt: 'Analytics overview screen' },
-      { src: '/images/projects/workplace-analytics-programs/nudges-system.png', alt: 'Nudges and behavioral prompts system' },
-      { src: '/images/projects/workplace-analytics-programs/bridge-integration.png', alt: 'Bridge between products integration' },
-      { src: '/images/projects/workplace-analytics-programs/wpa-01.jpg', alt: 'Workplace Analytics interface' },
-      { src: '/images/projects/workplace-analytics-programs/wf-01.jpg', alt: 'Workplace Focus interface' }
-    ],
+    gallery: [],
     stack: ['Microsoft', 'Workplace Analytics', 'MyAnalytics', 'Behavioral Design', 'UX Design'],
     details: {
       role: 'Product Designer / Design Lead',
@@ -749,9 +837,15 @@ export const projects: Project[] = [
       team: 'Initially worked with a design lead and another FTE designer. Later became the sole FTE designer in the US, leading 4 contractors and remote FTE designers in India. Eventually helped onboard and support a new manager and additional FTE designers.',
       headerImage: { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard interface' },
       synopsis: [
-        'This was one of two sister programs that were my primary focus for 2.5 years at Microsoft. My work centered around integrating Workplace Analytics and MyAnalytics through the bridging component of programs, which tied the two products together. Additionally, I led a wide range of design changes, including improving data visualizations, refining navigation systems, and driving a visual design refresh.',
-        'As the de-facto design lead during a transitional period, I managed contractors and ensured their work aligned with the broader design system. My role encompassed wireframing, research, coding, content writing, visual design, and data visualization consulting—essentially handling all design-related needs for the team.',
-        'Starting with a small team, I led the design efforts through various team changes, becoming the de-facto design lead. My role evolved to manage multiple contractors and remote designers, culminating in onboarding a new manager and additional FTE designers. I ensured they were well-integrated and organized with the existing design files and systems.'
+        'This was one of two sister programs that were my primary focus for 2.5 years at Microsoft. My work centered around integrating Workplace Analytics and MyAnalytics through the bridging component of programs, which tied the two products together. As the de-facto design lead during a transitional period, I managed contractors and ensured their work aligned with the broader design system. My role encompassed wireframing, research, coding, content writing, visual design, and data visualization consulting—essentially handling all design-related needs for the team.',
+        'Early Concepts & Wireframes: Initial design exploration and wireframing to establish the foundation for the programs system. Early concepts focused on understanding how to bridge Workplace Analytics and MyAnalytics through a unified programs experience.',
+        'Programs Dashboard Overview: The central hub that connected Workplace Analytics and MyAnalytics, providing users with a unified view of their workplace insights and productivity programs. This dashboard served as the entry point for users to discover, enroll in, and manage programs that would help improve their work habits.',
+        'Bridge Integration & Data Flow: Created the bridge between Workplace Analytics and MyAnalytics through a programs system that enabled seamless data flow and user experience continuity across both platforms. This integration allowed organizational insights from Workplace Analytics to connect with personal productivity tools in MyAnalytics.',
+        'Workplace Analytics Integration: Comprehensive analytics dashboards that provided meaningful insights to users while maintaining privacy and security standards. I led improvements to data visualizations, refining how complex workplace metrics were presented to make them more accessible and actionable.',
+        'Workplace Focus & Nudges System: Designed and implemented a nudges system that provided gentle behavioral prompts to help users improve their work habits and productivity without being intrusive. The Workplace Focus component integrated seamlessly with the analytics platform, creating a cohesive experience that guided users toward better work-life balance.',
+        'Advanced Analytics & Insights: Continued development of sophisticated analytics interfaces that provided deeper insights into workplace patterns and productivity metrics. These advanced views allowed users to dive deeper into their data and understand the relationships between different aspects of their work.',
+        'Management & Interface Controls: Interface management tools that allowed administrators to configure and customize the analytics experience for different user groups and organizational needs. This administrative layer ensured that programs could be tailored to specific organizational contexts while maintaining privacy and compliance standards.',
+        'Design Refinement & Final Implementation: Screenshots documenting the refinement process and final implementation, showing how designs evolved from wireframes to polished interfaces based on user feedback and testing. Starting with a small team, I led the design efforts through various team changes, becoming the de-facto design lead. My role evolved to manage multiple contractors and remote designers, culminating in onboarding a new manager and additional FTE designers.'
       ],
       skills: ['Wireframing', 'Research', 'Coding', 'Visual Design', 'Data Visualization', 'Content Writing', 'Statistics Consulting', 'Stakeholder Interviews', 'Internal Research', 'Advocacy and Collaboration with PMs and Engineers', 'Team Leadership', 'Design System Development', 'Program Management', 'Contractor Management', 'Remote Team Coordination'],
       prototypes: [
@@ -762,97 +856,98 @@ export const projects: Project[] = [
       ],
       sections: [
         {
+          title: 'Early Concepts & Wireframes',
+          body: 'Initial design exploration and wireframing to establish the foundation for the programs system. Early concepts focused on understanding how to bridge Workplace Analytics and MyAnalytics through a unified programs experience.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/project-evolution-early.png', alt: 'Early wireframes and concept exploration for programs dashboard and integration points' },
+            { src: '/images/projects/workplace-analytics-programs/project-evolution-mid.png', alt: 'Mid-fidelity wireframes showing refined program structure and user flows' }
+          ]
+        },
+        {
           title: 'Programs Dashboard Overview',
           body: 'The central hub that connected Workplace Analytics and MyAnalytics, providing users with a unified view of their workplace insights and productivity programs.',
           images: [
-            { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard interface' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-01.jpg', alt: 'Programs dashboard detail view' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-02.jpg', alt: 'Program management interface' }
-          ]
-        },
-        {
-          title: 'Workplace Analytics Integration',
-          body: 'Comprehensive analytics dashboards that provided meaningful insights to users while maintaining privacy and security standards. These interfaces show the evolution of data visualization and user experience design.',
-          images: [
-            { src: '/images/projects/workplace-analytics-programs/analytics-overview.png', alt: 'Analytics overview screen' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-03.jpg', alt: 'Analytics dashboard 1' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-04.jpg', alt: 'Analytics dashboard 2' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-05.jpg', alt: 'Analytics dashboard 3' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-06.jpg', alt: 'Analytics dashboard 4' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-07.jpg', alt: 'Analytics dashboard 5' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-08.jpg', alt: 'Analytics dashboard 6' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-09.jpg', alt: 'Analytics dashboard 7' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-10.jpg', alt: 'Analytics dashboard 8' }
-          ]
-        },
-        {
-          title: 'Workplace Focus & Nudges System',
-          body: 'Designed and implemented a nudges system that provided gentle behavioral prompts to help users improve their work habits and productivity without being intrusive. The Workplace Focus component integrated seamlessly with the analytics platform.',
-          images: [
-            { src: '/images/projects/workplace-analytics-programs/nudges-system.png', alt: 'Nudges and behavioral prompts system' },
-            { src: '/images/projects/workplace-analytics-programs/wf-01.jpg', alt: 'Workplace Focus interface 1' },
-            { src: '/images/projects/workplace-analytics-programs/wf-02.jpg', alt: 'Workplace Focus interface 2' },
-            { src: '/images/projects/workplace-analytics-programs/wf-03.jpg', alt: 'Workplace Focus interface 3' },
-            { src: '/images/projects/workplace-analytics-programs/wf-04.jpg', alt: 'Workplace Focus interface 4' },
-            { src: '/images/projects/workplace-analytics-programs/wf-05.jpg', alt: 'Workplace Focus interface 5' },
-            { src: '/images/projects/workplace-analytics-programs/wf-06.jpg', alt: 'Workplace Focus interface 6' },
-            { src: '/images/projects/workplace-analytics-programs/wf-07.jpg', alt: 'Workplace Focus interface 7' },
-            { src: '/images/projects/workplace-analytics-programs/wf-08.jpg', alt: 'Workplace Focus interface 8' }
+            { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard main interface showing overview of available programs and analytics' },
+            { src: '/images/projects/workplace-analytics-programs/programs-dashboard-detail.jpg', alt: 'Programs dashboard detailed view with program cards and enrollment options' },
+            { src: '/images/projects/workplace-analytics-programs/program-management-interface.jpg', alt: 'Program management interface for creating and configuring workplace programs' }
           ]
         },
         {
           title: 'Bridge Integration & Data Flow',
           body: 'Created the bridge between Workplace Analytics and MyAnalytics through a programs system that enabled seamless data flow and user experience continuity across both platforms.',
           images: [
-            { src: '/images/projects/workplace-analytics-programs/bridge-integration.png', alt: 'Bridge between products integration' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-11.jpg', alt: 'Integration interface 1' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-12.jpg', alt: 'Integration interface 2' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-13.jpg', alt: 'Integration interface 3' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-14.png', alt: 'Integration interface 4' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-15.png', alt: 'Integration interface 5' }
+            { src: '/images/projects/workplace-analytics-programs/bridge-integration.png', alt: 'Bridge integration diagram showing connection between Workplace Analytics and MyAnalytics' },
+            { src: '/images/projects/workplace-analytics-programs/bridge-integration-interface-1.jpg', alt: 'Bridge integration interface screen 1 connecting Workplace Analytics and MyAnalytics' },
+            { src: '/images/projects/workplace-analytics-programs/bridge-integration-interface-2.jpg', alt: 'Bridge integration interface screen 2 showing data flow and synchronization' },
+            { src: '/images/projects/workplace-analytics-programs/bridge-integration-interface-3.jpg', alt: 'Bridge integration interface screen 3 with program configuration options' },
+            { src: '/images/projects/workplace-analytics-programs/bridge-integration-interface-4.png', alt: 'Bridge integration interface screen 4 displaying unified user experience' },
+            { src: '/images/projects/workplace-analytics-programs/bridge-integration-interface-5.png', alt: 'Bridge integration interface screen 5 with cross-platform navigation' }
+          ]
+        },
+        {
+          title: 'Workplace Analytics Integration',
+          body: 'Comprehensive analytics dashboards that provided meaningful insights to users while maintaining privacy and security standards. These interfaces show the evolution of data visualization and user experience design.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/analytics-overview.png', alt: 'Workplace Analytics overview dashboard with navigation and key metrics' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-email-usage.jpg', alt: 'Email usage analytics dashboard with charts showing email patterns, volume, and response times' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-meeting-patterns.jpg', alt: 'Meeting patterns analytics dashboard displaying meeting frequency, duration, and time allocation' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-collaboration.jpg', alt: 'Collaboration analytics dashboard with network visualization and collaboration metrics' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-time-allocation.jpg', alt: 'Time allocation analytics dashboard showing breakdown of time spent across different work activities' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-network-insights.jpg', alt: 'Network insights analytics dashboard with relationship mapping and connection visualization' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-productivity-metrics.jpg', alt: 'Productivity metrics analytics dashboard displaying productivity scores and trend indicators' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-trends.jpg', alt: 'Trends analytics dashboard showing historical comparisons and trend analysis over time' },
+            { src: '/images/projects/workplace-analytics-programs/analytics-dashboard-summary.jpg', alt: 'Analytics summary dashboard with overview of key metrics and quick insights' }
+          ]
+        },
+        {
+          title: 'Workplace Focus & Nudges System',
+          body: 'Designed and implemented a nudges system that provided gentle behavioral prompts to help users improve their work habits and productivity without being intrusive. The Workplace Focus component integrated seamlessly with the analytics platform.',
+          images: [
+            { src: '/images/projects/workplace-analytics-programs/nudges-system.png', alt: 'Nudges system interface showing behavioral prompts and productivity suggestions' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-1.jpg', alt: 'Workplace Focus interface screen 1 showing nudge system and behavioral prompts' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-2.jpg', alt: 'Workplace Focus interface screen 2 with productivity insights and recommendations' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-3.jpg', alt: 'Workplace Focus interface screen 3 displaying focus time tracking and goals' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-4.jpg', alt: 'Workplace Focus interface screen 4 showing work-life balance metrics' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-5.jpg', alt: 'Workplace Focus interface screen 5 with personalized insights and tips' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-6.jpg', alt: 'Workplace Focus interface screen 6 displaying weekly summary and progress' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-7.jpg', alt: 'Workplace Focus interface screen 7 with notification settings and preferences' },
+            { src: '/images/projects/workplace-analytics-programs/workplace-focus-interface-8.jpg', alt: 'Workplace Focus interface screen 8 showing detailed analytics and breakdowns' }
           ]
         },
         {
           title: 'Advanced Analytics & Insights',
           body: 'Continued development of sophisticated analytics interfaces that provided deeper insights into workplace patterns and productivity metrics.',
           images: [
-            { src: '/images/projects/workplace-analytics-programs/wpa-16.jpg', alt: 'Advanced analytics 1' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-17.jpg', alt: 'Advanced analytics 2' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-18.jpg', alt: 'Advanced analytics 3' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-19.png', alt: 'Advanced analytics 4' },
-            { src: '/images/projects/workplace-analytics-programs/wpa-20.png', alt: 'Advanced analytics 5' },
-            { src: '/images/projects/workplace-analytics-programs/wf-09.png', alt: 'Focus analytics 1' },
-            { src: '/images/projects/workplace-analytics-programs/wf-10.jpg', alt: 'Focus analytics 2' },
-            { src: '/images/projects/workplace-analytics-programs/wf-11.jpg', alt: 'Focus analytics 3' }
+            { src: '/images/projects/workplace-analytics-programs/advanced-analytics-insights-1.jpg', alt: 'Advanced analytics insights screen 1 showing deep insights into work patterns and behaviors' },
+            { src: '/images/projects/workplace-analytics-programs/advanced-analytics-insights-2.jpg', alt: 'Advanced analytics insights screen 2 with predictive insights and trend forecasting' },
+            { src: '/images/projects/workplace-analytics-programs/advanced-analytics-insights-3.jpg', alt: 'Advanced analytics insights screen 3 displaying comparative analysis and benchmarking' },
+            { src: '/images/projects/workplace-analytics-programs/advanced-analytics-insights-4.png', alt: 'Advanced analytics insights screen 4 with custom report generation and export options' },
+            { src: '/images/projects/workplace-analytics-programs/advanced-analytics-insights-5.png', alt: 'Advanced analytics insights screen 5 showing organizational-level insights and aggregations' },
+            { src: '/images/projects/workplace-analytics-programs/focus-analytics-insights-1.png', alt: 'Focus analytics insights screen 1 displaying personal productivity insights and recommendations' },
+            { src: '/images/projects/workplace-analytics-programs/focus-analytics-insights-2.jpg', alt: 'Focus analytics insights screen 2 with goal tracking and achievement metrics' },
+            { src: '/images/projects/workplace-analytics-programs/focus-analytics-insights-3.jpg', alt: 'Focus analytics insights screen 3 showing time management insights and optimization suggestions' }
           ]
         },
         {
           title: 'Management & Interface Controls',
           body: 'Interface management tools that allowed administrators to configure and customize the analytics experience for different user groups and organizational needs.',
           images: [
-            { src: '/images/projects/workplace-analytics-programs/interface-01.jpg', alt: 'Identify interface' },
-            { src: '/images/projects/workplace-analytics-programs/interface-02.jpg', alt: 'Manage page interface' },
-            { src: '/images/projects/workplace-analytics-programs/interface-03.jpg', alt: 'Manage panel interface' },
-            { src: '/images/projects/workplace-analytics-programs/wf-12.jpg', alt: 'Management interface 1' },
-            { src: '/images/projects/workplace-analytics-programs/wf-13.jpg', alt: 'Management interface 2' },
-            { src: '/images/projects/workplace-analytics-programs/wf-14.jpg', alt: 'Management interface 3' },
-            { src: '/images/projects/workplace-analytics-programs/wf-15.jpg', alt: 'Management interface 4' },
-            { src: '/images/projects/workplace-analytics-programs/wf-16.jpg', alt: 'Management interface 5' },
-            { src: '/images/projects/workplace-analytics-programs/wf-17.jpg', alt: 'Management interface 6' }
+            { src: '/images/projects/workplace-analytics-programs/admin-identify-interface.jpg', alt: 'Admin identify interface for identifying and configuring user groups and permissions' },
+            { src: '/images/projects/workplace-analytics-programs/admin-manage-page-interface.jpg', alt: 'Admin management page interface for program configuration and settings' },
+            { src: '/images/projects/workplace-analytics-programs/admin-manage-panel-interface.jpg', alt: 'Admin management panel interface with detailed control options' },
+            { src: '/images/projects/workplace-analytics-programs/management-interface-config-1.jpg', alt: 'Management interface configuration screen 1 for configuring analytics visibility and access controls' },
+            { src: '/images/projects/workplace-analytics-programs/management-interface-config-2.jpg', alt: 'Management interface configuration screen 2 showing program assignment and user management' },
+            { src: '/images/projects/workplace-analytics-programs/management-interface-config-3.jpg', alt: 'Management interface configuration screen 3 with reporting and data export configuration' },
+            { src: '/images/projects/workplace-analytics-programs/management-interface-config-4.jpg', alt: 'Management interface configuration screen 4 displaying notification and nudge settings' },
+            { src: '/images/projects/workplace-analytics-programs/management-interface-config-5.jpg', alt: 'Management interface configuration screen 5 with privacy and compliance controls' },
+            { src: '/images/projects/workplace-analytics-programs/management-interface-config-6.jpg', alt: 'Management interface configuration screen 6 showing integration settings and API configuration' }
           ]
         },
         {
-          title: 'Project Documentation & Evolution',
-          body: 'Screenshots documenting the evolution of the project over time, showing the iterative design process and the refinement of interfaces based on user feedback and testing.',
+          title: 'Design Refinement & Final Implementation',
+          body: 'Screenshots documenting the refinement process and final implementation, showing how designs evolved from wireframes to polished interfaces based on user feedback and testing.',
           images: [
-            { src: '/images/projects/workplace-analytics-programs/screenshot-01.png', alt: 'Early project screenshot' },
-            { src: '/images/projects/workplace-analytics-programs/screenshot-02.png', alt: 'Mid-project screenshot' },
-            { src: '/images/projects/workplace-analytics-programs/screenshot-03.png', alt: 'Late project screenshot' },
-            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-01.png', alt: 'Final project screenshot 1' },
-            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-02.png', alt: 'Final project screenshot 2' },
-            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-03.png', alt: 'Final project screenshot 3' },
-            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-04.png', alt: 'Final project screenshot 4' },
-            { src: '/images/projects/workplace-analytics-programs/screenshot-may29-05.png', alt: 'Final project screenshot 5' }
+            { src: '/images/projects/workplace-analytics-programs/project-evolution-late.png', alt: 'Late-stage design refinement showing near-final interfaces and implementation progress' }
           ]
         }
       ]
@@ -923,10 +1018,10 @@ export const projects: Project[] = [
     image: { src: '/images/projects/ae/TrustedNews (1).png', alt: 'Trusted News' },
     gallery: [
       { src: '/images/projects/trusted-news-chrome-extension/final-layout.png', alt: 'Final layout, displaying the regions of the extension' },
-      { src: '/images/projects/trusted-news-chrome-extension/screenshot-1.png', alt: 'Extension screenshot 1' },
-      { src: '/images/projects/trusted-news-chrome-extension/screenshot-2.png', alt: 'Extension screenshot 2' },
-      { src: '/images/projects/trusted-news-chrome-extension/image-asset.png', alt: 'Extension UI detail' },
-      { src: '/images/projects/trusted-news-chrome-extension/screenshot-3.png', alt: 'Extension screenshot 3' }
+      { src: '/images/projects/trusted-news-chrome-extension/extension-interface-1.png', alt: 'Extension interface showing news source verification' },
+      { src: '/images/projects/trusted-news-chrome-extension/extension-interface-2.png', alt: 'Extension interface displaying trust indicators' },
+      { src: '/images/projects/trusted-news-chrome-extension/extension-ui-detail.png', alt: 'Extension UI detail showing interface components' },
+      { src: '/images/projects/trusted-news-chrome-extension/extension-interface-3.png', alt: 'Extension interface with news analysis features' }
     ],
     stack: ['Hackathon', 'Prototype', 'Chrome Extension'],
     details: {
@@ -1006,8 +1101,8 @@ export const projects: Project[] = [
     image: { src: '/images/projects/design-guide-thousands-users/card.png', alt: 'Design guide' },
     gallery: [
       // Key overview images
-      { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'Design guide overview' },
-      { src: '/images/projects/design-guide-thousands-users/screenshot-06.png', alt: 'Component library showcase' }
+      { src: '/images/projects/design-guide-thousands-users/design-guide-overview-navigation.png', alt: 'Design guide overview' },
+      { src: '/images/projects/design-guide-thousands-users/component-library-showcase.png', alt: 'Component library showcase' }
     ],
     stack: ['IBM', 'Design System', 'Component Library', 'UX Design', 'Frontend Development'],
     details: {
@@ -1015,7 +1110,7 @@ export const projects: Project[] = [
       entity: 'IBM Design, Watson Data Platform (formerly Analytics Platform)',
       years: '2016–2017',
       team: 'Very healthy leadership combo of design, dev and management with PM. For direct work I was doing a mix of UX concepts and coding to see how these components played out.',
-      headerImage: { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'IBM Watson Data Platform design guide' },
+      headerImage: { src: '/images/projects/design-guide-thousands-users/design-guide-overview-navigation.png', alt: 'IBM Watson Data Platform design guide' },
       synopsis: [
         'My last main group at IBM was the Watson Data Platform team, a position that was incredibly hard to leave. My role blended design, development, and asset and product management in the creation of a comprehensive guide used across multiple products. Although it was a team effort, we worked highly collaboratively to achieve our goals.',
         'I was deeply involved in both the coding and UX aspects of the guide. Everything in the guide was built and coded between myself and my dev lead, while I also engaged in UX work with our visual designers and Design Lead. The final implementation of the guide into products was incredibly gratifying, and it was rewarding to gather feedback on the components as they were used in real-world applications.'
@@ -1026,37 +1121,37 @@ export const projects: Project[] = [
           title: 'Design Guide Foundation',
           body: 'The comprehensive design guide served as the foundation for consistent user experiences across the Watson Data Platform. This system enabled thousands of users to have a cohesive experience while working across multiple products.',
           images: [
-            { src: '/images/projects/design-guide-thousands-users/screenshot-01.png', alt: 'Design guide overview and navigation' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-02.png', alt: 'Component documentation structure' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-03.png', alt: 'Visual design system principles' }
+            { src: '/images/projects/design-guide-thousands-users/design-guide-overview-navigation.png', alt: 'Design guide overview and navigation' },
+            { src: '/images/projects/design-guide-thousands-users/component-documentation-structure.png', alt: 'Component documentation structure' },
+            { src: '/images/projects/design-guide-thousands-users/visual-design-system-principles.png', alt: 'Visual design system principles' }
           ]
         },
         {
           title: 'Component Library Development',
           body: 'Working closely with the dev lead, I coded and designed comprehensive component libraries that could be easily implemented across different products. Each component included detailed specifications and usage guidelines.',
           images: [
-            { src: '/images/projects/design-guide-thousands-users/screenshot-04.png', alt: 'Component specifications and properties' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-05.png', alt: 'Design patterns and variations' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-06.png', alt: 'Comprehensive component library showcase' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-07.png', alt: 'Implementation examples and code snippets' }
+            { src: '/images/projects/design-guide-thousands-users/component-specifications-properties.png', alt: 'Component specifications and properties' },
+            { src: '/images/projects/design-guide-thousands-users/design-patterns-variations.png', alt: 'Design patterns and variations' },
+            { src: '/images/projects/design-guide-thousands-users/component-library-showcase.png', alt: 'Comprehensive component library showcase' },
+            { src: '/images/projects/design-guide-thousands-users/implementation-examples-code-snippets.png', alt: 'Implementation examples and code snippets' }
           ]
         },
         {
           title: 'Interactive Components & Patterns',
           body: 'The guide included detailed documentation of interactive components, showing different states, variations, and usage patterns that designers and developers could reference when building new features.',
           images: [
-            { src: '/images/projects/design-guide-thousands-users/screenshot-08.png', alt: 'Component variations and states' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-09.png', alt: 'Design guide navigation and structure' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-11.png', alt: 'System architecture and relationships' }
+            { src: '/images/projects/design-guide-thousands-users/component-variations-states.png', alt: 'Component variations and states' },
+            { src: '/images/projects/design-guide-thousands-users/design-guide-navigation-structure.png', alt: 'Design guide navigation and structure' },
+            { src: '/images/projects/design-guide-thousands-users/system-architecture-relationships.png', alt: 'System architecture and relationships' }
           ]
         },
         {
           title: 'Implementation & Usage Guidelines',
           body: 'The final sections of the guide provided clear usage guidelines, implementation details, and real-world examples that helped teams successfully integrate the design system into their products.',
           images: [
-            { src: '/images/projects/design-guide-thousands-users/screenshot-12.png', alt: 'Usage guidelines and best practices' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-13.png', alt: 'Detailed component specifications' },
-            { src: '/images/projects/design-guide-thousands-users/screenshot-14.png', alt: 'Final implementation showcase' }
+            { src: '/images/projects/design-guide-thousands-users/usage-guidelines-best-practices.png', alt: 'Usage guidelines and best practices' },
+            { src: '/images/projects/design-guide-thousands-users/detailed-component-specifications.png', alt: 'Detailed component specifications' },
+            { src: '/images/projects/design-guide-thousands-users/final-implementation-showcase.png', alt: 'Final implementation showcase' }
           ]
         }
       ]
@@ -1090,61 +1185,61 @@ export const projects: Project[] = [
           title: 'Initial Research',
           body: 'Conducted extensive research to lay the groundwork for Watson Analytics.',
           images: [
-            { src: '/images/projects/watson-analytics-early-work/gem-01.png', alt: 'Research visualization 1' },
-            { src: '/images/projects/watson-analytics-early-work/gem-02.png', alt: 'Research visualization 2' },
-            { src: '/images/projects/watson-analytics-early-work/gem-03.png', alt: 'Research visualization 3' },
-            { src: '/images/projects/watson-analytics-early-work/gem-04.png', alt: 'Research visualization 4' },
-            { src: '/images/projects/watson-analytics-early-work/gem-05.png', alt: 'Research visualization 5' },
-            { src: '/images/projects/watson-analytics-early-work/gem-06.png', alt: 'Research visualization 6' },
-            { src: '/images/projects/watson-analytics-early-work/gem-07.png', alt: 'Research visualization 7' },
-            { src: '/images/projects/watson-analytics-early-work/gem-08.png', alt: 'Research visualization 8' },
-            { src: '/images/projects/watson-analytics-early-work/gem-09.png', alt: 'Research visualization 9' },
-            { src: '/images/projects/watson-analytics-early-work/gem-10.png', alt: 'Research visualization 10' },
-            { src: '/images/projects/watson-analytics-early-work/gem-11.png', alt: 'Research visualization 11' },
-            { src: '/images/projects/watson-analytics-early-work/gem-12.png', alt: 'Research visualization 12' },
-            { src: '/images/projects/watson-analytics-early-work/gem-13.png', alt: 'Research visualization 13' },
-            { src: '/images/projects/watson-analytics-early-work/gem-14.png', alt: 'Research visualization 14' },
-            { src: '/images/projects/watson-analytics-early-work/gem-15.png', alt: 'Research visualization 15' }
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-1.png', alt: 'Research visualization showing data patterns and insights for Watson Analytics foundation' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-2.png', alt: 'Research visualization displaying analytical frameworks and data relationships' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-3.png', alt: 'Research visualization with statistical analysis and pattern recognition' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-4.png', alt: 'Research visualization showing user behavior patterns and analytics insights' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-5.png', alt: 'Research visualization displaying data correlation and trend analysis' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-6.png', alt: 'Research visualization with comparative analysis and benchmarking' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-7.png', alt: 'Research visualization showing predictive modeling and forecasting' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-8.png', alt: 'Research visualization displaying network analysis and relationship mapping' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-9.png', alt: 'Research visualization with time series analysis and temporal patterns' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-10.png', alt: 'Research visualization showing clustering and segmentation analysis' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-11.png', alt: 'Research visualization displaying dimensional analysis and data exploration' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-12.png', alt: 'Research visualization with interactive data exploration and drill-down capabilities' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-13.png', alt: 'Research visualization showing advanced statistical models and algorithms' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-14.png', alt: 'Research visualization displaying machine learning insights and predictions' },
+            { src: '/images/projects/watson-analytics-early-work/research-visualization-data-patterns-15.png', alt: 'Research visualization with comprehensive analytics dashboard concepts' }
           ]
         },
         {
           title: 'Prototyping Social Media Analytics',
           body: 'Created a series of prototypes to demonstrate and sell the concept of social media analytics.',
           images: [
-            { src: '/images/projects/watson-analytics-early-work/sm-01.png', alt: 'Social media analytics prototype 1' },
-            { src: '/images/projects/watson-analytics-early-work/sm-02.png', alt: 'Social media analytics prototype 2' },
-            { src: '/images/projects/watson-analytics-early-work/sm-03.png', alt: 'Social media analytics prototype 3' },
-            { src: '/images/projects/watson-analytics-early-work/sm-04.png', alt: 'Social media analytics prototype 4' }
+            { src: '/images/projects/watson-analytics-early-work/social-media-analytics-prototype-1.png', alt: 'Social media analytics prototype showing sentiment analysis and engagement metrics' },
+            { src: '/images/projects/watson-analytics-early-work/social-media-analytics-prototype-2.png', alt: 'Social media analytics prototype displaying trend tracking and influencer analysis' },
+            { src: '/images/projects/watson-analytics-early-work/social-media-analytics-prototype-3.png', alt: 'Social media analytics prototype with content performance and reach analytics' },
+            { src: '/images/projects/watson-analytics-early-work/social-media-analytics-prototype-4.png', alt: 'Social media analytics prototype showing audience insights and demographic analysis' }
           ]
         },
         {
           title: 'AI-Powered Dashboards',
           body: 'Developed innovative blue-sky concepts for future AI-powered dashboards, highlighting the potential for advanced data visualization and user interaction.',
           images: [
-            { src: '/images/projects/watson-analytics-early-work/wa-01.png', alt: 'AI dashboard concept 1' },
-            { src: '/images/projects/watson-analytics-early-work/wa-02.png', alt: 'AI dashboard concept 2' },
-            { src: '/images/projects/watson-analytics-early-work/wa-03.png', alt: 'AI dashboard concept 3' },
-            { src: '/images/projects/watson-analytics-early-work/wa-04.png', alt: 'AI dashboard concept 4' },
-            { src: '/images/projects/watson-analytics-early-work/wa-05.png', alt: 'AI dashboard concept 5' },
-            { src: '/images/projects/watson-analytics-early-work/wa-06.png', alt: 'AI dashboard concept 6' },
-            { src: '/images/projects/watson-analytics-early-work/wa-07.png', alt: 'AI dashboard concept 7' },
-            { src: '/images/projects/watson-analytics-early-work/wa-08.png', alt: 'AI dashboard concept 8' },
-            { src: '/images/projects/watson-analytics-early-work/wa-09.png', alt: 'AI dashboard concept 9' },
-            { src: '/images/projects/watson-analytics-early-work/wa-10.png', alt: 'AI dashboard concept 10' },
-            { src: '/images/projects/watson-analytics-early-work/wa-12.png', alt: 'AI dashboard concept 12' }
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-1.png', alt: 'AI-powered dashboard concept showing intelligent data visualization and insights' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-2.png', alt: 'AI-powered dashboard concept with natural language query interface' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-3.png', alt: 'AI-powered dashboard concept displaying predictive analytics and forecasting' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-4.png', alt: 'AI-powered dashboard concept with automated insight generation' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-5.png', alt: 'AI-powered dashboard concept showing contextual recommendations and suggestions' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-6.png', alt: 'AI-powered dashboard concept with interactive data exploration and discovery' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-7.png', alt: 'AI-powered dashboard concept displaying anomaly detection and alerts' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-8.png', alt: 'AI-powered dashboard concept with conversational analytics interface' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-9.png', alt: 'AI-powered dashboard concept showing adaptive visualization and personalization' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-10.png', alt: 'AI-powered dashboard concept with multi-dimensional data analysis' },
+            { src: '/images/projects/watson-analytics-early-work/ai-dashboard-concept-12.png', alt: 'AI-powered dashboard concept displaying advanced machine learning insights' }
           ]
         },
         {
           title: 'Analytics Explorations',
           body: 'Additional explorations and concepts for analytics visualization.',
           images: [
-            { src: '/images/projects/watson-analytics-early-work/az-03.png', alt: 'Analytics exploration 3' },
-            { src: '/images/projects/watson-analytics-early-work/az-04.png', alt: 'Analytics exploration 4' },
-            { src: '/images/projects/watson-analytics-early-work/az-05.png', alt: 'Analytics exploration 5' },
-            { src: '/images/projects/watson-analytics-early-work/az-06.png', alt: 'Analytics exploration 6' },
-            { src: '/images/projects/watson-analytics-early-work/az-07.png', alt: 'Analytics exploration 7' },
-            { src: '/images/projects/watson-analytics-early-work/az-08.png', alt: 'Analytics exploration 8' },
-            { src: '/images/projects/watson-analytics-early-work/az-09.png', alt: 'Analytics exploration 9' }
+            { src: '/images/projects/watson-analytics-early-work/analytics-exploration-visualization-3.png', alt: 'Analytics exploration showing alternative visualization approaches and design patterns' },
+            { src: '/images/projects/watson-analytics-early-work/analytics-exploration-visualization-4.png', alt: 'Analytics exploration displaying experimental chart types and data representations' },
+            { src: '/images/projects/watson-analytics-early-work/analytics-exploration-visualization-5.png', alt: 'Analytics exploration with interactive filtering and dynamic querying' },
+            { src: '/images/projects/watson-analytics-early-work/analytics-exploration-visualization-6.png', alt: 'Analytics exploration showing comparative views and multi-dataset analysis' },
+            { src: '/images/projects/watson-analytics-early-work/analytics-exploration-visualization-7.png', alt: 'Analytics exploration displaying temporal analysis and time-based insights' },
+            { src: '/images/projects/watson-analytics-early-work/analytics-exploration-visualization-8.png', alt: 'Analytics exploration with spatial data visualization and geographic insights' },
+            { src: '/images/projects/watson-analytics-early-work/analytics-exploration-visualization-9.png', alt: 'Analytics exploration showing hierarchical data structures and tree visualizations' }
           ]
         }
       ]
