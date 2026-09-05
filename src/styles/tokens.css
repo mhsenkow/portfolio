@@ -206,4 +206,26 @@
     --glass-3: rgba(235, 228, 216, 0.95);
     --glass-sheen: linear-gradient(180deg, rgba(255, 250, 245, 0.5), rgba(195, 180, 158, 0.2));
   }
+
+  :root[data-theme="forest"] {
+    --color-bg: #0d1412;
+    --color-bg-elev: #151d1a;
+    --color-text: #e8f5e9;
+    --color-muted: #81c784;
+    --color-accent: #4caf50;
+    --color-accent-2: #66bb6a;
+    --border-weak: 1px solid rgba(76, 175, 80, 0.12);
+    --border: 1px solid rgba(76, 175, 80, 0.18);
+    --border-strong: 1px solid rgba(76, 175, 80, 0.28);
+    --surface-card: rgba(21, 29, 26, 0.85);
+    --surface-image-frame: #4caf50;
+    --focus-ring: 2px solid #66bb6a;
+    /* glass with natural green tint */
+    --glass-1: rgba(21, 29, 26, 0.50);
+    --glass-2: rgba(21, 29, 26, 0.65);
+    --glass-3: rgba(21, 29, 26, 0.80);
+    --glass-sheen: linear-gradient(180deg, rgba(76, 175, 80, 0.12), rgba(102, 187, 106, 0.06));
+    --selection-bg: rgba(76, 175, 80, 0.30);
+    --selection-text: #e8f5e9;
+  }
 }

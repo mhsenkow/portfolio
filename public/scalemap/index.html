@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto" data-show-viz="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>scale — ibm.io</title>
+<meta name="description" content="map legend">
+<link rel="canonical" href="https://ibm.io/scalemap/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="../lib/number-tool.css?v=45">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+</head>
+<body class="tool-app" data-tool="scalemap">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>scale</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+<main>
+
+  <div class="face">
+    <div class="face-value" id="out" role="status" aria-live="polite" aria-atomic="true">0</div>
+    <p class="face-sub" id="sub">miles</p>
+  </div>
+  <div class="stack">
+    <fieldset class="panel">
+      <legend>legend</legend>
+      <label class="row"><span class="key">1 inch =</span><span class="value"><input id="real" type="number" inputmode="decimal" min="0" step="0.1" value="1" aria-label="distance per inch"></span></label>
+      <label class="row"><span class="key">units</span><span class="value"><select id="units" aria-label="distance units"><option value="mi" selected>miles</option><option value="km">km</option></select></span></label>
+      <label class="row"><span class="key">measure</span><span class="value"><input id="measure" type="number" inputmode="decimal" min="0" step="0.1" value="2.4" data-primary data-axis="y" data-axis-x="real" data-step-fast="1" data-gesture="1" aria-label="inches on map"><span class="unit">in</span></span></label>
+    </fieldset>
+    <div class="presets" id="presets" role="group" aria-label="map presets" data-cols="4">
+      <button type="button" class="preset" data-real="0.1" data-measure="3" data-units="mi" aria-pressed="false">city<span class="preset-meta">0.1 mi/in</span></button>
+      <button type="button" class="preset" data-real="0.25" data-measure="2" data-units="mi" aria-pressed="false">park<span class="preset-meta">¼ mi/in</span></button>
+      <button type="button" class="preset" data-real="1" data-measure="2.4" data-units="mi" aria-pressed="true">usgs<span class="preset-meta">1 mi/in</span></button>
+      <button type="button" class="preset" data-real="50" data-measure="1.5" data-units="mi" aria-pressed="false">atlas<span class="preset-meta">50 mi/in</span></button>
+    </div>
+  </div>
+</main>
+<script src="../lib/suite.js?v=47"></script>
+<script src="../lib/number-tool.js?v=45"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('scalemap');
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'scalemap',
+    about: "Map legend → measured length → real distance. Distance rings and a true scale bar.",
+    hasViz: true,
+    extra: {"defaults":{"rings":"on"},"fieldsHtml":"<fieldset><legend>rings</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"distance rings\"><label><input type=\"radio\" name=\"rings\" value=\"off\"><span>off</span></label><label><input type=\"radio\" name=\"rings\" value=\"on\"><span>on</span></label></div></fieldset>"},
+    onApply: function () {
+      if (typeof window.__ibmToolRender === 'function') window.__ibmToolRender();
+    }
+  });
+
+  var stage = IBMNumberTool.ensureStage('scalemap');
+  function S(){ return (toolUI && toolUI.settings) || {}; }
+  var MI_PER_KM = 0.621371;
+  function paint(measure, real, units, dist){
+    var ringsOn = (S().rings || 'on') === 'on';
+    var seg = Math.max(4, Math.min(76, (measure / 4) * 76));
+    var html = '<div class="map-plane" data-rings="' + (ringsOn ? 'on' : 'off') + '">';
+    if (ringsOn) {
+      for (var r = 1; r <= 3; r++) {
+        html += '<div class="ring" style="--r:' + (r * 28) + '%"><span>' +
+          (dist * r / 3).toFixed(dist >= 10 ? 0 : 1) + ' ' + units + '</span></div>';
+      }
+    }
+    html += '<div class="origin"></div>';
+    html += '<div class="seg" data-scrub="measure" style="width:' + seg + '%"></div>';
+    html += '<div class="legend" data-scrub="real"><div class="scale-bar"><i></i><i></i><i></i><i></i></div>';
+    html += '1 in = ' + real + ' ' + units + '</div></div>';
+    stage.innerHTML = html;
+    IBMNumberTool.afterPaint && IBMNumberTool.afterPaint();
+  }
+  function render(){
+    var units = document.getElementById('units').value || 'mi';
+    var realIn = Math.max(0, parseFloat(document.getElementById('real').value) || 0);
+    var measure = Math.max(0, parseFloat(document.getElementById('measure').value) || 0);
+    var real = units === 'km' ? realIn * (1 / MI_PER_KM) : realIn;
+    /* Input stays as authored; display converts when units=km assuming input is mi-per-inch */
+    var factor = units === 'km' ? (1 / MI_PER_KM) : 1;
+    var out = measure * realIn * factor;
+    var pretty = out >= 100 ? out.toFixed(0) : out.toFixed(2);
+    var unitLabel = document.querySelector('#real + .unit, .row .unit');
+    var realRow = document.getElementById('real');
+    if (realRow && realRow.parentElement) {
+      var u = realRow.parentElement.querySelector('.unit');
+      if (u) u.textContent = units;
+    }
+    document.getElementById('out').textContent = pretty;
+    document.getElementById('sub').textContent = measure + ' in × ' + realIn + ' ' + units + '/in';
+    var mode = IBMNumberTool.vizMode ? IBMNumberTool.vizMode(S()) : 'viz';
+    if (mode === 'deep') IBMNumberTool.paintDeep('scalemap', stage, { measure: measure, real: realIn, units: units, dist: out });
+    else if (mode !== 'plain') paint(measure, realIn, units, out);
+    else stage.innerHTML = '';
+    if (presets) presets.sync();
+  }
+  window.__ibmToolRender = render;
+  ['real','measure','units'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+    document.getElementById(id).addEventListener('change', render);
+  });
+
+  var presets = IBMNumberTool.bindPresets('#presets', {
+    keys: ["real","measure","units"],
+    map: null,
+    after: function () { render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

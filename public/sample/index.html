@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto" data-show-viz="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>sample — ibm.io</title>
+<meta name="description" content="poll · ±">
+<link rel="canonical" href="https://ibm.io/sample/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="../lib/number-tool.css?v=45">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+</head>
+<body class="tool-app" data-tool="sample">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>sample</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+<main>
+
+  <div class="face">
+    <div class="face-value" id="out" role="status" aria-live="polite" aria-atomic="true">±0%</div>
+    <p class="face-sub" id="sub">margin of error</p>
+  </div>
+  <div class="stack">
+    <fieldset class="panel">
+      <legend>poll</legend>
+      <label class="row"><span class="key">people</span><span class="value"><input id="n" type="number" inputmode="numeric" min="1" step="1" value="400" data-primary data-axis="y" data-axis-x="p" data-step-fast="50" data-gesture="1" aria-label="number of people surveyed"></span></label>
+      <label class="row"><span class="key">yes</span><span class="value"><input id="p" type="number" inputmode="decimal" min="0" max="100" step="1" value="50" aria-label="percent who said yes"><span class="unit">%</span></span></label>
+      <label class="row"><span class="key">confidence</span><span class="value"><select id="z" aria-label="confidence level"><option value="1.645">90%</option><option value="1.96" selected>95%</option><option value="2.576">99%</option></select></span></label>
+    </fieldset>
+    <div class="presets" id="presets" role="group" aria-label="poll presets" data-cols="4">
+      <button type="button" class="preset" data-n="100" data-p="50" data-z="1.96" aria-pressed="false">quick<span class="preset-meta">n=100</span></button>
+      <button type="button" class="preset" data-n="400" data-p="50" data-z="1.96" aria-pressed="true">local<span class="preset-meta">n=400</span></button>
+      <button type="button" class="preset" data-n="1000" data-p="50" data-z="1.96" aria-pressed="false">national<span class="preset-meta">n=1k</span></button>
+      <button type="button" class="preset" data-n="400" data-p="30" data-z="1.96" aria-pressed="false">skew<span class="preset-meta">30% yes</span></button>
+    </div>
+    <p class="note">± around yes at the chosen confidence</p>
+  </div>
+</main>
+<script src="../lib/suite.js?v=47"></script>
+<script src="../lib/number-tool.js?v=45"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('sample');
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'sample',
+    about: "Ballpark how far a poll might miss the real share. More people → tighter ±. Rule of thumb only — not a full survey design.",
+    hasViz: true,
+    extra: {"defaults":{"curve":"bell"},"fieldsHtml":"<fieldset><legend>curve</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"sample curve\"><label><input type=\"radio\" name=\"curve\" value=\"bell\"><span>bell</span></label><label><input type=\"radio\" name=\"curve\" value=\"rail\"><span>rail</span></label></div></fieldset>"},
+    onApply: function () {
+      if (typeof window.__ibmToolRender === 'function') window.__ibmToolRender();
+    }
+  });
+
+  var stage = IBMNumberTool.ensureStage('sample');
+  function S(){ return (toolUI && toolUI.settings) || {}; }
+  function paint(p, moe){
+    var curve = S().curve || 'bell';
+    var lo = Math.max(0, (p - moe) * 100);
+    var hi = Math.min(100, (p + moe) * 100);
+    var mid = p * 100;
+    if (curve === 'rail') {
+      var top = 100 - hi;
+      var span = Math.max(1, hi - lo);
+      stage.innerHTML =
+        '<div class="sample-field"></div>' +
+        '<div class="conf-rail">' +
+        '<div class="track" data-scrub="n"></div>' +
+        '<div class="band" data-scrub="n" style="top:' + top + '%;height:' + span + '%"></div>' +
+        '<div class="head" data-scrub="p" style="top:' + (100 - mid) + '%"></div>' +
+        '<div class="marks"><span style="top:0%">100</span><span style="top:50%">50</span><span style="top:100%">0</span></div>' +
+        '</div>';
+    } else {
+      var bandL = Math.max(0, mid - moe * 100);
+      var bandW = Math.max(2, Math.min(100, moe * 200));
+      stage.innerHTML =
+        '<div class="sample-bell" data-scrub="n">' +
+        '<svg viewBox="0 0 100 56" preserveAspectRatio="none" aria-hidden="true">' +
+        '<path class="curve" d="M0,52 C18,52 22,' + Math.max(4, Math.min(40, 8 + moe * 120)).toFixed(1) + ' 50,' + Math.max(4, Math.min(40, 8 + moe * 80)).toFixed(1) + ' C78,' + Math.max(4, Math.min(40, 8 + moe * 120)).toFixed(1) + ' 82,52 100,52"/>' +
+        '<rect class="moe" x="' + bandL.toFixed(1) + '" y="6" width="' + bandW.toFixed(1) + '" height="46"/>' +
+        '</svg>' +
+        '<div class="baseline"><i class="head" data-scrub="p" style="left:' + mid.toFixed(1) + '%"></i></div>' +
+        '<div class="conf-rail is-legend">' +
+        '<div class="band" style="top:' + (100 - hi) + '%;height:' + Math.max(1, hi - lo) + '%"></div>' +
+        '<div class="head" style="top:' + (100 - mid) + '%"></div>' +
+        '</div></div>';
+    }
+    IBMNumberTool.afterPaint && IBMNumberTool.afterPaint();
+  }
+  function render(){
+    var n = Math.max(1, parseInt(document.getElementById('n').value, 10) || 1);
+    var z = parseFloat(document.getElementById('z').value) || 1.96;
+    var conf = ({ '1.645': '90%', '1.96': '95%', '2.576': '99%' })[String(z)] || '95%';
+    var p = Math.max(0, Math.min(1, (parseFloat(document.getElementById('p').value) || 50) / 100));
+    var moe = z * Math.sqrt(p * (1 - p) / n);
+    document.getElementById('out').textContent = '±' + (moe * 100).toFixed(1) + '%';
+    document.getElementById('sub').textContent =
+      'yes ' + Math.round(p * 100) + '% of ' + n + ' · ' + conf + ' confidence';
+    var mode = IBMNumberTool.vizMode ? IBMNumberTool.vizMode(S()) : 'viz';
+    if (mode === 'deep') IBMNumberTool.paintDeep('sample', stage, { n: n, share: p, moe: moe, z: z });
+    else if (mode !== 'plain') paint(p, moe);
+    else stage.innerHTML = '';
+    if (presets) presets.sync();
+  }
+  window.__ibmToolRender = render;
+  ['n','p','z'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+    document.getElementById(id).addEventListener('change', render);
+  });
+
+  var presets = IBMNumberTool.bindPresets('#presets', {
+    keys: ["n","p","z"],
+    map: null,
+    after: function () { render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light' | 'hc' | 'electric' | 'paper';
+type Theme = 'dark' | 'light' | 'hc' | 'electric' | 'paper' | 'forest';
 type Font = 'geist' | 'ibm-plex' | 'inter' | 'work-sans' | 'space-grotesk' | 'dm-sans' | 'libre-baskerville' | 'lora' | 'manrope' | 'jetbrains-mono' | 'fira-code';
 
 function getStoredTheme(): Theme | null {
@@ -163,6 +163,19 @@ export default function ThemeToggle() {
             <path d="M16 13H8"/>
             <path d="M16 17H8"/>
             <path d="M10 9H8"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          aria-pressed={theme === 'forest'}
+          aria-label="Forest theme"
+          onClick={() => setTheme('forest')}
+          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+        >
+          {/* tree/leaf icon */}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 2C8 2 5 5 5 9c0 5 4 8 7 12 3-4 7-7 7-12 0-4-3-7-7-7z"/>
+            <path d="M12 2v20"/>
           </svg>
         </button>
       </div>

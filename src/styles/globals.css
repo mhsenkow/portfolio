@@ -1,6 +1,9 @@
 @layer resets, tokens, base, components, utilities;
 
-@import './tokens.css' layer(tokens);
+/* Import without `layer()` — Next/LightningCSS turns
+   `@import ... layer(tokens)` into invalid `@media layer(tokens)`,
+   which browsers ignore, so all theme variables disappear. */
+@import './tokens.css';
 
 @layer resets {
   *, *::before, *::after { box-sizing: border-box; }
@@ -13,6 +16,7 @@
   :root[data-theme="dark"] { color-scheme: dark; }
   :root[data-theme="light"] { color-scheme: light; }
   :root[data-theme="hc"] { color-scheme: dark; }
+  :root[data-theme="forest"] { color-scheme: dark; }
   
   /* font switching via data-font attribute on html element */
   html[data-font="geist"] { --font-sans: var(--font-geist); }

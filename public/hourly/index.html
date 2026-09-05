@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto" data-show-viz="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>hourly — ibm.io</title>
+<meta name="description" content="rate · project">
+<link rel="canonical" href="https://ibm.io/hourly/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="../lib/number-tool.css?v=45">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+</head>
+<body class="tool-app" data-tool="hourly">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>hourly</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+<main>
+
+  <div class="face">
+    <div class="face-value" id="out" role="status" aria-live="polite" aria-atomic="true">$0</div>
+    <p class="face-sub" id="sub">project total</p>
+  </div>
+  <div class="stack">
+    <fieldset class="panel">
+      <legend>rate</legend>
+      <label class="row"><span class="key">$ / hour</span><span class="value"><input id="rate" type="number" inputmode="decimal" min="0" step="1" value="125" data-step-fast="10" aria-label="hourly rate"></span></label>
+      <label class="row"><span class="key">hours / day</span><span class="value"><input id="hpd" type="number" inputmode="decimal" min="0" step="0.5" value="6" aria-label="hours per day"></span></label>
+      <label class="row"><span class="key">days</span><span class="value"><input id="days" type="number" inputmode="decimal" min="0" step="0.5" value="10" data-primary data-axis="y" data-axis-x="hpd" data-pinch="rate" data-step-fast="5" data-gesture="1" aria-label="days"></span></label>
+    </fieldset>
+    <div class="presets" id="presets" role="group" aria-label="project presets" data-cols="4">
+      <button type="button" class="preset" data-rate="125" data-hpd="8" data-days="1" aria-pressed="false">day<span class="preset-meta">8h</span></button>
+      <button type="button" class="preset" data-rate="125" data-hpd="6" data-days="5" aria-pressed="false">week<span class="preset-meta">30h</span></button>
+      <button type="button" class="preset" data-rate="150" data-hpd="6" data-days="10" aria-pressed="true">sprint<span class="preset-meta">60h</span></button>
+      <button type="button" class="preset" data-rate="100" data-hpd="4" data-days="20" aria-pressed="false">month<span class="preset-meta">80h</span></button>
+    </div>
+  </div>
+</main>
+<script src="../lib/suite.js?v=47"></script>
+<script src="../lib/number-tool.js?v=45"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('hourly');
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'hourly',
+    about: "Hourly ↔ day rate ↔ project total. Calendar strip: weeks as rows, days as hour ladders.",
+    hasViz: true,
+    extra: {"defaults":{"grain":"days","showRate":"tint"},"fieldsHtml":"<fieldset><legend>grain</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"calendar grain\"><label><input type=\"radio\" name=\"grain\" value=\"days\"><span>days</span></label><label><input type=\"radio\" name=\"grain\" value=\"weeks\"><span>weeks</span></label></div></fieldset><fieldset><legend>rate</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"rate tint\"><label><input type=\"radio\" name=\"showRate\" value=\"off\"><span>off</span></label><label><input type=\"radio\" name=\"showRate\" value=\"tint\"><span>tint</span></label></div></fieldset>"},
+    onApply: function () {
+      if (typeof window.__ibmToolRender === 'function') window.__ibmToolRender();
+    }
+  });
+
+  var stage = IBMNumberTool.ensureStage('hourly');
+  function S(){ return (toolUI && toolUI.settings) || {}; }
+  function money(n){ return IBMNumberTool.formatMoney(n); }
+  function paint(days, hpd, rate){
+    var grain = S().grain || 'days';
+    var showRate = S().showRate || 'tint';
+    var d = Math.max(0, Math.min(28, Math.round(days)));
+    var slots = Math.max(1, Math.min(12, Math.round(hpd) || 1));
+    var worked = Math.max(0, Math.min(slots, Math.round(hpd)));
+    var tint = showRate === 'tint' ? Math.max(8, Math.min(72, rate / 4)) : 0;
+    var html = '<div class="cal-strip" data-grain="' + grain + '" style="--rate-tint:' + tint + '%">';
+    if (grain === 'weeks') {
+      var weeks = Math.max(1, Math.ceil(d / 7));
+      for (var w = 0; w < weeks; w++) {
+        html += '<div class="cal-week">';
+        for (var day = 0; day < 7; day++) {
+          var idx = w * 7 + day;
+          if (idx >= d) { html += '<div class="day is-empty"></div>'; continue; }
+          html += '<div class="day" data-scrub="days">';
+          for (var s = 0; s < slots; s++) html += '<i class="' + (s < worked ? 'on' : '') + '"></i>';
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+    } else {
+      html += '<div class="day-cols">';
+      for (var i = 0; i < d; i++) {
+        html += '<div class="day" data-scrub="days">';
+        for (var s2 = 0; s2 < slots; s2++) html += '<i class="' + (s2 < worked ? 'on' : '') + '"></i>';
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+    html += '</div>';
+    stage.innerHTML = html;
+    IBMNumberTool.afterPaint && IBMNumberTool.afterPaint();
+  }
+  function render(){
+    var rate = Math.max(0, parseFloat(document.getElementById('rate').value) || 0);
+    var hpd = Math.max(0, parseFloat(document.getElementById('hpd').value) || 0);
+    var days = Math.max(0, parseFloat(document.getElementById('days').value) || 0);
+    var hours = hpd * days;
+    var total = rate * hours;
+    var dayRate = rate * hpd;
+    document.getElementById('out').textContent = money(total);
+    document.getElementById('sub').textContent =
+      'day rate ' + money(dayRate) + (hours ? ' · ' + hours + 'h' : '');
+    var mode = IBMNumberTool.vizMode ? IBMNumberTool.vizMode(S()) : 'viz';
+    if (mode === 'deep') IBMNumberTool.paintDeep('hourly', stage, { rate: rate, days: days, hpd: hpd });
+    else if (mode !== 'plain') paint(days, hpd, rate);
+    else stage.innerHTML = '';
+    if (presets) presets.sync();
+  }
+  window.__ibmToolRender = render;
+  ['rate','hpd','days'].forEach(function(id){ document.getElementById(id).addEventListener('input', render); });
+
+  var presets = IBMNumberTool.bindPresets('#presets', {
+    keys: ["rate","hpd","days"],
+    map: null,
+    after: function () { render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

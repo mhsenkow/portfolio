@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto" data-show-viz="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>odds — ibm.io</title>
+<meta name="description" content="avg · bet">
+<link rel="canonical" href="https://ibm.io/odds/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="../lib/number-tool.css?v=45">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+</head>
+<body class="tool-app" data-tool="odds">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>odds</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+<main>
+
+  <div class="face">
+    <div class="face-value" id="out" role="status" aria-live="polite" aria-atomic="true">0</div>
+    <p class="face-sub" id="sub">avg $ per play</p>
+  </div>
+  <div class="stack">
+    <fieldset class="panel">
+      <legend>bet</legend>
+      <label class="row"><span class="key">chance</span><span class="value"><input id="p" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="12" data-primary data-axis="y" data-axis-x="win" data-step-fast="1" data-gesture="1" aria-label="win chance percent"><span class="unit">%</span></span></label>
+      <label class="row"><span class="key">win $</span><span class="value"><input id="win" type="number" inputmode="decimal" step="1" value="100" data-step-fast="10" aria-label="dollars if you win"></span></label>
+      <label class="row"><span class="key">lose $</span><span class="value"><input id="lose" type="number" inputmode="decimal" step="1" value="-20" aria-label="dollars if you lose"></span></label>
+    </fieldset>
+    <div class="presets" id="presets" role="group" aria-label="bet presets" data-cols="4">
+      <button type="button" class="preset" data-p="50" data-win="10" data-lose="-10" aria-pressed="false">even<span class="preset-meta">50/50</span></button>
+      <button type="button" class="preset" data-p="12" data-win="100" data-lose="-20" aria-pressed="true">long<span class="preset-meta">longshot</span></button>
+      <button type="button" class="preset" data-p="48.6" data-win="10" data-lose="-10" aria-pressed="false">coin<span class="preset-meta">fair-ish</span></button>
+      <button type="button" class="preset" data-p="25" data-win="30" data-lose="-10" aria-pressed="false">3∶1<span class="preset-meta">odds</span></button>
+    </div>
+    <p class="note">above zero = pays you over many plays</p>
+  </div>
+</main>
+<script src="../lib/suite.js?v=47"></script>
+<script src="../lib/number-tool.js?v=45"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('odds');
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'odds',
+    about: "Average dollars each time you take a bet — not a bookmaker’s odds line. Chance × win $ plus (100 − chance) × lose $ (lose is usually negative).",
+    hasViz: true,
+    extra: {"defaults":{"frame":"seesaw"},"fieldsHtml":"<fieldset><legend>frame</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"odds frame\"><label><input type=\"radio\" name=\"frame\" value=\"seesaw\"><span>seesaw</span></label><label><input type=\"radio\" name=\"frame\" value=\"field\"><span>field</span></label></div></fieldset>"},
+    onApply: function () {
+      if (typeof window.__ibmToolRender === 'function') window.__ibmToolRender();
+    }
+  });
+
+  var stage = IBMNumberTool.ensureStage('odds');
+  function S(){ return (toolUI && toolUI.settings) || {}; }
+  function paint(ev, p, win, lose){
+    var frame = S().frame || 'seesaw';
+    if (frame === 'field') {
+      var span = Math.max(Math.abs(ev) * 2, 1);
+      var pct = 50 + (ev / span) * 45;
+      pct = Math.max(5, Math.min(95, pct));
+      var on = Math.round(Math.max(0, Math.min(100, p * 100)) / 10);
+      var dots = '';
+      for (var i = 0; i < 10; i++) dots += '<i class="' + (i < on ? 'on' : '') + '"></i>';
+      stage.innerHTML =
+        '<div class="signed-field"><div class="lose" data-scrub="lose"></div><div class="win" data-scrub="win"></div>' +
+        '<div class="zero"></div>' +
+        '<div class="ev-mark' + (ev < 0 ? ' is-neg' : '') + '" style="left:' + pct + '%"></div>' +
+        '<div class="chance-dots" data-scrub="p">' + dots + '</div></div>';
+    } else {
+      var tilt = Math.max(-18, Math.min(18, ev * 2));
+      var weights = Math.max(1, Math.min(12, Math.round(p * 12)));
+      var html = '<div class="seesaw" style="--tilt:' + tilt.toFixed(1) + 'deg">';
+      html += '<div class="beam"><div class="plate lose" data-scrub="lose"><em>lose</em><span>' + lose + '</span></div>';
+      html += '<div class="fulcrum" data-scrub="p"></div>';
+      html += '<div class="plate win" data-scrub="win"><em>win</em><span>' + win + '</span><div class="weights">';
+      for (var w = 0; w < weights; w++) html += '<i></i>';
+      html += '</div></div></div>';
+      html += '<div class="ev-balance">' + (ev >= 0 ? '+' : '') + ev.toFixed(2) + '</div></div>';
+      stage.innerHTML = html;
+    }
+    IBMNumberTool.afterPaint && IBMNumberTool.afterPaint();
+  }
+  function money(n, face){
+    var s = face ? Number(n).toFixed(2) : String(Math.round(n * 100) / 100);
+    return (Number(s) >= 0 ? '+' : '') + s;
+  }
+  function render(){
+    var p = Math.max(0, Math.min(100, parseFloat(document.getElementById('p').value) || 0)) / 100;
+    var win = parseFloat(document.getElementById('win').value) || 0;
+    var lose = parseFloat(document.getElementById('lose').value) || 0;
+    var ev = p * win + (1 - p) * lose;
+    document.getElementById('out').textContent = money(ev, true);
+    document.getElementById('sub').textContent =
+      (p * 100).toFixed(1) + '% of ' + money(win) + ' · ' + ((1 - p) * 100).toFixed(1) + '% of ' + money(lose);
+    var mode = IBMNumberTool.vizMode ? IBMNumberTool.vizMode(S()) : 'viz';
+    if (mode === 'deep') IBMNumberTool.paintDeep('odds', stage, { p: p, win: win, lose: lose, ev: ev });
+    else if (mode !== 'plain') paint(ev, p, win, lose);
+    else stage.innerHTML = '';
+    if (presets) presets.sync();
+  }
+  window.__ibmToolRender = render;
+
+  var presets = IBMNumberTool.bindPresets('#presets', {
+    keys: ["p","win","lose"],
+    map: null,
+    after: function () { render(); }
+  });
+  ['p','win','lose'].forEach(function(id){ document.getElementById(id).addEventListener('input', render); });
+  render();
+})();
+</script>
+</body>
+</html>

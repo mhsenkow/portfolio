@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto" data-show-viz="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>exposure — ibm.io</title>
+<meta name="description" content="iso · shutter">
+<link rel="canonical" href="https://ibm.io/exposure/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="../lib/number-tool.css?v=45">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+</head>
+<body class="tool-app" data-tool="exposure">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>exposure</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+<main>
+
+  <div class="face">
+    <div class="face-value" id="out" role="status" aria-live="polite" aria-atomic="true">EV 0</div>
+    <p class="face-sub" id="sub">exposure value</p>
+  </div>
+  <div class="stack">
+    <fieldset class="panel">
+      <legend>triangle</legend>
+      <label class="row"><span class="key">ISO</span><span class="value"><select id="iso" aria-label="ISO"><option value="50">50</option><option value="100" selected>100</option><option value="200">200</option><option value="400">400</option><option value="800">800</option><option value="1600">1600</option><option value="3200">3200</option><option value="6400">6400</option></select></span></label>
+      <label class="row"><span class="key">ƒ</span><span class="value"><select id="fnum" aria-label="aperture" data-primary data-axis="y" data-axis-x="shut" data-pinch="iso" data-gesture="1"><option value="1.4">ƒ/1.4</option><option value="2">ƒ/2</option><option value="2.8">ƒ/2.8</option><option value="4">ƒ/4</option><option value="5.6">ƒ/5.6</option><option value="8">ƒ/8</option><option value="11">ƒ/11</option><option value="16" selected>ƒ/16</option><option value="22">ƒ/22</option></select></span></label>
+      <label class="row"><span class="key">shutter</span><span class="value"><select id="shut" aria-label="shutter speed"><option value="1000">1/1000</option><option value="500">1/500</option><option value="250">1/250</option><option value="125" selected>1/125</option><option value="60">1/60</option><option value="30">1/30</option><option value="15">1/15</option><option value="8">1/8</option><option value="4">1/4</option><option value="2">1/2</option><option value="1">1″</option></select></span></label>
+    </fieldset>
+    <div class="presets" id="presets" role="group" aria-label="sunny 16 presets" data-cols="4">
+      <button type="button" class="preset" data-iso="100" data-fnum="16" data-shut="125" aria-pressed="true">sunny<span class="preset-meta">ƒ/16</span></button>
+      <button type="button" class="preset" data-iso="100" data-fnum="11" data-shut="125" aria-pressed="false">haze<span class="preset-meta">ƒ/11</span></button>
+      <button type="button" class="preset" data-iso="400" data-fnum="5.6" data-shut="250" aria-pressed="false">shade<span class="preset-meta">ƒ/5.6</span></button>
+      <button type="button" class="preset" data-iso="800" data-fnum="2.8" data-shut="60" aria-pressed="false">dim<span class="preset-meta">ƒ/2.8</span></button>
+    </div>
+  </div>
+</main>
+<script src="../lib/suite.js?v=47"></script>
+<script src="../lib/number-tool.js?v=45"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('exposure');
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'exposure',
+    about: "Exposure value from ISO, aperture, and shutter. Triangle instrument with sunny-16 reference.",
+    hasViz: true,
+    extra: {"defaults":{"ref":"sunny16","triangle":"filled"},"fieldsHtml":"<fieldset><legend>ref</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"face reference\"><label><input type=\"radio\" name=\"ref\" value=\"sunny16\"><span>sunny 16</span></label><label><input type=\"radio\" name=\"ref\" value=\"ev\"><span>ev</span></label></div></fieldset><fieldset><legend>triangle</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"triangle style\"><label><input type=\"radio\" name=\"triangle\" value=\"filled\"><span>filled</span></label><label><input type=\"radio\" name=\"triangle\" value=\"wire\"><span>wire</span></label></div></fieldset>"},
+    onApply: function () {
+      if (typeof window.__ibmToolRender === 'function') window.__ibmToolRender();
+    }
+  });
+
+  var stage = IBMNumberTool.ensureStage('exposure');
+  function S(){ return (toolUI && toolUI.settings) || {}; }
+  function paint(ev, iso, f, shutN){
+    var style = S().triangle || 'filled';
+    var t = Math.max(0.15, Math.min(1, (ev + 2) / 18));
+    var wi = Math.max(0.05, Math.log(iso / 25) / Math.log(3200 / 25));
+    var wf = Math.max(0.05, Math.log(f / 0.5) / Math.log(22));
+    var ws = Math.max(0.05, Math.log(shutN / 1) / Math.log(2000));
+    var s = wi + wf + ws;
+    var cx = (50 * wi + 94 * wf + 6 * ws) / s;
+    var cy = (6 * wi + 80 * wf + 80 * ws) / s;
+    var html = '<div class="exp-instrument" data-style="' + style + '" style="--glow:' + t.toFixed(3) + '">';
+    html += '<svg viewBox="0 0 100 86" aria-hidden="true">';
+    html += '<polygon class="tri" points="50,6 94,80 6,80"/>';
+    html += '<text class="ax" x="50" y="4" text-anchor="middle">ISO</text>';
+    html += '<text class="ax" x="96" y="84" text-anchor="end">ƒ</text>';
+    html += '<text class="ax" x="4" y="84" text-anchor="start">shut</text>';
+    html += '<circle class="locus" cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="3.2"/>';
+    html += '<line class="sunny" x1="18" y1="42" x2="82" y2="42"/>';
+    html += '</svg>';
+    html += '<div class="exp-labels"><span data-scrub="iso">ISO ' + iso + '</span><span data-scrub="fnum">ƒ/' + f + '</span><span data-scrub="shut">1/' + shutN + '</span></div>';
+    html += '</div>';
+    stage.innerHTML = html;
+    IBMNumberTool.afterPaint && IBMNumberTool.afterPaint();
+  }
+  function render(){
+    var iso = Math.max(25, parseFloat(document.getElementById('iso').value) || 100);
+    var f = Math.max(0.5, parseFloat(document.getElementById('fnum').value) || 1);
+    var shutN = Math.max(1, parseFloat(document.getElementById('shut').value) || 1);
+    var tt = 1 / shutN;
+    var ev = Math.log((f * f) / tt) / Math.LN2 - Math.log(iso / 100) / Math.LN2;
+    var sunnyDelta = ev - 15;
+    var ref = S().ref || 'sunny16';
+    document.getElementById('out').textContent = 'EV ' + (Math.round(ev * 10) / 10);
+    if (ref === 'ev') {
+      document.getElementById('sub').textContent = 'ƒ/' + f + ' · 1/' + shutN + ' · ISO ' + iso;
+    } else {
+      document.getElementById('sub').textContent =
+        'ƒ/' + f + ' · 1/' + shutN + ' · ISO ' + iso +
+        (Math.abs(sunnyDelta) < 0.15
+          ? ' · sunny 16'
+          : ' · ' + (sunnyDelta > 0 ? '+' : '') + (Math.round(sunnyDelta * 10) / 10) + ' from sunny 16');
+    }
+    var mode = IBMNumberTool.vizMode ? IBMNumberTool.vizMode(S()) : 'viz';
+    if (mode === 'deep') IBMNumberTool.paintDeep('exposure', stage, { iso: iso, fnum: f, shutN: shutN, ev: ev });
+    else if (mode !== 'plain') paint(ev, iso, f, shutN);
+    else stage.innerHTML = '';
+    if (presets) presets.sync();
+  }
+  window.__ibmToolRender = render;
+
+  var presets = IBMNumberTool.bindPresets('#presets', {
+    keys: ["iso","fnum","shut"],
+    map: null,
+    after: function () { render(); }
+  });
+  ['iso','fnum','shut'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+    document.getElementById(id).addEventListener('change', render);
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto" data-show-viz="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>fuel — ibm.io</title>
+<meta name="description" content="mpg · trip cost">
+<link rel="canonical" href="https://ibm.io/fuel/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="../lib/number-tool.css?v=45">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+</head>
+<body class="tool-app" data-tool="fuel">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>fuel</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+<main>
+
+  <div class="face">
+    <div class="face-value" id="out" role="status" aria-live="polite" aria-atomic="true">$0</div>
+    <p class="face-sub" id="sub">trip fuel cost</p>
+  </div>
+  <div class="stack">
+    <fieldset class="panel">
+      <legend>trip</legend>
+      <label class="row"><span class="key">miles</span><span class="value"><input id="miles" type="number" inputmode="decimal" min="0" step="5" value="320" data-primary data-axis="y" data-axis-x="mpg" data-pinch="price" data-step-fast="25" data-gesture="1" aria-label="miles"></span></label>
+      <label class="row"><span class="key">mpg</span><span class="value"><input id="mpg" type="number" inputmode="decimal" min="0.1" step="0.1" value="28" aria-label="miles per gallon"></span></label>
+      <label class="row"><span class="key">$ / gal</span><span class="value"><input id="price" type="number" inputmode="decimal" min="0" step="0.01" value="3.89" data-step-fast="0.1" aria-label="dollars per gallon"></span></label>
+    </fieldset>
+    <div class="presets" id="presets" role="group" aria-label="trip presets" data-cols="4">
+      <button type="button" class="preset" data-miles="30" data-mpg="28" data-price="3.89" aria-pressed="false">commute<span class="preset-meta">30 mi</span></button>
+      <button type="button" class="preset" data-miles="320" data-mpg="28" data-price="3.89" aria-pressed="true">road<span class="preset-meta">320 mi</span></button>
+      <button type="button" class="preset" data-miles="12" data-mpg="22" data-price="4.29" aria-pressed="false">city<span class="preset-meta">thirsty</span></button>
+      <button type="button" class="preset" data-miles="450" data-mpg="34" data-price="3.69" aria-pressed="false">hwy<span class="preset-meta">efficient</span></button>
+    </div>
+  </div>
+</main>
+<script src="../lib/suite.js?v=47"></script>
+<script src="../lib/number-tool.js?v=45"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('fuel');
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'fuel',
+    about: "Miles ÷ mpg × price. Tank fill = gallons; route ticks = miles with cost at the nose.",
+    hasViz: true,
+    extra: {"defaults":{"focus":"tank"},"fieldsHtml":"<fieldset><legend>focus</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"stage focus\"><label><input type=\"radio\" name=\"focus\" value=\"tank\"><span>tank</span></label><label><input type=\"radio\" name=\"focus\" value=\"route\"><span>route</span></label></div></fieldset>"},
+    onApply: function () {
+      if (typeof window.__ibmToolRender === 'function') window.__ibmToolRender();
+    }
+  });
+
+  var stage = IBMNumberTool.ensureStage('fuel');
+  function S(){ return (toolUI && toolUI.settings) || {}; }
+  function paint(gal, miles, cost){
+    var focus = S().focus || 'tank';
+    var fill = Math.max(4, Math.min(96, Math.min(1, gal / 20) * 100));
+    var ticks = Math.max(4, Math.min(24, Math.round(miles / 20) || 4));
+    var html = '<div class="tank-route" data-focus="' + focus + '">';
+    html += '<div class="fuel-tank" data-scrub="mpg" style="--fill:' + fill.toFixed(1) + '%"><i></i><em>' + gal.toFixed(1) + ' gal</em></div>';
+    html += '<div class="fuel-route" data-scrub="miles"><div class="route-line">';
+    for (var i = 0; i < ticks; i++) html += '<i></i>';
+    html += '</div><span class="route-nose" data-scrub="price">' + IBMNumberTool.formatMoney(cost, { forceCents: true }) + '</span>';
+    html += '<span class="route-cap">' + miles.toFixed(0) + ' mi</span></div></div>';
+    stage.innerHTML = html;
+    IBMNumberTool.afterPaint && IBMNumberTool.afterPaint();
+  }
+  function render(){
+    var miles = Math.max(0, parseFloat(document.getElementById('miles').value) || 0);
+    var mpg = Math.max(0.01, parseFloat(document.getElementById('mpg').value) || 0.01);
+    var price = Math.max(0, parseFloat(document.getElementById('price').value) || 0);
+    var gal = miles / mpg;
+    var cost = gal * price;
+    var l100 = 235.215 / mpg;
+    document.getElementById('out').textContent = IBMNumberTool.formatMoney(cost, { forceCents: true });
+    document.getElementById('sub').textContent =
+      gal.toFixed(1) + ' gal · ' + l100.toFixed(1) + ' L/100km · ' + IBMNumberTool.formatMoney(price / mpg, { forceCents: true }) + '/mi';
+    var mode = IBMNumberTool.vizMode ? IBMNumberTool.vizMode(S()) : 'viz';
+    if (mode === 'deep') IBMNumberTool.paintDeep('fuel', stage, { miles: miles, mpg: mpg, price: price });
+    else if (mode !== 'plain') paint(gal, miles, cost);
+    else stage.innerHTML = '';
+    if (presets) presets.sync();
+  }
+  window.__ibmToolRender = render;
+  ['miles','mpg','price'].forEach(function(id){ document.getElementById(id).addEventListener('input', render); });
+
+  var presets = IBMNumberTool.bindPresets('#presets', {
+    keys: ["miles","mpg","price"],
+    map: null,
+    after: function () { render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
