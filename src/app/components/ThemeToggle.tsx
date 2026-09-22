@@ -11,6 +11,7 @@ import {
   type Font,
   type Theme,
 } from "@/theme/system";
+import { ensureOptionalFontClass } from "@/theme/optional-fonts";
 
 function getStoredTheme(): Theme | null {
   try {
@@ -50,10 +51,11 @@ function storeFont(font: Font) {
   }
 }
 
-/** Font stacks are applied via `html[data-font]` CSS — no inline styles. */
+/** Font stacks via `html[data-font]` + on-demand next/font CSS vars. */
 function applyFont(font: Font) {
   if (typeof document === "undefined") return;
   document.documentElement.setAttribute("data-font", font);
+  ensureOptionalFontClass(font);
 }
 
 type Props = {

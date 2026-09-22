@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, IBM_Plex_Sans, Inter, Work_Sans, Space_Grotesk, DM_Sans, Libre_Baskerville, Lora, Manrope, JetBrains_Mono, Fira_Code } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Nav } from "./components/Nav";
 import { LightboxProvider } from "./components/Lightbox";
 import { IntroModal } from "./components/IntroModal";
@@ -7,6 +7,7 @@ import Script from "next/script";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/content/site";
 import "@/styles/globals.css";
 
+/** Default stack only — optional typefaces load on demand via ThemeToggle. */
 const geistSans = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
@@ -15,61 +16,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-const ibmPlex = IBM_Plex_Sans({
-  weight: ['400', '500', '600'],
-  variable: "--font-ibm-plex",
-  subsets: ["latin"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const workSans = Work_Sans({
-  variable: "--font-work-sans",
-  subsets: ["latin"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-});
-
-const libreBaskerville = Libre_Baskerville({
-  variable: "--font-libre-baskerville",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-const lora = Lora({
-  variable: "--font-lora",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
-
-const firaCode = Fira_Code({
-  variable: "--font-fira-code",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -154,7 +100,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${libreBaskerville.variable} ${lora.variable} ${manrope.variable} ${jetBrainsMono.variable} ${firaCode.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body>
         {/* Critical: cover before globals.css arrives — CSS latency, not JS */}

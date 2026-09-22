@@ -56,7 +56,7 @@ export function useLightbox() {
   return ctx;
 }
 
-export function LightboxImage({ src, alt, group, index, width, height, sizes, className, style }: {
+export function LightboxImage({ src, alt, group, index, width, height, sizes, className, style, unoptimized = true }: {
   src: string;
   alt: string;
   group: { src: string; alt: string }[];
@@ -66,11 +66,13 @@ export function LightboxImage({ src, alt, group, index, width, height, sizes, cl
   sizes?: string;
   className?: string;
   style?: React.CSSProperties;
+  /** Keep true where CF Images 400s; false for panel thumbs. */
+  unoptimized?: boolean;
 }) {
   const { open } = useLightbox();
   return (
     <button type="button" onClick={() => open(group, index)} aria-label="Open image" style={{ appearance: 'none', padding: 0, border: 0, background: 'transparent', display: 'block', width: '100%' }}>
-      <Image src={src} alt={alt} width={width ?? 1600} height={height ?? 900} sizes={sizes} unoptimized className={className} style={style} />
+      <Image src={src} alt={alt} width={width ?? 1600} height={height ?? 900} sizes={sizes} unoptimized={unoptimized} quality={75} className={className} style={style} />
     </button>
   );
 }

@@ -1,18 +1,13 @@
-"use client";
-
 import { projects } from "@/content/projects";
-import { GridWithHoverPanel } from "@/app/all-experiences/GridWithHoverPanel";
-import { openIntroModal } from "@/app/components/IntroModal";
+import { toProjectCards } from "@/content/project-card";
+import { HomeGrid } from "./HomeGrid";
 
 export default function Home() {
+  const cards = toProjectCards(projects);
   return (
     <main id="content">
       <section className="container" style={{ padding: "var(--space-6) 0 var(--space-12)" }}>
-        <GridWithHoverPanel
-          items={projects}
-          title="Work"
-          onTitleClick={openIntroModal}
-        />
+        <HomeGrid items={cards} />
       </section>
     </main>
   );

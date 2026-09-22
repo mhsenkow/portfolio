@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import type { Project } from "@/content/projects";
+import type { ProjectCard } from "@/content/project-card";
 import { LightboxImage } from "@/app/components/Lightbox";
 import {
   INTRO_STATE_EVENT,
@@ -19,15 +18,18 @@ import {
   type FilterOption,
   type SortOption,
 } from "@/app/components/SortFilterBar";
-import { itemTransition } from "@/theme/motion";
 import { warmGridImages } from "./warmGridImages";
 import styles from "./GridWithHoverPanel.module.css";
 
 type Props = {
-  items: Project[];
+  items: ProjectCard[];
   title?: string;
   onTitleClick?: () => void;
 };
+
+const EAGER_COUNT = 6;
+const WARM_INTRO = 12;
+const WARM_IDLE = 8;
 
 function GridTileImage({
   src,
@@ -72,10 +74,9 @@ function GridTileImage({
 }
 
 export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Props) {
-  const [hovered, setHovered] = useState<Project | null>(null);
+  const [hovered, setHovered] = useState<ProjectCard | null>(null);
   const [mountNode, setMountNode] = useState<Element | null>(null);
   const [introOpen, setIntroOpen] = useState(false);
-  const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(() => {
     if (typeof window === "undefined") return true;
     return window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? false : true;
@@ -105,16 +106,15 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     document.body.setAttribute("data-right-panel", open ? "open" : "closed");
   }, [open]);
 
-  // Warm thumbs as soon as the grid mounts (and harder while the intro curtain is up).
   useEffect(() => {
-    warmGridImages(items, introOpen ? 36 : 16);
+    warmGridImages(items, introOpen ? WARM_INTRO : WARM_IDLE);
   }, [items, introOpen]);
 
   useEffect(() => {
     function onIntroState(e: Event) {
       const detail = (e as CustomEvent<IntroStateDetail>).detail;
       setIntroOpen(Boolean(detail?.open));
-      if (detail?.open) warmGridImages(items, 36);
+      if (detail?.open) warmGridImages(items, WARM_INTRO);
     }
     window.addEventListener(INTRO_STATE_EVENT, onIntroState);
     return () => window.removeEventListener(INTRO_STATE_EVENT, onIntroState);
@@ -143,7 +143,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
           {hovered ? (
             <>
               <p className="work-panel__meta">
-                {hovered.details?.entity || hovered.year || "project"}
+                {hovered.entity || hovered.year || "project"}
                 {hovered.year ? ` · ${hovered.year}` : ""}
               </p>
               <h2 className="work-panel__title">{hovered.title}</h2>
@@ -155,8 +155,10 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                     alt={hovered.image.alt}
                     group={[{ src: hovered.image.src, alt: hovered.image.alt }]}
                     index={0}
-                    width={1200}
-                    height={800}
+                    width={720}
+                    height={450}
+                    sizes="360px"
+                    unoptimized={false}
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
                 </div>
@@ -177,8 +179,6 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     ),
     [hovered, open]
   );
-
-  const eagerCount = introOpen ? 24 : 12;
 
   return (
     <div className={styles.work}>
@@ -207,54 +207,46 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         />
       </div>
 
-      <motion.div className={styles.grid} layout>
-        <AnimatePresence mode="popLayout">
-          {processedItems.map((p, index) => (
-            <motion.div
-              key={p.slug}
-              layout={!reduceMotion}
-              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
-              transition={itemTransition(
-                reduceMotion,
-                reduceMotion ? 0 : Math.min(index * 0.012, 0.16)
-              )}
+      <div className={styles.grid}>
+        {processedItems.map((p, index) => (
+          <div
+            key={p.slug}
+            className={styles.tileWrap}
+            style={{ "--tile-i": index } as CSSProperties}
+            onMouseEnter={() => setHovered(p)}
+            onPointerEnter={() => setHovered(p)}
+            onFocus={() => setHovered(p)}
+            onBlur={() => setHovered((cur) => (cur?.slug === p.slug ? null : cur))}
+          >
+            <Link
+              href={`/projects/${p.slug}`}
+              className={`${styles.tile} glass-card is-interactive`}
+              data-active={hovered?.slug === p.slug ? "true" : undefined}
               onMouseEnter={() => setHovered(p)}
-              onPointerEnter={() => setHovered(p)}
               onFocus={() => setHovered(p)}
-              onBlur={() => setHovered((cur) => (cur?.slug === p.slug ? null : cur))}
+              onTouchStart={() => setHovered(p)}
             >
-              <Link
-                href={`/projects/${p.slug}`}
-                className={`${styles.tile} glass-card is-interactive`}
-                data-active={hovered?.slug === p.slug ? "true" : undefined}
-                onMouseEnter={() => setHovered(p)}
-                onFocus={() => setHovered(p)}
-                onTouchStart={() => setHovered(p)}
-              >
-                {p.image ? (
-                  <GridTileImage
-                    src={p.image.src}
-                    alt={p.image.alt}
-                    priority={index < eagerCount}
-                  />
-                ) : (
-                  <div className={styles.thumb} data-loaded="false">
-                    <span className={styles.thumbFiller} aria-hidden="true">
-                      <span className={styles.thumbFillerSweep} />
-                    </span>
-                  </div>
-                )}
-                <div className={styles.meta}>
-                  <span className={styles.year}>{p.year || "—"}</span>
-                  <h3 className={styles.tileTitle}>{p.title}</h3>
+              {p.image ? (
+                <GridTileImage
+                  src={p.image.src}
+                  alt={p.image.alt}
+                  priority={!introOpen && index < EAGER_COUNT}
+                />
+              ) : (
+                <div className={styles.thumb} data-loaded="false">
+                  <span className={styles.thumbFiller} aria-hidden="true">
+                    <span className={styles.thumbFillerSweep} />
+                  </span>
                 </div>
-              </Link>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
+              )}
+              <div className={styles.meta}>
+                <span className={styles.year}>{p.year || "—"}</span>
+                <h3 className={styles.tileTitle}>{p.title}</h3>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
 
       {mountNode ? createPortal(panel, mountNode) : panel}
     </div>

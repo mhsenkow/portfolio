@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import type { Project } from "@/content/projects";
-import { easeOut, springSnappy } from "@/theme/motion";
+import type { ProjectCard } from "@/content/project-card";
 
 export type SortOption = "year-desc" | "year-asc" | "title-asc" | "title-desc";
 export type FilterOption = "all" | "featured" | "creative" | "microsoft" | "meta" | "ibm" | "apple";
@@ -18,6 +16,15 @@ interface SortFilterBarProps {
   leading?: ReactNode;
 }
 
+function matchesOrg(p: ProjectCard, org: string) {
+  const needle = org.toLowerCase();
+  return (
+    p.stack?.some((s) => s.toLowerCase().includes(needle)) ||
+    p.entity?.toLowerCase().includes(needle) ||
+    p.title.toLowerCase().includes(needle)
+  );
+}
+
 export function SortFilterBar({
   onSortChange,
   onFilterChange,
@@ -28,7 +35,6 @@ export function SortFilterBar({
   leading,
 }: SortFilterBarProps) {
   const [showFilters, setShowFilters] = useState(false);
-  const reduceMotion = useReducedMotion();
   const filtersRef = useRef<HTMLDivElement>(null);
 
   const sortOptions = [
@@ -53,18 +59,14 @@ export function SortFilterBar({
     const root = filtersRef.current;
     if (!root) return;
     const active = root.querySelector<HTMLElement>('[data-active="true"]');
+    const reduce =
+      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     active?.scrollIntoView({
-      behavior: reduceMotion ? "auto" : "smooth",
+      behavior: reduce ? "auto" : "smooth",
       inline: "nearest",
       block: "nearest",
     });
-  }, [currentFilter, showFilters, reduceMotion]);
-
-  const rowTransition = reduceMotion
-    ? { duration: 0 }
-    : { duration: 0.22, ease: easeOut };
-
-  const activePillTransition = springSnappy(reduceMotion);
+  }, [currentFilter, showFilters]);
 
   return (
     <div className="tool-bar">
@@ -105,52 +107,32 @@ export function SortFilterBar({
         </div>
       </div>
 
-      <AnimatePresence initial={false}>
-        {showFilters && (
-          <motion.div
-            ref={filtersRef}
-            className="tool-bar__filters"
-            role="group"
-            aria-label="Filters"
-            initial={reduceMotion ? false : { opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -4 }}
-            transition={rowTransition}
-          >
-            <LayoutGroup id="work-filters">
-              {filterOptions.map((option) => {
-                const active = currentFilter === option.value;
-                return (
-                  <button
-                    key={option.value}
-                    type="button"
-                    className="tool-bar__chip"
-                    data-active={active ? "true" : undefined}
-                    aria-pressed={active}
-                    onClick={() => onFilterChange(option.value)}
-                  >
-                    {active ? (
-                      <motion.span
-                        className="tool-bar__chip-pill"
-                        layoutId="work-filter-pill"
-                        transition={activePillTransition}
-                        aria-hidden="true"
-                      />
-                    ) : null}
-                    <span className="tool-bar__chip-label">{option.label}</span>
-                    <span className="tool-bar__chip-count">{option.count}</span>
-                  </button>
-                );
-              })}
-            </LayoutGroup>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showFilters && (
+        <div ref={filtersRef} className="tool-bar__filters" role="group" aria-label="Filters">
+          {filterOptions.map((option) => {
+            const active = currentFilter === option.value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                className="tool-bar__chip"
+                data-active={active ? "true" : undefined}
+                aria-pressed={active}
+                onClick={() => onFilterChange(option.value)}
+              >
+                {active ? <span className="tool-bar__chip-pill" aria-hidden="true" /> : null}
+                <span className="tool-bar__chip-label">{option.label}</span>
+                <span className="tool-bar__chip-count">{option.count}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
 
-export function sortProjects(projects: Project[], sort: SortOption): Project[] {
+export function sortProjects(projects: ProjectCard[], sort: SortOption): ProjectCard[] {
   const sorted = [...projects];
 
   switch (sort) {
@@ -167,74 +149,34 @@ export function sortProjects(projects: Project[], sort: SortOption): Project[] {
   }
 }
 
-export function filterProjects(projects: Project[], filter: FilterOption): Project[] {
+export function filterProjects(projects: ProjectCard[], filter: FilterOption): ProjectCard[] {
   switch (filter) {
     case "featured":
       return projects.filter((p) => p.featured === true);
     case "creative":
       return projects.filter((p) => p.category === "creative");
     case "microsoft":
-      return projects.filter(
-        (p) =>
-          p.stack?.some((s) => s.toLowerCase().includes("microsoft")) ||
-          p.details?.entity?.toLowerCase().includes("microsoft") ||
-          p.title.toLowerCase().includes("microsoft")
-      );
+      return projects.filter((p) => matchesOrg(p, "microsoft"));
     case "meta":
-      return projects.filter(
-        (p) =>
-          p.stack?.some((s) => s.toLowerCase().includes("meta")) ||
-          p.details?.entity?.toLowerCase().includes("meta") ||
-          p.title.toLowerCase().includes("meta")
-      );
+      return projects.filter((p) => matchesOrg(p, "meta"));
     case "ibm":
-      return projects.filter(
-        (p) =>
-          p.stack?.some((s) => s.toLowerCase().includes("ibm")) ||
-          p.details?.entity?.toLowerCase().includes("ibm") ||
-          p.title.toLowerCase().includes("ibm")
-      );
+      return projects.filter((p) => matchesOrg(p, "ibm"));
     case "apple":
-      return projects.filter(
-        (p) =>
-          p.stack?.some((s) => s.toLowerCase().includes("apple")) ||
-          p.details?.entity?.toLowerCase().includes("apple") ||
-          p.title.toLowerCase().includes("apple")
-      );
+      return projects.filter((p) => matchesOrg(p, "apple"));
     case "all":
     default:
       return projects;
   }
 }
 
-export function getFilterCounts(projects: Project[]) {
+export function getFilterCounts(projects: ProjectCard[]) {
   return {
     all: projects.length,
     featured: projects.filter((p) => p.featured === true).length,
     creative: projects.filter((p) => p.category === "creative").length,
-    microsoft: projects.filter(
-      (p) =>
-        p.stack?.some((s) => s.toLowerCase().includes("microsoft")) ||
-        p.details?.entity?.toLowerCase().includes("microsoft") ||
-        p.title.toLowerCase().includes("microsoft")
-    ).length,
-    meta: projects.filter(
-      (p) =>
-        p.stack?.some((s) => s.toLowerCase().includes("meta")) ||
-        p.details?.entity?.toLowerCase().includes("meta") ||
-        p.title.toLowerCase().includes("meta")
-    ).length,
-    ibm: projects.filter(
-      (p) =>
-        p.stack?.some((s) => s.toLowerCase().includes("ibm")) ||
-        p.details?.entity?.toLowerCase().includes("ibm") ||
-        p.title.toLowerCase().includes("ibm")
-    ).length,
-    apple: projects.filter(
-      (p) =>
-        p.stack?.some((s) => s.toLowerCase().includes("apple")) ||
-        p.details?.entity?.toLowerCase().includes("apple") ||
-        p.title.toLowerCase().includes("apple")
-    ).length,
+    microsoft: projects.filter((p) => matchesOrg(p, "microsoft")).length,
+    meta: projects.filter((p) => matchesOrg(p, "meta")).length,
+    ibm: projects.filter((p) => matchesOrg(p, "ibm")).length,
+    apple: projects.filter((p) => matchesOrg(p, "apple")).length,
   };
 }

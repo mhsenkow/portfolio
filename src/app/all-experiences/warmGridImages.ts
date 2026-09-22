@@ -1,10 +1,10 @@
 import { getImageProps } from "next/image";
-import type { Project } from "@/content/projects";
+import type { ProjectCard } from "@/content/project-card";
 
 const warmed = new Set<string>();
 
 /** Warm Next.js-optimized grid thumbs so decode happens behind the intro curtain. */
-export function warmGridImages(items: Project[], limit = 28) {
+export function warmGridImages(items: ProjectCard[], limit = 8) {
   if (typeof window === "undefined") return;
 
   const slice = items.filter((p) => p.image).slice(0, limit);
@@ -28,8 +28,8 @@ export function warmGridImages(items: Project[], limit = 28) {
       img.decoding = "async";
       img.src = href;
 
-      // Hint the browser for the first wave
-      if (warmed.size <= 12) {
+      // Hint the browser for the first wave only
+      if (warmed.size <= 3) {
         const link = document.createElement("link");
         link.rel = "preload";
         link.as = "image";
