@@ -167,14 +167,17 @@
     border-radius: 999px;
     display: grid;
     place-items: center;
-    background: var(--glass-2);
+    color: var(--color-text);
+    background: color-mix(in oklab, var(--color-bg-elev, var(--color-bg)) 28%, transparent);
     border: var(--border);
     box-shadow: var(--shadow-1);
     backdrop-filter: var(--glass-blur-2);
+    -webkit-backdrop-filter: var(--glass-blur-2);
     transition:
       transform var(--motion-fast) ease,
       box-shadow var(--motion-fast) ease,
-      border-color var(--motion-fast) ease;
+      border-color var(--motion-fast) ease,
+      background var(--motion-fast) ease;
     overflow: hidden;
     z-index: 30;
   }
@@ -184,13 +187,14 @@
     inset: 0;
     pointer-events: none;
     background: var(--glass-sheen);
-    opacity: 0.7;
+    opacity: 0.35;
   }
   .panel-handle:hover,
   .panel-handle:focus-visible {
     transform: translateY(-1px);
     border: var(--border-strong);
     box-shadow: var(--shadow-2);
+    background: color-mix(in oklab, var(--color-bg-elev, var(--color-bg)) 42%, transparent);
   }
   .panel-handle:active {
     transform: translateY(0) scale(0.98);
@@ -1065,10 +1069,12 @@
     width: 32px;
     height: 32px;
     border-radius: 999px;
-    background: var(--card-bg);
-    border: var(--card-border);
-    box-shadow: var(--card-shadow);
-    backdrop-filter: var(--card-blur);
+    /* See-through glass — do not inherit opaque card fill */
+    background: color-mix(in oklab, var(--color-bg-elev, var(--color-bg)) 28%, transparent);
+    border: var(--border-strong);
+    box-shadow: var(--shadow-1);
+    backdrop-filter: var(--glass-blur-2);
+    -webkit-backdrop-filter: var(--glass-blur-2);
   }
 
   /* system glass card — grid tiles, panels, featured cards, case-study rails */
