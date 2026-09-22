@@ -60,15 +60,28 @@ const EAGER_COUNT = 6;
 const WARM_INTRO = 12;
 const WARM_IDLE = 8;
 
+/** Must match next.config images.imageSizes / deviceSizes — unknown w → 400. */
+const ALLOWED_WIDTHS = [64, 96, 128, 256, 384, 440] as const;
+
 const DENSITY_THUMB: Record<GridDensity, { sizes: string; maxW: number }> = {
-  small: { sizes: "140px", maxW: 280 },
-  medium: { sizes: "180px", maxW: 360 },
+  small: { sizes: "140px", maxW: 256 },
+  medium: { sizes: "180px", maxW: 384 },
   normal: { sizes: "220px", maxW: 440 },
 };
 
+function snapWidth(requested: number, maxW: number): number {
+  const cap = Math.min(requested, maxW);
+  let best: number = ALLOWED_WIDTHS[0];
+  for (const w of ALLOWED_WIDTHS) {
+    if (w <= cap) best = w;
+    else break;
+  }
+  return best;
+}
+
 function makeThumbLoader(maxW: number): ImageLoader {
   return ({ src, width, quality }) => {
-    const w = Math.min(width, maxW);
+    const w = snapWidth(width, maxW);
     const q = quality ?? 75;
     return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${q}`;
   };

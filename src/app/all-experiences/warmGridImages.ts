@@ -3,7 +3,9 @@ import type { ProjectCard } from "@/content/project-card";
 
 const warmed = new Set<string>();
 
-/** Match GridTileImage — 220px CSS / 440w max for 2x. */
+/** Must match next.config imageSizes — unknown w → 400 from CF Images. */
+const ALLOWED_WIDTHS = [64, 96, 128, 256, 384, 440] as const;
+
 const THUMB = {
   width: 440,
   height: 275,
@@ -11,8 +13,18 @@ const THUMB = {
   sizes: "220px",
 };
 
+function snapWidth(requested: number, maxW = 440): number {
+  const cap = Math.min(requested, maxW);
+  let best: number = ALLOWED_WIDTHS[0];
+  for (const w of ALLOWED_WIDTHS) {
+    if (w <= cap) best = w;
+    else break;
+  }
+  return best;
+}
+
 function thumbUrl(src: string, width = THUMB.width) {
-  const w = Math.min(width, 440);
+  const w = snapWidth(width);
   return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${THUMB.quality}`;
 }
 
@@ -27,7 +39,6 @@ export function warmGridImages(items: ProjectCard[], limit = 8) {
     warmed.add(src);
 
     try {
-      // Prefer the capped URL; fall back to getImageProps if needed
       let href = thumbUrl(src);
       try {
         const { props } = getImageProps({
@@ -38,7 +49,7 @@ export function warmGridImages(items: ProjectCard[], limit = 8) {
           quality: THUMB.quality,
           sizes: THUMB.sizes,
           loader: ({ src: s, width, quality }) => {
-            const w = Math.min(width, 440);
+            const w = snapWidth(width);
             return `/_next/image?url=${encodeURIComponent(s)}&w=${w}&q=${quality ?? 75}`;
           },
         });
