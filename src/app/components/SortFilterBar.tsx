@@ -25,6 +25,23 @@ function matchesOrg(p: ProjectCard, org: string) {
   );
 }
 
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: "year-desc", label: "newest" },
+  { value: "year-asc", label: "oldest" },
+  { value: "title-asc", label: "a–z" },
+  { value: "title-desc", label: "z–a" },
+];
+
+const FILTER_OPTIONS: { value: FilterOption; label: string }[] = [
+  { value: "all", label: "all" },
+  { value: "featured", label: "featured" },
+  { value: "creative", label: "creative" },
+  { value: "microsoft", label: "microsoft" },
+  { value: "meta", label: "meta" },
+  { value: "ibm", label: "ibm" },
+  { value: "apple", label: "apple" },
+];
+
 export function SortFilterBar({
   onSortChange,
   onFilterChange,
@@ -36,23 +53,10 @@ export function SortFilterBar({
 }: SortFilterBarProps) {
   const [showFilters, setShowFilters] = useState(false);
   const filtersRef = useRef<HTMLDivElement>(null);
-
-  const sortOptions = [
-    { value: "year-desc" as const, label: "newest" },
-    { value: "year-asc" as const, label: "oldest" },
-    { value: "title-asc" as const, label: "a–z" },
-    { value: "title-desc" as const, label: "z–a" },
-  ];
-
-  const filterOptions = [
-    { value: "all" as const, label: "all", count: filterCounts?.all || itemCount },
-    { value: "featured" as const, label: "featured", count: filterCounts?.featured || 0 },
-    { value: "creative" as const, label: "creative", count: filterCounts?.creative || 0 },
-    { value: "microsoft" as const, label: "microsoft", count: filterCounts?.microsoft || 0 },
-    { value: "meta" as const, label: "meta", count: filterCounts?.meta || 0 },
-    { value: "ibm" as const, label: "ibm", count: filterCounts?.ibm || 0 },
-    { value: "apple" as const, label: "apple", count: filterCounts?.apple || 0 },
-  ];
+  const rootRef = useRef<HTMLDivElement>(null);
+  const filterActive = currentFilter !== "all";
+  const activeFilterLabel =
+    FILTER_OPTIONS.find((o) => o.value === currentFilter)?.label ?? currentFilter;
 
   useEffect(() => {
     if (!showFilters) return;
@@ -68,66 +72,115 @@ export function SortFilterBar({
     });
   }, [currentFilter, showFilters]);
 
+  useEffect(() => {
+    if (!showFilters) return;
+    function onPointerDown(e: PointerEvent) {
+      if (!rootRef.current?.contains(e.target as Node)) setShowFilters(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setShowFilters(false);
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [showFilters]);
+
   return (
-    <div className="tool-bar">
+    <div className="tool-bar" ref={rootRef}>
       <div className="tool-bar__top">
         {leading}
-        <div className="tool-bar__controls">
-          <label className="tool-bar__field">
-            <span className="tool-bar__label">sort</span>
-            <select
-              value={currentSort}
-              onChange={(e) => onSortChange(e.target.value as SortOption)}
-              aria-label="Sort projects"
-            >
-              {sortOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
 
+        <div className="tool-bar__rail" role="group" aria-label="Sort">
+          <span className="tool-bar__legend" aria-hidden="true">
+            sort
+          </span>
+          <div className="tool-bar__segment">
+            {SORT_OPTIONS.map((option, i) => {
+              const active = currentSort === option.value;
+              return (
+                <span key={option.value} className="tool-bar__seg-item">
+                  {i > 0 ? <span className="tool-bar__dot" aria-hidden="true" /> : null}
+                  <button
+                    type="button"
+                    className="tool-bar__opt"
+                    data-active={active ? "true" : undefined}
+                    aria-pressed={active}
+                    onClick={() => onSortChange(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="tool-bar__rail tool-bar__rail--filter">
           <button
             type="button"
-            className="tool-bar__link"
+            className="tool-bar__opt tool-bar__filter-toggle"
+            data-active={showFilters || filterActive ? "true" : undefined}
             aria-expanded={showFilters}
+            aria-controls="work-filters"
             onClick={() => setShowFilters((v) => !v)}
           >
-            {showFilters ? "hide filters" : "filter"}
+            filter
+            {filterActive && !showFilters ? (
+              <span className="tool-bar__filter-live">{activeFilterLabel}</span>
+            ) : null}
           </button>
 
-          <span className="tool-bar__count">{itemCount}</span>
-
-          {currentFilter !== "all" && (
-            <button type="button" className="tool-bar__link" onClick={() => onFilterChange("all")}>
+          {filterActive ? (
+            <button
+              type="button"
+              className="tool-bar__opt tool-bar__clear"
+              onClick={() => onFilterChange("all")}
+              aria-label="Clear filter"
+            >
               clear
             </button>
-          )}
+          ) : null}
         </div>
+
+        <span className="tool-bar__count" aria-live="polite">
+          {itemCount}
+        </span>
       </div>
 
-      {showFilters && (
-        <div ref={filtersRef} className="tool-bar__filters" role="group" aria-label="Filters">
-          {filterOptions.map((option) => {
+      {showFilters ? (
+        <div
+          id="work-filters"
+          ref={filtersRef}
+          className="tool-bar__filters"
+          role="group"
+          aria-label="Filters"
+        >
+          {FILTER_OPTIONS.map((option) => {
             const active = currentFilter === option.value;
+            const count =
+              filterCounts?.[option.value] ?? (option.value === "all" ? itemCount : 0);
             return (
               <button
                 key={option.value}
                 type="button"
-                className="tool-bar__chip"
+                className="tool-bar__opt tool-bar__filter-opt"
                 data-active={active ? "true" : undefined}
                 aria-pressed={active}
-                onClick={() => onFilterChange(option.value)}
+                onClick={() => {
+                  onFilterChange(option.value);
+                  if (option.value === "all") setShowFilters(false);
+                }}
               >
-                {active ? <span className="tool-bar__chip-pill" aria-hidden="true" /> : null}
-                <span className="tool-bar__chip-label">{option.label}</span>
-                <span className="tool-bar__chip-count">{option.count}</span>
+                <span className="tool-bar__filter-label">{option.label}</span>
+                <span className="tool-bar__filter-count">{count}</span>
               </button>
             );
           })}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
