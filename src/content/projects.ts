@@ -23,7 +23,7 @@ export type Project = {
     team?: string;
     synopsis?: string | string[];
     skills?: string[];
-    prototypes?: { label: string; href: string }[];
+    prototypes?: { label: string; href: string; description?: string }[];
     headerImage?: { src: string; alt: string; width?: number; height?: number };
     headerEmbed?: { html: string; title?: string; link?: string };
     goals?: string | string[];
@@ -138,8 +138,16 @@ export const projects: Project[] = [
 				height: 430,
 			},
 			prototypes: [
-				{ label: 'Wishlist on Steam', href: 'https://store.steampowered.com/app/4796460/' },
-				{ label: 'Play free (GitHub)', href: 'https://github.com/mhsenkow/SimFish/releases/latest' },
+				{
+					label: 'Wishlist on Steam',
+					href: 'https://store.steampowered.com/app/4796460/',
+					description: 'SimFish on Steam — wishlist / store page for the paid build.',
+				},
+				{
+					label: 'Play free (GitHub)',
+					href: 'https://github.com/mhsenkow/SimFish/releases/latest',
+					description: 'Latest free GitHub release builds — download and play without Steam.',
+				},
 			],
 			synopsis: [
 				'walstad loom is a living tank you watch more than you play. A continuous 3D voxel aquascape runs through a palette-quantize + dither pipeline so everything reads as chunky 48-color pixel art — while plants, fish, shrimp, and snails interact in a Walstad-style closed nutrient loop underneath.',
@@ -303,9 +311,21 @@ export const projects: Project[] = [
         'Edge-case handling (sparse and dense value sets) became part of the chart spec',
       ],
       prototypes: [
-        { label: 'Prototype 1: Tooltip Exploration', href: 'https://codepen.io/mhsenkow/full/dXRwqW' },
-        { label: 'Prototype 2: Display of Specifics in Motion', href: 'https://codepen.io/mhsenkow/full/MjWGdP' },
-        { label: 'Prototype 3: Neural network diagram highlight example', href: 'https://codepen.io/mhsenkow/full/apwZxz' }
+        {
+          label: 'Prototype 1: Tooltip Exploration',
+          href: 'https://codepen.io/mhsenkow/full/dXRwqW',
+          description: 'Coded tooltip behavior exploration for SPSS / Carbon data controls.',
+        },
+        {
+          label: 'Prototype 2: Display of Specifics in Motion',
+          href: 'https://codepen.io/mhsenkow/full/MjWGdP',
+          description: 'Motion study for how specific values surface in the control.',
+        },
+        {
+          label: 'Prototype 3: Neural network diagram highlight example',
+          href: 'https://codepen.io/mhsenkow/full/apwZxz',
+          description: 'Highlight pattern for neural-net diagram nodes and relationships.',
+        },
       ],
       sections: [
         {

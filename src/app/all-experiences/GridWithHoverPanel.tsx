@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
+import { ArrowRight, CaretLeft, CaretRight } from "@phosphor-icons/react";
 import type { ProjectCard } from "@/content/project-card";
 import { LightboxImage } from "@/app/components/Lightbox";
 import {
@@ -134,13 +135,9 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
           onClick={() => setOpen((v) => !v)}
         >
           {open ? (
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-              <path fill="currentColor" d="M9.29 6.71a1 1 0 0 0 0 1.41L13.17 12l-3.88 3.88a1 1 0 1 0 1.42 1.41l4.59-4.59a1 1 0 0 0 0-1.41L10.71 6.7a1 1 0 0 0-1.42 0Z" />
-            </svg>
+            <CaretRight size={16} weight="light" aria-hidden />
           ) : (
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-              <path fill="currentColor" d="M14.71 17.29a1 1 0 0 0 0-1.41L10.83 12l3.88-3.88a1 1 0 1 0-1.42-1.41L8.7 11.3a1 1 0 0 0 0 1.41l4.59 4.59a1 1 0 0 0 1.42 0Z" />
-            </svg>
+            <CaretLeft size={16} weight="light" aria-hidden />
           )}
         </button>
         <div className="work-panel__body glass-card">
@@ -168,7 +165,8 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                 </div>
               )}
               <Link href={`/projects/${hovered.slug}`} className="work-panel__open">
-                View case study →
+                View case study
+                <ArrowRight size={16} weight="light" aria-hidden />
               </Link>
             </>
           ) : (

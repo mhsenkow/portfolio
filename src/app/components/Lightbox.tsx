@@ -1,6 +1,8 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react';
+import { useDismissible } from '@/hooks/useDismissible';
 
 type LightboxState = {
   isOpen: boolean;
@@ -18,8 +20,10 @@ export function LightboxProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [items, setItems] = useState<{ src: string; alt: string }[]>([]);
+  const openerRef = useRef<HTMLElement | null>(null);
 
   const open = useCallback((list: { src: string; alt: string }[], startIndex = 0) => {
+    openerRef.current = document.activeElement as HTMLElement | null;
     setItems(list);
     setCurrentIndex(startIndex);
     setIsOpen(true);
@@ -32,20 +36,19 @@ export function LightboxProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close();
       if (e.key === 'ArrowRight') next();
       if (e.key === 'ArrowLeft') prev();
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [isOpen, close, next, prev]);
+  }, [isOpen, next, prev]);
 
   const value = useMemo<LightboxState>(() => ({ isOpen, currentIndex, items, open, close, next, prev }), [isOpen, currentIndex, items, open, close, next, prev]);
 
   return (
     <LightboxContext.Provider value={value}>
       {children}
-      <LightboxOverlay />
+      <LightboxOverlay openerRef={openerRef} />
     </LightboxContext.Provider>
   );
 }
@@ -77,17 +80,34 @@ export function LightboxImage({ src, alt, group, index, width, height, sizes, cl
   );
 }
 
-function LightboxOverlay() {
+function LightboxOverlay({ openerRef }: { openerRef: React.RefObject<HTMLElement | null> }) {
   const { isOpen, items, currentIndex, close, next, prev } = useLightbox();
   const backdropRef = useRef<HTMLDivElement | null>(null);
+
+  useDismissible({
+    open: isOpen,
+    onClose: close,
+    rootRef: backdropRef,
+    openerRef,
+    lockScroll: true,
+    focusOnOpen: true,
+    disableOutside: true, // backdrop onClick handles outside
+  });
+
   if (!isOpen || items.length === 0) return null;
   const item = items[currentIndex];
   return (
     <div className="lb-overlay" role="dialog" aria-modal="true" ref={backdropRef} onClick={(e) => { if (e.target === backdropRef.current) close(); }}>
       <div className="lb-content">
-        <button className="lb-close" onClick={close} aria-label="Close">×</button>
-        <button className="lb-prev" onClick={prev} aria-label="Previous">←</button>
-        <button className="lb-next" onClick={next} aria-label="Next">→</button>
+        <button className="lb-close" onClick={close} aria-label="Close">
+          <X size={18} weight="light" aria-hidden />
+        </button>
+        <button className="lb-prev" onClick={prev} aria-label="Previous">
+          <ArrowLeft size={18} weight="light" aria-hidden />
+        </button>
+        <button className="lb-next" onClick={next} aria-label="Next">
+          <ArrowRight size={18} weight="light" aria-hidden />
+        </button>
         <div className="lb-image-wrap">
           <Image src={item.src} alt={item.alt} fill sizes="100vw" style={{ objectFit: 'contain' }} />
         </div>
@@ -95,5 +115,3 @@ function LightboxOverlay() {
     </div>
   );
 }
-
-

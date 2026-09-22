@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { ProjectCard } from "@/content/project-card";
 import { COMPANIES, COMPANY_LABEL, type Company } from "@/content/companies";
 import { SKILLSETS, SKILLSET_LABEL, type Skillset } from "@/content/skillsets";
+import { useDismissible } from "@/hooks/useDismissible";
 
 export type SortOption = "year-desc" | "year-asc" | "title-asc" | "title-desc";
 export type SkillFilter = "all" | "featured" | Skillset;
@@ -65,6 +66,9 @@ export function SortFilterBar({
   const [panel, setPanel] = useState<Panel>(null);
   const filtersRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const skillBtnRef = useRef<HTMLButtonElement>(null);
+  const companyBtnRef = useRef<HTMLButtonElement>(null);
+  const openerRef = panel === "skill" ? skillBtnRef : companyBtnRef;
 
   const skillActive = currentSkill !== "all";
   const companyActive = currentCompany !== "all";
@@ -89,21 +93,12 @@ export function SortFilterBar({
     });
   }, [currentSkill, currentCompany, panel]);
 
-  useEffect(() => {
-    if (!panel) return;
-    function onPointerDown(e: PointerEvent) {
-      if (!rootRef.current?.contains(e.target as Node)) setPanel(null);
-    }
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setPanel(null);
-    }
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [panel]);
+  useDismissible({
+    open: panel !== null,
+    onClose: () => setPanel(null),
+    rootRef,
+    openerRef,
+  });
 
   function clearAll() {
     onSkillChange("all");
@@ -145,6 +140,7 @@ export function SortFilterBar({
 
         <div className="tool-bar__rail tool-bar__rail--filter">
           <button
+            ref={skillBtnRef}
             type="button"
             className="tool-bar__opt tool-bar__filter-toggle"
             data-active={panel === "skill" || skillActive ? "true" : undefined}
@@ -159,6 +155,7 @@ export function SortFilterBar({
           </button>
 
           <button
+            ref={companyBtnRef}
             type="button"
             className="tool-bar__opt tool-bar__filter-toggle"
             data-active={panel === "company" || companyActive ? "true" : undefined}

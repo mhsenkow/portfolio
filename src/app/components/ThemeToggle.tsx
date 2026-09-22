@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FONTS,
   FONT_LABEL,
@@ -12,6 +12,7 @@ import {
   type Theme,
 } from "@/theme/system";
 import { ensureAllOptionalFontClasses, ensureOptionalFontClass } from "@/theme/optional-fonts";
+import { useDismissible } from "@/hooks/useDismissible";
 
 function getStoredTheme(): Theme | null {
   try {
@@ -65,6 +66,8 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
   const [theme, setTheme] = useState<Theme>("light");
   const [font, setFont] = useState<Font>("geist");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const typeBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const currentTheme = migrateTheme(document.documentElement.getAttribute("data-theme"));
@@ -96,14 +99,27 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
     if (settingsOpen) ensureAllOptionalFontClasses();
   }, [settingsOpen]);
 
+  useDismissible({
+    open: settingsOpen,
+    onClose: () => setSettingsOpen(false),
+    rootRef,
+    openerRef: typeBtnRef,
+    focusOnOpen: true,
+  });
+
   function cycleTheme() {
     const idx = THEMES.indexOf(theme);
     const next = THEMES[(idx + 1) % THEMES.length];
     setTheme(next);
   }
 
+  function pickFont(id: Font) {
+    setFont(id);
+    setSettingsOpen(false);
+  }
+
   return (
-    <div className="masthead-theme">
+    <div className="masthead-theme" ref={rootRef}>
       <button
         type="button"
         className="masthead-orb-btn"
@@ -115,6 +131,7 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
         <span className="theme-orb" aria-hidden="true" />
       </button>
       <button
+        ref={typeBtnRef}
         type="button"
         className="masthead-link masthead-settings"
         aria-expanded={settingsOpen}
@@ -123,37 +140,29 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
       >
         type
       </button>
-      {settingsOpen && (
-        <>
-          <button
-            type="button"
-            className="masthead-settings-scrim"
-            aria-label="close type settings"
-            onClick={() => setSettingsOpen(false)}
-          />
-          <div className="masthead-settings-panel" role="dialog" aria-label="Type">
-            <ul className="type-list" role="list">
-              {FONTS.map((id) => {
-                const active = font === id;
-                return (
-                  <li key={id}>
-                    <button
-                      type="button"
-                      className="type-list__face"
-                      data-active={active ? "true" : undefined}
-                      data-font-preview={id}
-                      aria-pressed={active}
-                      onClick={() => setFont(id)}
-                    >
-                      {FONT_LABEL[id]}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </>
-      )}
+      {settingsOpen ? (
+        <div className="masthead-settings-panel" role="dialog" aria-label="Type">
+          <ul className="type-list" role="list">
+            {FONTS.map((id) => {
+              const active = font === id;
+              return (
+                <li key={id}>
+                  <button
+                    type="button"
+                    className="type-list__face"
+                    data-active={active ? "true" : undefined}
+                    data-font-preview={id}
+                    aria-pressed={active}
+                    onClick={() => pickFont(id)}
+                  >
+                    {FONT_LABEL[id]}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 }

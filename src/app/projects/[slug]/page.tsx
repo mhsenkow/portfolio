@@ -189,7 +189,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 								{project.details?.prototypes && project.details.prototypes.length > 0 && (
 									<div className="project-links">
 										{project.details.prototypes.map((p) => (
-											<LinkToken key={p.href} href={p.href} label={p.label} />
+											<LinkToken
+												key={p.href}
+												href={p.href}
+												label={p.label}
+												description={p.description}
+											/>
 										))}
 									</div>
 								)}

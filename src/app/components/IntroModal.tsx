@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowRight, X } from "@phosphor-icons/react";
 import { LinkToken } from "@/app/components/LinkToken";
+import { useDismissible } from "@/hooks/useDismissible";
 
 export const INTRO_OPEN_EVENT = "portfolio:open-intro";
 export const INTRO_STATE_EVENT = "portfolio:intro-state";
@@ -30,24 +32,52 @@ export function openIntroModal() {
 }
 
 const EARLIER_SITES = [
-  { href: "https://mhsenkow.work/", label: "Prior portfolio (Vercel)" },
-  { href: "https://webgl-portfolio-jbxw.vercel.app/", label: "WebGL portfolio" },
-  { href: "https://portfolio-site-tau-ten-35.vercel.app/", label: "Particle narrative" },
-  { href: "https://mhsenkow.github.io/sleeping-ox-studios/", label: "Sleeping Ox Studios" },
-  { href: "https://www.mhsenkow.org/Older/old/portfolio/", label: "2013 portfolio" },
+  {
+    href: "https://mhsenkow.work/",
+    label: "Prior portfolio (Vercel)",
+    description:
+      "The previous Next.js portfolio — denser archive, experimental themes, and the bridge into this ibm.io cut.",
+  },
+  {
+    href: "https://webgl-portfolio-jbxw.vercel.app/",
+    label: "WebGL portfolio",
+    description:
+      "GPU / WebGL experiment: spatial navigation and motion as the primary storytelling layer.",
+  },
+  {
+    href: "https://portfolio-site-tau-ten-35.vercel.app/",
+    label: "Particle narrative",
+    description:
+      "Particle-field narrative site — scroll and motion used to move through chapters of work.",
+  },
+  {
+    href: "https://mhsenkow.github.io/sleeping-ox-studios/",
+    label: "Sleeping Ox Studios",
+    description:
+      "Studio / brand landing for Sleeping Ox — early independent identity and project framing.",
+  },
+  {
+    href: "https://www.mhsenkow.org/Older/old/portfolio/",
+    label: "2013 portfolio",
+    description:
+      "Pre-staff archive from 2013 — school and early professional work before the systems track.",
+  },
   {
     href: "https://www.figma.com/proto/SS9PFTPBKoUEmOhn1f5GJt/presentation?node-id=376-3&t=97fqkQd8qUt8cyQY-1&starting-point-node-id=376%3A3",
     label: "AI work deck",
+    description:
+      "Figma prototype deck covering AI product work — flows, framing, and presentation narrative.",
   },
 ] as const;
 
 export function IntroModal() {
   const [open, setOpen] = useState(true);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
 
   const dismiss = useCallback(() => {
     setOpen(false);
     emitIntroState(false);
-    document.body.style.overflow = "";
   }, []);
 
   useEffect(() => {
@@ -71,6 +101,7 @@ export function IntroModal() {
 
   useEffect(() => {
     function onOpen() {
+      openerRef.current = document.activeElement as HTMLElement | null;
       setOpen(true);
       emitIntroState(true);
     }
@@ -78,26 +109,21 @@ export function IntroModal() {
     return () => window.removeEventListener(INTRO_OPEN_EVENT, onOpen);
   }, []);
 
-  useEffect(() => {
-    if (!open) {
-      document.body.style.overflow = "";
-      return;
-    }
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") dismiss();
-    }
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [open, dismiss]);
+  useDismissible({
+    open,
+    onClose: dismiss,
+    rootRef,
+    openerRef,
+    lockScroll: true,
+    focusOnOpen: true,
+    disableOutside: true, // backdrop onClick handles outside
+  });
 
   if (!open) return null;
 
   return (
     <div
+      ref={rootRef}
       className="intro-modal"
       role="dialog"
       aria-modal="true"
@@ -111,15 +137,7 @@ export function IntroModal() {
           onClick={dismiss}
           aria-label="Close intro"
         >
-          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-            <path
-              d="M3.2 3.2l9.6 9.6M12.8 3.2L3.2 12.8"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.15"
-              strokeLinecap="square"
-            />
-          </svg>
+          <X size={14} weight="light" aria-hidden />
         </button>
         <p className="intro-modal__hint">portfolio : i build machines</p>
 
@@ -187,20 +205,26 @@ export function IntroModal() {
         </p>
 
         <p className="intro-modal__aside">
-          Product systems across IBM, Microsoft, Meta, and i2Systems · M.S. HCI ·
-          B.S. Mechanical Engineering &amp; Technical Communications · architecture and
-          digital fabrication · early Apple IS&amp;T accessibility
+          IBM, Microsoft, Meta, and i2Systems. M.S. HCI · B.S. Mechanical Engineering
+          &amp; Technical Communications · architecture, digital fabrication, and early
+          Apple IS&amp;T accessibility.
         </p>
 
         <button type="button" className="intro-modal__enter" onClick={dismiss}>
-          View work →
+          View work
+          <ArrowRight size={16} weight="light" aria-hidden />
         </button>
 
         <details className="intro-modal__earlier">
           <summary>Earlier sites</summary>
           <div className="intro-modal__links">
             {EARLIER_SITES.map((item) => (
-              <LinkToken key={item.href} href={item.href} label={item.label} />
+              <LinkToken
+                key={item.href}
+                href={item.href}
+                label={item.label}
+                description={item.description}
+              />
             ))}
           </div>
         </details>
