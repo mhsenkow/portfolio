@@ -13,9 +13,11 @@ import {
 import {
   SortFilterBar,
   filterProjects,
-  getFilterCounts,
+  getCompanyCounts,
+  getSkillCounts,
   sortProjects,
-  type FilterOption,
+  type CompanyFilter,
+  type SkillFilter,
   type SortOption,
 } from "@/app/components/SortFilterBar";
 import { warmGridImages } from "./warmGridImages";
@@ -83,13 +85,15 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
   });
 
   const [sort, setSort] = useState<SortOption>("year-desc");
-  const [filter, setFilter] = useState<FilterOption>("all");
+  const [skill, setSkill] = useState<SkillFilter>("all");
+  const [company, setCompany] = useState<CompanyFilter>("all");
 
   const processedItems = useMemo(() => {
-    return sortProjects(filterProjects(items, filter), sort);
-  }, [items, sort, filter]);
+    return sortProjects(filterProjects(items, { skill, company }), sort);
+  }, [items, sort, skill, company]);
 
-  const filterCounts = useMemo(() => getFilterCounts(items), [items]);
+  const skillCounts = useMemo(() => getSkillCounts(items, company), [items, company]);
+  const companyCounts = useMemo(() => getCompanyCounts(items, skill), [items, skill]);
 
   useEffect(() => {
     setMountNode(document.getElementById("overlays"));
@@ -199,11 +203,14 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
             )
           }
           onSortChange={setSort}
-          onFilterChange={setFilter}
+          onSkillChange={setSkill}
+          onCompanyChange={setCompany}
           currentSort={sort}
-          currentFilter={filter}
+          currentSkill={skill}
+          currentCompany={company}
           itemCount={processedItems.length}
-          filterCounts={filterCounts}
+          skillCounts={skillCounts}
+          companyCounts={companyCounts}
         />
       </div>
 

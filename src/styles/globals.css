@@ -908,6 +908,10 @@
   .tool-bar__filters::-webkit-scrollbar {
     display: none;
   }
+  .tool-bar__filters-legend {
+    flex: 0 0 auto;
+    margin-right: 4px;
+  }
   .tool-bar__filter-opt {
     display: inline-flex;
     align-items: baseline;

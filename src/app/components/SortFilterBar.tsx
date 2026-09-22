@@ -2,18 +2,31 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { ProjectCard } from "@/content/project-card";
+import { COMPANIES, COMPANY_LABEL, type Company } from "@/content/companies";
 import { SKILLSETS, SKILLSET_LABEL, type Skillset } from "@/content/skillsets";
 
 export type SortOption = "year-desc" | "year-asc" | "title-asc" | "title-desc";
-export type FilterOption = "all" | "featured" | Skillset;
+export type SkillFilter = "all" | "featured" | Skillset;
+export type CompanyFilter = "all" | Company;
+
+/** @deprecated use SkillFilter — kept for any residual imports */
+export type FilterOption = SkillFilter;
+
+export type WorkFilters = {
+  skill: SkillFilter;
+  company: CompanyFilter;
+};
 
 interface SortFilterBarProps {
   onSortChange: (sort: SortOption) => void;
-  onFilterChange: (filter: FilterOption) => void;
+  onSkillChange: (skill: SkillFilter) => void;
+  onCompanyChange: (company: CompanyFilter) => void;
   currentSort: SortOption;
-  currentFilter: FilterOption;
+  currentSkill: SkillFilter;
+  currentCompany: CompanyFilter;
   itemCount: number;
-  filterCounts?: Partial<Record<FilterOption, number>>;
+  skillCounts?: Partial<Record<SkillFilter, number>>;
+  companyCounts?: Partial<Record<CompanyFilter, number>>;
   leading?: ReactNode;
 }
 
@@ -24,30 +37,46 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "title-desc", label: "z–a" },
 ];
 
-const FILTER_OPTIONS: { value: FilterOption; label: string }[] = [
+const SKILL_OPTIONS: { value: SkillFilter; label: string }[] = [
   { value: "all", label: "all" },
   { value: "featured", label: "featured" },
-  ...SKILLSETS.map((id) => ({ value: id as FilterOption, label: SKILLSET_LABEL[id] })),
+  ...SKILLSETS.map((id) => ({ value: id as SkillFilter, label: SKILLSET_LABEL[id] })),
 ];
+
+const COMPANY_OPTIONS: { value: CompanyFilter; label: string }[] = [
+  { value: "all", label: "all" },
+  ...COMPANIES.map((id) => ({ value: id as CompanyFilter, label: COMPANY_LABEL[id] })),
+];
+
+type Panel = "skill" | "company" | null;
 
 export function SortFilterBar({
   onSortChange,
-  onFilterChange,
+  onSkillChange,
+  onCompanyChange,
   currentSort,
-  currentFilter,
+  currentSkill,
+  currentCompany,
   itemCount,
-  filterCounts,
+  skillCounts,
+  companyCounts,
   leading,
 }: SortFilterBarProps) {
-  const [showFilters, setShowFilters] = useState(false);
+  const [panel, setPanel] = useState<Panel>(null);
   const filtersRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const filterActive = currentFilter !== "all";
-  const activeFilterLabel =
-    FILTER_OPTIONS.find((o) => o.value === currentFilter)?.label ?? currentFilter;
+
+  const skillActive = currentSkill !== "all";
+  const companyActive = currentCompany !== "all";
+  const anyActive = skillActive || companyActive;
+
+  const skillLive =
+    SKILL_OPTIONS.find((o) => o.value === currentSkill)?.label ?? currentSkill;
+  const companyLive =
+    COMPANY_OPTIONS.find((o) => o.value === currentCompany)?.label ?? currentCompany;
 
   useEffect(() => {
-    if (!showFilters) return;
+    if (!panel) return;
     const root = filtersRef.current;
     if (!root) return;
     const active = root.querySelector<HTMLElement>('[data-active="true"]');
@@ -58,15 +87,15 @@ export function SortFilterBar({
       inline: "nearest",
       block: "nearest",
     });
-  }, [currentFilter, showFilters]);
+  }, [currentSkill, currentCompany, panel]);
 
   useEffect(() => {
-    if (!showFilters) return;
+    if (!panel) return;
     function onPointerDown(e: PointerEvent) {
-      if (!rootRef.current?.contains(e.target as Node)) setShowFilters(false);
+      if (!rootRef.current?.contains(e.target as Node)) setPanel(null);
     }
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setShowFilters(false);
+      if (e.key === "Escape") setPanel(null);
     }
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKey);
@@ -74,7 +103,15 @@ export function SortFilterBar({
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKey);
     };
-  }, [showFilters]);
+  }, [panel]);
+
+  function clearAll() {
+    onSkillChange("all");
+    onCompanyChange("all");
+    setPanel(null);
+  }
+
+  const openOptions = panel === "skill" ? SKILL_OPTIONS : panel === "company" ? COMPANY_OPTIONS : [];
 
   return (
     <div className="tool-bar" ref={rootRef}>
@@ -110,23 +147,37 @@ export function SortFilterBar({
           <button
             type="button"
             className="tool-bar__opt tool-bar__filter-toggle"
-            data-active={showFilters || filterActive ? "true" : undefined}
-            aria-expanded={showFilters}
+            data-active={panel === "skill" || skillActive ? "true" : undefined}
+            aria-expanded={panel === "skill"}
             aria-controls="work-filters"
-            onClick={() => setShowFilters((v) => !v)}
+            onClick={() => setPanel((p) => (p === "skill" ? null : "skill"))}
           >
-            filter
-            {filterActive && !showFilters ? (
-              <span className="tool-bar__filter-live">{activeFilterLabel}</span>
+            skill
+            {skillActive && panel !== "skill" ? (
+              <span className="tool-bar__filter-live">{skillLive}</span>
             ) : null}
           </button>
 
-          {filterActive ? (
+          <button
+            type="button"
+            className="tool-bar__opt tool-bar__filter-toggle"
+            data-active={panel === "company" || companyActive ? "true" : undefined}
+            aria-expanded={panel === "company"}
+            aria-controls="work-filters"
+            onClick={() => setPanel((p) => (p === "company" ? null : "company"))}
+          >
+            company
+            {companyActive && panel !== "company" ? (
+              <span className="tool-bar__filter-live">{companyLive}</span>
+            ) : null}
+          </button>
+
+          {anyActive ? (
             <button
               type="button"
               className="tool-bar__opt tool-bar__clear"
-              onClick={() => onFilterChange("all")}
-              aria-label="Clear filter"
+              onClick={clearAll}
+              aria-label="Clear filters"
             >
               clear
             </button>
@@ -138,21 +189,34 @@ export function SortFilterBar({
         </span>
       </div>
 
-      {showFilters ? (
+      {panel ? (
         <div
           id="work-filters"
           ref={filtersRef}
           className="tool-bar__filters"
           role="group"
-          aria-label="Filters"
+          aria-label={panel === "skill" ? "Skill filters" : "Company filters"}
+          data-panel={panel}
         >
-          {FILTER_OPTIONS.map((option) => {
-            const active = currentFilter === option.value;
+          <span className="tool-bar__legend tool-bar__filters-legend" aria-hidden="true">
+            {panel}
+          </span>
+          {openOptions.map((option) => {
+            const active =
+              panel === "skill"
+                ? currentSkill === option.value
+                : currentCompany === option.value;
             const count =
-              filterCounts?.[option.value] ?? (option.value === "all" ? itemCount : 0);
+              panel === "skill"
+                ? (skillCounts?.[option.value as SkillFilter] ??
+                  (option.value === "all" ? itemCount : 0))
+                : (companyCounts?.[option.value as CompanyFilter] ??
+                  (option.value === "all" ? itemCount : 0));
+
             if (option.value !== "all" && option.value !== "featured" && count === 0) {
               return null;
             }
+
             return (
               <button
                 key={option.value}
@@ -161,8 +225,13 @@ export function SortFilterBar({
                 data-active={active ? "true" : undefined}
                 aria-pressed={active}
                 onClick={() => {
-                  onFilterChange(option.value);
-                  if (option.value === "all") setShowFilters(false);
+                  if (panel === "skill") {
+                    onSkillChange(option.value as SkillFilter);
+                    if (option.value === "all" && !companyActive) setPanel(null);
+                  } else {
+                    onCompanyChange(option.value as CompanyFilter);
+                    if (option.value === "all" && !skillActive) setPanel(null);
+                  }
                 }}
               >
                 <span className="tool-bar__filter-label">{option.label}</span>
@@ -193,26 +262,60 @@ export function sortProjects(projects: ProjectCard[], sort: SortOption): Project
   }
 }
 
-export function filterProjects(projects: ProjectCard[], filter: FilterOption): ProjectCard[] {
-  switch (filter) {
-    case "all":
-      return projects;
-    case "featured":
-      return projects.filter((p) => p.featured === true);
-    default:
-      return projects.filter((p) => p.skillsets.includes(filter));
-  }
+function matchesSkill(p: ProjectCard, skill: SkillFilter): boolean {
+  if (skill === "all") return true;
+  if (skill === "featured") return p.featured === true;
+  return p.skillsets.includes(skill);
 }
 
-export function getFilterCounts(projects: ProjectCard[]): Record<FilterOption, number> {
-  const counts = {
-    all: projects.length,
-    featured: projects.filter((p) => p.featured === true).length,
-  } as Record<FilterOption, number>;
+function matchesCompany(p: ProjectCard, company: CompanyFilter): boolean {
+  if (company === "all") return true;
+  return p.companies.includes(company);
+}
 
-  for (const id of SKILLSETS) {
-    counts[id] = projects.filter((p) => p.skillsets.includes(id)).length;
+export function filterProjects(
+  projects: ProjectCard[],
+  filters: WorkFilters | SkillFilter
+): ProjectCard[] {
+  // Back-compat: single skill filter arg
+  if (typeof filters === "string") {
+    return projects.filter((p) => matchesSkill(p, filters));
   }
+  return projects.filter(
+    (p) => matchesSkill(p, filters.skill) && matchesCompany(p, filters.company)
+  );
+}
 
+/** Counts for skill options, scoped to the current company filter. */
+export function getSkillCounts(
+  projects: ProjectCard[],
+  company: CompanyFilter = "all"
+): Record<SkillFilter, number> {
+  const base = projects.filter((p) => matchesCompany(p, company));
+  const counts = {
+    all: base.length,
+    featured: base.filter((p) => p.featured === true).length,
+  } as Record<SkillFilter, number>;
+  for (const id of SKILLSETS) {
+    counts[id] = base.filter((p) => p.skillsets.includes(id)).length;
+  }
   return counts;
+}
+
+/** Counts for company options, scoped to the current skill filter. */
+export function getCompanyCounts(
+  projects: ProjectCard[],
+  skill: SkillFilter = "all"
+): Record<CompanyFilter, number> {
+  const base = projects.filter((p) => matchesSkill(p, skill));
+  const counts = { all: base.length } as Record<CompanyFilter, number>;
+  for (const id of COMPANIES) {
+    counts[id] = base.filter((p) => p.companies.includes(id)).length;
+  }
+  return counts;
+}
+
+/** @deprecated use getSkillCounts */
+export function getFilterCounts(projects: ProjectCard[]) {
+  return getSkillCounts(projects, "all");
 }
