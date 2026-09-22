@@ -114,8 +114,8 @@ export function groupByCareerEra(
 /** Newest-first employer order; craft/independent last. */
 export const CORP_ORDER_DESC: Company[] = [
   "i2systems",
-  "microsoft",
   "meta",
+  "microsoft",
   "ibm",
   "apple",
   "independent",
