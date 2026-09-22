@@ -105,6 +105,22 @@ export function IntroModal() {
       onClick={dismiss}
     >
       <div className="intro-modal__panel" onClick={(e) => e.stopPropagation()}>
+        <button
+          type="button"
+          className="intro-modal__close"
+          onClick={dismiss}
+          aria-label="Close intro"
+        >
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+            <path
+              d="M3.2 3.2l9.6 9.6M12.8 3.2L3.2 12.8"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.15"
+              strokeLinecap="square"
+            />
+          </svg>
+        </button>
         <p className="intro-modal__hint">portfolio : i build machines</p>
 
         <header className="intro-modal__mast">

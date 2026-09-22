@@ -109,11 +109,11 @@ export default function RootLayout({
             __html: `
 html{background:#f2f2f0}
 html[data-theme=dark],html[data-theme=frost],html[data-theme=loom],html[data-theme=tank]{background:#121212}
-#intro-boot{display:block;position:fixed;inset:0;z-index:190;pointer-events:none;background:rgba(242,242,240,.5);backdrop-filter:saturate(1.2) blur(18px);-webkit-backdrop-filter:saturate(1.2) blur(18px)}
-html[data-theme=dark] #intro-boot,html[data-theme=frost] #intro-boot,html[data-theme=loom] #intro-boot,html[data-theme=tank] #intro-boot{background:rgba(18,18,18,.55)}
+#intro-boot{display:block;position:fixed;inset:0;z-index:190;pointer-events:none;background:linear-gradient(165deg,rgba(126,182,217,.12),rgba(242,242,240,.42) 45%,rgba(158,196,220,.1));backdrop-filter:saturate(1.35) blur(22px);-webkit-backdrop-filter:saturate(1.35) blur(22px)}
+html[data-theme=dark] #intro-boot,html[data-theme=frost] #intro-boot,html[data-theme=loom] #intro-boot,html[data-theme=tank] #intro-boot{background:linear-gradient(165deg,rgba(58,111,143,.2),rgba(18,18,18,.5) 45%,rgba(42,74,92,.16))}
 html[data-intro=skip] #intro-boot,html.intro-done #intro-boot{display:none!important}
-.intro-modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:rgba(242,242,240,.42);backdrop-filter:saturate(1.2) blur(18px);-webkit-backdrop-filter:saturate(1.2) blur(18px);pointer-events:auto}
-html[data-theme=dark] .intro-modal,html[data-theme=frost] .intro-modal,html[data-theme=loom] .intro-modal,html[data-theme=tank] .intro-modal{background:rgba(18,18,18,.45)}
+.intro-modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:linear-gradient(165deg,rgba(126,182,217,.14),rgba(242,242,240,.28) 42%,rgba(158,196,220,.1));backdrop-filter:saturate(1.35) blur(22px);-webkit-backdrop-filter:saturate(1.35) blur(22px);pointer-events:auto}
+html[data-theme=dark] .intro-modal,html[data-theme=frost] .intro-modal,html[data-theme=loom] .intro-modal,html[data-theme=tank] .intro-modal{background:linear-gradient(165deg,rgba(58,111,143,.18),rgba(18,18,18,.4) 45%,rgba(42,74,92,.14))}
 `.replace(/\s+/g, " ").trim(),
           }}
         />
