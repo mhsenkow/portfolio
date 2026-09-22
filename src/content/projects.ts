@@ -40,30 +40,41 @@ export const projects: Project[] = [
 	...githubBuilds,
 	{
 		slug: 'judge',
-		aliases: ['i2systems-lighting-infra'],
+		aliases: ['i2systems-lighting-infra', 'i2systems'],
 		mediaDir: 'i2systems-lighting-infra',
-		title: 'Judge — Salesforce / CRM integrity',
+		title: 'i2Systems — product systems & experiments',
 		description:
-			'Local-first review-gated integrity layer over Salesforce — scan accounts/contacts, rank issues, apply sandbox-safe fixes with HubSpot / Mailchimp sync and a full audit trail.',
+			'Catch-all for current work at i2Systems: Lux design system, Figma add-ons, Flux demos, SEO tooling, Judge (Salesforce / CRM integrity), and other internal experiments — moving the design and product practice forward, not the marketing site.',
 		year: 2026,
 		featured: true,
 		image: {
 			src: '/images/projects/i2systems-lighting-infra/card.png',
-			alt: 'Judge — Agents view with detail panel',
+			alt: 'Judge — Agents view with detail panel (one thread of i2Systems work)',
 			width: 1024,
 			height: 600,
 		},
-		stack: ['Product design', 'Salesforce', 'Next.js', 'Postgres', 'CRM integrity'],
+		stack: [
+			'Design systems',
+			'Figma',
+			'Product design',
+			'Salesforce',
+			'Prototyping',
+			'Internal tools',
+		],
 		details: {
-			role: 'Staff Product Designer / builder',
+			role: 'Staff Product Designer — advancing design systems, tooling, and CRM integrity',
 			entity: 'i2Systems',
 			location: 'Remote · Morris, CT lighting manufacturer',
 			years: '2025–present',
-			team: 'Built locally as a working CRM integrity surface for sales ops and marketing.',
+			team:
+				'Partnering across product, sales ops, and marketing. I did not build the public marketing site; the mandate is practice, systems, and working prototypes that move the team forward.',
 			skills: [
+				'Design systems (Lux)',
+				'Figma plugins / add-ons',
+				'Prototype demos (Flux)',
+				'SEO tooling',
 				'CRM / data integrity UX',
 				'Prototyping in production code',
-				'Salesforce + HubSpot + Mailchimp connectors',
 			],
 			headerImage: {
 				src: '/images/projects/i2systems-lighting-infra/card.png',
@@ -72,23 +83,46 @@ export const projects: Project[] = [
 				height: 600,
 			},
 			synopsis: [
-				'Judge is a review-gated integrity layer I built locally over Salesforce, with HubSpot and Mailchimp sync. It scans accounts and contacts, ranks issues, and applies sandbox-safe fixes with an audit trail — human review instead of blind automation, Salesforce stays system of record.',
-				'Direction is governance, not replacement: native connectors keep syncing; Judge makes integrity issues visible and stamps every decision.',
+				'i2Systems is the current chapter: a portfolio of internal product work rather than a single shipped consumer surface. Threads include Lux (design system), Figma add-ons for the team, Flux demos, SEO tooling, Judge as a Salesforce / CRM integrity layer, and smaller experiments that test how the org should design and ship.',
+				'The through-line is moving the team forward — clearer systems, better tools, review-gated automation where data integrity matters — without claiming ownership of the company website.',
 			],
 			goals: [
-				'Make CRM data trustworthy enough that sales and marketing can act on it without tribal cleanup rituals',
-				'Keep Salesforce as system of record while adding a human review gate before writes',
-				'Leave an audit trail for every proposed and applied fix',
+				'Stand up and evolve Lux so product UI shares one coherent system',
+				'Give designers and PMs Figma add-ons and Flux demos they can actually use',
+				'Make CRM data trustworthy with a human review gate (Judge) before writes hit Salesforce',
+				'Leave working prototypes and experiments that raise the floor for how the team builds',
 			],
 			results: [
-				'Judge MVP live for sandbox Salesforce scan → review → gated apply, with HubSpot/Mailchimp connections and audit log',
+				'Lux design-system work underway as the shared visual and component language',
+				'Figma add-ons and Flux demos in use as practice tools, not slideware',
+				'SEO tooling experiments supporting how content and discovery get evaluated',
+				'Judge MVP live for sandbox Salesforce scan → review → gated apply, with HubSpot / Mailchimp connections and an audit log',
 			],
 			sections: [
 				{
-					title: 'Salesforce infra — Judge',
+					title: 'How the work is scoped',
 					body: [
-						'Built Judge MVP (Next.js + Postgres) as the working surface for CRM integrity: connect Salesforce / HubSpot / Mailchimp, scan sandbox accounts and contacts into a working copy, severity-rank proposals, and gate writes behind review with dry-run, confirm, and undo.',
-						'Direction is governance, not replacement — native connectors keep syncing; Judge makes integrity issues visible and stamps every decision on an audit trail.',
+						'This case study is intentionally a catch-all. At a lighting manufacturer the highest-leverage design work is often internal: systems, plugins, demos, and ops tooling — not the brochure site. I own pushing that practice forward.',
+					],
+				},
+				{
+					title: 'Lux, Figma add-ons, and Flux',
+					body: [
+						'Lux is the design-system thread — tokens, components, and patterns so new product UI does not reinvent itself every sprint.',
+						'Figma add-ons and Flux demos sit next to that system: ways for the team to author, preview, and argue about interaction without waiting on a full engineering cycle.',
+					],
+				},
+				{
+					title: 'SEO tooling & other experiments',
+					body: [
+						'Smaller experiments — including SEO tooling and other i2Systems probes — are how we find leverage before committing to a platform bet. Each one is meant to teach the org something concrete about workflow or discovery.',
+					],
+				},
+				{
+					title: 'Judge — Salesforce / CRM integrity',
+					body: [
+						'Judge is the CRM integrity thread: a local-first, review-gated layer over Salesforce with HubSpot and Mailchimp sync. It scans accounts and contacts, ranks issues, and applies sandbox-safe fixes with an audit trail — human review instead of blind automation, Salesforce stays system of record.',
+						'Built as a working MVP (Next.js + Postgres): connect → scan sandbox into a working copy → severity-rank proposals → gate writes behind dry-run, confirm, and undo.',
 					],
 				},
 			],

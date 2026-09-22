@@ -190,9 +190,10 @@ export function IntroModal() {
             <li>
               <span className="intro-modal__proof-org">i2Systems</span>
               <span className="intro-modal__proof-body">
-                <strong>Judge</strong> — a review-gated Salesforce / CRM integrity
-                layer: scan accounts and contacts, rank issues, and apply
-                sandbox-safe fixes with HubSpot / Mailchimp sync and a full audit trail.
+                <strong>Current</strong> — Lux design system, Figma add-ons, Flux demos,
+                SEO tooling, and <strong>Judge</strong> (Salesforce / CRM integrity), plus
+                other internal experiments. Moving the team&apos;s product practice forward;
+                not the marketing site.
               </span>
             </li>
             <li>

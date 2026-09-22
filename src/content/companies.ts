@@ -35,7 +35,7 @@ const RULES: Record<Exclude<Company, "independent">, RegExp[]> = {
   meta: [/\bmeta\b/, /\bdaiquery\b/, /\bbento\b/],
   ibm: [/\bibm\b/, /\bwatson\b/, /\bcarbon\b/, /\bcognos\b/],
   apple: [/\bapple\b/],
-  i2systems: [/\bi2systems\b/, /\bi2 systems\b/, /\bjudge —/, /\bjudge\b.*crm/],
+  i2systems: [/\bi2systems\b/, /\bi2 systems\b/, /\bi2systems —/, /\bjudge —/, /\bjudge\b.*crm/, /\blux\b.*design/],
 };
 
 function haystack(project: CompanySource): string {

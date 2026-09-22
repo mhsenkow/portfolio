@@ -45,9 +45,10 @@ export default function AboutPage() {
 							<li>
 								<span className={styles.orgName}>i2Systems</span>
 								<span className={styles.orgBody}>
-									Current — <strong>Judge</strong>, a Salesforce / CRM integrity
-									layer with review-gated fixes, HubSpot / Mailchimp sync, and an
-									audit trail.
+									Current — Lux design system, Figma add-ons, Flux demos, SEO
+									tooling, <strong>Judge</strong> (CRM integrity), and related
+									experiments. Advancing how the team designs and ships — not the
+									company marketing site.
 								</span>
 							</li>
 							<li>
