@@ -4,6 +4,36 @@
 	gap: var(--space-6);
 }
 
+.card {
+	animation: caseCardIn 0.35s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.card:nth-child(1) { animation-delay: 0ms; }
+.card:nth-child(2) { animation-delay: 40ms; }
+.card:nth-child(3) { animation-delay: 80ms; }
+.card:nth-child(4) { animation-delay: 120ms; }
+.card:nth-child(5) { animation-delay: 160ms; }
+.card:nth-child(6) { animation-delay: 200ms; }
+.card:nth-child(7) { animation-delay: 240ms; }
+.card:nth-child(8) { animation-delay: 280ms; }
+
+@keyframes caseCardIn {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.card {
+		animation: none;
+	}
+}
+
 .cardBody {
 	margin: 0;
 }
