@@ -186,9 +186,8 @@ export const projects: Project[] = [
 		description:
 			'IS&T internship: accessibility audits, coded interaction examples, login concept, and a bushel/app-bundle exploration.',
 		year: 2012,
-    featured: false,
+		featured: true,
 		links: [
-			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/apple/' },
 			{ label: 'App bundles', href: 'https://developer.apple.com/app-store/app-bundles/' },
 		],
 		image: { src: '/images/projects/cards/apple.png', alt: 'Apple' },
@@ -205,7 +204,7 @@ export const projects: Project[] = [
 				"Wireframes: Early work centered on quick, direct asks that needed concepts. One was an iPad login concept that needed an MVP UI. I followed my typical pattern: connect with stakeholders, locate available resources (at the time PDF-based design language assets), iterate on variations and states (including motion examples), and partner with engineering early to ensure feasibility.",
 				"Accessibility: The internship's main thrust became a deep focus on Accessibility in internal tooling. I audited existing software, leveled up on accessibility standards, and partnered with leads to recenter discussion around Universal Access — fixes that improve both edge cases and the in‑between states. This included prototypes to explore improved interactions and research with customers using assistive tech.",
 				"End results: A set of thorough documentation artifacts left with IS&T — immediate recommendations across tools, coded interaction examples for accessibility, guidance for designers moving forward, and a touch of blue‑sky for login potentials (e.g., making the login experience more enjoyable).",
-				"Side contests: I also took part in two small concept projects (including app bundles) by interviewing across the company, finding missing interaction points, and producing visuals to sell the story. The 'bushel' concept presaged the App Store's eventual App Bundle feature."
+				"Side contests: I also took part in two small concept projects (including app bundles) by interviewing across the company, finding missing interaction points, and producing visuals to sell the story. The 'bushel' concept explored app-grouping — an early intern exploration adjacent to what later became App Store App Bundles (not a shipped claim).",
 			],
 			skills: ['Accessibility', 'UX/UI', 'Documentation', 'Prototyping', 'User research'],
 			goals: [
@@ -250,7 +249,7 @@ export const projects: Project[] = [
 						{ src: '/images/projects/apple-accessibility/bushel-apps-visualization.png', alt: 'Bushel of apps concept — app bundle visualization for marketing team challenge' },
 						{ src: '/images/projects/apple-accessibility/bushel-apps-wireframes-flow.png', alt: 'A Bushel of apps concept wireframes and flow map' }
 					],
-					body: "I also took part in two small concept projects (including app bundles) by interviewing across the company, finding missing interaction points, and producing visuals to sell the story. The 'bushel' concept presaged the App Store's eventual App Bundle feature."
+					body: "I also took part in two small concept projects (including app bundles) by interviewing across the company, finding missing interaction points, and producing visuals to sell the story. The 'bushel' concept explored app-grouping — an early intern exploration adjacent to what later became App Store App Bundles (not a shipped claim).",
 				}
 			]
 		},
@@ -263,7 +262,6 @@ export const projects: Project[] = [
 		year: 2016,
     featured: true,
 		links: [
-			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/redesign-of-spss-modeler/' },
       { label: 'Prototype 1 — Tooltip Exploration', href: 'https://codepen.io/mhsenkow/full/dXRwqW' },
       { label: 'Prototype 2 — Display of Specifics', href: 'https://codepen.io/mhsenkow/full/MjWGdP' },
       { label: 'Prototype 3 — NN highlight', href: 'https://codepen.io/mhsenkow/full/apwZxz' },
@@ -339,10 +337,7 @@ export const projects: Project[] = [
 			'SQL cell notebooks that became Meta’s unified SQL + Python notebook direction — 10k+ MAU, AI-assisted analysis patterns.',
 		year: 2022,
     featured: true,
-		links: [
-			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/daiquery-notebooks-creation-then-merging-with-bento-notebooks/' },
-		],
-		image: { src: '/images/projects/cards/meta-notebooks.png', alt: 'Notebooks and data workflows' },
+				image: { src: '/images/projects/cards/meta-notebooks.png', alt: 'Notebooks and data workflows' },
 		gallery: [
 		
 		],
@@ -427,10 +422,7 @@ export const projects: Project[] = [
 			'Staff-level contract work: AI legal notebooks and recommendation bot, data-suite foundations, and Windows Cloud recovery flows — plus supporting startup systems.',
 		year: 2025,
 		featured: true,
-		links: [
-			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/contracts-across-roles/' },
-		],
-		image: { src: '/images/projects/cards/contracts-suite.png', alt: 'AI workflow and data-suite exploration' },
+				image: { src: '/images/projects/cards/contracts-suite.png', alt: 'AI workflow and data-suite exploration' },
 		stack: ['AI workflows', 'Data products', 'Prototyping', 'Design systems'],
 		details: {
 			role: 'Product Designer',
@@ -528,10 +520,7 @@ export const projects: Project[] = [
     description: 'Shared design system across MyAnalytics and Workplace Analytics — components, layout, and leadership through team transitions.',
     year: 2018,
     featured: true,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/re-envisioning-my-primary-product/' },
-    ],
-    image: { src: '/images/projects/cards/redesign.png', alt: 'Re-envisioning core product' },
+        image: { src: '/images/projects/cards/redesign.png', alt: 'Re-envisioning core product' },
     stack: ['Microsoft', 'Design System', 'Product'],
     details: {
       role: 'Primary Designer for Interactions',
@@ -618,10 +607,7 @@ export const projects: Project[] = [
     description:
       'Concepts and flows for updating peripherals in Windows Cloud contexts; error states and recovery.',
     year: 2024,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences' },
-    ],
-    image: { src: '/images/projects/cards/windows-cloud.png', alt: 'Windows Cloud peripherals' },
+        image: { src: '/images/projects/cards/windows-cloud.png', alt: 'Windows Cloud peripherals' },
     stack: ['Windows Cloud', 'Concepts'],
     details: {
       role: 'Product Designer',
@@ -646,10 +632,7 @@ export const projects: Project[] = [
     title: 'Teams admin center',
     description: 'Teams admin tooling concepts — a late-tenure sprint mapping operator workflows under transition.',
     year: 2019,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/teams-admin-center/' },
-    ],
-    image: { src: '/images/projects/cards/teams.png', alt: 'Teams admin center' },
+        image: { src: '/images/projects/cards/teams.png', alt: 'Teams admin center' },
     stack: ['Microsoft', 'Admin'],
     details: {
       role: 'Product Designer / Design lead',
@@ -676,10 +659,7 @@ export const projects: Project[] = [
     description: 'Office silence-mode research in London and Paris that evolved into today’s Focus Time concepts.',
     year: 2018,
     featured: true,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/researching-silence/' },
-    ],
-    image: { src: '/images/projects/cards/silence-mode.png', alt: 'Silence mode research' },
+        image: { src: '/images/projects/cards/silence-mode.png', alt: 'Silence mode research' },
     gallery: [
       { src: '/images/projects/researching-silence/early-silence-mode-concepts.png', alt: 'Early silence mode concepts showing initial UI explorations for blocking notifications and managing interruptions' },
       { src: '/images/projects/researching-silence/silence-mode-wireframes.png', alt: 'Silence mode wireframes exploring interface patterns for notification controls and time-based settings' },
@@ -750,10 +730,7 @@ export const projects: Project[] = [
     description: 'Viva Insights/Workplace Analytics — topic/keyword analysis redesign; design system expansion, mentoring.',
     year: 2019,
     featured: true,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/keyword-analysis-redesign/' },
-    ],
-    image: { src: '/images/projects/cards/topic-selection.png', alt: 'Topic selection' },
+        image: { src: '/images/projects/cards/topic-selection.png', alt: 'Topic selection' },
     stack: ['Microsoft', 'Analytics'],
     details: {
       role: 'Product Designer — expansion of design system, mentoring',
@@ -865,10 +842,7 @@ export const projects: Project[] = [
     title: 'Microsoft — Navigation & component system',
     description: 'Nav consistency push that hardened the shared component system — comparison analysis, wireframes, coded proofs.',
     year: 2019,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/navigation-update-leads-to-better-component-system/' },
-    ],
-    image: { src: '/images/projects/cards/redesign.png', alt: 'Navigation/component redesign' },
+        image: { src: '/images/projects/cards/redesign.png', alt: 'Navigation/component redesign' },
     gallery: [],
     stack: ['Microsoft', 'Design System'],
     details: {
@@ -963,10 +937,7 @@ export const projects: Project[] = [
     description: 'Programs as the bridge between Workplace Analytics and MyAnalytics — dashboards, nudges, and multi-year design leadership.',
     year: 2018,
     featured: true,
-    links: [
-      { label: 'Original', href: 'https://mhsenkow.squarespace.com/all-experiences#/workplace-analytics-programs-analytics-and-nudges/' },
-    ],
-    image: { src: '/images/projects/workplace-analytics-programs/card.png', alt: 'Workplace Analytics Programs' },
+        image: { src: '/images/projects/workplace-analytics-programs/card.png', alt: 'Workplace Analytics Programs' },
     gallery: [],
     stack: ['Microsoft', 'Workplace Analytics', 'MyAnalytics', 'Behavioral Design', 'UX Design'],
     details: {
@@ -1105,10 +1076,7 @@ export const projects: Project[] = [
     description: 'Evolving MyAnalytics from raw analytics into actionable self-help — top-four metrics, motion, sharing, and onboarding.',
     year: 2018,
     featured: true,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/improving-your-work-life-balance-within-office-365/' },
-    ],
-    image: { src: '/images/projects/cards/data-viz.png', alt: 'MyAnalytics top four metrics' },
+        image: { src: '/images/projects/cards/data-viz.png', alt: 'MyAnalytics top four metrics' },
     stack: ['Microsoft', 'Product', 'Animation'],
     details: {
       role: 'Designer 2 (UX with prototyping and Front-End collaboration)',
@@ -1168,7 +1136,6 @@ export const projects: Project[] = [
     description: '2019 FHL hackathon: rapid UX/visual iterations and front-end prototyping with data scientists and engineers.',
     year: 2019,
     links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/trusted-news-ai-chrome-extension/' },
       { label: 'Final prototype', href: 'https://codepen.io/mhsenkow/full/xvVGWj' },
     ],
     image: { src: '/images/projects/cards/trusted-news.png', alt: 'Trusted News' },
@@ -1204,10 +1171,7 @@ export const projects: Project[] = [
       'Chart grammar, coded Vega examples, and documentation for Meta Infra — plus AI-imagen storytelling explorations.',
     year: 2022,
     featured: true,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/meta-infra-data-viz-framework-and-ai-infographics/' },
-    ],
-    image: { src: '/images/projects/cards/contracts-suite.png', alt: 'Data viz framework' },
+        image: { src: '/images/projects/cards/contracts-suite.png', alt: 'Data viz framework' },
     gallery: [
       { src: '/images/projects/data-viz-framework-meta/Axis_and_Legend.png', alt: 'Axis and Legend' },
       { src: '/images/projects/data-viz-framework-meta/Line_Chart.png', alt: 'Line Chart' },
@@ -1260,10 +1224,7 @@ export const projects: Project[] = [
     description: 'Coded component guide with the dev lead — shipped into products used across thousands of users.',
     year: 2017,
     featured: true,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/the-creation-of-a-design-guide-used-across-thousands-of-users/' },
-    ],
-    image: { src: '/images/projects/design-guide-thousands-users/card.png', alt: 'Design guide' },
+        image: { src: '/images/projects/design-guide-thousands-users/card.png', alt: 'Design guide' },
     gallery: [
       // Key overview images
       { src: '/images/projects/design-guide-thousands-users/design-guide-overview-navigation.png', alt: 'Design guide overview' },
@@ -1338,10 +1299,7 @@ export const projects: Project[] = [
     description: 'Foundational research and prototypes that fed Watson Analytics — social analytics proofs and AI dashboard concepts.',
     year: 2014,
     featured: false,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/watson-analytics-early-work/' },
-    ],
-    image: { src: '/images/projects/cards/watson.png', alt: 'Watson Analytics' },
+        image: { src: '/images/projects/cards/watson.png', alt: 'Watson Analytics' },
     gallery: [],
     stack: ['IBM', 'Analytics'],
     details: {
@@ -1426,10 +1384,7 @@ export const projects: Project[] = [
     title: 'Vaporize — product design art installation',
     description: 'Glow Workshop installation in Flint, MI; early physical interaction explorations.',
     year: 2013,
-    links: [
-      { label: 'Original', href: 'https://mhsenkow.squarespace.com/all-experiences#/vaporize/' },
-    ],
-    image: { src: '/images/projects/vaporize-art-installation/card.png', alt: 'Vaporize installation' },
+        image: { src: '/images/projects/vaporize-art-installation/card.png', alt: 'Vaporize installation' },
     gallery: [
       { src: '/images/projects/vaporize-art-installation/vaporized-01.png', alt: 'Vaporize installation overview' },
       { src: '/images/projects/vaporize-art-installation/vaporized-06.png', alt: 'Installation detail view' },
@@ -1511,7 +1466,6 @@ export const projects: Project[] = [
     description: 'Early Processing/D3 visualization experiments during University of Michigan grad school.',
     year: 2013,
     links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/grad-school-data-visualization-work/' },
       { label: 'First project Video', href: 'https://youtu.be/cNAjJkotTjo' },
     ],
     image: { src: '/images/projects/cards/data-viz.png', alt: 'Grad school data viz' },
@@ -1562,10 +1516,7 @@ export const projects: Project[] = [
     title: 'Guide to the galaxy — mobile app concept',
     description: 'Adler Planetarium “walk the solar system” Android concept; quick 2‑day volunteer project.',
     year: 2012,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/guide-to-the-galaxy-a-mobile-app-concept/' },
-    ],
-    image: { src: '/images/projects/cards/adler.png', alt: 'Adler mobile concept' },
+        image: { src: '/images/projects/cards/adler.png', alt: 'Adler mobile concept' },
     gallery: [
       { src: '/images/projects/cards/adler.png', alt: 'Guide to the Galaxy concept' }
     ],
@@ -1586,10 +1537,7 @@ export const projects: Project[] = [
     title: 'Morphfaux — KUKA robot plaster research',
     description: 'Robotic plaster deposition experiments; scripting, motion control, and presentation assets.',
     year: 2012,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/morphfaux-kuka-robot-plaster-research/' },
-    ],
-    image: { src: '/images/projects/cards/morphfaux.png', alt: 'Morphfaux' },
+        image: { src: '/images/projects/cards/morphfaux.png', alt: 'Morphfaux' },
     gallery: [
       { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-1.jpg', alt: 'Morphfaux — 3D model rendering' },
       { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-2.jpg', alt: 'Morphfaux — detail study' },
@@ -1619,10 +1567,7 @@ export const projects: Project[] = [
     title: 'Architecture graduate projects',
     description: 'Selected architecture course projects: advanced graphics, modeling, rendering.',
     year: 2012,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/architecture-graduate-projects/' },
-    ],
-    image: { src: '/images/projects/cards/architecture.png', alt: 'Architecture projects' },
+        image: { src: '/images/projects/cards/architecture.png', alt: 'Architecture projects' },
     gallery: [
       { src: '/images/projects/architecture-graduate-projects/menil-1.png', alt: 'Menil Collection — exterior perspective' },
       { src: '/images/projects/architecture-graduate-projects/menil-2.png', alt: 'Menil Collection — interior space' },
@@ -1746,10 +1691,7 @@ export const projects: Project[] = [
 		title: '3D printer experimentation',
 		description: 'Explorations across Rhino/Grasshopper and node-based modeling; printed studies.',
 		category: 'creative',
-		links: [
-			{ label: 'Original', href: 'https://www.mhsenkow.work/other-design-work#/3d-printer-experimentation/' }
-		],
-		image: { src: '/images/projects/3d-printer-experimentation/card.png', alt: '3D printer experimentation' },
+				image: { src: '/images/projects/3d-printer-experimentation/card.png', alt: '3D printer experimentation' },
 		stack: ['Rhino', 'Grasshopper', 'Blender', '3D Printing', 'Parametric Design'],
 		gallery: [
 			{ src: '/images/projects/3d-printer-experimentation/print.png', alt: '3D print example 1' },

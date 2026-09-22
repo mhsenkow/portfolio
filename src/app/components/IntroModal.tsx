@@ -153,8 +153,8 @@ export function IntroModal() {
         </p>
 
         <p className="intro-modal__aside">
-          B.S. Mechanical Engineering &amp; Technical Communications · M.S. HCI · architecture and
-          digital fabrication
+          Former Apple IS&amp;T (accessibility) · B.S. Mechanical Engineering &amp; Technical
+          Communications · M.S. HCI · architecture and digital fabrication
         </p>
 
         <button type="button" className="intro-modal__enter" onClick={dismiss}>
