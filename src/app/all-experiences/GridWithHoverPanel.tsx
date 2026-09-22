@@ -9,6 +9,7 @@ import { ArrowRight, CaretLeft, CaretRight } from "@phosphor-icons/react";
 import type { ProjectCard } from "@/content/project-card";
 import { LightboxImage } from "@/app/components/Lightbox";
 import {
+  dismissIntroModal,
   INTRO_STATE_EVENT,
   type IntroStateDetail,
 } from "@/app/components/IntroModal";
@@ -193,7 +194,11 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                   />
                 </div>
               )}
-              <a href={`/projects/${active.slug}`} className="work-panel__open">
+              <a
+                href={`/projects/${active.slug}`}
+                className="work-panel__open"
+                onClick={() => dismissIntroModal()}
+              >
                 View case study
                 <ArrowRight size={16} weight="light" aria-hidden />
               </a>
@@ -259,6 +264,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
               onMouseEnter={() => selectProject(p)}
               onFocus={() => selectProject(p)}
               onTouchStart={() => selectProject(p)}
+              onClick={() => dismissIntroModal()}
             >
               {p.image ? (
                 <GridTileImage

@@ -18,12 +18,29 @@ function setIntroOpen(open: boolean) {
   root.classList.toggle("intro-done", !open);
 }
 
+function persistIntroDismissed() {
+  try {
+    sessionStorage.setItem("intro-dismissed", "1");
+  } catch {
+    /* ignore */
+  }
+}
+
 function emitIntroState(open: boolean) {
   if (typeof window === "undefined") return;
   setIntroOpen(open);
   window.dispatchEvent(
     new CustomEvent<IntroStateDetail>(INTRO_STATE_EVENT, { detail: { open } })
   );
+}
+
+/** Close intro and remember for this tab — call before leaving home. */
+export function dismissIntroModal() {
+  persistIntroDismissed();
+  emitIntroState(false);
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("portfolio:dismiss-intro"));
+  }
 }
 
 export function openIntroModal() {
@@ -71,13 +88,25 @@ const EARLIER_SITES = [
 ] as const;
 
 export function IntroModal() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(() => {
+    if (typeof document === "undefined") return false;
+    return document.documentElement.getAttribute("data-intro") === "open";
+  });
   const rootRef = useRef<HTMLDivElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
 
   const dismiss = useCallback(() => {
+    persistIntroDismissed();
     setOpen(false);
     emitIntroState(false);
+  }, []);
+
+  useEffect(() => {
+    function onDismissEvent() {
+      setOpen(false);
+    }
+    window.addEventListener("portfolio:dismiss-intro", onDismissEvent);
+    return () => window.removeEventListener("portfolio:dismiss-intro", onDismissEvent);
   }, []);
 
   useEffect(() => {
@@ -87,6 +116,11 @@ export function IntroModal() {
         params.delete("intro");
         const next = `${window.location.pathname}${params.toString() ? `?${params}` : ""}${window.location.hash}`;
         window.history.replaceState({}, "", next);
+        try {
+          sessionStorage.removeItem("intro-dismissed");
+        } catch {
+          /* ignore */
+        }
         setOpen(true);
         emitIntroState(true);
         return;
@@ -94,7 +128,6 @@ export function IntroModal() {
     } catch {
       /* ignore */
     }
-    // Sync curtain with initial open state (do not re-force after user dismisses).
     if (open) emitIntroState(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount sync only
   }, []);
