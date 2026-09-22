@@ -16,6 +16,7 @@ import {
   CaretLeft,
   CaretRight,
   GridFour,
+  Rows,
   Square,
   SquaresFour,
 } from "@phosphor-icons/react";
@@ -136,6 +137,17 @@ function readDensity(): GridDensity {
   return "normal";
 }
 
+function readEraBands(): boolean {
+  try {
+    const raw = localStorage.getItem("grid-era-bands");
+    if (raw === "0") return false;
+    if (raw === "1") return true;
+  } catch {
+    /* ignore */
+  }
+  return true;
+}
+
 export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Props) {
   const router = useRouter();
   /** Sticky selection — do not clear on blur or the panel CTA unmounts mid-click. */
@@ -147,6 +159,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     return window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? false : true;
   });
   const [density, setDensity] = useState<GridDensity>("normal");
+  const [eraBands, setEraBands] = useState(true);
 
   const [sort, setSort] = useState<SortOption>("year-desc");
   const [skill, setSkill] = useState<SkillFilter>("all");
@@ -156,11 +169,11 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     return sortProjects(filterProjects(items, { skill, company }), sort);
   }, [items, sort, skill, company]);
 
-  const useBands = sort === "year-desc" || sort === "year-asc";
   const bands = useMemo(() => {
-    if (!useBands) return null;
-    return groupByCareerEra(processedItems, sort === "year-asc" ? "asc" : "desc");
-  }, [processedItems, sort, useBands]);
+    if (!eraBands) return null;
+    const direction = sort === "year-asc" ? "asc" : "desc";
+    return groupByCareerEra(processedItems, direction);
+  }, [processedItems, sort, eraBands]);
 
   const skillCounts = useMemo(() => getSkillCounts(items, company), [items, company]);
   const companyCounts = useMemo(() => getCompanyCounts(items, skill), [items, skill]);
@@ -186,8 +199,21 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     });
   }, []);
 
+  const toggleEraBands = useCallback(() => {
+    setEraBands((cur) => {
+      const next = !cur;
+      try {
+        localStorage.setItem("grid-era-bands", next ? "1" : "0");
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
+
   useEffect(() => {
     setDensity(readDensity());
+    setEraBands(readEraBands());
   }, []);
 
   useEffect(() => {
@@ -364,17 +390,31 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
           skillCounts={skillCounts}
           companyCounts={companyCounts}
           trailing={
-            <button
-              type="button"
-              className={styles.densityBtn}
-              onClick={cycleDensity}
-              aria-label={`Tile size: ${DENSITY_LABEL[density]}. Click for next size.`}
-              title={DENSITY_LABEL[density]}
-              data-density={density}
-            >
-              <DensityIcon size={16} weight="light" aria-hidden />
-              <span className={styles.densityLabel}>{density}</span>
-            </button>
+            <span className={styles.viewControls}>
+              <button
+                type="button"
+                className={styles.densityBtn}
+                onClick={toggleEraBands}
+                aria-pressed={eraBands}
+                aria-label={eraBands ? "Era bands on. Click for flat grid." : "Flat grid. Click for era bands."}
+                title={eraBands ? "era bands" : "flat grid"}
+                data-active={eraBands ? "true" : undefined}
+              >
+                <Rows size={16} weight="light" aria-hidden />
+                <span className={styles.densityLabel}>{eraBands ? "eras" : "flat"}</span>
+              </button>
+              <button
+                type="button"
+                className={styles.densityBtn}
+                onClick={cycleDensity}
+                aria-label={`Tile size: ${DENSITY_LABEL[density]}. Click for next size.`}
+                title={DENSITY_LABEL[density]}
+                data-density={density}
+              >
+                <DensityIcon size={16} weight="light" aria-hidden />
+                <span className={styles.densityLabel}>{density}</span>
+              </button>
+            </span>
           }
         />
       </div>
