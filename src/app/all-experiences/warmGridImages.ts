@@ -3,13 +3,18 @@ import type { ProjectCard } from "@/content/project-card";
 
 const warmed = new Set<string>();
 
-/** Match GridTileImage — 220px CSS / 440w for 2x, not 750–1200. */
+/** Match GridTileImage — 220px CSS / 440w max for 2x. */
 const THUMB = {
   width: 440,
   height: 275,
   quality: 75 as const,
   sizes: "220px",
 };
+
+function thumbUrl(src: string, width = THUMB.width) {
+  const w = Math.min(width, 440);
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${THUMB.quality}`;
+}
 
 /** Warm Next.js-optimized grid thumbs so decode happens behind the intro curtain. */
 export function warmGridImages(items: ProjectCard[], limit = 8) {
@@ -22,22 +27,30 @@ export function warmGridImages(items: ProjectCard[], limit = 8) {
     warmed.add(src);
 
     try {
-      const { props } = getImageProps({
-        src,
-        alt: "",
-        width: THUMB.width,
-        height: THUMB.height,
-        quality: THUMB.quality,
-        sizes: THUMB.sizes,
-      });
-      const href = props.src;
-      if (!href) continue;
+      // Prefer the capped URL; fall back to getImageProps if needed
+      let href = thumbUrl(src);
+      try {
+        const { props } = getImageProps({
+          src,
+          alt: "",
+          width: THUMB.width,
+          height: THUMB.height,
+          quality: THUMB.quality,
+          sizes: THUMB.sizes,
+          loader: ({ src: s, width, quality }) => {
+            const w = Math.min(width, 440);
+            return `/_next/image?url=${encodeURIComponent(s)}&w=${w}&q=${quality ?? 75}`;
+          },
+        });
+        if (props.src) href = props.src;
+      } catch {
+        /* use thumbUrl */
+      }
 
       const img = new window.Image();
       img.decoding = "async";
       img.src = href;
 
-      // Hint the browser for the first wave only
       if (warmed.size <= 3) {
         const link = document.createElement("link");
         link.rel = "preload";

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { type ImageLoader } from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
@@ -35,6 +35,13 @@ const EAGER_COUNT = 6;
 const WARM_INTRO = 12;
 const WARM_IDLE = 8;
 
+/** Grid tiles are ~220px; never ask the optimizer for case-study-sized widths. */
+const gridThumbLoader: ImageLoader = ({ src, width, quality }) => {
+  const w = Math.min(width, 440);
+  const q = quality ?? 75;
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${q}`;
+};
+
 function GridTileImage({
   src,
   alt,
@@ -65,9 +72,10 @@ function GridTileImage({
         src={src}
         alt={alt}
         fill
+        loader={gridThumbLoader}
         priority={priority}
         loading={priority ? "eager" : "lazy"}
-        // ~220px CSS tile; 440 covers 2x without pulling 750–1200w variants
+        // ~220px CSS tile; loader caps at 440 for 2x
         sizes="220px"
         quality={75}
         className={styles.thumbImg}
