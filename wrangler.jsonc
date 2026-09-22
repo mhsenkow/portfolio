@@ -25,5 +25,8 @@
 	"routes": [
 		{ "pattern": "ibm.io", "custom_domain": true },
 		{ "pattern": "www.ibm.io", "custom_domain": true }
+		// After mhsenkow.work is added as a Cloudflare zone (same account) and NS switched:
+		// { "pattern": "mhsenkow.work", "custom_domain": true },
+		// { "pattern": "www.mhsenkow.work", "custom_domain": true }
 	]
 }

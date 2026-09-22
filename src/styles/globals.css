@@ -196,6 +196,9 @@
     min-height: var(--header-h);
   }
   .masthead-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 13px;
     font-weight: 400;
     letter-spacing: 0.02em;
@@ -205,7 +208,14 @@
     flex: 0 0 auto;
     white-space: nowrap;
   }
+  .masthead-brand__home {
+    flex: 0 0 auto;
+    opacity: 0.55;
+    transition: opacity 0.15s ease;
+  }
   .masthead-brand:hover { text-decoration: none; opacity: 0.7; }
+  .masthead-brand:hover .masthead-brand__home,
+  .masthead-brand[aria-current="page"] .masthead-brand__home { opacity: 0.9; }
   .masthead-brand[aria-current="page"] { color: var(--color-text); }
   .masthead-actions {
     display: flex;

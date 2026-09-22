@@ -13,6 +13,7 @@ export function openIntroModal() {
 }
 
 const EXPLORATIONS = [
+  { href: "https://portfolio-vercel-era.mhsenkow.workers.dev/", label: "Vercel-era grid" },
   { href: "https://webgl-portfolio-jbxw.vercel.app/", label: "WebGL portfolio" },
   { href: "https://portfolio-site-tau-ten-35.vercel.app/", label: "Particle narrative" },
   { href: "https://www.mhsenkow.org/Older/old/portfolio/", label: "2013 original" },
