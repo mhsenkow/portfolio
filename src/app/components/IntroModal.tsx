@@ -13,9 +13,10 @@ export function openIntroModal() {
 }
 
 const EXPLORATIONS = [
-  { href: "https://portfolio-vercel-era.mhsenkow.workers.dev/", label: "Vercel-era grid" },
+  { href: "https://mhsenkow.work/", label: "Vercel-era grid" },
   { href: "https://webgl-portfolio-jbxw.vercel.app/", label: "WebGL portfolio" },
   { href: "https://portfolio-site-tau-ten-35.vercel.app/", label: "Particle narrative" },
+  { href: "https://mhsenkow.github.io/sleeping-ox-studios/", label: "Over the top game example" },
   { href: "https://www.mhsenkow.org/Older/old/portfolio/", label: "2013 original" },
   {
     href: "https://www.figma.com/proto/SS9PFTPBKoUEmOhn1f5GJt/presentation?node-id=376-3&t=97fqkQd8qUt8cyQY-1&starting-point-node-id=376%3A3",
