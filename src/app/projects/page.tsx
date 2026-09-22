@@ -2,17 +2,18 @@ import { ProjectsGrid } from './ProjectsGrid';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'key projects — mhsenkow',
-    description: 'Selected work and experiments',
+    title: 'Case studies',
+    description: 'Selected product design case studies across enterprise and independent work.',
+	alternates: { canonical: '/projects' },
 };
 
 export default function ProjectsPage() {
 	return (
 		<main id="content">
 			<section className="container" style={{ padding: 'var(--space-16) 0' }}>
-                <h1 style={{ fontSize: 'var(--size-6)', lineHeight: 1.1 }}>key projects</h1>
+                <h1 className="h1">Case studies</h1>
 				<p style={{ marginTop: 'var(--space-4)', color: 'var(--color-muted)', maxWidth: 820 }}>
-					I have a fairly large number of projects I like to show off, this is a sub-sampling. 
+					Selected product and systems work — enterprise case studies and independent tools. The full archive is on the home page.
 				</p>
 				<ProjectsGrid />
 			</section>

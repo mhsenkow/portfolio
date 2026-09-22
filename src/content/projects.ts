@@ -35,6 +35,60 @@ export type Project = {
 export const projects: Project[] = [
 	...githubBuilds,
 	{
+		slug: 'i2systems-lighting-infra',
+		title: 'Judge — Salesforce / CRM integrity',
+		description:
+			'Local-first review-gated integrity layer over Salesforce — scan accounts/contacts, rank issues, apply sandbox-safe fixes with HubSpot / Mailchimp sync and a full audit trail.',
+		year: 2026,
+		featured: true,
+		image: {
+			src: '/images/projects/i2systems-lighting-infra/card.png',
+			alt: 'Judge — Agents view with detail panel',
+			width: 1024,
+			height: 600,
+		},
+		stack: ['Product design', 'Salesforce', 'Next.js', 'Postgres', 'CRM integrity'],
+		details: {
+			role: 'Staff Product Designer / builder',
+			entity: 'i2Systems',
+			location: 'Remote · Morris, CT lighting manufacturer',
+			years: '2025–present',
+			team: 'Built locally as a working CRM integrity surface for sales ops and marketing.',
+			skills: [
+				'CRM / data integrity UX',
+				'Prototyping in production code',
+				'Salesforce + HubSpot + Mailchimp connectors',
+			],
+			headerImage: {
+				src: '/images/projects/i2systems-lighting-infra/card.png',
+				alt: 'Judge — Agents view with detail panel',
+				width: 1024,
+				height: 600,
+			},
+			synopsis: [
+				'Judge is a review-gated integrity layer I built locally over Salesforce, with HubSpot and Mailchimp sync. It scans accounts and contacts, ranks issues, and applies sandbox-safe fixes with an audit trail — human review instead of blind automation, Salesforce stays system of record.',
+				'Direction is governance, not replacement: native connectors keep syncing; Judge makes integrity issues visible and stamps every decision.',
+			],
+			goals: [
+				'Make CRM data trustworthy enough that sales and marketing can act on it without tribal cleanup rituals',
+				'Keep Salesforce as system of record while adding a human review gate before writes',
+				'Leave an audit trail for every proposed and applied fix',
+			],
+			results: [
+				'Judge MVP live for sandbox Salesforce scan → review → gated apply, with HubSpot/Mailchimp connections and audit log',
+			],
+			sections: [
+				{
+					title: 'Salesforce infra — Judge',
+					body: [
+						'Built Judge MVP (Next.js + Postgres) as the working surface for CRM integrity: connect Salesforce / HubSpot / Mailchimp, scan sandbox accounts and contacts into a working copy, severity-rank proposals, and gate writes behind review with dry-run, confirm, and undo.',
+						'Direction is governance, not replacement — native connectors keep syncing; Judge makes integrity issues visible and stamps every decision on an audit trail.',
+					],
+				},
+			],
+		},
+	},
+	{
 		slug: 'walstad-loom',
 		title: 'walstad loom',
 		description:
@@ -130,9 +184,9 @@ export const projects: Project[] = [
 		slug: 'apple-accessibility',
 		title: 'Apple — Accessibility and internal tooling',
 		description:
-			'Product Designer in IS&T focusing on accessibility; login system, app bundle concepts, UX recommendations, prototyping and research.',
+			'IS&T internship: accessibility audits, coded interaction examples, login concept, and a bushel/app-bundle exploration.',
 		year: 2012,
-    featured: true,
+    featured: false,
 		links: [
 			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/apple/' },
 			{ label: 'App bundles', href: 'https://developer.apple.com/app-store/app-bundles/' },
@@ -162,11 +216,10 @@ export const projects: Project[] = [
 				'Leave behind actionable guidance so accessibility work continues after the internship'
 			],
 			results: [
-				'Internal tools became more usable for employees with assistive technologies',
-				'Universal Access principles became part of ongoing design discussions at IS&T',
-				'Designers gained practical guidance and coded examples to build on',
-				'App bundle concept helped shape what became an App Store feature',
-				'Accessibility became a foundational lens that continues to shape design work today'
+				'Left IS&T with audit docs, coded accessibility examples, and designer guidance',
+				'Login MVP concept wired with early eng feasibility checks',
+				'Bushel concept explored app-grouping — early intern exploration adjacent to later App Store bundles (not a shipped claim)',
+				'Accessibility stayed a lasting lens on later product work',
 			],
 			prototypes: [
 				{ label: 'Login concept video', href: 'https://www.youtube.com/watch?v=Q4RT9MrK3F0&feature=youtu.be' }
@@ -215,7 +268,7 @@ export const projects: Project[] = [
       { label: 'Prototype 2 — Display of Specifics', href: 'https://codepen.io/mhsenkow/full/MjWGdP' },
       { label: 'Prototype 3 — NN highlight', href: 'https://codepen.io/mhsenkow/full/apwZxz' },
 		],
-		image: { src: '/images/projects/ae/SPSS.png', alt: 'SPSS Modeler redesign' },
+		image: { src: '/images/projects/ibm-spss-modeler/card.png', alt: 'SPSS Modeler redesign — Carbon chart interactions' },
     gallery: [],
 		stack: ['IBM Design', 'Data Tools'],
 		details: {
@@ -235,18 +288,16 @@ export const projects: Project[] = [
       ],
       skills: ['UX', 'Front‑end', 'Design systems', 'Data viz'],
       goals: [
-        'Help data scientists understand their data more intuitively through better visualization',
-        'Reduce cognitive load when exploring complex data relationships',
-        'Create a design system that feels cohesive and trustworthy across the platform',
-        'Ensure the tools work for real people doing real work, not just ideal scenarios',
-        'Make advanced analytics accessible to more users, not just experts'
+        'Overhaul SPSS Modeler charts onto Carbon with a clear key-number hierarchy',
+        'Handle edge cases (too few / too many values) without breaking the viz',
+        'Ship coded interaction prototypes (tooltips, help, motion) engineers could reuse',
+        'Extend the system to advanced types (neural nets, predictor/brusher patterns)',
       ],
       results: [
-        'Redesigned charts surface key insights faster, reducing time to find critical numbers',
-        'Motion and interaction patterns measurably improved comprehension of complex data relationships',
-        'Design patterns from this work continue to appear in product checks 5+ years later',
-        'Neural network and advanced chart types became usable by non-expert users',
-        'Brusher concepts and interaction patterns were adopted in future data visualization projects'
+        'Carbon-aligned chart patterns still visible in product checks years later',
+        'Live CodePen prototypes documented tooltip, motion, and neural-net highlight behaviors',
+        'Predictor/brusher concepts carried into later data-viz work',
+        'Edge-case handling (sparse and dense value sets) became part of the chart spec',
       ],
       prototypes: [
         { label: 'Prototype 1: Tooltip Exploration', href: 'https://codepen.io/mhsenkow/full/dXRwqW' },
@@ -276,10 +327,6 @@ export const projects: Project[] = [
             { src: '/images/projects/ibm-spss-modeler/predictor-chart-patterns.jpg', alt: 'Advanced chart types showing predictor chart patterns' },
             { src: '/images/projects/ibm-spss-modeler/brusher-value-ranges.jpg', alt: 'Brusher concept exploring value ranges adjacent to data tables' }
           ]
-        },
-        {
-          title: 'Advanced work',
-          images: []
         }
       ]
 		},
@@ -289,7 +336,7 @@ export const projects: Project[] = [
 		slug: 'meta-daiquery-bento-notebooks',
 		title: 'Meta — Daiquery/Bento notebooks',
 		description:
-			'Creating unified SQL and Python notebooks to help data scientists and engineers work more efficiently with complex queries and data analysis.',
+			'SQL cell notebooks that became Meta’s unified SQL + Python notebook direction — 10k+ MAU, AI-assisted analysis patterns.',
 		year: 2022,
     featured: true,
 		links: [
@@ -318,18 +365,16 @@ export const projects: Project[] = [
       ],
       skills: ['UX Design', 'Interaction Design', 'Visual Design', 'Prototyping', 'User Research', 'SQL', 'Python'],
       goals: [
-        'Help data scientists and engineers better connect and understand complex queries',
-        'Create a unified notebook experience that works for both SQL and Python users',
-        'Reduce friction in data analysis workflows by bringing queries and visualization together',
-        'Make notebooks accessible to more users, not just expert coders',
-        'Build a foundation that can evolve with user needs and organizational changes'
+        'Stand up a SQL cell notebook that stores and visualizes complex warehouse queries in one place',
+        'Unify Daiquery (SQL) and Bento (Python) into a shared cell architecture teams can extend',
+        'Prove a universal notebook direction with prototypes — plugins, sharing, education — before org scope narrowed',
+        'Explore AI assists (joins, related objects, prompt→viz) without forcing a single bot metaphor',
       ],
       results: [
-        'Daiquery notebooks enabled users to run and visualize SQL queries in a single interface, improving workflow efficiency',
-        'Unified notebook direction was established, connecting SQL and Python workflows across Meta',
-        'Cell-based architecture became the foundation for future notebook development',
-        'Work informed Meta AI image creation flows and recommendation systems',
-        'Notebook patterns established here continue to influence data tool design at Meta'
+        'Notebook merge shipped and reached 10k+ monthly active users at Meta',
+        'About 40% of the original universal-notebook concepts landed alongside org churn',
+        'Cell-based architecture became the foundation for subsequent notebook work',
+        'AI workflow patterns from this effort informed Meta AI image-creation and recommendation flows',
       ],
       sections: [
         {
@@ -377,124 +422,110 @@ export const projects: Project[] = [
 	},
 	{
 		slug: 'contracts-2024-2025',
-		title: 'Freelancing — 2024–2025',
+		title: 'Confidential AI Legal & Data Suite — 2024–2025',
 		description:
-			'AI Law notebooks and recommendation bot, Finance recommendation notebook, Imagen‑node app work, Data Suite concepts, Windows Cloud errors.',
+			'Staff-level contract work: AI legal notebooks and recommendation bot, data-suite foundations, and Windows Cloud recovery flows — plus supporting startup systems.',
 		year: 2025,
-    featured: true,
+		featured: true,
 		links: [
 			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/contracts-across-roles/' },
 		],
-    image: { src: '/images/projects/ae/Pie chart.png', alt: 'AI infographic pie chart' },
-		stack: ['AI', 'Prototyping'],
+		image: { src: '/images/projects/ae/Pie chart.png', alt: 'AI workflow and data-suite exploration' },
+		stack: ['AI workflows', 'Data products', 'Prototyping', 'Design systems'],
 		details: {
-				role: 'Product Designer',
-				entity: 'Supio, Microsoft Cloud, Mars Data Suite; supporting ComfyUI / Pincites / Zeplyn / Peopled',
-				location: 'Seattle / remote / in person',
-				years: '2024–2025',
-				team: 'Mixture across places; similar set‑ups as prior roles. Preference for GitHub/Google ecosystems when relevant.',
-				synopsis: [
-					"Team make‑up: Mixture across places; similar set‑ups to what I’ve done before. Learned I prefer GitHub / Google land when it matters.",
-					"Similar patterns: Many start‑ups with secure localized data sources connecting to chat or ‘diagram’ sessions — Legal, Finance, Images, HR, and general Data.",
-					"Processes: Helped teams get set up in Figma, explored blue‑sky directions, and aligned on broader framework choices.",
-					"Patterns for Peopled: Built a coded prototype alongside a wider Figma system to validate patterns quickly.",
-					"Windows App Interstitials: Error flows and selection updates; studied interstitial states and recovery patterns.",
-					"Board sample: A snapshot of exploration — part of the effort was surveying the space to see what existed and what resonated.",
-					"Mars Data Suite work: Foundation explorations toward a data suite — brand, UX flows, early component framing."
-				],
-				skills: ['Brand', 'UX', 'Wireframing', 'Prototyping', 'Components', 'AI workflows'],
-				goals: [
-					'Help startups quickly establish design systems and processes that scale',
-					'Validate interaction patterns early through rapid prototyping',
-					'Bridge the gap between exploration and implementation with concrete examples',
-					'Apply learnings from enterprise design to fast-moving startup environments',
-					'Create reusable patterns that work across different domains and use cases'
-				],
-				results: [
-					'Established Figma systems and design processes for multiple startups',
-					'Validated interaction patterns through coded prototypes before full implementation',
-					'Created reusable component systems that accelerated development timelines',
-					'Explored and documented patterns across Legal, Finance, Images, HR, and Data domains',
-					'Delivered foundation work for data suite products including brand and UX flows'
-				],
-				sections: [
-					{
-						title: 'Similar patterns',
-						body: [
-							'Secure, localized data → chat/diagram sessions.',
-							'Domains: Legal, Finance, Images, HR, general Data.'
-						],
-						images: [
-							
-						]
-					},
-					{
-						title: 'Processes',
-						body: [
-							'Stand up Figma, establish exploration cadence.',
-							'Blue‑sky map, converge on frameworks and reusable patterns.',
-							'Part of the effort was surveying the space to see what existed and what resonated with users and stakeholders.'
-						]
-					},
-					{
-						title: 'Patterns for Peopled',
-						body: [
-							'Coded prototype to complement the Figma system.',
-							'Validated interaction details and component seams early.'
-						],
-            images: [
-							{ src: '/images/projects/contracts-2024-2025/windows-app-interstitial-error-state.png', alt: 'Coded prototype showing Windows app error interstitial with detailed error message, recovery action buttons, and clear user guidance for resolving the issue' },
-							{ src: '/images/projects/contracts-2024-2025/windows-app-interstitial-selection-update.png', alt: 'Coded prototype displaying Windows app selection update interstitial with confirmation dialog, state change indicators, and user feedback for selection modifications' }
-						]
-					},
-					{
-						title: 'Windows App Interstitials',
-						body: [
-							'Error and selection interstitials; emphasis on clarity and recovery.',
-							'Samples from interstitials work and option evaluation.'
-						],
-						images: [
-              { src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-2.png', alt: 'Figma exploration board showing multiple design direction options with wireframes, mockups, and concept variations being evaluated during initial blue-sky mapping phase' },
-							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-1.png', alt: 'Pattern research board documenting secure data connection patterns across Legal, Finance, Images, HR, and Data domains with annotated examples and use case mappings' },
-							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-3.png', alt: 'Interaction pattern comparison board showing side-by-side analysis of chat and diagram session patterns across different domains with evaluation notes and design recommendations' }
-						]
-					},
-					{
-						title: 'Mars Data Suite work',
-						body: [
-							'Explorations toward a data suite basis: brand, UX flows, early components.'
-						],
-            images: [
-							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-4.png', alt: 'Exploration board displaying component library variations including button styles, form inputs, navigation patterns, and layout options as design frameworks converge' },
-							{ src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-5.png', alt: 'Final exploration board showing narrowed design direction with selected UI patterns, component specifications, and visual style decisions after stakeholder feedback and evaluation' }
-						]
-					}
-				]
+			role: 'Product Designer',
+			entity: 'Confidential AI Legal · Confidential Data Suite · Microsoft Cloud',
+			location: 'Seattle / remote / hybrid',
+			years: '2024–2025',
+			team: 'Founders, PMs, and engineers across AI legal, data-suite, and cloud surfaces — overlapping with short supporting engagements.',
+			synopsis: [
+				'Thesis: The same pattern kept showing up — secure, localized data wired into chat or diagram sessions — across Legal, Finance, Images, HR, and general Data. Enterprise habits (systems, provenance, recovery) transfer cleanly into startup velocity.',
+				'Confidential AI Legal: Notebook + recommendation-bot work for legal workflows — helping teams query and reason over sealed corpora without turning the product into a generic chat wrapper.',
+				'Confidential Data Suite: Brand, UX flows, and early component framing for a data-suite foundation — enough structure to ship, not a museum of unused tokens.',
+				'Microsoft Cloud: Error and selection interstitials for peripheral updates — clarity and recovery over blame screens.',
+				'Supporting engagements: Short system and prototype work (including coded UI proofs) to validate patterns before full builds.',
+			],
+			skills: ['AI product UX', 'Data-suite IA', 'Prototyping', 'Component systems', 'Error recovery'],
+			goals: [
+				'Ship AI legal surfaces that respect sealed data and still feel fast to use',
+				'Establish a coherent visual and interaction basis for a growing data suite',
+				'Make Windows Cloud update failures recoverable in one glance',
+				'Validate interaction patterns with coded prototypes before locking inventory',
+			],
+			results: [
+				'Delivered AI legal notebook / recommendation concepts used as product direction',
+				'Handed off data-suite brand, flows, and starter components as the suite basis',
+				'Shipped interstitial patterns emphasizing clear error state + recovery actions',
+				'Left reusable Figma + coded prototypes teams could extend without restarting the system',
+			],
+			sections: [
+				{
+					title: 'Confidential AI Legal',
+					body: [
+						'Notebook and recommendation-bot explorations for legal teams working over localized corpora — chat/diagram sessions as the interaction model, not a thin LLM skin.',
+					],
+					images: [
+						{
+							src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-1.png',
+							alt: 'Pattern research board mapping secure data → chat/diagram sessions across Legal and adjacent domains',
+						},
+						{
+							src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-3.png',
+							alt: 'Side-by-side comparison of chat and diagram session patterns with evaluation notes',
+						},
+					],
+				},
+				{
+					title: 'Confidential Data Suite',
+					body: [
+						'Foundation work toward a data suite: brand language, core UX flows, and early components sized for growth — not a complete library up front.',
+					],
+					images: [
+						{
+							src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-4.png',
+							alt: 'Component and pattern survey for the data-suite visual system',
+						},
+						{
+							src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-5.png',
+							alt: 'Narrowed design direction with selected UI patterns after stakeholder feedback',
+						},
+					],
+				},
+				{
+					title: 'Microsoft Cloud — recovery interstitials',
+					body: [
+						'Error and selection update states for peripheral flows — prioritize what failed, what to do next, and how to resume.',
+					],
+					images: [
+						{
+							src: '/images/projects/contracts-2024-2025/windows-app-interstitial-error-state.png',
+							alt: 'Windows Cloud error interstitial with clear message and recovery actions',
+						},
+						{
+							src: '/images/projects/contracts-2024-2025/windows-app-interstitial-selection-update.png',
+							alt: 'Selection-update interstitial with confirmation and state-change feedback',
+						},
+					],
+				},
+				{
+					title: 'Exploration cadence',
+					body: [
+						'Stand up Figma, map the space, converge on frameworks — then prove seams with coded prototypes before inventory balloons.',
+					],
+					images: [
+						{
+							src: '/images/projects/contracts-2024-2025/exploration-board-pattern-survey-2.png',
+							alt: 'Blue-sky exploration board with wireframes and concept variations under evaluation',
+						},
+					],
+				},
+			],
 		},
 	},
   {
-    slug: 'mars-inc-data-suite',
-    title: 'Mars Inc — building a data suite basis',
-    description:
-      'Product design and prototyping toward a data suite foundation; brand, UX, component system and workflows.',
-    year: 2024,
-    links: [
-      { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences' },
-    ],
-    image: { src: '/images/projects/ae/Supio.png', alt: 'Mars Inc data suite basis' },
-    stack: ['Product design', 'Data suite', 'Components'],
-    details: {
-      role: 'Product Designer',
-      entity: 'Mars Inc (contracts)',
-      years: '2024–2025',
-      synopsis:
-        'Explorations and foundation work for a data suite: brand, UX flows, early component system and prototypes.'
-    }
-  },
-  {
     slug: 're-envisioning-my-primary-product',
-    title: 'Re-envisioning my primary product',
-    description: 'Design system improvements and interaction ownership for MyAnalytics/Workplace Analytics; led across team shifts.',
+    title: 'Microsoft — MyAnalytics / WPA design system',
+    description: 'Shared design system across MyAnalytics and Workplace Analytics — components, layout, and leadership through team transitions.',
     year: 2018,
     featured: true,
     links: [
@@ -507,26 +538,23 @@ export const projects: Project[] = [
       entity: 'Microsoft',
       location: 'Redmond, WA (MyAnalytics – Workplace Analytics team)',
       years: '2018',
-      team: 'Initially worked with a design lead and another FTE designer. Later became the sole FTE designer in the US, leading 4 contractors and remote FTE designers in India. Eventually helped onboard and support a new manager and additional FTE designers.',
+      team: 'Grew from IC beside a design lead to sole US FTE, leading contractors and remote designers in India while onboarding new leadership.',
       headerImage: { src: '/images/projects/re-envisioning-my-primary-product/design-system-update.png', alt: 'Design system update overview' },
       synopsis: [
-        'Alongside other IC work, I spearheaded the design and implementation of an improved design system now utilized by the sister products MyAnalytics and Workplace Analytics. This initiative involved conducting stakeholder interviews, performing internal research, and extensive visual design work. Engaging in numerous discussions with PMs and engineers, I emphasized the importance of this process and ensured its successful adoption.',
-        'Starting with a small team, I led the design efforts through various team changes, becoming the de-facto design lead. My role evolved to manage multiple contractors and remote designers, culminating in onboarding a new manager and additional FTE designers. I ensured they were well-integrated and organized with the existing design files and systems.'
+        'Led the shared design system for MyAnalytics and Workplace Analytics — stakeholder interviews, visual foundations, and component inventory that both products could ship against.',
+        'As the team changed, I held the system together: contractors, remote FTEs, and new managers inherited coherent files and patterns instead of a pile of one-offs.',
       ],
       skills: ['Stakeholder Interviews', 'Internal Research', 'Visual Design', 'Advocacy and Collaboration with PMs and Engineers', 'Team Leadership'],
       goals: [
-        'Create a unified design system that works consistently across MyAnalytics and Workplace Analytics',
-        'Reduce design debt and inconsistencies that were slowing down development',
-        'Establish clear design patterns that designers and engineers could rely on',
-        'Improve the visual quality and cohesiveness of the product experience',
-        'Build a foundation that could scale as the team and products grew'
+        'One visual and interaction language across MyAnalytics and Workplace Analytics',
+        'Cut design debt that was slowing engineering handoff',
+        'Document components (buttons, dropdowns, toggles, layout) teams could reuse',
+        'Keep the system usable as the design org grew and changed',
       ],
       results: [
-        'Design system was successfully adopted across both MyAnalytics and Workplace Analytics products',
-        'Reduced design inconsistencies and improved visual cohesion across the product suite',
-        'Component library enabled faster development cycles and reduced design-to-code handoff time',
-        'Design patterns became the standard for future feature development',
-        'System supported team growth and onboarding of new designers and contractors'
+        'System adopted across both sister products',
+        'Faster design-to-code handoff via shared component specs',
+        'Onboarding path for new designers and contractors against a single source of truth',
       ],
       sections: [
         {
@@ -599,14 +627,24 @@ export const projects: Project[] = [
       role: 'Product Designer',
       entity: 'Microsoft (contracts)',
       years: '2024–2025',
-      synopsis:
-        'Flows and UI concepts around updating peripherals in cloud‑managed environments; focused on clarity of status and recovery.'
+      synopsis: [
+        'Concept work for updating peripherals in cloud-managed Windows environments — status, progress, and recovery when fleets and devices disagree.',
+        'Emphasis on readable error states and next actions so admins and end users can tell what failed and how to continue.',
+      ],
+      skills: ['Systems UX', 'Error-state design', 'Cloud admin flows'],
+      goals: [
+        'Make peripheral update status unambiguous in cloud-managed contexts',
+        'Design recovery paths that work when devices are offline or partially updated',
+      ],
+      results: [
+        'Produced flow and UI concepts used to align stakeholders on status and recovery patterns',
+      ],
     }
   },
   {
     slug: 'teams-admin-center',
     title: 'Teams admin center',
-    description: 'Wireframes and concepts around backend tooling for communications; quick iterations near end of Microsoft tenure.',
+    description: 'Teams admin tooling concepts — a late-tenure sprint mapping operator workflows under transition.',
     year: 2019,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/teams-admin-center/' },
@@ -618,15 +656,24 @@ export const projects: Project[] = [
       entity: 'Microsoft',
       location: 'Seattle, WA',
       years: '2019',
-      synopsis:
-        'Quick wireframes and concepts for the back‑end tooling behind public communications tools; lesson in org transitions.',
-      skills: ['Wireframing', 'Prototyping', 'Admin UX']
+      synopsis: [
+        'Wireframes and concepts for admin tooling behind Teams communications — the operator surface under the public product.',
+        'A short, late-tenure sprint: rapid iteration while the org shifted, useful as a case study in shipping under transition.',
+      ],
+      skills: ['Wireframing', 'Prototyping', 'Admin UX'],
+      goals: [
+        'Map admin workflows for communications tooling clearly enough to debate with eng and PM',
+        'Keep concepts light so they survive org transition without over-investment',
+      ],
+      results: [
+        'Delivered wireframe packages that framed the admin-center problem space for the next owners',
+      ],
     }
   },
   {
     slug: 'researching-silence',
-    title: 'Researching silence',
-    description: 'Study for "Silence Mode" across Office; London and Paris client visits, rapid iteration into today\'s focus time concepts.',
+    title: 'Microsoft — Silence Mode → Focus Time',
+    description: 'Office silence-mode research in London and Paris that evolved into today’s Focus Time concepts.',
     year: 2018,
     featured: true,
     links: [
@@ -658,18 +705,14 @@ export const projects: Project[] = [
       ],
       skills: ['In-Person Interviews', 'Quick Design Conception', 'Prototyping', 'Stakeholder Management', 'User Research'],
       goals: [
-        'Understand how users want to manage interruptions and focus time in their workday',
-        'Create a "Silence Mode" that feels natural and helpful, not intrusive or controlling',
-        'Validate concepts with real users in their actual work environments',
-        'Iterate quickly based on live feedback during international client visits',
-        'Develop a proposal that could evolve into a meaningful feature for Office users'
+        'Learn how Office users want to protect focus without a blunt notification kill-switch',
+        'Prototype Silence Mode concepts against live client feedback in London and Paris',
+        'Return with a proposal stakeholders could evolve into Focus Time',
       ],
       results: [
-        'Conducted in-person interviews with 8 clients across London and Paris',
-        'Rapidly iterated on designs during the research trip based on real-time feedback',
-        'Created comprehensive proposal that evolved into current focus time concepts in Office',
-        'Successfully aligned stakeholders upon returning to the US',
-        'Established research methodology for international user studies and rapid iteration'
+        'In-person interviews with 8 clients across London and Paris',
+        'Same-trip design iterations based on live reactions',
+        'Proposal lineage that fed today’s Focus Time / Focus plan concepts in Office',
       ],
       sections: [
         {
@@ -720,7 +763,7 @@ export const projects: Project[] = [
       team: 'With this area, one main PM and one main Engineer were involved. My role evolved from consulting with a contracting designer, to primary designer and expansion of my design system into this space.',
 			headerImage: { src: '/images/projects/topic-keyword-analysis/topics_list_page.png', alt: 'Topics list page displaying available topics for keyword analysis with selection interface and navigation, showing the redesigned single-screen tool approach' },
       synopsis: [
-        'Synopsis: Many of the projects I worked on for Workplace Analytics were extensive and ongoing. For this particular project, which focused on the topic keyword analysis section of the app, I took over a struggling initiative and transformed it into a success. Initially joining as a design lead, I provided direction to a contractor and then took over the redesign efforts as the project parameters changed. This study took place at the same time as expansion of the design system I’d been fleshing out and provided a good space to view this in.',
+        'Took over a struggling topic/keyword analysis initiative on Workplace Analytics — first as design lead for a contractor, then owning the redesign as scope shifted. Ran in parallel with expanding the design system I’d been building.',
         'Initial set of designs: Working as the design‑lead/consultant for first implementation — ensured the contractor’s work matched component system constraints, fit PM/Engineering needs, and addressed interaction issues found in research.',
         'Push for integration: Took preliminary designs and updated them for another section (Meeting exclusion keyword selection) in conjunction with PM/Engineering, pushing interaction implementation through.',
         'Learnings: Too many steps left users unsure of progress; users wanted to see all steps in one place without scrolling. Goal shifted toward a tool feel rather than a linear wizard.',
@@ -730,18 +773,14 @@ export const projects: Project[] = [
       ],
       skills: ['UX Design', 'Visual Design', 'Mentoring', 'Background in Analytics', 'Tool Creation'],
       goals: [
-        'Transform a struggling initiative into a successful, usable feature',
-        'Reduce cognitive load by consolidating multiple steps into a single, clear interface',
-        'Create a tool-like experience rather than a linear wizard that confuses users',
-        'Expand the design system into new areas while maintaining consistency',
-        'Help users understand their progress and see all options without scrolling'
+        'Collapse a 13-step keyword wizard into a single-screen tool users can finish',
+        'Carry patterns into Meeting Exclusions with PM/eng',
+        'Use the redesign to expand the shared design system under real product pressure',
       ],
       results: [
-        'Redesigned topic keyword analysis from 13-step wizard to single-screen tool interface',
-        'Improved user comprehension by showing all steps in one place without scrolling',
-        'Successfully integrated patterns into Meeting Exclusions section',
-        'Design system expansion provided reusable components for future features',
-        'Patterns were adopted by the team and moved the app toward a cohesive tool experience'
+        '13-step wizard → single-screen tool with responsive layout',
+        'Patterns adopted in Meeting Exclusions',
+        'Reusable components fed the broader Workplace Analytics design system',
       ],
       sections: [
         {
@@ -823,8 +862,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'navigation-update-component-system',
-    title: 'Navigation update → better component system',
-    description: 'Comparison analysis, UX wireframes, and coded prototypes leading to improved component system.',
+    title: 'Microsoft — Navigation & component system',
+    description: 'Nav consistency push that hardened the shared component system — comparison analysis, wireframes, coded proofs.',
     year: 2019,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/navigation-update-leads-to-better-component-system/' },
@@ -840,18 +879,24 @@ export const projects: Project[] = [
       team: 'Sole designer for this project; collaborated with one primary PM and multiple developers.',
       headerImage: { src: '/images/projects/navigation-update-component-system/final-form.png', alt: 'Final navigation form' },
       synopsis: [
-        'During a transition period, I became the de-facto Design Lead for our Seattle group after the main design lead left. I managed contractors and remote designers while keeping work aligned.',
-        'For this project I led comparison analysis, UX wireframing, and coded prototypes to push the navigation update that ultimately informed a better component system.',
-        'Work centered on bringing consistency, simplifying choices, and producing concrete, coded examples that helped engineering validate edge cases and implementation details.'
+        'Led comparison analysis, UX wireframes, and coded prototypes to fix navigation inconsistency — the work that tightened the shared component system.',
+        'Sole designer with one PM and multiple developers; produced concrete coded examples so engineering could validate edge cases.',
       ],
       skills: [
         'UX Design',
         'Visual Design',
         'Wireframing',
         'Coded & Figma Prototyping',
-        'Stakeholder Interviews',
-        'User Research',
         'Component Systems'
+      ],
+      goals: [
+        'Resolve navigation inconsistency that was creating system debt',
+        'Codify nav decisions into components engineering could trust',
+        'Prove edge cases with coded prototypes, not slides alone',
+      ],
+      results: [
+        'Navigation update informed a tighter, more cohesive component system',
+        'Faster implementation via clearer starting points and guidelines',
       ],
       prototypes: [
         { label: 'Tooltip Exploration', href: 'https://codepen.io/mhsenkow/full/KYrNZP' }
@@ -914,8 +959,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'workplace-analytics-programs',
-    title: 'Workplace Analytics — programs, analytics, and nudges',
-    description: 'Bridge between Workplace Analytics and MyAnalytics via programs; multi‑year design leadership and systemization.',
+    title: 'Microsoft — Workplace Analytics programs & nudges',
+    description: 'Programs as the bridge between Workplace Analytics and MyAnalytics — dashboards, nudges, and multi-year design leadership.',
     year: 2018,
     featured: true,
     links: [
@@ -929,20 +974,26 @@ export const projects: Project[] = [
       entity: 'Microsoft — Workplace Analytics team',
       location: 'Redmond, WA',
       years: '2017–2019',
-      team: 'Initially worked with a design lead and another FTE designer. Later became the sole FTE designer in the US, leading 4 contractors and remote FTE designers in India. Eventually helped onboard and support a new manager and additional FTE designers.',
+      team: 'Grew into de-facto design lead across a transitional period — contractors, remote FTEs, and new managers shipping against one programs system.',
       headerImage: { src: '/images/projects/workplace-analytics-programs/programs-dashboard.png', alt: 'Programs dashboard interface' },
       synopsis: [
-        'This was one of two sister programs that were my primary focus for 2.5 years at Microsoft. My work centered around integrating Workplace Analytics and MyAnalytics through the bridging component of programs, which tied the two products together. As the de-facto design lead during a transitional period, I managed contractors and ensured their work aligned with the broader design system. My role encompassed wireframing, research, coding, content writing, visual design, and data visualization consulting—essentially handling all design-related needs for the team.',
-        'Early Concepts & Wireframes: Initial design exploration and wireframing to establish the foundation for the programs system. Early concepts focused on understanding how to bridge Workplace Analytics and MyAnalytics through a unified programs experience.',
-        'Programs Dashboard Overview: The central hub that connected Workplace Analytics and MyAnalytics, providing users with a unified view of their workplace insights and productivity programs. This dashboard served as the entry point for users to discover, enroll in, and manage programs that would help improve their work habits.',
-        'Bridge Integration & Data Flow: Created the bridge between Workplace Analytics and MyAnalytics through a programs system that enabled seamless data flow and user experience continuity across both platforms. This integration allowed organizational insights from Workplace Analytics to connect with personal productivity tools in MyAnalytics.',
-        'Workplace Analytics Integration: Comprehensive analytics dashboards that provided meaningful insights to users while maintaining privacy and security standards. I led improvements to data visualizations, refining how complex workplace metrics were presented to make them more accessible and actionable.',
-        'Workplace Focus & Nudges System: Designed and implemented a nudges system that provided gentle behavioral prompts to help users improve their work habits and productivity without being intrusive. The Workplace Focus component integrated seamlessly with the analytics platform, creating a cohesive experience that guided users toward better work-life balance.',
-        'Advanced Analytics & Insights: Continued development of sophisticated analytics interfaces that provided deeper insights into workplace patterns and productivity metrics. These advanced views allowed users to dive deeper into their data and understand the relationships between different aspects of their work.',
-        'Management & Interface Controls: Interface management tools that allowed administrators to configure and customize the analytics experience for different user groups and organizational needs. This administrative layer ensured that programs could be tailored to specific organizational contexts while maintaining privacy and compliance standards.',
-        'Design Refinement & Final Implementation: Screenshots documenting the refinement process and final implementation, showing how designs evolved from wireframes to polished interfaces based on user feedback and testing. Starting with a small team, I led the design efforts through various team changes, becoming the de-facto design lead. My role evolved to manage multiple contractors and remote designers, culminating in onboarding a new manager and additional FTE designers.'
+        'Primary focus for ~2.5 years: programs as the bridge tying Workplace Analytics (org insights) to MyAnalytics (personal productivity) — wireframes through visual, content, and coded motion.',
+        'Programs dashboard: Entry point to discover, enroll, and manage programs that change work habits — not a second analytics silo.',
+        'Nudges & focus: Gentle behavioral prompts and Workplace Focus surfaces that stay useful without becoming noise.',
+        'Admin & refinement: Configuration for different org contexts, plus iterative polish from wireframe to production based on feedback.',
       ],
-      skills: ['Wireframing', 'Research', 'Coding', 'Visual Design', 'Data Visualization', 'Content Writing', 'Statistics Consulting', 'Stakeholder Interviews', 'Internal Research', 'Advocacy and Collaboration with PMs and Engineers', 'Team Leadership', 'Design System Development', 'Program Management', 'Contractor Management', 'Remote Team Coordination'],
+      skills: ['Wireframing', 'Research', 'Visual Design', 'Data Visualization', 'Behavioral Design', 'Team Leadership', 'Design Systems'],
+      goals: [
+        'Make programs the coherent bridge between org analytics and personal insight',
+        'Ship nudges that change habits without nagging',
+        'Keep privacy and admin controls first-class in the experience',
+        'Hold design quality steady while the team scaled and changed',
+      ],
+      results: [
+        'Programs system became the connective tissue between Workplace Analytics and MyAnalytics',
+        'Dashboard, nudges, and focus patterns shipped with coded motion prototypes',
+        'Design leadership through contractor/remote onboarding kept the system coherent',
+      ],
       prototypes: [
         { label: 'Top Four Redesign and Animations', href: 'https://codepen.io/mhsenkow/full/eRYzoW/' },
         { label: 'Email Usage Redesign and Animations', href: 'https://codepen.io/mhsenkow/full/XgVYyj/' },
@@ -1050,8 +1101,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'improving-work-life-balance',
-    title: 'Improving your work life balance within Office 365',
-    description: 'Evolving MyAnalytics from analytics tool to self-help platform; metrics redesign, animations, and sharing.',
+    title: 'Microsoft — MyAnalytics metrics & self-help',
+    description: 'Evolving MyAnalytics from raw analytics into actionable self-help — top-four metrics, motion, sharing, and onboarding.',
     year: 2018,
     featured: true,
     links: [
@@ -1065,10 +1116,20 @@ export const projects: Project[] = [
       years: 'Early 2017 – 2018',
       headerImage: { src: '/images/projects/improving-work-life-balance/top-four.png', alt: 'Top four metrics redesign' },
       synopsis: [
-        'MyAnalytics leverages the analytics of Office365 to provide users with insights into how they spend their time across meetings, emails, and focus time. The goal is to help users better navigate and manage their schedules. Since joining the team, I\'ve been instrumental in evolving MyAnalytics from a straightforward analytics tool into a self-help tool.',
-        'My contributions focused on making data more accessible and actionable through intuitive design, animations, and comprehensive onboarding experiences. I worked closely with front-end developers to bring these designs to life, while diplomatically navigating through multiple iterations with PMs and stakeholders.'
+        'MyAnalytics turns Office 365 signals (meetings, email, focus) into personal insight. I pushed it from a readout toward a self-help product — clearer metrics, motion that teaches, sharing, and onboarding.',
+        'Worked with front-end to ship motion prototypes; iterated with PMs until the top-four metrics and sharing affordances were something people could act on.',
       ],
-      skills: ['UX Design', 'Prototyping', 'Front-End Development', 'Animation Design', 'Diplomacy in Design Iterations', 'Process Improvement'],
+      skills: ['UX Design', 'Prototyping', 'Front-End Collaboration', 'Animation Design'],
+      goals: [
+        'Make the top-four metrics scannable and actionable in one view',
+        'Use motion to teach work patterns without decoration for its own sake',
+        'Add sharing and onboarding that help people start — and return',
+      ],
+      results: [
+        'Top-four metrics redesign shipped with coded animation prototypes',
+        'Sharing and onboarding concepts validated through iterative stakeholder review',
+        'Established the self-help framing that later Focus Time work could build on',
+      ],
       prototypes: [
         { label: 'Top Four Redesign and Animations', href: 'https://codepen.io/mhsenkow/pen/PmbJRz' },
         { label: 'Sharing Button Concept', href: 'https://codepen.io/mhsenkow/full/QQGBOX/' },
@@ -1138,9 +1199,11 @@ export const projects: Project[] = [
   },
   {
     slug: 'data-viz-framework-meta',
-    title: 'Meta infra — data viz framework & AI‑infographics',
-    description: 'Data visualization framework efforts in Vega; guidance, examples, and AI‑infographic explorations.',
+    title: 'Meta Infra — Vega data viz framework & AI infographics',
+    description:
+      'Chart grammar, coded Vega examples, and documentation for Meta Infra — plus AI-imagen storytelling explorations.',
     year: 2022,
+    featured: true,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/meta-infra-data-viz-framework-and-ai-infographics/' },
     ],
@@ -1148,7 +1211,6 @@ export const projects: Project[] = [
     gallery: [
       { src: '/images/projects/data-viz-framework-meta/Axis_and_Legend.png', alt: 'Axis and Legend' },
       { src: '/images/projects/data-viz-framework-meta/Line_Chart.png', alt: 'Line Chart' },
-      { src: '/images/projects/data-viz-framework-meta/Line_Chart_(1).png', alt: 'Line Chart variant' },
       { src: '/images/projects/data-viz-framework-meta/Slope_Chart.png', alt: 'Slope Chart' },
       { src: '/images/projects/data-viz-framework-meta/Barbell_Chart.png', alt: 'Barbell Chart' },
       { src: '/images/projects/data-viz-framework-meta/Funnel_Chart.png', alt: 'Funnel Chart' },
@@ -1156,9 +1218,6 @@ export const projects: Project[] = [
       { src: '/images/projects/data-viz-framework-meta/Box_Plot.png', alt: 'Box Plot' },
       { src: '/images/projects/data-viz-framework-meta/Parallel_Coordinates.png', alt: 'Parallel Coordinates' },
       { src: '/images/projects/data-viz-framework-meta/Scatter_Plot.png', alt: 'Scatter Plot' },
-      { src: '/images/projects/data-viz-framework-meta/Axis_and_Legend_(1).png', alt: 'Axis and Legend variant' },
-      { src: '/images/projects/data-viz-framework-meta/image_115.png', alt: 'Data visualization example' },
-      { src: '/images/projects/data-viz-framework-meta/Group_625888.png', alt: 'Chart group' },
       { src: '/images/projects/data-viz-framework-meta/Colors.png', alt: 'Color palette' },
       { src: '/images/projects/data-viz-framework-meta/All_Palettes.png', alt: 'All color palettes' },
       { src: '/images/projects/data-viz-framework-meta/Presentation.png', alt: 'Presentation' },
@@ -1168,28 +1227,39 @@ export const projects: Project[] = [
     details: {
       role: 'Product Designer',
       entity: 'Meta',
-      location: 'Seattle but with talks in MPK, London and Tel-aviv',
+      location: 'Seattle · talks in MPK, London, Tel Aviv',
       years: '2022–2023',
-      team: 'The team consisted of myself, a main front-end developer, a main PM, 5-8 engineers involved in training, additional engineers brought in for related work, and a researcher helping confirm the results.',
+      team: 'Paired with a lead front-end engineer and PM; 5–8 engineers on training/integration; researcher validating results.',
       headerEmbed: { 
         html: '<iframe src="https://www.slideshare.net/slideshow/embed_code/key/q3WcAhjVafouPW" width="610" height="515" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border: var(--border-1) solid #CCC; border-width:1px; margin-bottom:5px; max-width:100%;" allowfullscreen></iframe>',
         title: 'AI-Imagen for Data Storytelling Infographics',
         link: 'https://www.slideshare.net/slideshow/ai-imagen-for-data-storytelling-infographics-pdf/268972473'
       },
       synopsis: [
-        'Over the past two years, I led a significant project at Meta focused on creating a Data Visualization framework for Meta Infra. As a Product Designer, I was instrumental in also coding prototypes using Vega, an open-source visualization grammar, to flesh out what our visual capabilities and options were.',
-        'I championed the need for structured guidance in this area, overseeing the visuals, documentation, and prototypes. My responsibilities included working closely with engineering in Vega to develop coded examples of various chart types and ensure their implementation met our high standards.',
-        'Collaborating with a front-end developer, the main PM, and a team of engineers, I pushed for innovative and intuitive solutions that elevated our data visualization capabilities. Additionally, I worked with a researcher to validate our results, ensuring the framework was both effective and user-friendly.',
-        'This work was integrated alongside the design system I was building out, ensuring consistency and coherence across the platform.'
+        'Led Meta Infra’s data-visualization framework: chart grammar, visual guidance, and Vega prototypes that made “what can we draw?” an engineering-ready answer — not a slide deck of aspirations.',
+        'Coded Vega examples alongside engineering so axis, legend, and chart-type decisions survived handoff. Work ran next to the wider infra design system for consistency across Analysis tools.',
+        'AI-imagen storytelling: explored prompt → infographic paths for data narratives, presented across Meta sites (MPK, London, Tel Aviv).',
       ],
-      skills: ['UX Design', 'Visual Design', 'Prototyping (Vega)', 'Documentation', 'Collaboration with PMs and Engineers', 'Research Validation']
+      skills: ['UX Design', 'Visual Design', 'Prototyping (Vega)', 'Documentation', 'Collaboration with PMs and Engineers', 'Research Validation'],
+      goals: [
+        'Give Infra a shared chart vocabulary engineers could implement without one-off art',
+        'Ship coded Vega references for core chart types, axes, legends, and palettes',
+        'Validate the framework with research — not only design preference',
+        'Explore AI-assisted data storytelling without abandoning chart rigor',
+      ],
+      results: [
+        'Framework guidance and Vega prototypes adopted as the Infra viz reference alongside the design system',
+        'Chart library coverage across line, slope, barbell, funnel, bullet, box, parallel coordinates, scatter, and more',
+        'AI-imagen storytelling deck used to socialize prompt → infographic patterns across Meta Infra',
+      ],
     }
   },
   {
     slug: 'design-guide-thousands-users',
-    title: 'The creation of a design guide used across thousands of users',
-    description: 'IBM Watson Data Platform guide; coded components with dev lead, integrated across products.',
+    title: 'IBM — Watson Data Platform design guide',
+    description: 'Coded component guide with the dev lead — shipped into products used across thousands of users.',
     year: 2017,
+    featured: true,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/the-creation-of-a-design-guide-used-across-thousands-of-users/' },
     ],
@@ -1207,10 +1277,20 @@ export const projects: Project[] = [
       team: 'Very healthy leadership combo of design, dev and management with PM. For direct work I was doing a mix of UX concepts and coding to see how these components played out.',
       headerImage: { src: '/images/projects/design-guide-thousands-users/design-guide-overview-navigation.png', alt: 'IBM Watson Data Platform design guide' },
       synopsis: [
-        'My last main group at IBM was the Watson Data Platform team, a position that was incredibly hard to leave. My role blended design, development, and asset and product management in the creation of a comprehensive guide used across multiple products. Although it was a team effort, we worked highly collaboratively to achieve our goals.',
-        'I was deeply involved in both the coding and UX aspects of the guide. Everything in the guide was built and coded between myself and my dev lead, while I also engaged in UX work with our visual designers and Design Lead. The final implementation of the guide into products was incredibly gratifying, and it was rewarding to gather feedback on the components as they were used in real-world applications.'
+        'On Watson Data Platform I worked as designer-developer: the guide’s components were built and coded with my dev lead, while UX landed with visual designers and the Design Lead.',
+        'Seeing those components land in products — and hearing feedback from real usage — was the point. The system had to work for teams shipping, not only for the guide itself.',
       ],
-      skills: ['Design System Architecture', 'Component Library Development', 'Frontend Development', 'UX Design', 'Asset and Product Management', 'Technical Documentation', 'Cross-functional Collaboration', 'Design-to-Code Implementation', 'User Experience Research', 'Visual Design', 'Design Patterns', 'System Integration'],
+      skills: ['Design System Architecture', 'Component Library Development', 'Frontend Development', 'UX Design', 'Technical Documentation', 'Design-to-Code Implementation'],
+      goals: [
+        'Ship a coded component guide products could adopt without reinterpretation',
+        'Keep design and implementation in one loop with the dev lead',
+        'Cover usage guidelines so integration didn’t invent new variants',
+      ],
+      results: [
+        'Guide components integrated across Watson Data Platform products',
+        'Thousands of users experienced the shared patterns in production',
+        'Design-to-code partnership became the delivery model for the system',
+      ],
       sections: [
         {
           title: 'Design Guide Foundation',
@@ -1254,9 +1334,10 @@ export const projects: Project[] = [
   },
   {
     slug: 'watson-analytics-early-work',
-    title: 'Watson Analytics — early work',
-    description: 'Foundational research and prototypes for Watson Analytics; blue‑sky AI‑powered dashboards.',
+    title: 'IBM — Watson Analytics early research',
+    description: 'Foundational research and prototypes that fed Watson Analytics — social analytics proofs and AI dashboard concepts.',
     year: 2014,
+    featured: false,
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/watson-analytics-early-work/' },
     ],
@@ -1450,7 +1531,6 @@ export const projects: Project[] = [
       { src: '/images/projects/grad-school-data-viz/final8.png', alt: 'Final visualization 8' },
       { src: '/images/projects/grad-school-data-viz/final9.png', alt: 'Final visualization 9' },
       { src: '/images/projects/grad-school-data-viz/final10.png', alt: 'Final visualization 10' },
-      { src: '/images/projects/grad-school-data-viz/example-video.png', alt: 'Video example screenshot' },
       { src: '/images/projects/grad-school-data-viz/screenshot-12.36.59-pm.png', alt: 'Processing sketch 1' },
       { src: '/images/projects/grad-school-data-viz/screenshot2-12.36.59-pm.png', alt: 'Processing sketch 2' },
       { src: '/images/projects/grad-school-data-viz/screenshot-12.46.15-pm.png', alt: 'D3 visualization 1' },
@@ -1616,7 +1696,6 @@ export const projects: Project[] = [
 		image: { src: '/images/projects/generative-web-code-art/card.png', alt: 'Generative web-code art' },
 		gallery: [
 			{ src: '/images/projects/generative-web-code-art/isovox-aquarium.png', alt: 'Isovox Aquarium - 3D voxel aquarium ecosystem' },
-			{ src: '/images/projects/generative-web-code-art/voice-visualizer.png', alt: 'Voice Visualizer' },
 			{ src: '/images/projects/generative-web-code-art/music-sound-experiment.png', alt: 'Music Sound experiment 2' },
 			{ src: '/images/projects/generative-web-code-art/header-concept.png', alt: 'Piece 1: Header concept for cards' },
 			{ src: '/images/projects/generative-web-code-art/artistic-loader-1.png', alt: 'Piece 2: Artistic loader concept' },

@@ -95,14 +95,14 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                 </div>
               )}
               <Link href={`/projects/${hovered.slug}`} className="work-panel__open">
-                open project →
+                View case study →
               </Link>
             </>
           ) : (
             <>
-              <p className="work-panel__meta">inspector</p>
-              <h2 className="work-panel__title">hover a tile</h2>
-              <p className="work-panel__desc">Details land here — year, blurb, preview.</p>
+              <p className="work-panel__meta">Project detail</p>
+              <h2 className="work-panel__title">Select a project</h2>
+              <p className="work-panel__desc">Hover a tile to preview title, year, and summary.</p>
             </>
           )}
         </div>
@@ -114,19 +114,21 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
   return (
     <div className={styles.work}>
       <div className={styles.toolbar}>
-        {onTitleClick ? (
-          <button
-            type="button"
-            onClick={onTitleClick}
-            className={styles.titleBtn}
-            aria-label={`${title} — open intro`}
-          >
-            {title}
-          </button>
-        ) : (
-          <h1 className={styles.title}>{title}</h1>
-        )}
         <SortFilterBar
+          leading={
+            onTitleClick ? (
+              <button
+                type="button"
+                onClick={onTitleClick}
+                className={styles.titleBtn}
+                aria-label={`${title} — open intro`}
+              >
+                {title}
+              </button>
+            ) : (
+              <h1 className={styles.title}>{title}</h1>
+            )
+          }
           onSortChange={setSort}
           onFilterChange={setFilter}
           currentSort={sort}
@@ -142,10 +144,14 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
             <motion.div
               key={p.slug}
               layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.18, delay: Math.min(index * 0.012, 0.2) }}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{
+                duration: 0.22,
+                ease: [0.2, 0, 0, 1],
+                delay: Math.min(index * 0.012, 0.16),
+              }}
               onMouseEnter={() => setHovered(p)}
               onPointerEnter={() => setHovered(p)}
               onFocus={() => setHovered(p)}

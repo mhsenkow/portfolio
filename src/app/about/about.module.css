@@ -16,8 +16,6 @@
 
 .title {
   margin: 0;
-  font-size: clamp(2rem, 6vw, var(--size-7));
-  line-height: 1.05;
 }
 
 .grid {

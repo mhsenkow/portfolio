@@ -46,7 +46,6 @@ export const githubBuilds: Project[] = [
 		description:
 			'Free online word counter — single-file, offline-capable, localStorage only. Live at ibm.io/wordcount.',
 		year: 2026,
-		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/wordcounter/card.png',
@@ -164,7 +163,6 @@ export const githubBuilds: Project[] = [
 		description:
 			'Low-poly isometric permaculture builder — plants instead of buildings, nutrient carriers instead of villagers, soil food web instead of economy.',
 		year: 2026,
-		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/loam/card.jpg',
@@ -192,7 +190,6 @@ export const githubBuilds: Project[] = [
 		description:
 			'Real-time voxel strategy sim in a gas torus — Integral Trees–inspired sky with no ground.',
 		year: 2026,
-		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/smoke-ring/card.png',
@@ -278,31 +275,124 @@ export const githubBuilds: Project[] = [
 				'Make institutional filings explorable without laundering provenance.',
 				'Ship a polished product proof from a written PRD.',
 			],
+			results: [
+				'Public repo with Whale Grid, Conviction Flow, and provenance-backed moves',
+				'Demo/live honesty rules baked into the product surface — mock data never poses as market truth',
+			],
 		},
 	},
 	{
 		slug: 'imdb-loom',
 		title: 'IMDb Loom',
 		description:
-			'Printable actor-network posters — Vite atelier plus DuckDB pipeline for film graph craft.',
+			'Printable actor-network posters — story gallery + poster atelier over a DuckDB pipeline for film-graph craft.',
 		year: 2026,
+		featured: true,
 		category: 'creative',
 		image: {
-			src: '/images/projects/imdb-loom/card.jpg',
-			alt: 'IMDb Loom — actor network posters',
-			width: 1200,
-			height: 600,
+			src: '/images/projects/imdb-loom/card.png',
+			alt: 'IMDb Loom atelier — scream-queen chord poster with inspect insights',
+			width: 1600,
+			height: 1000,
 		},
-		stack: ['TypeScript', 'Vite', 'DuckDB', 'Print'],
+		stack: ['TypeScript', 'Vite', 'D3', 'DuckDB', 'Print'],
 		links: [
+			{ label: 'Live', href: 'https://mhsenkow.github.io/imbd_loom/?view=home' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/imbd_loom' },
 		],
 		details: {
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: [
+				'Construct-based data viz',
+				'Print-first authoring UX',
+				'DuckDB pipelines',
+				'Data provenance / methodology',
+			],
+			headerImage: {
+				src: '/images/projects/imdb-loom/atelier-chord.png',
+				alt: 'Scream-queen web chord diagram in the poster atelier with strip constructs and Insight Hub',
+				width: 1600,
+				height: 1000,
+			},
+			prototypes: [
+				{ label: 'Story gallery', href: 'https://mhsenkow.github.io/imbd_loom/?view=home' },
+				{ label: 'Open atelier', href: 'https://mhsenkow.github.io/imbd_loom/?view=atelier' },
+				{ label: 'Trust the data', href: 'https://mhsenkow.github.io/imbd_loom/?view=methodology' },
+			],
 			synopsis: [
-				'IMDb Loom turns actor collaboration graphs into printable network posters — an atelier UI over a DuckDB pipeline for local film-data craft.',
+				'Concept: Most film networks only show who worked with whom. Loom adds a second axis — who someone is (voice vs on-camera, gender coding, role type) flowing into what kind of work they do (genre, medium, era). Each “construct” is a saved lens: query + visual treatment.',
+				'Story gallery: Six shelves of tuned sheets — Just look cool, Horror webs, Voice & cartoons, Careers & bridges, New lenses, Archetypes & eras. Open a sheet, then re-author in the atelier.',
+				'Poster atelier: Chord, edge-bundle, timeline, and scatter heroes with density knobs, find/highlight/isolate, Insight Hub callouts, and local-only PDF export — one app from IMDb datasets → DuckDB → mm-sized SVG → print.',
+				'Forms beyond the knot: Timeline heroes for long careers and silent→sound skylines; scatter for strength × prominence (blockbuster cloud). Theme/palette (loom, ink, dusk, okabe, contrast) travels in the share URL.',
+				'Trust the data: Methodology surface for sources (IMDb non-commercial, optional TMDB/Wikidata/Bechdel), math, integrity badges, and per-construct quality — provenance is part of the product.',
+			],
+			goals: [
+				'Make collaboration graphs readable as woven objects, not hairballs',
+				'Author large-format posters without Illustrator / Gephi / RAWGraphs',
+				'Keep construct, palette, and filters shareable in the URL',
+				'Expose data limits honestly (top-billed cast, gender proxies, Bechdel coverage)',
+			],
+			results: [
+				'Public explorer on GitHub Pages with 30+ constructs and curated gallery shelves',
+				'Atelier ships chord / bundle / timeline / scatter heroes with strip sub-views and Insight Hub',
+				'Pipeline builds construct JSON via DuckDB; PDF export stays local (Puppeteer)',
+				'Methodology page documents sources, metrics, and integrity status per construct',
+			],
+			sections: [
+				{
+					title: 'Story gallery',
+					body: 'Browse a cut that already reads as an object, then jump into the atelier to re-author.',
+					images: [
+						{
+							src: '/images/projects/imdb-loom/home.png',
+							alt: 'IMDb Loom story gallery — shelves of curated weaves with Open atelier and Trust the data',
+						},
+					],
+				},
+				{
+					title: 'Poster atelier',
+					body: 'Hero band as a dense chord or edge bundle; strip below pulls related constructs as parallel threads. Insight Hub turns the cut into readable claims.',
+					images: [
+						{
+							src: '/images/projects/imdb-loom/atelier-chord.png',
+							alt: 'Scream-queen web chord in atelier with construct strip and Insight Hub callouts',
+						},
+						{
+							src: '/images/projects/imdb-loom/atelier-bundle.png',
+							alt: 'Voice actors in cartoons edge-bundle hero with multi-construct strip and strength legend',
+						},
+					],
+				},
+				{
+					title: 'Forms beyond the knot',
+					body: 'Timeline and scatter heroes for careers that don’t want a circular weave.',
+					images: [
+						{
+							src: '/images/projects/imdb-loom/atelier.png',
+							alt: 'Voice actors in cartoons atelier view with vertical name warp and bundled co-appearance arcs',
+						},
+						{
+							src: '/images/projects/imdb-loom/atelier-timeline.png',
+							alt: 'Long-careers timeline hero — decades on the X axis with co-appearance arcs',
+						},
+						{
+							src: '/images/projects/imdb-loom/atelier-scatter.png',
+							alt: 'Blockbuster strength × prominence scatter hero in the poster atelier',
+						},
+					],
+				},
+				{
+					title: 'Trust the data',
+					body: 'Co-appearances are high-confidence (same IMDb title in principals); gender/voice/Bechdel carry explicit caveats on the methodology page.',
+					images: [
+						{
+							src: '/images/projects/imdb-loom/methodology.png',
+							alt: 'Trust the data methodology page listing IMDb, TMDB, Wikidata, and Bechdel sources with caveats',
+						},
+					],
+				},
 			],
 		},
 	},
@@ -495,32 +585,6 @@ export const githubBuilds: Project[] = [
 				'A Vega visualization gallery for interactive chart creation and data management — a playground adjacent to Meta-era data-viz craft.',
 			],
 			prototypes: [{ label: 'Open gallery', href: 'https://starship-vega.vercel.app' }],
-		},
-	},
-	{
-		slug: 'ibm-alum',
-		title: 'IBM Alum',
-		description:
-			'Independent ex-IBM alumni directory — Next.js + Postgres, static public preview on GitHub Pages.',
-		year: 2026,
-		category: 'creative',
-		image: {
-			src: '/images/projects/ibm-alum/card.jpg',
-			alt: 'IBM Alum — alumni directory',
-			width: 1200,
-			height: 600,
-		},
-		stack: ['Next.js', 'Postgres', 'TypeScript'],
-		links: [
-			{ label: 'GitHub', href: 'https://github.com/mhsenkow/ibm_alum' },
-		],
-		details: {
-			role: 'Design & engineering',
-			entity: 'Independent',
-			years: '2026',
-			synopsis: [
-				'An independent directory for ex-IBM alumni — Next.js app with Postgres backing and a static public preview on GitHub Pages.',
-			],
 		},
 	},
 ];

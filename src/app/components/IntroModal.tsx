@@ -13,11 +13,11 @@ export function openIntroModal() {
 }
 
 const EXPLORATIONS = [
-  { href: "https://mhsenkow.work/", label: "Vercel-era grid" },
+  { href: "https://mhsenkow.work/", label: "Prior portfolio (Vercel)" },
   { href: "https://webgl-portfolio-jbxw.vercel.app/", label: "WebGL portfolio" },
   { href: "https://portfolio-site-tau-ten-35.vercel.app/", label: "Particle narrative" },
-  { href: "https://mhsenkow.github.io/sleeping-ox-studios/", label: "Over the top game example" },
-  { href: "https://www.mhsenkow.org/Older/old/portfolio/", label: "2013 original" },
+  { href: "https://mhsenkow.github.io/sleeping-ox-studios/", label: "Sleeping Ox Studios" },
+  { href: "https://www.mhsenkow.org/Older/old/portfolio/", label: "2013 portfolio" },
   {
     href: "https://www.figma.com/proto/SS9PFTPBKoUEmOhn1f5GJt/presentation?node-id=376-3&t=97fqkQd8qUt8cyQY-1&starting-point-node-id=376%3A3",
     label: "AI work deck",
@@ -87,27 +87,35 @@ export function IntroModal() {
       onClick={dismiss}
     >
       <div className="intro-modal__panel" onClick={(e) => e.stopPropagation()}>
-        <p className="intro-modal__hint">i build machines</p>
+        <p className="intro-modal__hint">Portfolio</p>
 
         <header className="intro-modal__mast">
-          <h1 id="intro-title" className="intro-modal__title">
+          <h1 id="intro-title" className="h1 intro-modal__title">
             Michael Senkow
           </h1>
           <p className="intro-modal__role">Staff Product Designer</p>
           <p className="intro-modal__lede">
-            Complex tooling, data workflows, and software that still feels like craft.
+            Complex tooling, data workflows, and product systems for enterprise and independent work.
           </p>
         </header>
 
         <section className="intro-modal__proof" aria-label="Selected products">
-          <p className="intro-modal__section-label">selected products</p>
+          <p className="intro-modal__section-label">selected work</p>
           <ul className="intro-modal__proof-list">
+            <li>
+              <span className="intro-modal__proof-org">i2Systems</span>
+              <span className="intro-modal__proof-body">
+                <strong>Judge</strong> — a review-gated Salesforce / CRM integrity
+                layer: scan accounts and contacts, rank issues, and apply
+                sandbox-safe fixes with HubSpot / Mailchimp sync and a full audit trail.
+              </span>
+            </li>
             <li>
               <span className="intro-modal__proof-org">Microsoft</span>
               <span className="intro-modal__proof-body">
-                <strong>Focus Time</strong> in Viva Insights — protected deep-work blocks that ship
-                across Outlook on millions of PCs. Grew out of earlier silence-mode research
-                into what became the Focus plan. Also the first chapters of{" "}
+                <strong>Focus Time</strong> in Viva Insights — protected deep-work blocks shipping
+                across Outlook on millions of PCs. Grew from silence-mode research into the Focus plan.
+                Earlier chapters of{" "}
                 <strong>Workplace Analytics → Viva Insights</strong>.
               </span>
             </li>
@@ -115,15 +123,15 @@ export function IntroModal() {
               <span className="intro-modal__proof-org">Meta Infra</span>
               <span className="intro-modal__proof-body">
                 <strong>Daiquery notebooks</strong> — the SQL cell system data scientists and
-                engineers use to query Meta&apos;s warehouse; augmented with AI and part adding to
-                the component system in Meta&apos;s XDS infra framework. Also data-viz systems and
-                AI-infographics across Analysis workflows.
+                engineers use to query Meta&apos;s warehouse; AI-assisted workflows and contributions
+                to Meta&apos;s XDS infra component system. Also data visualization systems and
+                AI-infographics across Analysis tools.
               </span>
             </li>
             <li>
               <span className="intro-modal__proof-org">IBM</span>
               <span className="intro-modal__proof-body">
-                Cognos Analytics with Watson, and early steps of the{" "}
+                Cognos Analytics with Watson, and early contributions to the{" "}
                 <strong>Carbon Design System</strong>.
               </span>
             </li>
@@ -131,28 +139,30 @@ export function IntroModal() {
         </section>
 
         <p className="intro-modal__guide">
-          The grid behind this is a sample across eras. Hover a tile, or jump to{" "}
+          The grid behind this is a cross-section of the work.
+          <br />
+          Hover a project, or open{" "}
           <Link href="/projects" onClick={dismiss}>
-            key projects
+            Case studies
           </Link>{" "}
           /{" "}
           <Link href="/list-view" onClick={dismiss}>
-            full list
+            Archive
           </Link>
           .
         </p>
 
         <p className="intro-modal__aside">
-          MechE + technical communications undergrad · HCI masters · architecture &amp; digital
-          fabrication along the way
+          B.S. Mechanical Engineering &amp; Technical Communications · M.S. HCI · architecture and
+          digital fabrication
         </p>
 
         <button type="button" className="intro-modal__enter" onClick={dismiss}>
-          enter →
+          View work →
         </button>
 
-        <aside className="intro-modal__explorations" aria-label="Other portfolio explorations">
-          <p className="intro-modal__section-label">other portfolio explorations</p>
+        <aside className="intro-modal__explorations" aria-label="Previous portfolio versions">
+          <p className="intro-modal__section-label">previous portfolio versions</p>
           <div className="intro-modal__links">
             {EXPLORATIONS.map((item) => (
               <LinkToken key={item.href} href={item.href} label={item.label} />

@@ -4,6 +4,7 @@ import { Nav } from "./components/Nav";
 import { LightboxProvider } from "./components/Lightbox";
 import { IntroModal } from "./components/IntroModal";
 import Script from "next/script";
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/content/site";
 import "@/styles/globals.css";
 
 const geistSans = Geist({
@@ -72,20 +73,76 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "mhsenkow — portfolio",
-  description: "lower case portfolio by mhsenkow",
-  metadataBase: new URL("https://www.mhsenkow.work"),
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Staff Product Designer`,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: `${SITE_TAGLINE} Case studies from Microsoft, Meta, IBM, and independent work.`,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
-    title: "mhsenkow — portfolio",
-    description: "lower case portfolio by mhsenkow",
-    url: "https://www.mhsenkow.work",
+    locale: "en_US",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Staff Product Designer`,
+    description: SITE_TAGLINE,
+    url: SITE_URL,
+    images: [
+      {
+        url: "/images/profile/michael.jpg",
+        width: 1000,
+        height: 1000,
+        alt: "Michael Senkow — Staff Product Designer",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "mhsenkow — portfolio",
-    description: "lower case portfolio by mhsenkow",
+    card: "summary_large_image",
+    title: `${SITE_NAME} — Staff Product Designer`,
+    description: SITE_TAGLINE,
+    images: ["/images/profile/michael.jpg"],
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  mainEntity: {
+    "@type": "Person",
+    name: SITE_NAME,
+    url: SITE_URL,
+    jobTitle: "Staff Product Designer",
+    description: SITE_TAGLINE,
+    image: `${SITE_URL}/images/profile/michael.jpg`,
+    sameAs: [
+      "https://github.com/mhsenkow",
+      "https://www.linkedin.com/in/mhsenkow/",
+      "https://codepen.io/mhsenkow",
+      "https://thenounproject.com/creator/mhsenkow/",
+    ],
+    knowsAbout: [
+      "Product design",
+      "Design systems",
+      "Data visualization",
+      "Enterprise tooling",
+      "Local-first software",
+    ],
+  },
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: `${SITE_NAME} — Portfolio`,
+  url: SITE_URL,
+  description: SITE_TAGLINE,
+  author: { "@type": "Person", name: SITE_NAME, url: SITE_URL },
 };
 
 export default function RootLayout({
@@ -96,6 +153,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${libreBaskerville.variable} ${lora.variable} ${manrope.variable} ${jetBrainsMono.variable} ${firaCode.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);if(t)localStorage.setItem('theme',t);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);}catch(e){}})();`}
         </Script>
@@ -107,7 +172,7 @@ export default function RootLayout({
               <Nav />
             </nav>
           </header>
-          <main className="app-main">{children}</main>
+          <div className="app-main">{children}</div>
           {/* overlay root for panels (left/right drawers, modals) */}
           <div id="overlays" className="overlay-root" />
           <IntroModal />

@@ -32,266 +32,370 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 	};
 }
 
+function ImageFrame({
+	src,
+	alt,
+	group,
+	index,
+	width = 1200,
+	height = 800,
+	sizes,
+}: {
+	src: string;
+	alt: string;
+	group: { src: string; alt: string }[];
+	index: number;
+	width?: number;
+	height?: number;
+	sizes: string;
+}) {
+	return (
+		<div className="project-media">
+			<LightboxImage
+				src={src}
+				alt={alt}
+				group={group}
+				index={index}
+				width={width}
+				height={height}
+				sizes={sizes}
+				style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }}
+			/>
+		</div>
+	);
+}
+
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
 	const { slug } = await params;
 	const project = projects.find((p) => p.slug === slug);
 	if (!project) return notFound();
 
-    // Auto-discover any local images for this project under public/images/projects/{slug}
-    let autoGallery: { src: string; alt: string }[] = [];
-    try {
-        const dir = path.join(process.cwd(), 'public', 'images', 'projects', slug);
-        const files = fs.readdirSync(dir);
-        autoGallery = files
-            .filter((f) => /\.(png|jpe?g|webp|gif|avif)$/i.test(f))
-            .map((f) => ({ src: `/images/projects/${slug}/${f}`, alt: project.title }));
-    } catch {
-        // ignore missing directory
-    }
+	let autoGallery: { src: string; alt: string }[] = [];
+	try {
+		const dir = path.join(process.cwd(), 'public', 'images', 'projects', slug);
+		const files = fs.readdirSync(dir);
+		autoGallery = files
+			.filter((f) => /\.(png|jpe?g|webp|gif|avif)$/i.test(f))
+			.filter((f) => {
+				try {
+					return fs.statSync(path.join(dir, f)).size >= 2048;
+				} catch {
+					return false;
+				}
+			})
+			.map((f) => ({ src: `/images/projects/${slug}/${f}`, alt: project.title }));
+	} catch {
+		// ignore missing directory
+	}
 
-    const gallery = [
-        ...(project.gallery ?? []),
-        ...autoGallery,
-    ].filter((item, idx, arr) => arr.findIndex((x) => x.src === item.src) === idx);
+	const gallery = [
+		...(project.gallery ?? []),
+		...autoGallery,
+	].filter((item, idx, arr) => arr.findIndex((x) => x.src === item.src) === idx);
 
-    // If section images are defined, remove them from the bottom gallery to avoid duplication
-    const headerSrc = project.details?.headerImage?.src;
-    const sectionImageSrcs = project.details?.sections?.flatMap((section) =>
-      section.images?.map((img) => img.src) ?? []
-    ) ?? [];
-    const galleryFiltered = gallery.filter((g) => !sectionImageSrcs.includes(g.src) && g.src !== headerSrc);
+	const headerSrc = project.details?.headerImage?.src;
+	const sectionImageSrcs = project.details?.sections?.flatMap((section) =>
+		section.images?.map((img) => img.src) ?? []
+	) ?? [];
+	const galleryFiltered = gallery.filter((g) => !sectionImageSrcs.includes(g.src) && g.src !== headerSrc);
 
-    const idx = projects.findIndex((p) => p.slug === slug);
-    const prev = idx > 0 ? projects[idx - 1] : null;
-    const next = idx >= 0 && idx < projects.length - 1 ? projects[idx + 1] : null;
+	const idx = projects.findIndex((p) => p.slug === slug);
+	const prev = idx > 0 ? projects[idx - 1] : null;
+	const next = idx >= 0 && idx < projects.length - 1 ? projects[idx + 1] : null;
 
-    // Extract a YouTube video from prototypes if present
-    const videoHref = project.details?.prototypes?.find((p) => /youtu\.be|youtube\.com/.test(p.href))?.href;
-    const embedSrc = videoHref
-      ? (() => {
-          try {
-            const u = new URL(videoHref);
-            const id = u.hostname.includes('youtu.be') ? u.pathname.slice(1) : u.searchParams.get('v');
-            return id ? `https://www.youtube.com/embed/${id}` : undefined;
-          } catch { return undefined; }
-        })()
-      : undefined;
+	const videoHref = project.details?.prototypes?.find((p) => /youtu\.be|youtube\.com/.test(p.href))?.href;
+	const embedSrc = videoHref
+		? (() => {
+				try {
+					const u = new URL(videoHref);
+					const id = u.hostname.includes('youtu.be') ? u.pathname.slice(1) : u.searchParams.get('v');
+					return id ? `https://www.youtube.com/embed/${id}` : undefined;
+				} catch {
+					return undefined;
+				}
+			})()
+		: undefined;
+
+	const metaFields: { label: string; value: string }[] = [];
+	if (project.details?.role) metaFields.push({ label: 'Role', value: project.details.role });
+	if (project.details?.entity) metaFields.push({ label: 'Entity', value: project.details.entity });
+	if (project.details?.location) metaFields.push({ label: 'Location', value: project.details.location });
+	if (project.details?.years) metaFields.push({ label: 'Years', value: project.details.years });
+	if (project.details?.team) metaFields.push({ label: 'Team make-up', value: project.details.team });
+	if (project.details?.skills && project.details.skills.length > 0) {
+		metaFields.push({ label: 'Skills used', value: project.details.skills.join(', ') });
+	}
+
+	const gallerySizes = '(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 420px';
+	const heroSizes = '(max-width: 700px) 100vw, (max-width: 1100px) 92vw, min(1100px, 70vw)';
 
 	return (
 		<main id="content">
-			<section className="container--fluid" style={{ padding: 'var(--space-16) 0' }}>
-        <SidePanelLayout panel={
-          <>
-            <div className="project-card">
-                <div className="eyebrow">project</div>
-                <h1 className="h3" style={{ marginTop: '6px' }}>{project.title}</h1>
-                <p className="type-secondary" style={{ marginTop: 'var(--space-3)' }}>{project.description}</p>
-                {project.details && (
-                  <dl className="project-meta">
-                    {project.details.role && (<><dt>Role</dt><dd>{project.details.role}</dd></>)}
-                    {project.details.entity && (<><dt>Entity</dt><dd>{project.details.entity}</dd></>)}
-                    {project.details.location && (<><dt>Location</dt><dd>{project.details.location}</dd></>)}
-                    {project.details.years && (<><dt>Years</dt><dd>{project.details.years}</dd></>)}
-                    {project.details.team && (<><dt>Team make-up</dt><dd>{project.details.team}</dd></>)}
-                    {project.details.skills && project.details.skills.length > 0 && (<><dt>Skills used</dt><dd>{project.details.skills.join(', ')}</dd></>)}
-                  </dl>
-                )}
-                {project.details?.prototypes && project.details.prototypes.length > 0 && (
-                  <div className="project-links" style={{ gridAutoFlow: 'row', gap: '8px' }}>
-                    {project.details.prototypes.map((p) => (
-                      <LinkToken key={p.href} href={p.href} label={p.label} />
-                    ))}
-                  </div>
-                )}
-            </div>
-            {(project.details?.goals || project.details?.results) && (
-              <div className="project-card" style={{ marginTop: 'var(--space-6)' }}>
-                <div className="eyebrow">Goals and results</div>
-                {project.details.goals && (
-                  <div style={{ marginTop: 'var(--space-3)' }}>
-                    <h3 className="h4" style={{ marginBottom: 'var(--space-2)' }}>Initial goals</h3>
-                    {Array.isArray(project.details.goals) ? (
-                      <ul className="type-secondary" style={{ margin: 0, paddingLeft: 'var(--space-4)', listStyle: 'disc' }}>
-                        {project.details.goals.map((goal, i) => (
-                          <li key={i} style={{ marginTop: i === 0 ? 0 : 'var(--space-1)' }}>{goal}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="type-secondary">{project.details.goals}</p>
-                    )}
-                  </div>
-                )}
-                {project.details.results && (
-                  <div style={{ marginTop: project.details.goals ? 'var(--space-4)' : 'var(--space-3)' }}>
-                    <h3 className="h4" style={{ marginBottom: 'var(--space-2)' }}>Long term results</h3>
-                    {Array.isArray(project.details.results) ? (
-                      <ul className="type-secondary" style={{ margin: 0, paddingLeft: 'var(--space-4)', listStyle: 'disc' }}>
-                        {project.details.results.map((result, i) => (
-                          <li key={i} style={{ marginTop: i === 0 ? 0 : 'var(--space-1)' }}>{result}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="type-secondary">{project.details.results}</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </>
-        }>
-          <div className="project-content-scroll">
-            <section>
-              <div className="eyebrow">overview</div>
-              <h2 className="h2" style={{ marginTop: '6px' }}>{project.title}</h2>
-              <p className="lede" style={{ marginTop: 'var(--space-2)' }}>{project.description}</p>
-            </section>
-            {project.details?.headerEmbed && (
-              <div style={{ marginTop: 'var(--space-6)' }}>
-                <div 
-                  dangerouslySetInnerHTML={{ __html: project.details.headerEmbed.html }}
-                  style={{ 
-                    display: 'flex', 
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                />
-                {project.details.headerEmbed.title && project.details.headerEmbed.link && (
-                  <div style={{ marginTop: 'var(--space-3)', textAlign: 'center' }}>
-                    <a 
-                      href={project.details.headerEmbed.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      style={{ 
-                        fontSize: 'var(--size-2)', 
-                        color: 'var(--color-link)',
-                        textDecoration: 'none'
-                      }}
-                    >
-                      {project.details.headerEmbed.title} →
-                    </a>
-                  </div>
-                )}
-              </div>
-            )}
-            {!project.details?.headerEmbed && project.details?.headerImage && (
-              <div style={{ marginTop: 'var(--space-6)', background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px' }}>
-                <LightboxImage src={project.details.headerImage.src} alt={project.details.headerImage.alt} group={[{ src: project.details.headerImage.src, alt: project.details.headerImage.alt }]} index={0} width={project.details.headerImage.width ?? 1600} height={project.details.headerImage.height ?? 900} sizes="(max-width: 600px) 100vw, (max-width: 1200px) 80vw, 1200px" className={undefined} style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
-              </div>
-            )}
-            {project.details?.synopsis && (
-              <section className="project-section" style={{ maxWidth: 960 }}>
-                {Array.isArray(project.details.synopsis) ? (
-                  project.details.synopsis.map((s, i) => {
-                    const titled = s.match(/^([A-Z][A-Za-z\s&/\-]{2,100}):\s*(.*)$/);
-                    if (titled) {
-                      const [, title, rest] = titled;
-                      return (
-                        <div key={i} style={{ marginTop: i === 0 ? 0 : 'var(--space-6)' }}>
-                          <h3 className="h3">{title}</h3>
-                          {rest && <p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{rest}</p>}
-                          {/* mini gallery if sections mapping provided */}
-                          {project.details?.sections && project.details.sections.find((sec) => sec.title.toLowerCase() === title.toLowerCase())?.images && (
-                            <div style={{ marginTop: 'var(--space-4)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
-                              {(() => {
-                                const sec = project.details!.sections!.find((sec) => sec.title.toLowerCase() === title.toLowerCase())!;
-                                const group = sec.images!.map((i) => ({ src: i.src, alt: i.alt }));
-                                return sec.images!.map((img, idx) => (
-                                  <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px', overflow: 'hidden' }}>
-                                    <LightboxImage src={img.src} alt={img.alt} group={group} index={idx} width={1200} height={800} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
-                                  </div>
-                                ));
-                              })()}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    }
-                    return <p key={i} className="type-secondary" style={{ marginTop: i === 0 ? 0 : 'var(--space-3)' }}>{s}</p>;
-                  })
-                ) : (
-                  <p className="type-secondary">{project.details.synopsis}</p>
-                )}
-              </section>
-            )}
-			{/* If sections exist but are not anchored by titled synopsis lines, render them explicitly */}
-			{project.details?.sections && Array.isArray(project.details.synopsis) && (() => {
-				const synopsisTitles = project.details!.synopsis!
-					.map((s) => {
-						const m = typeof s === 'string' ? s.match(/^([A-Z][A-Za-z\s&/\-]{2,100}):\s*.*$/) : null;
-						return m ? m[1].toLowerCase() : null;
-					})
-					.filter(Boolean) as string[];
-				const hasAnchors = project.details!.sections!.some((sec) => synopsisTitles.includes(sec.title.toLowerCase()));
-				return hasAnchors ? null : (
-					<section className="project-section" style={{ maxWidth: 960 }}>
-						{project.details!.sections!.map((sec) => (
-							<div key={sec.title} style={{ marginTop: 'var(--space-6)' }}>
-								<h3 className="h3">{sec.title}</h3>
-								{sec.body && (Array.isArray(sec.body) ? sec.body.map((b, i) => (
-									<p key={i} className="type-secondary" style={{ marginTop: i === 0 ? 'var(--space-2)' : 'var(--space-1)' }}>{b}</p>
-								)) : <p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{sec.body}</p>)}
-                                {sec.images && (
-									<div style={{ marginTop: 'var(--space-4)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
-                                        {(() => {
-                                          const group = sec.images!.map((i) => ({ src: i.src, alt: i.alt }));
-                                          return sec.images!.map((img, idx) => (
-                                            <div key={img.src + idx} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px', overflow: 'hidden' }}>
-                                              <LightboxImage src={img.src} alt={img.alt} group={group} index={idx} width={1200} height={800} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
-                                            </div>
-                                          ));
-                                        })()}
+			<section className="container--fluid project-page">
+				<SidePanelLayout
+					panel={
+						<>
+							<div className="project-card project-rail-card">
+								<div className="eyebrow">Case study</div>
+								<h1 className="h3 project-rail-title">{project.title}</h1>
+								<p className="type-secondary project-rail-desc">{project.description}</p>
+								{metaFields.length > 0 && (
+									<dl className="project-meta">
+										{metaFields.map((field) => (
+											<div key={field.label} className="project-meta__item">
+												<dt>{field.label}</dt>
+												<dd>{field.value}</dd>
+											</div>
+										))}
+									</dl>
+								)}
+								{project.details?.prototypes && project.details.prototypes.length > 0 && (
+									<div className="project-links">
+										{project.details.prototypes.map((p) => (
+											<LinkToken key={p.href} href={p.href} label={p.label} />
+										))}
 									</div>
 								)}
 							</div>
-						))}
-					</section>
-				);
-			})()}
-            {galleryFiltered.length > 0 ? (
-              <section className="project-section">
-                <h3 className="h3">gallery</h3>
-                <div style={{ marginTop: 'var(--space-4)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-4)' }}>
-                {(() => {
-                  const group = galleryFiltered.map((g) => ({ src: g.src, alt: g.alt }));
-                  return galleryFiltered.map((g, i) => (
-                    <div key={g.src + i} style={{ background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px', overflow: 'hidden' }}>
-                      <LightboxImage src={g.src} alt={g.alt} group={group} index={i} width={1600} height={900} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px" style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
-                    </div>
-                  ));
-                })()}
-                </div>
-              </section>
-            ) : (project.image && sectionImageSrcs.length === 0) ? (
-              <div style={{ marginTop: 'var(--space-8)', background: 'var(--surface-image-frame)', borderRadius: 'var(--radius-md)', padding: '8px' }}>
-                <LightboxImage src={project.image.src} alt={project.image.alt} group={[{ src: project.image.src, alt: project.image.alt }]} index={0} width={project.image.width ?? 1600} height={project.image.height ?? 900} style={{ width: '100%', height: 'auto', borderRadius: 'calc(var(--radius-md) - 8px)', display: 'block' }} />
-              </div>
-            ) : null}
-            {embedSrc && (
-              <section className="project-section">
-                <h3 className="h3">Login concept video</h3>
-                <div style={{ marginTop: 'var(--space-3)' }}>
-                <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-1)' }}>
-                  <iframe src={embedSrc} title="YouTube video" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-                </div>
-                </div>
-              </section>
-            )}
-            <div style={{ display: 'flex', gap: 'var(--space-4)', marginTop: 'var(--space-8)', alignItems: 'center' }}>
-              {prev && <Link href={`/projects/${prev.slug}`}>&larr; {prev.title}</Link>}
-              <span style={{ color: 'var(--color-muted)' }}>|</span>
-              {next && <Link href={`/projects/${next.slug}`}>{next.title} &rarr;</Link>}
-            </div>
-          </div>
-        </SidePanelLayout>
-                {project.links && project.links.length > 0 && (
-					<ul style={{ display: 'flex', gap: 'var(--space-4)', marginTop: 'var(--space-6)', padding: 0, listStyle: 'none' }}>
+							{(project.details?.goals || project.details?.results) && (
+								<div className="project-card project-rail-card project-goals-card">
+									<div className="eyebrow">Goals &amp; outcomes</div>
+									<div className="project-goals-grid">
+										{project.details.goals && (
+											<div className="project-goals-block">
+												<h3 className="h4">Goals</h3>
+												{Array.isArray(project.details.goals) ? (
+													<ul className="type-secondary project-bullet-list">
+														{project.details.goals.map((goal, i) => (
+															<li key={i}>{goal}</li>
+														))}
+													</ul>
+												) : (
+													<p className="type-secondary">{project.details.goals}</p>
+												)}
+											</div>
+										)}
+										{project.details.results && (
+											<div className="project-goals-block">
+												<h3 className="h4">Outcomes</h3>
+												{Array.isArray(project.details.results) ? (
+													<ul className="type-secondary project-bullet-list">
+														{project.details.results.map((result, i) => (
+															<li key={i}>{result}</li>
+														))}
+													</ul>
+												) : (
+													<p className="type-secondary">{project.details.results}</p>
+												)}
+											</div>
+										)}
+									</div>
+								</div>
+							)}
+						</>
+					}
+				>
+					<div className="project-content-scroll">
+						<section className="project-overview">
+							<div className="eyebrow">Overview</div>
+							<h2 className="h2 project-overview-title">{project.title}</h2>
+							<p className="lede">{project.description}</p>
+						</section>
+
+						{project.details?.headerEmbed && (
+							<div className="project-hero">
+								<div
+									className="project-hero-embed"
+									dangerouslySetInnerHTML={{ __html: project.details.headerEmbed.html }}
+								/>
+								{project.details.headerEmbed.title && project.details.headerEmbed.link && (
+									<div className="project-hero-caption">
+										<a href={project.details.headerEmbed.link} target="_blank" rel="noopener noreferrer">
+											{project.details.headerEmbed.title} →
+										</a>
+									</div>
+								)}
+							</div>
+						)}
+
+						{!project.details?.headerEmbed && project.details?.headerImage && (
+							<div className="project-hero">
+								<ImageFrame
+									src={project.details.headerImage.src}
+									alt={project.details.headerImage.alt}
+									group={[{ src: project.details.headerImage.src, alt: project.details.headerImage.alt }]}
+									index={0}
+									width={project.details.headerImage.width ?? 1600}
+									height={project.details.headerImage.height ?? 900}
+									sizes={heroSizes}
+								/>
+							</div>
+						)}
+
+						{project.details?.synopsis && (
+							<section className="project-section">
+								{Array.isArray(project.details.synopsis) ? (
+									project.details.synopsis.map((s, i) => {
+										const titled = s.match(/^([A-Z][A-Za-z\s&/\-]{2,100}):\s*(.*)$/);
+										if (titled) {
+											const [, title, rest] = titled;
+											const sec = project.details?.sections?.find(
+												(section) => section.title.toLowerCase() === title.toLowerCase()
+											);
+											const group = sec?.images?.map((img) => ({ src: img.src, alt: img.alt })) ?? [];
+											return (
+												<div key={i} className="project-block">
+													<h3 className="h3">{title}</h3>
+													{rest && <p className="type-secondary project-block-body">{rest}</p>}
+													{sec?.images && (
+														<div className="project-image-grid">
+															{sec.images.map((img, imgIdx) => (
+																<ImageFrame
+																	key={img.src + imgIdx}
+																	src={img.src}
+																	alt={img.alt}
+																	group={group}
+																	index={imgIdx}
+																	sizes={gallerySizes}
+																/>
+															))}
+														</div>
+													)}
+												</div>
+											);
+										}
+										return (
+											<p key={i} className={`type-secondary${i === 0 ? '' : ' project-block-body'}`}>
+												{s}
+											</p>
+										);
+									})
+								) : (
+									<p className="type-secondary">{project.details.synopsis}</p>
+								)}
+							</section>
+						)}
+
+						{project.details?.sections && Array.isArray(project.details.synopsis) && (() => {
+							const synopsisTitles = project.details!.synopsis!
+								.map((s) => {
+									const m = typeof s === 'string' ? s.match(/^([A-Z][A-Za-z\s&/\-]{2,100}):\s*.*$/) : null;
+									return m ? m[1].toLowerCase() : null;
+								})
+								.filter(Boolean) as string[];
+							const hasAnchors = project.details!.sections!.some((sec) =>
+								synopsisTitles.includes(sec.title.toLowerCase())
+							);
+							return hasAnchors ? null : (
+								<section className="project-section">
+									{project.details!.sections!.map((sec) => {
+										const group = sec.images?.map((img) => ({ src: img.src, alt: img.alt })) ?? [];
+										return (
+											<div key={sec.title} className="project-block">
+												<h3 className="h3">{sec.title}</h3>
+												{sec.body &&
+													(Array.isArray(sec.body) ? (
+														sec.body.map((b, i) => (
+															<p key={i} className={`type-secondary${i === 0 ? ' project-block-body' : ' project-block-body--tight'}`}>
+																{b}
+															</p>
+														))
+													) : (
+														<p className="type-secondary project-block-body">{sec.body}</p>
+													))}
+												{sec.images && (
+													<div className="project-image-grid">
+														{sec.images.map((img, imgIdx) => (
+															<ImageFrame
+																key={img.src + imgIdx}
+																src={img.src}
+																alt={img.alt}
+																group={group}
+																index={imgIdx}
+																sizes={gallerySizes}
+															/>
+														))}
+													</div>
+												)}
+											</div>
+										);
+									})}
+								</section>
+							);
+						})()}
+
+						{galleryFiltered.length > 0 ? (
+							<section className="project-section">
+								<h3 className="h3">Gallery</h3>
+								<div className="project-image-grid project-image-grid--gallery">
+									{(() => {
+										const group = galleryFiltered.map((g) => ({ src: g.src, alt: g.alt }));
+										return galleryFiltered.map((g, i) => (
+											<ImageFrame
+												key={g.src + i}
+												src={g.src}
+												alt={g.alt}
+												group={group}
+												index={i}
+												width={1600}
+												height={900}
+												sizes={gallerySizes}
+											/>
+										));
+									})()}
+								</div>
+							</section>
+						) : project.image && sectionImageSrcs.length === 0 ? (
+							<div className="project-hero">
+								<ImageFrame
+									src={project.image.src}
+									alt={project.image.alt}
+									group={[{ src: project.image.src, alt: project.image.alt }]}
+									index={0}
+									width={project.image.width ?? 1600}
+									height={project.image.height ?? 900}
+									sizes={heroSizes}
+								/>
+							</div>
+						) : null}
+
+						{embedSrc && (
+							<section className="project-section">
+								<h3 className="h3">Login concept video</h3>
+								<div className="project-video">
+									<iframe
+										src={embedSrc}
+										title="YouTube video"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+										allowFullScreen
+									/>
+								</div>
+							</section>
+						)}
+
+						<nav className="project-inline-nav" aria-label="Adjacent case studies">
+							{prev ? <Link href={`/projects/${prev.slug}`}>&larr; {prev.title}</Link> : <span />}
+							{next ? <Link href={`/projects/${next.slug}`}>{next.title} &rarr;</Link> : <span />}
+						</nav>
+					</div>
+				</SidePanelLayout>
+
+				{project.links && project.links.length > 0 && (
+					<ul className="project-external-links">
 						{project.links.map((l) => (
-							<li key={l.href}><a href={l.href} target="_blank" rel="noreferrer noopener">{l.label}</a></li>
+							<li key={l.href}>
+								<a href={l.href} target="_blank" rel="noreferrer noopener">
+									{l.label}
+								</a>
+							</li>
 						))}
 					</ul>
 				)}
 			</section>
-            <ProjectPager prev={prev ? { slug: prev.slug, title: prev.title } : null} next={next ? { slug: next.slug, title: next.title } : null} />
+			<ProjectPager
+				prev={prev ? { slug: prev.slug, title: prev.title } : null}
+				next={next ? { slug: next.slug, title: next.title } : null}
+			/>
 		</main>
 	);
 }

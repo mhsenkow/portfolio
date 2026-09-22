@@ -7,7 +7,15 @@ import styles from './page.module.css';
 import { projects as allProjects, type Project } from '@/content/projects';
 
 export function ProjectsGrid({ items }: { items?: Project[] }) {
-    const list = items ?? allProjects.filter((p) => p.featured === true);
+    const list =
+        items ??
+        [...allProjects.filter((p) => p.featured === true)].sort((a, b) => {
+            // Corp / work case studies first, then machines & craft
+            const rank = (p: Project) => (p.category === 'creative' ? 1 : 0);
+            const byKind = rank(a) - rank(b);
+            if (byKind !== 0) return byKind;
+            return (b.year ?? 0) - (a.year ?? 0);
+        });
 	return (
 		<motion.div className={styles.grid} style={{ marginTop: 'var(--space-8)' }} initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 }}}}>
 			{list.map((p) => (
@@ -24,7 +32,7 @@ export function ProjectsGrid({ items }: { items?: Project[] }) {
                                 />
                             </div>
                         )}
-						<h3>{p.title}</h3>
+						<h3 className="h3">{p.title}</h3>
 						<p>{p.description}</p>
 					</Link>
 				</motion.div>

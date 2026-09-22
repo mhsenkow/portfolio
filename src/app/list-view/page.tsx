@@ -1,33 +1,26 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { projects } from '@/content/projects';
+import { ArchiveList } from './ArchiveList';
 
 export const metadata: Metadata = {
-	title: 'full list — mhsenkow',
-	description: 'Chronological list of projects',
+	title: 'Archive',
+	description: 'Chronological archive of product design and independent projects.',
+	alternates: { canonical: '/list-view' },
 };
 
 export default function ListViewPage() {
 	const sorted = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
 	return (
 		<main id="content">
-			<section className="container" style={{ padding: 'var(--space-16) 0' }}>
-				<h1 style={{ fontSize: 'var(--size-6)', lineHeight: 1.1 }}>full list</h1>
-				<ul className="timeline">
-					{sorted.map((p) => (
-						<li key={p.slug} className="timeline-item">
-							<div className="timeline-year">{p.year ?? ''}</div>
-							<div className="timeline-dot" aria-hidden="true" />
-							<div className="timeline-content">
-								<Link href={`/projects/${p.slug}`}>{p.title}</Link>
-								<p className="type-secondary" style={{ marginTop: 'var(--space-2)' }}>{p.description}</p>
-							</div>
-						</li>
-					))}
-				</ul>
+			<section className="container container--fluid" style={{ padding: 'var(--space-16) 0', maxWidth: 1200, marginInline: 'auto', width: 'min(100% - 32px, 1200px)' }}>
+				<h1 className="h1">Archive</h1>
+				<p style={{ marginTop: 'var(--space-4)', color: 'var(--color-muted)', maxWidth: 640 }}>
+					Scroll the career arc — work left, side projects right. Density chart jumps years.
+				</p>
+				<div style={{ marginTop: 'var(--space-8)' }}>
+					<ArchiveList projects={sorted} />
+				</div>
 			</section>
 		</main>
 	);
 }
-
-

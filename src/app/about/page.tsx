@@ -4,9 +4,10 @@ import { RESUME_URL } from '@/content/site';
 import styles from './about.module.css';
 
 export const metadata: Metadata = {
-	title: 'about — mhsenkow',
+	title: 'About',
 	description:
-		'Michael Senkow — staff product designer. Complex tooling, data workflows, and software that still feels like craft.',
+		'Michael Senkow — Staff Product Designer. Complex tooling, data workflows, and product systems.',
+	alternates: { canonical: '/about' },
 };
 
 const LINKS = [
@@ -23,57 +24,58 @@ export default function AboutPage() {
 		<main id="content">
 			<section className={`container ${styles.page}`}>
 				<header className={styles.mast}>
-					<p className={styles.hint}>i build machines</p>
-					<h1 className={`h1 ${styles.title}`}>about</h1>
+					<p className={styles.hint}>Staff Product Designer</p>
+					<h1 className={`h1 ${styles.title}`}>About</h1>
 				</header>
 
 				<div className={styles.grid}>
 					<div className={styles.story}>
 						<p>
-							I&apos;m Michael — staff product designer working where complex tooling,
-							data workflows, and craft meet. Enterprise systems that still feel like
-							something made by a person; personal machines that you can run on your
-							own desk.
+							I&apos;m Michael — a staff product designer focused on complex tooling,
+							data workflows, and systems that stay clear at scale. I design and
+							prototype enterprise products and the supporting infrastructure around them.
 						</p>
 						<p>
-							Path: MechE + technical communications at Michigan Tech, then HCI and
-							digital fabrication at the University of Michigan. Early stops in Boston
-							startups, architecture research, and an Apple IS&amp;T internship on
-							accessibility.
+							Background: B.S. Mechanical Engineering and Technical Communications at
+							Michigan Tech; M.S. HCI and digital fabrication at the University of
+							Michigan. Earlier work includes Boston startups, architecture research,
+							and an Apple IS&amp;T internship on accessibility.
 						</p>
 						<ul className={styles.orgList}>
 							<li>
-								<span className={styles.orgName}>IBM</span>
+								<span className={styles.orgName}>i2Systems</span>
 								<span className={styles.orgBody}>
-									Early Design program, Watson Analytics, and the data-viz /
-									platform guide work that folded into Carbon.
+									Current — <strong>Judge</strong>, a Salesforce / CRM integrity
+									layer with review-gated fixes, HubSpot / Mailchimp sync, and an
+									audit trail.
 								</span>
 							</li>
 							<li>
 								<span className={styles.orgName}>Microsoft</span>
 								<span className={styles.orgBody}>
-									MyAnalytics and Workplace Analytics → Viva Insights (including
-									Focus Time).
+									MyAnalytics and Workplace Analytics → Viva Insights, including
+									Focus Time.
 								</span>
 							</li>
 							<li>
 								<span className={styles.orgName}>Meta Infra</span>
 								<span className={styles.orgBody}>
-									Daiquery / Bento notebooks, analysis workflows, data-viz
+									Daiquery / Bento notebooks, analysis workflows, data visualization
 									systems, and XDS.
 								</span>
 							</li>
 							<li>
-								<span className={styles.orgBodyFull}>
-									Providing a range of infra, analytics and complex tooling for
-									various start-ups now
+								<span className={styles.orgName}>IBM</span>
+								<span className={styles.orgBody}>
+									Early Design program, Watson Analytics, and data-viz / platform
+									guide work that contributed to Carbon.
 								</span>
 							</li>
 						</ul>
 						<p>
-							I also ship my own local-first tools and sims — aquariums, orreries,
-							word counters, and the like. Happy to talk design, tooling, or
-							whatever you&apos;re building.
+							I also build and ship independent tools — local-first utilities,
+							simulations, and design experiments. Open to conversations about product
+							design, tooling, and systems work.
 						</p>
 					</div>
 
@@ -93,14 +95,13 @@ export default function AboutPage() {
 
 						<div className={`${styles.meta} glass-card`}>
 							<div>
-								<p className={styles.metaLabel}>based</p>
+								<p className={styles.metaLabel}>Based</p>
 								<p className={styles.metaText}>
-									Seattle — previously Upper &amp; Lower Michigan, Boston, Austin,
-									Cupertino.
+									Seattle — previously Michigan, Boston, Austin, and Cupertino.
 								</p>
 							</div>
 							<div>
-								<p className={styles.metaLabel}>reach</p>
+								<p className={styles.metaLabel}>Contact</p>
 								<ul className={styles.links}>
 									{LINKS.map((link) => (
 										<li key={link.href}>

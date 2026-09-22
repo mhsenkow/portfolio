@@ -10,9 +10,9 @@ export function Nav() {
   const pathname = usePathname();
   const items = [
     { href: "/about", label: "about" },
-    { href: "/projects", label: "projects" },
-    { href: "/other-design-work", label: "other" },
-    { href: "/list-view", label: "list" },
+    { href: "/projects", label: "case studies" },
+    { href: "/other-design-work", label: "explorations" },
+    { href: "/list-view", label: "archive" },
   ];
 
   return (

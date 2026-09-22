@@ -10,7 +10,7 @@ export default function Home() {
       <section className="container" style={{ padding: "var(--space-6) 0 var(--space-12)" }}>
         <GridWithHoverPanel
           items={projects}
-          title="work"
+          title="Work"
           onTitleClick={openIntroModal}
         />
       </section>
