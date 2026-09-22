@@ -485,27 +485,153 @@
     position: absolute;
     right: 0;
     top: calc(100% + 10px);
-    min-width: 200px;
-    padding: 12px;
-    background: var(--surface-card);
-    border: var(--border-weak);
+    width: min(320px, calc(100vw - 24px));
+    max-height: min(70vh, 560px);
+    overflow: auto;
+    padding: 14px 14px 16px;
+    background: color-mix(in oklab, var(--glass-2) 88%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-border), transparent 35%);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-2);
+    backdrop-filter: saturate(1.2) blur(14px);
+    -webkit-backdrop-filter: saturate(1.2) blur(14px);
     z-index: 41;
+    scrollbar-width: thin;
   }
-  .masthead-settings-label {
-    display: grid;
-    gap: 6px;
-    font-size: 12px;
+  .type-story__head {
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-border), transparent 45%);
+  }
+  .type-story__kicker {
+    margin: 0;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
     color: var(--color-muted);
   }
-  .masthead-settings-label select {
+  .type-story__lede {
+    margin: 4px 0 0;
     font-size: 13px;
-    padding: 6px 8px;
-    border-radius: var(--radius-sm);
-    border: var(--border);
-    background: var(--color-bg);
+    letter-spacing: 0.02em;
     color: var(--color-text);
+  }
+  .type-story {
+    display: grid;
+    gap: 14px;
+  }
+  .type-story__chapter {
+    display: grid;
+    gap: 6px;
+  }
+  .type-story__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .type-story__era {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    color: var(--color-text);
+  }
+  .type-story__years {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-muted);
+  }
+  .type-story__note {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--color-muted);
+  }
+  .type-story__faces {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+  .type-story__face {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0;
+    padding: 7px 8px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+    text-align: left;
+    box-shadow: inset 0 -1px 0 transparent;
+    transition:
+      color 140ms cubic-bezier(0.2, 0, 0, 1),
+      background-color 140ms cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 140ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .type-story__face:hover {
+    color: var(--color-text);
+    background: color-mix(in oklab, var(--color-text) 4%, transparent);
+  }
+  .type-story__face[data-active="true"] {
+    color: var(--color-text);
+    box-shadow: inset 0 -1px 0 currentColor;
+  }
+  .type-story__face:focus-visible {
+    outline: 1px solid color-mix(in oklab, var(--color-accent), transparent 30%);
+    outline-offset: 2px;
+  }
+  .type-story__name {
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .type-story__beat {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+  .type-story__face[data-active="true"] .type-story__beat {
+    color: color-mix(in oklab, var(--color-muted) 80%, var(--color-text));
+  }
+
+  /* Preview each face in its own type — system stacks + loaded vars */
+  .type-story__face[data-font-preview="libre-baskerville"] .type-story__name {
+    font-family: var(--font-libre-baskerville), "Libre Baskerville", Georgia, serif;
+  }
+  .type-story__face[data-font-preview="lora"] .type-story__name {
+    font-family: var(--font-lora), Lora, Georgia, serif;
+  }
+  .type-story__face[data-font-preview="sf-pro"] .type-story__name {
+    font-family: var(--font-sf-pro);
+  }
+  .type-story__face[data-font-preview="ibm-plex"] .type-story__name {
+    font-family: var(--font-ibm-plex), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+  .type-story__face[data-font-preview="segoe"] .type-story__name {
+    font-family: var(--font-segoe);
+  }
+  .type-story__face[data-font-preview="optimistic"] .type-story__name {
+    font-family: var(--font-optimistic);
+  }
+  .type-story__face[data-font-preview="geist"] .type-story__name {
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  }
+  .type-story__face[data-font-preview="jetbrains-mono"] .type-story__name {
+    font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px;
+  }
+  .type-story__face[data-font-preview="fira-code"] .type-story__name {
+    font-family: var(--font-fira-code), "Fira Code", ui-monospace, monospace;
+    font-size: 13px;
   }
 
   /* intro entry modal — glass over the work grid */

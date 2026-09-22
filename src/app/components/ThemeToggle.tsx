@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from "react";
 import {
-  FONTS,
+  FONT_BEAT,
+  FONT_CHAPTERS,
   FONT_LABEL,
   THEMES,
   THEME_LABEL,
-  isFont,
+  migrateFont,
   migrateTheme,
   type Font,
   type Theme,
 } from "@/theme/system";
-import { ensureOptionalFontClass } from "@/theme/optional-fonts";
+import { ensureAllOptionalFontClasses, ensureOptionalFontClass } from "@/theme/optional-fonts";
 
 function getStoredTheme(): Theme | null {
   try {
@@ -36,8 +37,7 @@ function applyTheme(theme: Theme) {
 
 function getStoredFont(): Font | null {
   try {
-    const raw = localStorage.getItem("font");
-    return isFont(raw) ? raw : null;
+    return migrateFont(localStorage.getItem("font"));
   } catch {
     return null;
   }
@@ -79,9 +79,8 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
     applyTheme(initial);
     storeTheme(initial);
 
-    const attrFont = document.documentElement.getAttribute("data-font");
-    const initialFont: Font =
-      (isFont(attrFont) && attrFont) || getStoredFont() || "geist";
+    const attrFont = migrateFont(document.documentElement.getAttribute("data-font"));
+    const initialFont: Font = attrFont || getStoredFont() || "geist";
     setFont(initialFont);
     applyFont(initialFont);
   }, []);
@@ -95,6 +94,10 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
     applyFont(font);
     storeFont(font);
   }, [font]);
+
+  useEffect(() => {
+    if (settingsOpen) ensureAllOptionalFontClasses();
+  }, [settingsOpen]);
 
   function cycleTheme() {
     const idx = THEMES.indexOf(theme);
@@ -131,21 +134,45 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
             aria-label="close type settings"
             onClick={() => setSettingsOpen(false)}
           />
-          <div className="masthead-settings-panel" role="dialog" aria-label="type settings">
-            <label className="masthead-settings-label">
-              font
-              <select
-                aria-label="Font"
-                value={font}
-                onChange={(e) => setFont(e.target.value as Font)}
-              >
-                {FONTS.map((id) => (
-                  <option key={id} value={id}>
-                    {FONT_LABEL[id]}
-                  </option>
-                ))}
-              </select>
-            </label>
+          <div className="masthead-settings-panel" role="dialog" aria-label="Type — a career in faces">
+            <header className="type-story__head">
+              <p className="type-story__kicker">type</p>
+              <p className="type-story__lede">a career in faces</p>
+            </header>
+
+            <div className="type-story">
+              {FONT_CHAPTERS.map((chapter) => (
+                <section key={chapter.id} className="type-story__chapter" aria-label={chapter.era}>
+                  <div className="type-story__meta">
+                    <span className="type-story__era">{chapter.era}</span>
+                    {chapter.years ? (
+                      <span className="type-story__years">{chapter.years}</span>
+                    ) : null}
+                  </div>
+                  <p className="type-story__note">{chapter.note}</p>
+                  <ul className="type-story__faces" role="list">
+                    {chapter.fonts.map((id) => {
+                      const active = font === id;
+                      return (
+                        <li key={id}>
+                          <button
+                            type="button"
+                            className="type-story__face"
+                            data-active={active ? "true" : undefined}
+                            data-font-preview={id}
+                            aria-pressed={active}
+                            onClick={() => setFont(id)}
+                          >
+                            <span className="type-story__name">{FONT_LABEL[id]}</span>
+                            <span className="type-story__beat">{FONT_BEAT[id]}</span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              ))}
+            </div>
           </div>
         </>
       )}
