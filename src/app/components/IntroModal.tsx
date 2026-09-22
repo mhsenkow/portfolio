@@ -9,14 +9,16 @@ export const INTRO_STATE_EVENT = "portfolio:intro-state";
 
 export type IntroStateDetail = { open: boolean };
 
-function setIntroAttr(open: boolean) {
+function setIntroOpen(open: boolean) {
   if (typeof document === "undefined") return;
-  document.documentElement.setAttribute("data-intro", open ? "open" : "skip");
+  const root = document.documentElement;
+  root.setAttribute("data-intro", open ? "open" : "skip");
+  root.classList.toggle("intro-done", !open);
 }
 
 function emitIntroState(open: boolean) {
   if (typeof window === "undefined") return;
-  setIntroAttr(open);
+  setIntroOpen(open);
   window.dispatchEvent(
     new CustomEvent<IntroStateDetail>(INTRO_STATE_EVENT, { detail: { open } })
   );
@@ -40,12 +42,12 @@ const EARLIER_SITES = [
 ] as const;
 
 export function IntroModal() {
-  // Full page load always starts covered; dismiss lasts for this SPA session only.
   const [open, setOpen] = useState(true);
 
   const dismiss = useCallback(() => {
     setOpen(false);
     emitIntroState(false);
+    document.body.style.overflow = "";
   }, []);
 
   useEffect(() => {
@@ -62,8 +64,9 @@ export function IntroModal() {
     } catch {
       /* ignore */
     }
-    // Hard refresh / first paint: stay open and sync attr (boot script already set open).
-    emitIntroState(true);
+    // Sync curtain with initial open state (do not re-force after user dismisses).
+    if (open) emitIntroState(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount sync only
   }, []);
 
   useEffect(() => {

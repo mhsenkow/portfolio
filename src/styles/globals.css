@@ -124,8 +124,8 @@
   }
 
   /*
-   * Intro curtain: frosted glass over a live grid.
-   * Shell stays painted (so cards show through) but non-interactive until dismiss.
+   * Intro curtain is visual only. Interaction is owned by .intro-modal while open.
+   * Never set pointer-events:none on .app-main — if data-intro desyncs, the grid dies.
    */
   .intro-boot {
     display: none;
@@ -137,20 +137,12 @@
     backdrop-filter: var(--glass-blur-3);
     -webkit-backdrop-filter: var(--glass-blur-3);
   }
-  html:not([data-intro="skip"]) .intro-boot {
+  html[data-intro="open"] .intro-boot {
     display: block;
   }
-  html:not([data-intro="skip"]) .site-header,
-  html:not([data-intro="skip"]) .app-main,
-  html:not([data-intro="skip"]) .site-footer,
-  html:not([data-intro="skip"]) .overlay-root {
-    pointer-events: none;
-  }
-  html[data-intro="skip"] .site-header,
-  html[data-intro="skip"] .app-main,
-  html[data-intro="skip"] .site-footer,
-  html[data-intro="skip"] .overlay-root {
-    pointer-events: auto;
+  html[data-intro="skip"] .intro-boot,
+  html.intro-done .intro-boot {
+    display: none !important;
   }
   .overlay-root { position: fixed; left: 0; right: 0; top: calc(var(--header-h) + env(safe-area-inset-top)); bottom: calc(env(safe-area-inset-bottom)); z-index: 20; pointer-events: none; }
   .overlay-panel--right {

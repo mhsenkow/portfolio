@@ -157,6 +157,20 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${libreBaskerville.variable} ${lora.variable} ${manrope.variable} ${jetBrainsMono.variable} ${firaCode.variable}`}
     >
       <body>
+        {/* Critical: cover before globals.css arrives — CSS latency, not JS */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+html{background:#f2f2f0}
+html[data-theme=dark],html[data-theme=frost],html[data-theme=loom],html[data-theme=tank]{background:#121212}
+#intro-boot{display:block;position:fixed;inset:0;z-index:190;pointer-events:none;background:rgba(242,242,240,.5);backdrop-filter:saturate(1.2) blur(18px);-webkit-backdrop-filter:saturate(1.2) blur(18px)}
+html[data-theme=dark] #intro-boot,html[data-theme=frost] #intro-boot,html[data-theme=loom] #intro-boot,html[data-theme=tank] #intro-boot{background:rgba(18,18,18,.55)}
+html[data-intro=skip] #intro-boot,html.intro-done #intro-boot{display:none!important}
+.intro-modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:rgba(242,242,240,.42);backdrop-filter:saturate(1.2) blur(18px);-webkit-backdrop-filter:saturate(1.2) blur(18px);pointer-events:auto}
+html[data-theme=dark] .intro-modal,html[data-theme=frost] .intro-modal,html[data-theme=loom] .intro-modal,html[data-theme=tank] .intro-modal{background:rgba(18,18,18,.45)}
+`.replace(/\s+/g, " ").trim(),
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -166,8 +180,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);if(t)localStorage.setItem('theme',t);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);document.documentElement.setAttribute('data-intro','open');try{sessionStorage.removeItem('intro-dismissed');}catch(e){}}catch(e){document.documentElement.setAttribute('data-intro','open');}})();`}
+          {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);if(t)localStorage.setItem('theme',t);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);document.documentElement.setAttribute('data-intro','open');document.documentElement.classList.remove('intro-done');try{sessionStorage.removeItem('intro-dismissed');}catch(e){}}catch(e){document.documentElement.setAttribute('data-intro','open');}})();`}
         </Script>
+        {/* Curtain first in DOM so first paint is covered */}
+        <div id="intro-boot" className="intro-boot" aria-hidden="true" />
         <LightboxProvider>
         <div className="app-shell">
           <a href="#content" className="sr-only">Skip to content</a>
@@ -179,8 +195,6 @@ export default function RootLayout({
           <div className="app-main">{children}</div>
           {/* overlay root for panels (left/right drawers, modals) */}
           <div id="overlays" className="overlay-root" />
-          {/* Solid curtain until React intro hydrates — avoids grid flash */}
-          <div id="intro-boot" className="intro-boot" aria-hidden="true" />
           <IntroModal />
           <footer className="site-footer">
             <div className="container footer-inner">
