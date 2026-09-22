@@ -109,7 +109,7 @@ export const githubBuilds: Project[] = [
 		year: 2026,
 		category: 'creative',
 		image: {
-			src: '/images/projects/ramen/card.png',
+			src: '/images/projects/ramen/card.jpg',
 			alt: 'RAMEN — Kepler Drum walkthrough',
 			width: 1200,
 			height: 600,
