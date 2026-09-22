@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     // Cap widths — 3840 fallbacks were hanging lazy grid tiles on Cloudflare Images
     deviceSizes: [640, 750, 828, 1080, 1200],
     imageSizes: [64, 96, 128, 256, 384],
+    // Cloudflare / OpenNext only accept configured qualities (default 75). q=70 → 400.
+    qualities: [75],
     remotePatterns: [
       { protocol: "https", hostname: "mhsenkow.work" },
       { protocol: "https", hostname: "www.mhsenkow.work" },

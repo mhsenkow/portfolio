@@ -87,7 +87,7 @@ export function IntroModal() {
       onClick={dismiss}
     >
       <div className="intro-modal__panel" onClick={(e) => e.stopPropagation()}>
-        <p className="intro-modal__hint">Portfolio</p>
+        <p className="intro-modal__hint">portfolio : i build machines</p>
 
         <header className="intro-modal__mast">
           <h1 id="intro-title" className="h1 intro-modal__title">

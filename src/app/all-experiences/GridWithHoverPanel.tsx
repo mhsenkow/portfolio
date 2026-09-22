@@ -174,7 +174,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                       priority={index < 12}
                       loading={index < 12 ? "eager" : "lazy"}
                       sizes="220px"
-                      quality={70}
+                      quality={75}
                     />
                   ) : null}
                 </div>

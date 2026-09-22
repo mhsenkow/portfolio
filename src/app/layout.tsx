@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     default: `${SITE_NAME} — Staff Product Designer`,
     template: `%s — ${SITE_NAME}`,
   },
-  description: `${SITE_TAGLINE} Case studies from Microsoft, Meta, IBM, and independent work.`,
+  description: `${SITE_NAME} — Staff Product Designer. ${SITE_TAGLINE}. Case studies from Microsoft, Meta, IBM, and independent work.`,
   alternates: {
     canonical: "/",
   },
