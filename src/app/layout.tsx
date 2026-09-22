@@ -166,7 +166,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);if(t)localStorage.setItem('theme',t);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);}catch(e){}})();`}
+          {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);if(t)localStorage.setItem('theme',t);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);var force=/(?:^|[?&])intro=1(?:&|$)/.test(location.search);var dismissed=false;try{dismissed=sessionStorage.getItem('intro-dismissed')==='1';}catch(e){}document.documentElement.setAttribute('data-intro',(force||!dismissed)?'open':'skip');}catch(e){document.documentElement.setAttribute('data-intro','open');}})();`}
         </Script>
         <LightboxProvider>
         <div className="app-shell">
@@ -179,6 +179,8 @@ export default function RootLayout({
           <div className="app-main">{children}</div>
           {/* overlay root for panels (left/right drawers, modals) */}
           <div id="overlays" className="overlay-root" />
+          {/* Solid curtain until React intro hydrates — avoids grid flash */}
+          <div id="intro-boot" className="intro-boot" aria-hidden="true" />
           <IntroModal />
           <footer className="site-footer">
             <div className="container footer-inner">

@@ -10,8 +10,14 @@ export const INTRO_STATE_EVENT = "portfolio:intro-state";
 
 export type IntroStateDetail = { open: boolean };
 
+function setIntroAttr(open: boolean) {
+  if (typeof document === "undefined") return;
+  document.documentElement.setAttribute("data-intro", open ? "open" : "skip");
+}
+
 function emitIntroState(open: boolean) {
   if (typeof window === "undefined") return;
+  setIntroAttr(open);
   window.dispatchEvent(
     new CustomEvent<IntroStateDetail>(INTRO_STATE_EVENT, { detail: { open } })
   );
@@ -20,6 +26,17 @@ function emitIntroState(open: boolean) {
 export function openIntroModal() {
   if (typeof window === "undefined") return;
   window.dispatchEvent(new Event(INTRO_OPEN_EVENT));
+}
+
+function readShouldOpen(): boolean {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const force = params.get("intro") === "1";
+    const dismissed = sessionStorage.getItem(STORAGE_KEY) === "1";
+    return force || !dismissed;
+  } catch {
+    return true;
+  }
 }
 
 const EARLIER_SITES = [
@@ -35,7 +52,8 @@ const EARLIER_SITES = [
 ] as const;
 
 export function IntroModal() {
-  const [open, setOpen] = useState(false);
+  // Prefer covering first paint; boot script + CSS already hide the shell.
+  const [open, setOpen] = useState(true);
   const [ready, setReady] = useState(false);
 
   const dismiss = useCallback(() => {
@@ -49,22 +67,19 @@ export function IntroModal() {
   }, []);
 
   useEffect(() => {
+    const shouldOpen = readShouldOpen();
     try {
       const params = new URLSearchParams(window.location.search);
-      const force = params.get("intro") === "1";
-      const dismissed = sessionStorage.getItem(STORAGE_KEY) === "1";
-      const shouldOpen = force || !dismissed;
-      setOpen(shouldOpen);
-      emitIntroState(shouldOpen);
-      if (force) {
+      if (params.get("intro") === "1") {
         params.delete("intro");
         const next = `${window.location.pathname}${params.toString() ? `?${params}` : ""}${window.location.hash}`;
         window.history.replaceState({}, "", next);
       }
     } catch {
-      setOpen(true);
-      emitIntroState(true);
+      /* ignore */
     }
+    setOpen(shouldOpen);
+    emitIntroState(shouldOpen);
     setReady(true);
   }, []);
 
@@ -91,7 +106,9 @@ export function IntroModal() {
     };
   }, [open, dismiss]);
 
-  if (!ready || !open) return null;
+  // Still resolving session — keep solid cover (boot curtain handles paint).
+  if (!ready) return null;
+  if (!open) return null;
 
   return (
     <div

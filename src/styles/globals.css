@@ -109,6 +109,52 @@
   }
   .site-footer { height: auto; }
   .app-main { overflow: auto; grid-area: main; }
+
+  /*
+   * Intro curtain: hide shell until data-intro="skip".
+   * Default (no attr yet) and data-intro="open" keep the grid invisible
+   * so thumbs can warm behind a solid cover without looking broken.
+   */
+  .intro-boot {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 190;
+    background: var(--color-bg);
+    pointer-events: none;
+  }
+  html:not([data-intro="skip"]) .intro-boot {
+    display: block;
+  }
+  html:not([data-intro="skip"]) .site-header,
+  html:not([data-intro="skip"]) .app-main,
+  html:not([data-intro="skip"]) .site-footer,
+  html:not([data-intro="skip"]) .overlay-root {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  html[data-intro="skip"] .site-header,
+  html[data-intro="skip"] .app-main,
+  html[data-intro="skip"] .site-footer,
+  html[data-intro="skip"] .overlay-root {
+    visibility: visible;
+    pointer-events: auto;
+    animation: intro-shell-reveal var(--motion-slow) var(--ease-out) both;
+  }
+
+  @keyframes intro-shell-reveal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html[data-intro="skip"] .site-header,
+    html[data-intro="skip"] .app-main,
+    html[data-intro="skip"] .site-footer,
+    html[data-intro="skip"] .overlay-root {
+      animation: none;
+    }
+  }
   .overlay-root { position: fixed; left: 0; right: 0; top: calc(var(--header-h) + env(safe-area-inset-top)); bottom: calc(env(safe-area-inset-bottom)); z-index: 20; pointer-events: none; }
   .overlay-panel--right {
     position: fixed;
@@ -486,7 +532,7 @@
     cursor: pointer;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    animation: intro-fade-in var(--motion-base) var(--ease-standard) both;
+    animation: none; /* boot curtain already covers — no fade flash */
   }
   .intro-modal__panel {
     width: min(100%, 720px);
