@@ -6,6 +6,8 @@ export const COMPANIES = [
   "ibm",
   "apple",
   "i2systems",
+  "umich",
+  "michigan-tech",
   "independent",
 ] as const;
 
@@ -17,6 +19,8 @@ export const COMPANY_LABEL: Record<Company, string> = {
   ibm: "ibm",
   apple: "apple",
   i2systems: "i2systems",
+  umich: "umich",
+  "michigan-tech": "michigan tech",
   independent: "independent",
 };
 
@@ -27,6 +31,7 @@ type CompanySource = {
   entity?: string;
   details?: {
     entity?: string;
+    location?: string;
   };
 };
 
@@ -35,7 +40,28 @@ const RULES: Record<Exclude<Company, "independent">, RegExp[]> = {
   meta: [/\bmeta\b/, /\bdaiquery\b/, /\bbento\b/],
   ibm: [/\bibm\b/, /\bwatson\b/, /\bcarbon\b/, /\bcognos\b/],
   apple: [/\bapple\b/],
-  i2systems: [/\bi2systems\b/, /\bi2 systems\b/, /\bi2systems —/, /\bjudge —/, /\bjudge\b.*crm/, /\blux\b.*design/],
+  i2systems: [
+    /\bi2systems\b/,
+    /\bi2 systems\b/,
+    /\bi2systems —/,
+    /\bjudge —/,
+    /\bjudge\b.*crm/,
+    /\blux\b.*design/,
+  ],
+  umich: [
+    /\buniversity of michigan\b/,
+    /\bumich\b/,
+    /\btaubman\b/,
+    /\bann arbor\b/,
+    /\bglow workshop\b/,
+  ],
+  "michigan-tech": [
+    /\bmichigan tech\b/,
+    /\bmichigan technological\b/,
+    /\bmtu\b/,
+    /\bhoughton\b/,
+    /\btechnical communications?\b/,
+  ],
 };
 
 function haystack(project: CompanySource): string {
@@ -44,6 +70,7 @@ function haystack(project: CompanySource): string {
     project.title,
     project.entity ?? "",
     project.details?.entity ?? "",
+    project.details?.location ?? "",
     ...(project.stack ?? []),
   ]
     .join(" | ")
@@ -57,7 +84,6 @@ export function deriveCompanies(project: CompanySource): Company[] {
     if (id === "independent") continue;
     if (RULES[id].some((re) => re.test(hay))) out.push(id);
   }
-  // Everything else — independent builds, academic, studio, untitled
   if (out.length === 0) out.push("independent");
   return out;
 }

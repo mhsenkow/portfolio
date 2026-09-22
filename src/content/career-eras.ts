@@ -9,7 +9,9 @@ export const CAREER_ERAS = [
   "meta",
   "microsoft",
   "ibm",
-  "origin",
+  "apple",
+  "umich",
+  "michigan-tech",
 ] as const;
 
 export type CareerEra = (typeof CAREER_ERAS)[number];
@@ -20,7 +22,9 @@ export const CAREER_ERA_LABEL: Record<CareerEra, string> = {
   meta: "2020–23 · meta",
   microsoft: "2018–19 · microsoft",
   ibm: "2014–17 · ibm",
-  origin: "–2013 · origin",
+  apple: "2012 · apple",
+  umich: "2011–13 · umich",
+  "michigan-tech": "–2011 · michigan tech",
 };
 
 /** Newest-first chapter order (default grid). */
@@ -30,12 +34,16 @@ export const CAREER_ERA_ORDER_DESC: CareerEra[] = [
   "meta",
   "microsoft",
   "ibm",
-  "origin",
+  "apple",
+  "umich",
+  "michigan-tech",
 ];
 
 /** Oldest-first chapter order. */
 export const CAREER_ERA_ORDER_ASC: CareerEra[] = [
-  "origin",
+  "michigan-tech",
+  "umich",
+  "apple",
   "ibm",
   "microsoft",
   "meta",
@@ -44,8 +52,8 @@ export const CAREER_ERA_ORDER_ASC: CareerEra[] = [
 ];
 
 /**
- * Assign a career chapter. Employer tags win; craft/independents land in the
- * same chapter as their year so eras mix companies with machines.
+ * Assign a career chapter. Employer/school tags win; craft/independents land in
+ * the same chapter as their year so eras mix companies with machines.
  */
 export function assignCareerEra(project: ProjectCard): CareerEra {
   const companies = project.companies;
@@ -53,7 +61,9 @@ export function assignCareerEra(project: ProjectCard): CareerEra {
   if (companies.includes("meta")) return "meta";
   if (companies.includes("microsoft")) return "microsoft";
   if (companies.includes("ibm")) return "ibm";
-  if (companies.includes("apple")) return "origin";
+  if (companies.includes("apple")) return "apple";
+  if (companies.includes("umich")) return "umich";
+  if (companies.includes("michigan-tech")) return "michigan-tech";
 
   const year = project.year ?? 0;
   if (year >= 2025) return "now";
@@ -61,7 +71,9 @@ export function assignCareerEra(project: ProjectCard): CareerEra {
   if (year >= 2020) return "meta";
   if (year >= 2018) return "microsoft";
   if (year >= 2014) return "ibm";
-  return "origin";
+  if (year >= 2012) return "apple";
+  if (year >= 2011) return "umich";
+  return "michigan-tech";
 }
 
 export type GridBand = {
@@ -111,13 +123,15 @@ export function groupByCareerEra(
   return bandsFromBuckets(order, CAREER_ERA_LABEL, buckets);
 }
 
-/** Newest-first employer order; craft/independent last. */
+/** Newest-first employer/school order; craft/independent last. */
 export const CORP_ORDER_DESC: Company[] = [
   "i2systems",
   "meta",
   "microsoft",
   "ibm",
   "apple",
+  "umich",
+  "michigan-tech",
   "independent",
 ];
 
@@ -129,6 +143,8 @@ export const CORP_BAND_LABEL: Record<Company, string> = {
   meta: "meta",
   ibm: "ibm",
   apple: "apple",
+  umich: "umich",
+  "michigan-tech": "michigan tech",
   independent: "independent · machines",
 };
 

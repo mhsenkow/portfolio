@@ -1448,7 +1448,7 @@ export const projects: Project[] = [
     stack: ['Physical Interaction Design', 'Art Installation', 'LED Design', 'CNC Machining', 'Thermoforming'],
     details: {
       role: 'Machining, Electrical work, Product Conception (Design)',
-      entity: 'Glow Workshop, installation in an open storefront',
+      entity: 'Glow Workshop — University of Michigan (Taubman)',
       location: 'Flint, MI',
       synopsis: [
         "Designed as part of the Glow Workshop led by Cathlyn Newell the workshop took a shop space in downtown Flint and designed projects based upon the concept of 'Glow'. I worked alongside Beatrice Lau and William Liow and created the final project you can see below. This was one of my first projects that started to toe the line of physical interaction design, looking into how objects can directly shape users connection to a space.",
@@ -1637,7 +1637,7 @@ export const projects: Project[] = [
     category: 'creative',
     stack: ['Architecture', '3D Modeling', 'Rendering'],
     details: {
-      entity: 'Taubman College of Architecture',
+      entity: 'Taubman College of Architecture — University of Michigan',
       location: 'Ann Arbor, MI',
       years: '2011–2013',
       synopsis: [
@@ -1741,6 +1741,7 @@ export const projects: Project[] = [
 			{ src: '/images/projects/graphic-design-work/marcom13.png', alt: 'Marketing communications design 4' }
 		],
 		details: {
+			entity: 'Michigan Tech — Technical Communications',
 			synopsis: "Providing some examples of the more purely graphic design work from old roles. A sampling of graphics and visual compositions created alongside product design work."
 		}
 	},
@@ -1778,7 +1779,7 @@ export const projects: Project[] = [
 		],
 		details: {
 			role: 'Digital Fabrication Researcher',
-			entity: 'Personal Project',
+			entity: 'Michigan Tech — Mechanical Engineering roots',
 			years: '2019 – Present',
 			synopsis: [
 				"Mechanical engineering and architecture provided me with a pretty extensive background across a number of 3d modeling tools. IDEAS, Solidworks, Sketchup, Shapelab, I've used a range.",
