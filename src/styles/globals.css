@@ -697,7 +697,7 @@
     }
     .intro-modal__panel {
       max-height: none;
-      padding: var(--space-4) 0 var(--space-8);
+      padding: var(--space-4) var(--space-4) var(--space-8);
     }
     .intro-modal__proof-list li {
       grid-template-columns: 1fr;
