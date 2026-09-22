@@ -1077,7 +1077,7 @@ export const projects: Project[] = [
     title: 'Microsoft — MyAnalytics metrics & self-help',
     description: 'Evolving MyAnalytics from raw analytics into actionable self-help — top-four metrics, motion, sharing, and onboarding.',
     year: 2018,
-        image: { src: '/images/projects/cards/data-viz.png', alt: 'MyAnalytics top four metrics' },
+    image: { src: '/images/projects/improving-work-life-balance/top-four.png', alt: 'MyAnalytics top four metrics' },
     stack: ['Microsoft', 'Product', 'Animation'],
     details: {
       role: 'Designer 2 (UX with prototyping and Front-End collaboration)',
@@ -1468,7 +1468,7 @@ export const projects: Project[] = [
     links: [
       { label: 'First project Video', href: 'https://youtu.be/cNAjJkotTjo' },
     ],
-    image: { src: '/images/projects/cards/data-viz.png', alt: 'Grad school data viz' },
+    image: { src: '/images/projects/grad-school-data-viz/final5.png', alt: 'Olymviz parallel coordinates visualization' },
     gallery: [
       { src: '/images/projects/grad-school-data-viz/viz.png', alt: 'Visualization experiment 1' },
       { src: '/images/projects/grad-school-data-viz/viz1.png', alt: 'Visualization experiment 2' },
@@ -1768,6 +1768,32 @@ export function findProject(slug: string): Project | undefined {
 	return projects.find(
 		(p) => p.slug === slug || p.aliases?.includes(slug)
 	);
+}
+
+/** Career timeline order — oldest → newest — for pager storytelling. */
+export function projectsByTimeline(): Project[] {
+	return [...projects].sort((a, b) => {
+		const ay = a.year ?? 0;
+		const by = b.year ?? 0;
+		if (ay !== by) return ay - by;
+		return a.title.localeCompare(b.title);
+	});
+}
+
+/** Neighbors in career-timeline order (← earlier, → later). */
+export function projectNeighbors(slug: string): {
+	prev: Project | null;
+	next: Project | null;
+} {
+	const ordered = projectsByTimeline();
+	const idx = ordered.findIndex(
+		(p) => p.slug === slug || p.aliases?.includes(slug)
+	);
+	if (idx < 0) return { prev: null, next: null };
+	return {
+		prev: idx > 0 ? ordered[idx - 1] : null,
+		next: idx < ordered.length - 1 ? ordered[idx + 1] : null,
+	};
 }
 
 /** Media folder under public/images/projects for auto-gallery / asset discovery. */

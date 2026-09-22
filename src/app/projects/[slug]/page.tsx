@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { LightboxImage } from '@/app/components/Lightbox';
 import type { Metadata } from 'next';
-import { findProject, projectMediaDir, projects } from '@/content/projects';
+import { findProject, projectMediaDir, projectNeighbors, projects } from '@/content/projects';
 import { SITE_NAME, SITE_URL } from '@/content/site';
 import Link from 'next/link';
 import { ProjectPager } from '@/app/components/ProjectPager';
@@ -116,9 +116,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 	) ?? [];
 	const galleryFiltered = gallery.filter((g) => !sectionImageSrcs.includes(g.src) && g.src !== headerSrc);
 
-	const idx = projects.findIndex((p) => p.slug === project.slug);
-	const prev = idx > 0 ? projects[idx - 1] : null;
-	const next = idx >= 0 && idx < projects.length - 1 ? projects[idx + 1] : null;
+	const { prev, next } = projectNeighbors(project.slug);
 
 	const videoHref = project.details?.prototypes?.find((p) => /youtu\.be|youtube\.com/.test(p.href))?.href;
 	const embedSrc = videoHref

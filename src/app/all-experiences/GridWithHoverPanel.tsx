@@ -84,7 +84,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     return window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? false : true;
   });
 
-  const [sort, setSort] = useState<SortOption>("year-desc");
+  const [sort, setSort] = useState<SortOption>("year-asc");
   const [skill, setSkill] = useState<SkillFilter>("all");
   const [company, setCompany] = useState<CompanyFilter>("all");
 
