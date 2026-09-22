@@ -90,6 +90,10 @@ function GridTileImage({
 
   const markLoaded = useCallback(() => setLoaded(true), []);
 
+  useEffect(() => {
+    setLoaded(false);
+  }, [density, src]);
+
   const imgRef = useCallback(
     (node: HTMLImageElement | null) => {
       if (node && node.complete && node.naturalWidth > 0) markLoaded();
@@ -103,6 +107,7 @@ function GridTileImage({
         <span className={styles.thumbFillerSweep} />
       </span>
       <Image
+        key={`${src}-${density}`}
         ref={imgRef}
         src={src}
         alt={alt}
