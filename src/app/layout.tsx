@@ -91,9 +91,9 @@ export const metadata: Metadata = {
     url: SITE_URL,
     images: [
       {
-        url: "/images/profile/michael.jpg",
-        width: 1000,
-        height: 1000,
+        url: "/images/og.png",
+        width: 1200,
+        height: 630,
         alt: "Michael Senkow — Staff Product Designer",
       },
     ],
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE_NAME} — Staff Product Designer`,
     description: SITE_TAGLINE,
-    images: ["/images/profile/michael.jpg"],
+    images: ["/images/og.png"],
   },
   robots: {
     index: true,

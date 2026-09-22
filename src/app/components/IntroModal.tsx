@@ -12,7 +12,7 @@ export function openIntroModal() {
   window.dispatchEvent(new Event(INTRO_OPEN_EVENT));
 }
 
-const EXPLORATIONS = [
+const EARLIER_SITES = [
   { href: "https://mhsenkow.work/", label: "Prior portfolio (Vercel)" },
   { href: "https://webgl-portfolio-jbxw.vercel.app/", label: "WebGL portfolio" },
   { href: "https://portfolio-site-tau-ten-35.vercel.app/", label: "Particle narrative" },
@@ -161,14 +161,14 @@ export function IntroModal() {
           View work →
         </button>
 
-        <aside className="intro-modal__explorations" aria-label="Previous portfolio versions">
-          <p className="intro-modal__section-label">previous portfolio versions</p>
+        <details className="intro-modal__earlier">
+          <summary>Earlier sites</summary>
           <div className="intro-modal__links">
-            {EXPLORATIONS.map((item) => (
+            {EARLIER_SITES.map((item) => (
               <LinkToken key={item.href} href={item.href} label={item.label} />
             ))}
           </div>
-        </aside>
+        </details>
       </div>
     </div>
   );

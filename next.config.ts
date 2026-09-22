@@ -15,6 +15,15 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/projects/i2systems-lighting-infra",
+        destination: "/projects/judge",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

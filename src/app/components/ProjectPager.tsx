@@ -14,22 +14,26 @@ export function ProjectPager({ prev, next }: Props) {
     setMountNode(document.getElementById('overlays'));
   }, []);
 
+  if (!prev && !next) return null;
+
   const content = (
     <div className="project-pager" role="navigation" aria-label="Project navigation">
-      {prev && (
-        <Link className="pager-btn" href={`/projects/${prev.slug}`} aria-label={`Previous: ${prev.title}`}>
-          ←
-        </Link>
-      )}
-      {next && (
-        <Link className="pager-btn" href={`/projects/${next.slug}`} aria-label={`Next: ${next.title}`}>
-          →
-        </Link>
-      )}
+      <div className="project-pager__slot">
+        {prev ? (
+          <Link className="pager-btn" href={`/projects/${prev.slug}`} aria-label={`Previous: ${prev.title}`}>
+            ←
+          </Link>
+        ) : null}
+      </div>
+      <div className="project-pager__slot project-pager__slot--end">
+        {next ? (
+          <Link className="pager-btn" href={`/projects/${next.slug}`} aria-label={`Next: ${next.title}`}>
+            →
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 
   return mountNode ? createPortal(content, mountNode) : content;
 }
-
-

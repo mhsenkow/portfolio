@@ -2,6 +2,10 @@ import { githubBuilds } from './github-builds';
 
 export type Project = {
 	slug: string;
+	/** Legacy URL segments that should resolve to this project. */
+	aliases?: string[];
+	/** Folder under public/images/projects for auto-gallery (defaults to slug). */
+	mediaDir?: string;
 	title: string;
 	description: string;
 	year?: number;
@@ -35,7 +39,9 @@ export type Project = {
 export const projects: Project[] = [
 	...githubBuilds,
 	{
-		slug: 'i2systems-lighting-infra',
+		slug: 'judge',
+		aliases: ['i2systems-lighting-infra'],
+		mediaDir: 'i2systems-lighting-infra',
 		title: 'Judge — Salesforce / CRM integrity',
 		description:
 			'Local-first review-gated integrity layer over Salesforce — scan accounts/contacts, rank issues, apply sandbox-safe fixes with HubSpot / Mailchimp sync and a full audit trail.',
@@ -94,7 +100,6 @@ export const projects: Project[] = [
 		description:
 			'A generative pixel-art Walstad aquarium — 3D voxel sim → palette-quantize render, closed nutrient loop, agent fish with genomes. Watch more than you play.',
 		year: 2026,
-		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/walstad-loom/card.png',
@@ -284,7 +289,7 @@ export const projects: Project[] = [
         'Advanced work: Progressed to more advanced chart types (e.g., neural networks) and deeper interaction patterns. Predictor chart learnings informed brusher concepts to expose full value ranges adjacent to tables.',
         'Outcome: Patterns from this redesign still appear in product checks years later, demonstrating the lasting impact of the Carbon Design System integration.'
       ],
-      skills: ['UX', 'Front‑end', 'Design systems', 'Data viz'],
+      skills: ['UX design', 'Front-end', 'Design systems', 'Data visualization'],
       goals: [
         'Overhaul SPSS Modeler charts onto Carbon with a clear key-number hierarchy',
         'Handle edge cases (too few / too many values) without breaking the viz',
@@ -358,7 +363,7 @@ export const projects: Project[] = [
         'AI integration: AI entered almost every discussion — surfacing join recommendations or related data objects. Explored whether users preferred in-situ recommendations vs. a helpful bot, and whether they wanted to compare results or have code produce results and move on. This included exploring concepts for AI-driven autocode completion, intelligent chart creation, and augmented data analysis workflows.',
         'Outcome: The notebook merging worked and was used by 10k+ monthly active users at Meta. Of the concepts laid out in the original story, about 40% were realized alongside work churn. Personally, I gained exposure to AI workflow concepts that are applicable across a range of spaces — invaluable experience that informed Meta AI image creation flows and established patterns for unified notebook experiences across SQL and Python workflows.'
       ],
-      skills: ['UX Design', 'Interaction Design', 'Visual Design', 'Prototyping', 'User Research', 'SQL', 'Python'],
+      skills: ['UX design', 'Interaction design', 'Visual design', 'Prototyping', 'User research', 'SQL', 'Python'],
       goals: [
         'Stand up a SQL cell notebook that stores and visualizes complex warehouse queries in one place',
         'Unify Daiquery (SQL) and Bento (Python) into a shared cell architecture teams can extend',
@@ -421,7 +426,6 @@ export const projects: Project[] = [
 		description:
 			'Staff-level contract work: AI legal notebooks and recommendation bot, data-suite foundations, and Windows Cloud recovery flows — plus supporting startup systems.',
 		year: 2025,
-		featured: true,
 				image: { src: '/images/projects/cards/contracts-suite.png', alt: 'AI workflow and data-suite exploration' },
 		stack: ['AI workflows', 'Data products', 'Prototyping', 'Design systems'],
 		details: {
@@ -729,7 +733,6 @@ export const projects: Project[] = [
     title: 'Microsoft — Topic keyword analysis redesigns',
     description: 'Viva Insights/Workplace Analytics — topic/keyword analysis redesign; design system expansion, mentoring.',
     year: 2019,
-    featured: true,
         image: { src: '/images/projects/cards/topic-selection.png', alt: 'Topic selection' },
     stack: ['Microsoft', 'Analytics'],
     details: {
@@ -748,7 +751,7 @@ export const projects: Project[] = [
         'Final flow and specifics for responsive layout: Consolidated steps into a single screen, reduced superfluous data‑viz, and documented responsive behavior across sections. Template selection aligned with broader application patterns for component reuse.',
         'Outcome: A mild visual redesign integrated into the larger design framework; patterns moved the app toward a cohesive tool experience and were adopted by the team after transition.'
       ],
-      skills: ['UX Design', 'Visual Design', 'Mentoring', 'Background in Analytics', 'Tool Creation'],
+      skills: ['UX design', 'Visual design', 'Mentoring', 'Analytics', 'Tool creation'],
       goals: [
         'Collapse a 13-step keyword wizard into a single-screen tool users can finish',
         'Carry patterns into Meeting Exclusions with PM/eng',
@@ -936,7 +939,6 @@ export const projects: Project[] = [
     title: 'Microsoft — Workplace Analytics programs & nudges',
     description: 'Programs as the bridge between Workplace Analytics and MyAnalytics — dashboards, nudges, and multi-year design leadership.',
     year: 2018,
-    featured: true,
         image: { src: '/images/projects/workplace-analytics-programs/card.png', alt: 'Workplace Analytics Programs' },
     gallery: [],
     stack: ['Microsoft', 'Workplace Analytics', 'MyAnalytics', 'Behavioral Design', 'UX Design'],
@@ -953,7 +955,7 @@ export const projects: Project[] = [
         'Nudges & focus: Gentle behavioral prompts and Workplace Focus surfaces that stay useful without becoming noise.',
         'Admin & refinement: Configuration for different org contexts, plus iterative polish from wireframe to production based on feedback.',
       ],
-      skills: ['Wireframing', 'Research', 'Visual Design', 'Data Visualization', 'Behavioral Design', 'Team Leadership', 'Design Systems'],
+      skills: ['Wireframing', 'Research', 'Visual design', 'Data visualization', 'Behavioral design', 'Team leadership', 'Design systems'],
       goals: [
         'Make programs the coherent bridge between org analytics and personal insight',
         'Ship nudges that change habits without nagging',
@@ -1075,7 +1077,6 @@ export const projects: Project[] = [
     title: 'Microsoft — MyAnalytics metrics & self-help',
     description: 'Evolving MyAnalytics from raw analytics into actionable self-help — top-four metrics, motion, sharing, and onboarding.',
     year: 2018,
-    featured: true,
         image: { src: '/images/projects/cards/data-viz.png', alt: 'MyAnalytics top four metrics' },
     stack: ['Microsoft', 'Product', 'Animation'],
     details: {
@@ -1087,7 +1088,7 @@ export const projects: Project[] = [
         'MyAnalytics turns Office 365 signals (meetings, email, focus) into personal insight. I pushed it from a readout toward a self-help product — clearer metrics, motion that teaches, sharing, and onboarding.',
         'Worked with front-end to ship motion prototypes; iterated with PMs until the top-four metrics and sharing affordances were something people could act on.',
       ],
-      skills: ['UX Design', 'Prototyping', 'Front-End Collaboration', 'Animation Design'],
+      skills: ['UX design', 'Prototyping', 'Front-end collaboration', 'Animation design'],
       goals: [
         'Make the top-four metrics scannable and actionable in one view',
         'Use motion to teach work patterns without decoration for its own sake',
@@ -1158,7 +1159,7 @@ export const projects: Project[] = [
         'During the 2019 Microsoft FHL hackathon, I served as the sole designer on a fast-paced project. My responsibilities included quick visual experimentation, front-end coding, and both UX and visual design. Collaborating closely with data scientists, PMs, and engineers, we rapidly developed and refined our project.',
         'I played a key role in transforming initial concepts into a functional prototype, which involved iterative design processes and agile development practices. My contributions culminated in a final set of designs and front-end code, effectively demonstrating the project\'s potential and usability.'
       ],
-      skills: ['Quick Visual Experimentation', 'Front-End Coding', 'UX Design', 'Visual Design'],
+      skills: ['Quick visual experimentation', 'Front-end coding', 'UX design', 'Visual design'],
       prototypes: [
         { label: 'Final set of design and front-end code', href: 'https://codepen.io/mhsenkow/full/xvVGWj' }
       ]
@@ -1204,7 +1205,7 @@ export const projects: Project[] = [
         'Coded Vega examples alongside engineering so axis, legend, and chart-type decisions survived handoff. Work ran next to the wider infra design system for consistency across Analysis tools.',
         'AI-imagen storytelling: explored prompt → infographic paths for data narratives, presented across Meta sites (MPK, London, Tel Aviv).',
       ],
-      skills: ['UX Design', 'Visual Design', 'Prototyping (Vega)', 'Documentation', 'Collaboration with PMs and Engineers', 'Research Validation'],
+      skills: ['UX design', 'Visual design', 'Prototyping (Vega)', 'Documentation', 'PM and engineering collaboration', 'Research validation'],
       goals: [
         'Give Infra a shared chart vocabulary engineers could implement without one-off art',
         'Ship coded Vega references for core chart types, axes, legends, and palettes',
@@ -1223,7 +1224,6 @@ export const projects: Project[] = [
     title: 'IBM — Watson Data Platform design guide',
     description: 'Coded component guide with the dev lead — shipped into products used across thousands of users.',
     year: 2017,
-    featured: true,
         image: { src: '/images/projects/design-guide-thousands-users/card.png', alt: 'Design guide' },
     gallery: [
       // Key overview images
@@ -1241,7 +1241,7 @@ export const projects: Project[] = [
         'On Watson Data Platform I worked as designer-developer: the guide’s components were built and coded with my dev lead, while UX landed with visual designers and the Design Lead.',
         'Seeing those components land in products — and hearing feedback from real usage — was the point. The system had to work for teams shipping, not only for the guide itself.',
       ],
-      skills: ['Design System Architecture', 'Component Library Development', 'Frontend Development', 'UX Design', 'Technical Documentation', 'Design-to-Code Implementation'],
+      skills: ['Design system architecture', 'Component library development', 'Frontend development', 'UX design', 'Technical documentation', 'Design-to-code implementation'],
       goals: [
         'Ship a coded component guide products could adopt without reinterpretation',
         'Keep design and implementation in one loop with the dev lead',
@@ -1313,7 +1313,7 @@ export const projects: Project[] = [
         'In the same group, my role evolved to include creating numerous prototypes to help sell the concept of social media analytics, demonstrating the potential and value of these tools to stakeholders and clients.',
         'In addition to these practical applications, I also developed blue-sky concepts for the future of AI-powered dashboards. These visionary designs aimed to showcase the potential of AI to transform data visualization and user interaction, pushing the boundaries of what analytics platforms could achieve.'
       ],
-      skills: ['Research', 'Prototyping', 'UX Design', 'Concept Development', 'Stakeholder Engagement'],
+      skills: ['Research', 'Prototyping', 'UX design', 'Concept development', 'Stakeholder engagement'],
       sections: [
         {
           title: 'Initial Research',
@@ -1598,6 +1598,7 @@ export const projects: Project[] = [
 		slug: 'icon-creation',
 		title: 'Icon creation',
 		description: 'Vector icon explorations and logo concepts; experiments with AI-assisted vectorization.',
+		year: 2024,
 		category: 'creative',
 		links: [
 			{ label: 'Noun Project Profile', href: 'https://thenounproject.com/creator/mhsenkow/' }
@@ -1624,6 +1625,7 @@ export const projects: Project[] = [
 		slug: 'scripted-axidraw-work',
 		title: 'Scripted Axidraw work',
 		description: 'Plotter art using code-driven paths; exploring digital craft and fabrication.',
+		year: 2021,
 		category: 'creative',
 		image: { src: '/images/projects/scripted-axidraw-work/card.jpg', alt: 'Scripted Axidraw plotter work' },
 		details: {
@@ -1637,6 +1639,7 @@ export const projects: Project[] = [
 		slug: 'generative-web-code-art',
 		title: 'Generative web-code art',
 		description: 'Small coded pieces — headers, backgrounds, loaders — and purely artistic experiments.',
+		year: 2023,
 		category: 'creative',
 		image: { src: '/images/projects/generative-web-code-art/card.png', alt: 'Generative web-code art' },
 		gallery: [
@@ -1674,6 +1677,7 @@ export const projects: Project[] = [
 		slug: 'graphic-design-work',
 		title: 'Graphic design work',
 		description: 'Selected graphic design examples from various roles.',
+		year: 2015,
 		category: 'creative',
 		image: { src: '/images/projects/graphic-design-work/card.PNG', alt: 'Graphic design work' },
 		gallery: [
@@ -1733,6 +1737,7 @@ export const projects: Project[] = [
 		slug: 'prototype-sketches',
 		title: 'Prototype sketches',
 		description: 'Wireframes, prototypes, and sketches illustrating iterative design across companies.',
+		year: 2019,
 		category: 'creative',
 		image: { src: '/images/projects/prototype-sketches/card.PNG', alt: 'Prototype sketches' },
 		details: {
@@ -1746,6 +1751,7 @@ export const projects: Project[] = [
 		slug: 'ai-generated-video-art',
 		title: 'AI generated video art',
 		description: 'Video-based art experiments created with AI tooling and post-processing.',
+		year: 2023,
 		category: 'creative',
 		image: { src: '/images/projects/ai-generated-video-art/card.PNG', alt: 'AI generated video art' },
 		details: {
@@ -1756,3 +1762,15 @@ export const projects: Project[] = [
 		}
 	},
 ];
+
+/** Resolve a project by canonical slug or legacy alias. */
+export function findProject(slug: string): Project | undefined {
+	return projects.find(
+		(p) => p.slug === slug || p.aliases?.includes(slug)
+	);
+}
+
+/** Media folder under public/images/projects for auto-gallery / asset discovery. */
+export function projectMediaDir(project: Project): string {
+	return project.mediaDir ?? project.slug;
+}

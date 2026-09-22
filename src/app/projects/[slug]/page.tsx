@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { LightboxImage } from '@/app/components/Lightbox';
 import type { Metadata } from 'next';
-import { projects } from '@/content/projects';
+import { findProject, projectMediaDir, projects } from '@/content/projects';
+import { SITE_NAME, SITE_URL } from '@/content/site';
 import Link from 'next/link';
 import { ProjectPager } from '@/app/components/ProjectPager';
 import { LinkToken } from '@/app/components/LinkToken';
@@ -9,24 +10,39 @@ import { SidePanelLayout } from '@/app/components/SidePanelLayout';
 import fs from 'fs';
 import path from 'path';
 
+export function generateStaticParams() {
+	return projects.map((p) => ({ slug: p.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 	const { slug } = await params;
-	const project = projects.find((p) => p.slug === slug);
-	if (!project) return { title: 'not found — mhsenkow' };
+	const project = findProject(slug);
+	if (!project) return { title: 'Not found' };
+	const title = project.title;
+	const description = project.description;
+	const canonical = `/projects/${project.slug}`;
+	const ogImage = project.image
+		? {
+				url: project.image.src,
+				width: project.image.width ?? 1200,
+				height: project.image.height ?? 630,
+				alt: project.image.alt,
+			}
+		: undefined;
 	return {
-		title: `${project.title} — mhsenkow`,
-		description: project.description,
+		title,
+		description,
+		alternates: { canonical },
 		openGraph: {
-			title: `${project.title} — mhsenkow`,
-			description: project.description,
-			images: project.image ? [
-				{ url: project.image.src, width: project.image.width ?? 1200, height: project.image.height ?? 630, alt: project.image.alt }
-			] : undefined,
+			title: `${title} — ${SITE_NAME}`,
+			description,
+			url: `${SITE_URL}${canonical}`,
+			images: ogImage ? [ogImage] : undefined,
 		},
 		twitter: {
 			card: project.image ? 'summary_large_image' : 'summary',
-			title: `${project.title} — mhsenkow`,
-			description: project.description,
+			title: `${title} — ${SITE_NAME}`,
+			description,
 			images: project.image ? [project.image.src] : undefined,
 		},
 	};
@@ -67,12 +83,13 @@ function ImageFrame({
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
 	const { slug } = await params;
-	const project = projects.find((p) => p.slug === slug);
+	const project = findProject(slug);
 	if (!project) return notFound();
 
+	const mediaDir = projectMediaDir(project);
 	let autoGallery: { src: string; alt: string }[] = [];
 	try {
-		const dir = path.join(process.cwd(), 'public', 'images', 'projects', slug);
+		const dir = path.join(process.cwd(), 'public', 'images', 'projects', mediaDir);
 		const files = fs.readdirSync(dir);
 		autoGallery = files
 			.filter((f) => /\.(png|jpe?g|webp|gif|avif)$/i.test(f))
@@ -83,7 +100,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 					return false;
 				}
 			})
-			.map((f) => ({ src: `/images/projects/${slug}/${f}`, alt: project.title }));
+			.map((f) => ({ src: `/images/projects/${mediaDir}/${f}`, alt: project.title }));
 	} catch {
 		// ignore missing directory
 	}
@@ -99,7 +116,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 	) ?? [];
 	const galleryFiltered = gallery.filter((g) => !sectionImageSrcs.includes(g.src) && g.src !== headerSrc);
 
-	const idx = projects.findIndex((p) => p.slug === slug);
+	const idx = projects.findIndex((p) => p.slug === project.slug);
 	const prev = idx > 0 ? projects[idx - 1] : null;
 	const next = idx >= 0 && idx < projects.length - 1 ? projects[idx + 1] : null;
 
@@ -129,8 +146,30 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 	const gallerySizes = '(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 420px';
 	const heroSizes = '(max-width: 700px) 100vw, (max-width: 1100px) 92vw, min(1100px, 70vw)';
 
+	const creativeWorkJsonLd = {
+		'@context': 'https://schema.org',
+		'@type': 'CreativeWork',
+		name: project.title,
+		description: project.description,
+		url: `${SITE_URL}/projects/${project.slug}`,
+		author: {
+			'@type': 'Person',
+			name: SITE_NAME,
+			url: SITE_URL,
+		},
+		...(project.year ? { dateCreated: String(project.year) } : {}),
+		...(project.image
+			? { image: project.image.src.startsWith('http') ? project.image.src : `${SITE_URL}${project.image.src}` }
+			: {}),
+		...(project.details?.skills?.length ? { keywords: project.details.skills.join(', ') } : {}),
+	};
+
 	return (
 		<main id="content">
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkJsonLd) }}
+			/>
 			<section className="container--fluid project-page">
 				<SidePanelLayout
 					panel={

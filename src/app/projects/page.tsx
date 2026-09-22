@@ -13,7 +13,7 @@ export default function ProjectsPage() {
 			<section className="container" style={{ padding: 'var(--space-16) 0' }}>
                 <h1 className="h1">Case studies</h1>
 				<p style={{ marginTop: 'var(--space-4)', color: 'var(--color-muted)', maxWidth: 820 }}>
-					Selected product and systems work — enterprise case studies and independent tools. The full archive is on the home page.
+					Selected case studies — full cross-section on the home grid.
 				</p>
 				<ProjectsGrid />
 			</section>

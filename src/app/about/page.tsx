@@ -74,8 +74,9 @@ export default function AboutPage() {
 						</ul>
 						<p>
 							I also build and ship independent tools — local-first utilities,
-							simulations, and design experiments. Open to conversations about product
-							design, tooling, and systems work.
+							simulations, and design experiments. Open to conversations about staff-level
+							product design for complex tooling, data workflows, and systems work —
+							email is the best first step.
 						</p>
 					</div>
 

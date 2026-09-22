@@ -78,7 +78,6 @@ export const githubBuilds: Project[] = [
 		description:
 			'Personal intelligence OS with a retro terminal aesthetic — local-first AI powered by Ollama with vector memory.',
 		year: 2026,
-		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/loom-os/card.png',
@@ -250,7 +249,6 @@ export const githubBuilds: Project[] = [
 		description:
 			'Cited institutional and insider filing intelligence terminal — 13F whales, Form 4 wire, provenance-backed.',
 		year: 2026,
-		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/sec-loom/card.png',
@@ -287,7 +285,6 @@ export const githubBuilds: Project[] = [
 		description:
 			'Printable actor-network posters — story gallery + poster atelier over a DuckDB pipeline for film-graph craft.',
 		year: 2026,
-		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/imdb-loom/card.png',
