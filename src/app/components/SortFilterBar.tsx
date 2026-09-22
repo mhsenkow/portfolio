@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { ProjectCard } from "@/content/project-card";
+import { SKILLSETS, SKILLSET_LABEL, type Skillset } from "@/content/skillsets";
 
 export type SortOption = "year-desc" | "year-asc" | "title-asc" | "title-desc";
-export type FilterOption = "all" | "featured" | "creative" | "microsoft" | "meta" | "ibm" | "apple";
+export type FilterOption = "all" | "featured" | Skillset;
 
 interface SortFilterBarProps {
   onSortChange: (sort: SortOption) => void;
@@ -12,17 +13,8 @@ interface SortFilterBarProps {
   currentSort: SortOption;
   currentFilter: FilterOption;
   itemCount: number;
-  filterCounts?: Record<FilterOption, number>;
+  filterCounts?: Partial<Record<FilterOption, number>>;
   leading?: ReactNode;
-}
-
-function matchesOrg(p: ProjectCard, org: string) {
-  const needle = org.toLowerCase();
-  return (
-    p.stack?.some((s) => s.toLowerCase().includes(needle)) ||
-    p.entity?.toLowerCase().includes(needle) ||
-    p.title.toLowerCase().includes(needle)
-  );
 }
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
@@ -35,11 +27,7 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 const FILTER_OPTIONS: { value: FilterOption; label: string }[] = [
   { value: "all", label: "all" },
   { value: "featured", label: "featured" },
-  { value: "creative", label: "creative" },
-  { value: "microsoft", label: "microsoft" },
-  { value: "meta", label: "meta" },
-  { value: "ibm", label: "ibm" },
-  { value: "apple", label: "apple" },
+  ...SKILLSETS.map((id) => ({ value: id as FilterOption, label: SKILLSET_LABEL[id] })),
 ];
 
 export function SortFilterBar({
@@ -162,6 +150,9 @@ export function SortFilterBar({
             const active = currentFilter === option.value;
             const count =
               filterCounts?.[option.value] ?? (option.value === "all" ? itemCount : 0);
+            if (option.value !== "all" && option.value !== "featured" && count === 0) {
+              return null;
+            }
             return (
               <button
                 key={option.value}
@@ -204,32 +195,24 @@ export function sortProjects(projects: ProjectCard[], sort: SortOption): Project
 
 export function filterProjects(projects: ProjectCard[], filter: FilterOption): ProjectCard[] {
   switch (filter) {
+    case "all":
+      return projects;
     case "featured":
       return projects.filter((p) => p.featured === true);
-    case "creative":
-      return projects.filter((p) => p.category === "creative");
-    case "microsoft":
-      return projects.filter((p) => matchesOrg(p, "microsoft"));
-    case "meta":
-      return projects.filter((p) => matchesOrg(p, "meta"));
-    case "ibm":
-      return projects.filter((p) => matchesOrg(p, "ibm"));
-    case "apple":
-      return projects.filter((p) => matchesOrg(p, "apple"));
-    case "all":
     default:
-      return projects;
+      return projects.filter((p) => p.skillsets.includes(filter));
   }
 }
 
-export function getFilterCounts(projects: ProjectCard[]) {
-  return {
+export function getFilterCounts(projects: ProjectCard[]): Record<FilterOption, number> {
+  const counts = {
     all: projects.length,
     featured: projects.filter((p) => p.featured === true).length,
-    creative: projects.filter((p) => p.category === "creative").length,
-    microsoft: projects.filter((p) => matchesOrg(p, "microsoft")).length,
-    meta: projects.filter((p) => matchesOrg(p, "meta")).length,
-    ibm: projects.filter((p) => matchesOrg(p, "ibm")).length,
-    apple: projects.filter((p) => matchesOrg(p, "apple")).length,
-  };
+  } as Record<FilterOption, number>;
+
+  for (const id of SKILLSETS) {
+    counts[id] = projects.filter((p) => p.skillsets.includes(id)).length;
+  }
+
+  return counts;
 }

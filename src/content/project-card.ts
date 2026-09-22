@@ -1,4 +1,5 @@
 import type { Project } from "./projects";
+import { deriveSkillsets, type Skillset } from "./skillsets";
 
 /** Slim card shape for grids/filters — no case-study body, gallery, or sections. */
 export type ProjectCard = {
@@ -12,6 +13,8 @@ export type ProjectCard = {
   stack?: string[];
   /** Flattened from details.entity for filter + hover panel. */
   entity?: string;
+  /** Derived craft clusters for the skillset filter. */
+  skillsets: Skillset[];
 };
 
 export function toProjectCard(project: Project): ProjectCard {
@@ -25,6 +28,7 @@ export function toProjectCard(project: Project): ProjectCard {
     image: project.image,
     stack: project.stack,
     entity: project.details?.entity,
+    skillsets: deriveSkillsets(project),
   };
 }
 
