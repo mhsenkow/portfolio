@@ -76,16 +76,18 @@ export function IntroModal() {
   }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      document.body.style.overflow = "";
+      return;
+    }
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") dismiss();
     }
     document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
+      document.body.style.overflow = "";
     };
   }, [open, dismiss]);
 

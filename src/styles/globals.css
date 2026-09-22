@@ -93,7 +93,13 @@
     background: repeating-linear-gradient(90deg, #209cee 0 8px, #1a86d1 8px 16px);
     background-attachment: fixed;
   }
-  .app-shell { display: grid; grid-template-rows: auto 1fr auto; grid-template-areas: 'header' 'main' 'footer'; height: 100svh; overflow: hidden; }
+  .app-shell {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'header' 'main' 'footer';
+    height: 100svh;
+    overflow: hidden;
+  }
   .site-header {
     grid-area: header;
     min-height: var(--header-h);
@@ -107,8 +113,15 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
-  .site-footer { height: auto; }
-  .app-main { overflow: auto; grid-area: main; }
+  .site-footer { height: auto; grid-area: footer; }
+  .app-main {
+    grid-area: main;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
 
   /*
    * Intro curtain: frosted glass over a live grid.
@@ -1737,7 +1750,8 @@
   body.has-right-panel[data-right-panel="closed"] .app-main { padding-right: calc(var(--panel-handle) + 48px); }
   @media (max-width: 900px) {
     body.has-right-panel .app-main { padding-right: 0; }
-    body.has-right-panel[data-right-panel="open"] { overflow: hidden; }
+    /* Don't lock document scroll — .app-main is the scrollport */
+    body.has-right-panel[data-right-panel="open"] { overflow: unset; }
     :root { --panel-handle: 28px; }
     .overlay-panel--right { right: 6px; width: min(84vw, 360px); }
     .overlay-panel--right .panel-handle { left: -8px; }
