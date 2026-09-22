@@ -111,17 +111,18 @@
   .app-main { overflow: auto; grid-area: main; }
 
   /*
-   * Intro curtain: hide shell until data-intro="skip".
-   * Default (no attr yet) and data-intro="open" keep the grid invisible
-   * so thumbs can warm behind a solid cover without looking broken.
+   * Intro curtain: frosted glass over a live grid.
+   * Shell stays painted (so cards show through) but non-interactive until dismiss.
    */
   .intro-boot {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 190;
-    background: var(--color-bg);
     pointer-events: none;
+    background: color-mix(in oklab, var(--color-bg) 42%, transparent);
+    backdrop-filter: var(--glass-blur-3);
+    -webkit-backdrop-filter: var(--glass-blur-3);
   }
   html:not([data-intro="skip"]) .intro-boot {
     display: block;
@@ -130,30 +131,13 @@
   html:not([data-intro="skip"]) .app-main,
   html:not([data-intro="skip"]) .site-footer,
   html:not([data-intro="skip"]) .overlay-root {
-    visibility: hidden;
     pointer-events: none;
   }
   html[data-intro="skip"] .site-header,
   html[data-intro="skip"] .app-main,
   html[data-intro="skip"] .site-footer,
   html[data-intro="skip"] .overlay-root {
-    visibility: visible;
     pointer-events: auto;
-    animation: intro-shell-reveal var(--motion-slow) var(--ease-out) both;
-  }
-
-  @keyframes intro-shell-reveal {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html[data-intro="skip"] .site-header,
-    html[data-intro="skip"] .app-main,
-    html[data-intro="skip"] .site-footer,
-    html[data-intro="skip"] .overlay-root {
-      animation: none;
-    }
   }
   .overlay-root { position: fixed; left: 0; right: 0; top: calc(var(--header-h) + env(safe-area-inset-top)); bottom: calc(env(safe-area-inset-bottom)); z-index: 20; pointer-events: none; }
   .overlay-panel--right {
@@ -519,7 +503,7 @@
     color: var(--color-text);
   }
 
-  /* intro entry modal */
+  /* intro entry modal — glass over the work grid */
   .intro-modal {
     position: fixed;
     inset: 0;
@@ -527,22 +511,56 @@
     display: grid;
     place-items: center;
     padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-    background: color-mix(in oklab, var(--color-bg), transparent 8%);
-    backdrop-filter: blur(10px);
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--color-bg) 28%, transparent),
+        color-mix(in oklab, var(--color-bg) 48%, transparent)
+      );
+    backdrop-filter: var(--glass-blur-3);
+    -webkit-backdrop-filter: var(--glass-blur-3);
     cursor: pointer;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    animation: none; /* boot curtain already covers — no fade flash */
+  }
+  .intro-modal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: var(--glass-sheen);
+    opacity: 0.55;
   }
   .intro-modal__panel {
+    position: relative;
+    z-index: 1;
     width: min(100%, 720px);
     max-width: 100%;
     min-width: 0;
     max-height: min(90vh, 900px);
     overflow: auto;
     cursor: default;
-    padding: var(--space-6) 0;
+    padding: var(--space-6) var(--space-5);
+    border-radius: var(--card-radius);
+    background: color-mix(in oklab, var(--glass-2) 88%, transparent);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    backdrop-filter: var(--glass-blur-2);
+    -webkit-backdrop-filter: var(--glass-blur-2);
     animation: intro-rise var(--motion-slow) var(--ease-out) both;
+  }
+  .intro-modal__panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: var(--card-sheen);
+    opacity: 0.5;
+  }
+  .intro-modal__panel > * {
+    position: relative;
+    z-index: 1;
   }
   .intro-modal__hint {
     font-size: 12px;
