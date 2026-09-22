@@ -29,6 +29,7 @@ interface SortFilterBarProps {
   skillCounts?: Partial<Record<SkillFilter, number>>;
   companyCounts?: Partial<Record<CompanyFilter, number>>;
   leading?: ReactNode;
+  trailing?: ReactNode;
 }
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
@@ -62,6 +63,7 @@ export function SortFilterBar({
   skillCounts,
   companyCounts,
   leading,
+  trailing,
 }: SortFilterBarProps) {
   const [panel, setPanel] = useState<Panel>(null);
   const filtersRef = useRef<HTMLDivElement>(null);
@@ -184,6 +186,7 @@ export function SortFilterBar({
         <span className="tool-bar__count" aria-live="polite">
           {itemCount}
         </span>
+        {trailing}
       </div>
 
       {panel ? (
