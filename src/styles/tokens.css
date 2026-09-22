@@ -64,6 +64,15 @@
     --type-secondary: var(--size-1);
     --type-tertiary: var(--size-0);
 
+    /* tight title / label tracking — prefer condensed over airy */
+    --track-title: -0.035em;
+    --track-title-md: -0.028em;
+    --track-title-sm: -0.022em;
+    --track-label: 0.01em;
+    --leading-title: 1.02;
+    --leading-title-md: 1.08;
+    --leading-label: 1.15;
+
     --size-0: clamp(12px, 0.75rem, 0.75rem);
     --size-1: clamp(14px, 0.875rem, 0.875rem);
     --size-2: clamp(16px, 1rem, 1rem);

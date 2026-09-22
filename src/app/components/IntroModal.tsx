@@ -152,6 +152,12 @@ export function IntroModal() {
     disableOutside: true, // backdrop onClick handles outside
   });
 
+  useEffect(() => {
+    if (!open) return;
+    const panel = rootRef.current?.querySelector<HTMLElement>(".intro-modal__panel");
+    panel?.scrollTo({ top: 0 });
+  }, [open]);
+
   if (!open) return null;
 
   return (
@@ -180,7 +186,7 @@ export function IntroModal() {
           </h1>
           <p className="intro-modal__role">Staff Product Designer</p>
           <p className="intro-modal__lede">
-            Complex tooling, data workflows, and product systems for enterprise and independent work.
+            Complex tooling, data workflows, and product systems — enterprise and independent.
           </p>
         </header>
 
@@ -190,44 +196,35 @@ export function IntroModal() {
             <li>
               <span className="intro-modal__proof-org">i2Systems</span>
               <span className="intro-modal__proof-body">
-                <strong>Current</strong> — Lux design system, Figma add-ons, Flux demos,
-                SEO tooling, and <strong>Judge</strong> (Salesforce / CRM integrity), plus
-                other internal experiments. Moving the team&apos;s product practice forward;
-                not the marketing site.
-              </span>
-            </li>
-            <li>
-              <span className="intro-modal__proof-org">Microsoft</span>
-              <span className="intro-modal__proof-body">
-                <strong>Focus Time</strong> in Viva Insights — protected deep-work blocks shipping
-                across Outlook on millions of PCs. Grew from silence-mode research into the Focus plan.
-                Earlier chapters of{" "}
-                <strong>Workplace Analytics → Viva Insights</strong>.
+                <strong>Current</strong> — Lux, Figma add-ons, Flux, SEO tooling,{" "}
+                <strong>Judge</strong> (CRM integrity). Internal product practice, not the marketing site.
               </span>
             </li>
             <li>
               <span className="intro-modal__proof-org">Meta Infra</span>
               <span className="intro-modal__proof-body">
-                <strong>Daiquery notebooks</strong> — the SQL cell system data scientists and
-                engineers use to query Meta&apos;s warehouse; AI-assisted workflows and contributions
-                to Meta&apos;s XDS infra component system. Also data visualization systems and
-                AI-infographics across Analysis tools.
+                <strong>Daiquery notebooks</strong> — SQL cells for Meta&apos;s warehouse; XDS infra,
+                data viz systems, AI workflows.
+              </span>
+            </li>
+            <li>
+              <span className="intro-modal__proof-org">Microsoft</span>
+              <span className="intro-modal__proof-body">
+                <strong>Focus Time</strong> in Viva Insights on Outlook at scale. Earlier{" "}
+                <strong>Workplace Analytics → Viva Insights</strong>.
               </span>
             </li>
             <li>
               <span className="intro-modal__proof-org">IBM</span>
               <span className="intro-modal__proof-body">
-                Cognos Analytics with Watson, and early contributions to the{" "}
-                <strong>Carbon Design System</strong>.
+                Cognos Analytics with Watson; early <strong>Carbon Design System</strong>.
               </span>
             </li>
           </ul>
         </section>
 
         <p className="intro-modal__guide">
-          The grid behind this is a cross-section of the work.
-          <br />
-          Hover a project, or open{" "}
+          The grid is a cross-section of the work. Open a project, or{" "}
           <Link href="/projects" onClick={dismiss}>
             Case studies
           </Link>{" "}
@@ -239,9 +236,7 @@ export function IntroModal() {
         </p>
 
         <p className="intro-modal__aside">
-          IBM, Microsoft, Meta, and i2Systems. M.S. HCI · B.S. Mechanical Engineering
-          &amp; Technical Communications · architecture, digital fabrication, and early
-          Apple IS&amp;T accessibility.
+          M.S. HCI · UMich · B.S. ME &amp; Tech Comm · Michigan Tech · Apple IS&amp;T accessibility.
         </p>
 
         <details className="intro-modal__earlier">

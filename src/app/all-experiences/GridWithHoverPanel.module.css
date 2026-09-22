@@ -14,7 +14,7 @@
   margin: 0;
   font-size: 11px;
   font-weight: 400;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--track-label);
   text-transform: lowercase;
   color: var(--color-text);
   background: none;
@@ -22,7 +22,7 @@
   padding: 0;
   font: inherit;
   font-size: 11px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--track-label);
   cursor: pointer;
   text-align: left;
   flex: 0 0 auto;
@@ -44,7 +44,7 @@
   cursor: pointer;
   font: inherit;
   font-size: 11px;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--track-label);
   text-transform: lowercase;
   transition: color 140ms cubic-bezier(0.2, 0, 0, 1);
 }
@@ -130,14 +130,15 @@
   margin: 0;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--track-label);
+  line-height: var(--leading-label);
   text-transform: lowercase;
   color: var(--color-muted);
 }
 
 .bandCount {
   font-size: 10px;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--track-label);
   color: color-mix(in oklab, var(--color-muted) 75%, transparent);
   font-variant-numeric: tabular-nums;
   margin-left: auto;
@@ -314,7 +315,7 @@
 
 .year {
   font-size: 10px;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--track-label);
   text-transform: uppercase;
   color: var(--color-muted);
   font-variant-numeric: tabular-nums;
@@ -324,8 +325,8 @@
   margin: 0;
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.35;
+  letter-spacing: var(--track-title-sm);
+  line-height: 1.2;
   text-transform: lowercase;
   color: var(--color-text);
   transition: color 0.15s ease;
