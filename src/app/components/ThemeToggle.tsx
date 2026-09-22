@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  DEFAULT_FONT,
+  DEFAULT_THEME,
   FONTS,
   FONT_LABEL,
   THEMES,
@@ -63,8 +65,8 @@ type Props = {
 
 export default function ThemeToggle({ compact: _compact = true }: Props) {
   void _compact;
-  const [theme, setTheme] = useState<Theme>("light");
-  const [font, setFont] = useState<Font>("geist");
+  const [theme, setTheme] = useState<Theme>(DEFAULT_THEME);
+  const [font, setFont] = useState<Font>(DEFAULT_FONT);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const typeBtnRef = useRef<HTMLButtonElement>(null);
@@ -72,15 +74,13 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
   useEffect(() => {
     const currentTheme = migrateTheme(document.documentElement.getAttribute("data-theme"));
     const stored = getStoredTheme();
-    const prefersDark =
-      window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial: Theme = currentTheme || stored || (prefersDark ? "dark" : "light");
+    const initial: Theme = currentTheme || stored || DEFAULT_THEME;
     setTheme(initial);
     applyTheme(initial);
     storeTheme(initial);
 
     const attrFont = migrateFont(document.documentElement.getAttribute("data-font"));
-    const initialFont: Font = attrFont || getStoredFont() || "geist";
+    const initialFont: Font = attrFont || getStoredFont() || DEFAULT_FONT;
     setFont(initialFont);
     applyFont(initialFont);
   }, []);

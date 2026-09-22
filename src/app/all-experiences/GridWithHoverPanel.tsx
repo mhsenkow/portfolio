@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { ArrowRight, CaretLeft, CaretRight } from "@phosphor-icons/react";
@@ -66,18 +67,22 @@ function GridTileImage({
         fill
         priority={priority}
         loading={priority ? "eager" : "lazy"}
-        sizes="(max-width: 700px) 45vw, 220px"
+        // ~220px CSS tile; 440 covers 2x without pulling 750–1200w variants
+        sizes="220px"
         quality={75}
         className={styles.thumbImg}
         onLoad={markLoaded}
         onLoadingComplete={markLoaded}
+        onError={markLoaded}
       />
     </div>
   );
 }
 
 export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Props) {
-  const [hovered, setHovered] = useState<ProjectCard | null>(null);
+  const router = useRouter();
+  /** Sticky selection — do not clear on blur or the panel CTA unmounts mid-click. */
+  const [active, setActive] = useState<ProjectCard | null>(null);
   const [mountNode, setMountNode] = useState<Element | null>(null);
   const [introOpen, setIntroOpen] = useState(false);
   const [open, setOpen] = useState(() => {
@@ -85,7 +90,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     return window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? false : true;
   });
 
-  const [sort, setSort] = useState<SortOption>("year-asc");
+  const [sort, setSort] = useState<SortOption>("year-desc");
   const [skill, setSkill] = useState<SkillFilter>("all");
   const [company, setCompany] = useState<CompanyFilter>("all");
 
@@ -95,6 +100,14 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
 
   const skillCounts = useMemo(() => getSkillCounts(items, company), [items, company]);
   const companyCounts = useMemo(() => getCompanyCounts(items, skill), [items, skill]);
+
+  const selectProject = useCallback(
+    (p: ProjectCard) => {
+      setActive(p);
+      router.prefetch(`/projects/${p.slug}`);
+    },
+    [router]
+  );
 
   useEffect(() => {
     setMountNode(document.getElementById("overlays"));
@@ -112,18 +125,26 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
   }, [open]);
 
   useEffect(() => {
-    warmGridImages(items, introOpen ? WARM_INTRO : WARM_IDLE);
-  }, [items, introOpen]);
+    warmGridImages(processedItems, introOpen ? WARM_INTRO : WARM_IDLE);
+  }, [processedItems, introOpen]);
 
   useEffect(() => {
     function onIntroState(e: Event) {
       const detail = (e as CustomEvent<IntroStateDetail>).detail;
       setIntroOpen(Boolean(detail?.open));
-      if (detail?.open) warmGridImages(items, WARM_INTRO);
+      if (detail?.open) warmGridImages(processedItems, WARM_INTRO);
     }
     window.addEventListener(INTRO_STATE_EVENT, onIntroState);
     return () => window.removeEventListener(INTRO_STATE_EVENT, onIntroState);
-  }, [items]);
+  }, [processedItems]);
+
+  /** Keep selection if the project is still in the filtered set. */
+  useEffect(() => {
+    if (!active) return;
+    if (!processedItems.some((p) => p.slug === active.slug)) {
+      setActive(null);
+    }
+  }, [processedItems, active]);
 
   const panel = useMemo(
     () => (
@@ -141,20 +162,20 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
           )}
         </button>
         <div className="work-panel__body glass-card">
-          {hovered ? (
+          {active ? (
             <>
               <p className="work-panel__meta">
-                {hovered.entity || hovered.year || "project"}
-                {hovered.year ? ` · ${hovered.year}` : ""}
+                {active.entity || active.year || "project"}
+                {active.year ? ` · ${active.year}` : ""}
               </p>
-              <h2 className="work-panel__title">{hovered.title}</h2>
-              <p className="work-panel__desc">{hovered.description}</p>
-              {hovered.image && (
+              <h2 className="work-panel__title">{active.title}</h2>
+              <p className="work-panel__desc">{active.description}</p>
+              {active.image && (
                 <div className="work-panel__media">
                   <LightboxImage
-                    src={hovered.image.src}
-                    alt={hovered.image.alt}
-                    group={[{ src: hovered.image.src, alt: hovered.image.alt }]}
+                    src={active.image.src}
+                    alt={active.image.alt}
+                    group={[{ src: active.image.src, alt: active.image.alt }]}
                     index={0}
                     width={720}
                     height={450}
@@ -164,10 +185,10 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                   />
                 </div>
               )}
-              <Link href={`/projects/${hovered.slug}`} className="work-panel__open">
+              <a href={`/projects/${active.slug}`} className="work-panel__open">
                 View case study
                 <ArrowRight size={16} weight="light" aria-hidden />
-              </Link>
+              </a>
             </>
           ) : (
             <>
@@ -179,7 +200,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         </div>
       </aside>
     ),
-    [hovered, open]
+    [active, open]
   );
 
   return (
@@ -218,18 +239,18 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
             key={p.slug}
             className={styles.tileWrap}
             style={{ "--tile-i": index } as CSSProperties}
-            onMouseEnter={() => setHovered(p)}
-            onPointerEnter={() => setHovered(p)}
-            onFocus={() => setHovered(p)}
-            onBlur={() => setHovered((cur) => (cur?.slug === p.slug ? null : cur))}
+            onMouseEnter={() => selectProject(p)}
+            onPointerEnter={() => selectProject(p)}
+            onFocus={() => selectProject(p)}
           >
             <Link
               href={`/projects/${p.slug}`}
+              prefetch
               className={`${styles.tile} glass-card is-interactive`}
-              data-active={hovered?.slug === p.slug ? "true" : undefined}
-              onMouseEnter={() => setHovered(p)}
-              onFocus={() => setHovered(p)}
-              onTouchStart={() => setHovered(p)}
+              data-active={active?.slug === p.slug ? "true" : undefined}
+              onMouseEnter={() => selectProject(p)}
+              onFocus={() => selectProject(p)}
+              onTouchStart={() => selectProject(p)}
             >
               {p.image ? (
                 <GridTileImage

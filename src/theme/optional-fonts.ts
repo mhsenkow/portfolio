@@ -20,7 +20,6 @@ const ibmPlex = IBM_Plex_Sans({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  preload: false,
   display: "swap",
 });
 
@@ -78,3 +77,6 @@ export function ensureAllOptionalFontClasses() {
 export function ensureOptionalFontClass() {
   ensureAllOptionalFontClasses();
 }
+
+/** Always-on class so the default face resolves before the type panel mounts. */
+export const defaultFontClassName = inter.variable;

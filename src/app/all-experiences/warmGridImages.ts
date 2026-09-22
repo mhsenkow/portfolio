@@ -3,6 +3,14 @@ import type { ProjectCard } from "@/content/project-card";
 
 const warmed = new Set<string>();
 
+/** Match GridTileImage — 220px CSS / 440w for 2x, not 750–1200. */
+const THUMB = {
+  width: 440,
+  height: 275,
+  quality: 75 as const,
+  sizes: "220px",
+};
+
 /** Warm Next.js-optimized grid thumbs so decode happens behind the intro curtain. */
 export function warmGridImages(items: ProjectCard[], limit = 8) {
   if (typeof window === "undefined") return;
@@ -17,9 +25,10 @@ export function warmGridImages(items: ProjectCard[], limit = 8) {
       const { props } = getImageProps({
         src,
         alt: "",
-        width: 440,
-        height: 275,
-        quality: 75,
+        width: THUMB.width,
+        height: THUMB.height,
+        quality: THUMB.quality,
+        sizes: THUMB.sizes,
       });
       const href = props.src;
       if (!href) continue;

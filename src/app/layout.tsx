@@ -6,9 +6,10 @@ import { IntroModal } from "./components/IntroModal";
 import { FooterLinks } from "./components/FooterLinks";
 import Script from "next/script";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/content/site";
+import { defaultFontClassName } from "@/theme/optional-fonts";
 import "@/styles/globals.css";
 
-/** Default stack only — optional typefaces load on demand via ThemeToggle. */
+/** Geist always available; Inter is the default face (see theme-init). */
 const geistSans = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
@@ -101,7 +102,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${defaultFontClassName}`}
     >
       <body>
         {/* Critical: cover before globals.css arrives — CSS latency, not JS */}
@@ -127,7 +128,7 @@ html[data-theme=dark] .intro-modal,html[data-theme=frost] .intro-modal,html[data
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);if(t)localStorage.setItem('theme',t);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);document.documentElement.setAttribute('data-intro','open');document.documentElement.classList.remove('intro-done');try{sessionStorage.removeItem('intro-dismissed');}catch(e){}}catch(e){document.documentElement.setAttribute('data-intro','open');}})();`}
+          {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;document.documentElement.setAttribute('data-theme',t||'light');if(t)localStorage.setItem('theme',t);var fmap={'work-sans':'inter','space-grotesk':'geist','dm-sans':'inter',manrope:'geist','sf-pro':'geist',segoe:'inter',optimistic:'inter'};var f=localStorage.getItem('font');if(fmap[f])f=fmap[f];var fonts=['libre-baskerville','lora','ibm-plex','inter','geist','jetbrains-mono','fira-code'];if(fonts.indexOf(f)<0)f='inter';document.documentElement.setAttribute('data-font',f);document.documentElement.setAttribute('data-intro','open');document.documentElement.classList.remove('intro-done');try{sessionStorage.removeItem('intro-dismissed');}catch(e){}}catch(e){document.documentElement.setAttribute('data-theme','light');document.documentElement.setAttribute('data-font','inter');document.documentElement.setAttribute('data-intro','open');}})();`}
         </Script>
         {/* Curtain first in DOM so first paint is covered */}
         <div id="intro-boot" className="intro-boot" aria-hidden="true" />

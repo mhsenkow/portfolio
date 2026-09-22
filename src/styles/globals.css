@@ -156,7 +156,8 @@
     transition: transform var(--motion-base) ease;
   }
   .overlay-panel--right[data-state="closed"] { transform: translateX(calc(100% - var(--panel-handle))); }
-  .overlay-panel--right[data-state="closed"] .project-card { pointer-events: none; }
+  .overlay-panel--right[data-state="closed"] .project-card,
+  .overlay-panel--right[data-state="closed"] .work-panel__body { pointer-events: none; }
   .panel-handle {
     position: absolute;
     top: 12px;
@@ -1026,6 +1027,8 @@
     border: var(--card-border);
   }
   .work-panel__open {
+    position: relative;
+    z-index: 2;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -1040,6 +1043,8 @@
     border-radius: var(--radius-sm);
     text-decoration: none;
     width: fit-content;
+    cursor: pointer;
+    pointer-events: auto;
     transition:
       background-color 140ms cubic-bezier(0.2, 0, 0, 1),
       color 140ms cubic-bezier(0.2, 0, 0, 1),

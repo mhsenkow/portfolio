@@ -75,6 +75,9 @@ export const FONT_LEGACY: Record<string, Font> = {
   optimistic: "inter",
 };
 
+export const DEFAULT_THEME: Theme = "light";
+export const DEFAULT_FONT: Font = "inter";
+
 export function migrateTheme(raw: string | null | undefined): Theme | null {
   if (!raw) return null;
   if (THEME_LEGACY[raw]) return THEME_LEGACY[raw];
