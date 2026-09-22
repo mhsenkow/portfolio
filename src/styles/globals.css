@@ -90,8 +90,32 @@
     background-attachment: fixed;
   }
   html[data-theme="nes"] body {
-    background: repeating-linear-gradient(90deg, #209cee 0 8px, #1a86d1 8px 16px);
+    /* Quieter CRT stripes — keep the vibe, stop fighting the type */
+    background: repeating-linear-gradient(
+      90deg,
+      #209cee 0 10px,
+      #1f97e8 10px 20px
+    );
     background-attachment: fixed;
+  }
+  /* Reading surfaces sit on paper so body copy isn't on blue stripes */
+  html[data-theme="nes"] .app-main .container,
+  html[data-theme="nes"] .app-main .container--fluid {
+    background: var(--color-bg-elev);
+    border: var(--border);
+    box-shadow: var(--shadow-1);
+    padding: var(--space-5);
+    margin-block: var(--space-4);
+    color: var(--color-text);
+  }
+  html[data-theme="nes"] .site-header,
+  html[data-theme="nes"] .site-footer {
+    background: var(--color-bg-elev);
+    border-color: #000;
+  }
+  html[data-theme="nes"] .lede,
+  html[data-theme="nes"] .type-secondary {
+    color: color-mix(in oklab, var(--color-text) 78%, transparent);
   }
   .app-shell {
     display: grid;

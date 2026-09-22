@@ -352,8 +352,8 @@
   :root[data-theme="nes"] {
     --color-bg: #209cee;
     --color-bg-elev: #f8f8f8;
-    --color-text: #212529;
-    --color-muted: #495057;
+    --color-text: #000000;
+    --color-muted: #1a1a1a;
     --color-accent: #e4002b;
     --color-accent-2: #fce100;
     --color-border: #000000;
@@ -369,6 +369,9 @@
     --glass-1: #f8f8f8;
     --glass-2: #f8f8f8;
     --glass-3: #f8f8f8;
+    --card-bg: #f8f8f8;
+    --card-border: 4px solid #000000;
+    --card-shadow: 4px 4px 0 #000;
     --selection-bg: #e4002b;
     --selection-text: #ffffff;
     --shadow-1: 3px 3px 0 #000;
