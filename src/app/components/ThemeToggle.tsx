@@ -55,7 +55,7 @@ function storeFont(font: Font) {
 function applyFont(font: Font) {
   if (typeof document === "undefined") return;
   document.documentElement.setAttribute("data-font", font);
-  ensureOptionalFontClass(font);
+  ensureOptionalFontClass();
 }
 
 type Props = {
