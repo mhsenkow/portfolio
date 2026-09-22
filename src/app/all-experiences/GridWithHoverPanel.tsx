@@ -2,11 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/content/projects";
 import { LightboxImage } from "@/app/components/Lightbox";
+import {
+  INTRO_STATE_EVENT,
+  type IntroStateDetail,
+} from "@/app/components/IntroModal";
 import {
   SortFilterBar,
   filterProjects,
@@ -15,6 +19,8 @@ import {
   type FilterOption,
   type SortOption,
 } from "@/app/components/SortFilterBar";
+import { itemTransition } from "@/theme/motion";
+import { warmGridImages } from "./warmGridImages";
 import styles from "./GridWithHoverPanel.module.css";
 
 type Props = {
@@ -23,9 +29,53 @@ type Props = {
   onTitleClick?: () => void;
 };
 
+function GridTileImage({
+  src,
+  alt,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+
+  const markLoaded = useCallback(() => setLoaded(true), []);
+
+  const imgRef = useCallback(
+    (node: HTMLImageElement | null) => {
+      if (node && node.complete && node.naturalWidth > 0) markLoaded();
+    },
+    [markLoaded]
+  );
+
+  return (
+    <div className={styles.thumb} data-loaded={loaded ? "true" : "false"}>
+      <span className={styles.thumbFiller} aria-hidden="true">
+        <span className={styles.thumbFillerSweep} />
+      </span>
+      <Image
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        loading={priority ? "eager" : "lazy"}
+        sizes="(max-width: 700px) 45vw, 220px"
+        quality={75}
+        className={styles.thumbImg}
+        onLoad={markLoaded}
+        onLoadingComplete={markLoaded}
+      />
+    </div>
+  );
+}
+
 export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Props) {
   const [hovered, setHovered] = useState<Project | null>(null);
   const [mountNode, setMountNode] = useState<Element | null>(null);
+  const [introOpen, setIntroOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(() => {
     if (typeof window === "undefined") return true;
     return window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? false : true;
@@ -43,15 +93,32 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
   useEffect(() => {
     setMountNode(document.getElementById("overlays"));
   }, []);
+
   useEffect(() => {
     document.body.classList.add("has-right-panel");
     return () => {
       document.body.classList.remove("has-right-panel");
     };
   }, []);
+
   useEffect(() => {
     document.body.setAttribute("data-right-panel", open ? "open" : "closed");
   }, [open]);
+
+  // Warm thumbs as soon as the grid mounts (and harder while the intro curtain is up).
+  useEffect(() => {
+    warmGridImages(items, introOpen ? 36 : 16);
+  }, [items, introOpen]);
+
+  useEffect(() => {
+    function onIntroState(e: Event) {
+      const detail = (e as CustomEvent<IntroStateDetail>).detail;
+      setIntroOpen(Boolean(detail?.open));
+      if (detail?.open) warmGridImages(items, 36);
+    }
+    window.addEventListener(INTRO_STATE_EVENT, onIntroState);
+    return () => window.removeEventListener(INTRO_STATE_EVENT, onIntroState);
+  }, [items]);
 
   const panel = useMemo(
     () => (
@@ -111,6 +178,8 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     [hovered, open]
   );
 
+  const eagerCount = introOpen ? 24 : 12;
+
   return (
     <div className={styles.work}>
       <div className={styles.toolbar}>
@@ -143,15 +212,14 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
           {processedItems.map((p, index) => (
             <motion.div
               key={p.slug}
-              layout
-              initial={{ opacity: 0, y: 6 }}
+              layout={!reduceMotion}
+              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{
-                duration: 0.22,
-                ease: [0.2, 0, 0, 1],
-                delay: Math.min(index * 0.012, 0.16),
-              }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+              transition={itemTransition(
+                reduceMotion,
+                reduceMotion ? 0 : Math.min(index * 0.012, 0.16)
+              )}
               onMouseEnter={() => setHovered(p)}
               onPointerEnter={() => setHovered(p)}
               onFocus={() => setHovered(p)}
@@ -165,19 +233,19 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                 onFocus={() => setHovered(p)}
                 onTouchStart={() => setHovered(p)}
               >
-                <div className={styles.thumb}>
-                  {p.image ? (
-                    <Image
-                      src={p.image.src}
-                      alt={p.image.alt}
-                      fill
-                      priority={index < 12}
-                      loading={index < 12 ? "eager" : "lazy"}
-                      sizes="220px"
-                      quality={75}
-                    />
-                  ) : null}
-                </div>
+                {p.image ? (
+                  <GridTileImage
+                    src={p.image.src}
+                    alt={p.image.alt}
+                    priority={index < eagerCount}
+                  />
+                ) : (
+                  <div className={styles.thumb} data-loaded="false">
+                    <span className={styles.thumbFiller} aria-hidden="true">
+                      <span className={styles.thumbFillerSweep} />
+                    </span>
+                  </div>
+                )}
                 <div className={styles.meta}>
                   <span className={styles.year}>{p.year || "—"}</span>
                   <h3 className={styles.tileTitle}>{p.title}</h3>

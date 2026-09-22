@@ -151,8 +151,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${libreBaskerville.variable} ${lora.variable} ${manrope.variable} ${jetBrainsMono.variable} ${firaCode.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${libreBaskerville.variable} ${lora.variable} ${manrope.variable} ${jetBrainsMono.variable} ${firaCode.variable}`}
+    >
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

@@ -1,3 +1,11 @@
+/**
+ * Portfolio design tokens.
+ *
+ * Themes: `data-theme` on <html> — catalog in `src/theme/system.ts`
+ * Fonts:  `data-font` on <html> — next/font vars also on <html>
+ * Motion: `src/styles/motion.css` + `src/theme/motion.ts`
+ * Cards:  `--card-*` recipe → `.glass-card` / `.project-card`
+ */
 @layer tokens {
   :root {
     /* color — defaults match wordcount light until data-theme applies */
@@ -41,23 +49,14 @@
     --radius-md: 10px;
     --radius-lg: 16px;
 
-    /* typography */
-    --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    /* typography — next/font vars (--font-geist, etc.) live on <html> */
+    --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, sans-serif;
     --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-    /* font stacks per company */
-    --font-geist: var(--font-geist-sans), ui-sans-serif, system-ui;
-    --font-ibm-plex: var(--font-ibm-plex), 'IBM Plex Sans', ui-sans-serif, system-ui;
-    --font-sf-pro: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui;
-    --font-segoe: 'Segoe UI', 'Segoe UI Variable', Roboto, system-ui;
-    --font-optimistic: 'Optimistic Display', -apple-system, system-ui;
-    
-    /* new font stacks */
-    --font-libre-baskerville: var(--font-libre-baskerville), 'Libre Baskerville', Georgia, serif;
-    --font-lora: var(--font-lora), 'Lora', Georgia, serif;
-    --font-manrope: var(--font-manrope), 'Manrope', ui-sans-serif, system-ui;
-    --font-jetbrains-mono: var(--font-jetbrains-mono), 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-    --font-fira-code: var(--font-fira-code), 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    /* company / system stacks (optional data-font targets) */
+    --font-sf-pro: -apple-system, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+    --font-segoe: "Segoe UI", "Segoe UI Variable", Roboto, system-ui, sans-serif;
+    --font-optimistic: "Optimistic Display", -apple-system, system-ui, sans-serif;
 
     /* type roles */
     --type-primary: var(--size-2);

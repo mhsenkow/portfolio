@@ -19,15 +19,17 @@ npm run dev
 
 Open [http://localhost:1337](http://localhost:1337).
 
-## Content
+## Design system
 
-| Path | Role |
-|------|------|
-| `src/content/site.ts` | Site URL, name, tagline, resume |
-| `src/content/projects.ts` | Career + creative case studies |
-| `src/content/github-builds.ts` | Independent tools / machines |
+| Concern | Where |
+|---------|--------|
+| Colors, glass, spacing, type scale | `src/styles/tokens.css` (`data-theme`) |
+| Motion durations / reduced-motion | `src/styles/motion.css`, `src/theme/motion.ts` |
+| Theme & font catalogs | `src/theme/system.ts` |
+| Theme / type UI | `ThemeToggle` (orb + type panel) |
+| Card recipe | `.glass-card` (+ `.is-interactive`, `.glass-card--pad`) |
 
-Home grid shows the full set. `/projects` shows `featured: true` only.
+Themes align with the wordcount suite: light, dark, contrast, paper, glass, frost, brutal, loom, tank, nes.
 
 ## Deploy
 

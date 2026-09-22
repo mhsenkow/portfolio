@@ -6,6 +6,16 @@ import { LinkToken } from "@/app/components/LinkToken";
 
 const STORAGE_KEY = "intro-dismissed";
 export const INTRO_OPEN_EVENT = "portfolio:open-intro";
+export const INTRO_STATE_EVENT = "portfolio:intro-state";
+
+export type IntroStateDetail = { open: boolean };
+
+function emitIntroState(open: boolean) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent<IntroStateDetail>(INTRO_STATE_EVENT, { detail: { open } })
+  );
+}
 
 export function openIntroModal() {
   if (typeof window === "undefined") return;
@@ -30,6 +40,7 @@ export function IntroModal() {
 
   const dismiss = useCallback(() => {
     setOpen(false);
+    emitIntroState(false);
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
@@ -42,7 +53,9 @@ export function IntroModal() {
       const params = new URLSearchParams(window.location.search);
       const force = params.get("intro") === "1";
       const dismissed = sessionStorage.getItem(STORAGE_KEY) === "1";
-      setOpen(force || !dismissed);
+      const shouldOpen = force || !dismissed;
+      setOpen(shouldOpen);
+      emitIntroState(shouldOpen);
       if (force) {
         params.delete("intro");
         const next = `${window.location.pathname}${params.toString() ? `?${params}` : ""}${window.location.hash}`;
@@ -50,6 +63,7 @@ export function IntroModal() {
       }
     } catch {
       setOpen(true);
+      emitIntroState(true);
     }
     setReady(true);
   }, []);
@@ -57,6 +71,7 @@ export function IntroModal() {
   useEffect(() => {
     function onOpen() {
       setOpen(true);
+      emitIntroState(true);
     }
     window.addEventListener(INTRO_OPEN_EVENT, onOpen);
     return () => window.removeEventListener(INTRO_OPEN_EVENT, onOpen);

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/content/projects";
+import { easeOut, springSnappy } from "@/theme/motion";
 
 export type SortOption = "year-desc" | "year-asc" | "title-asc" | "title-desc";
 export type FilterOption = "all" | "featured" | "creative" | "microsoft" | "meta" | "ibm" | "apple";
@@ -16,15 +17,6 @@ interface SortFilterBarProps {
   filterCounts?: Record<FilterOption, number>;
   leading?: ReactNode;
 }
-
-const filterEase = [0.2, 0, 0, 1] as const;
-
-const pillTransition = {
-  type: "spring" as const,
-  stiffness: 480,
-  damping: 38,
-  mass: 0.7,
-};
 
 export function SortFilterBar({
   onSortChange,
@@ -70,9 +62,9 @@ export function SortFilterBar({
 
   const rowTransition = reduceMotion
     ? { duration: 0 }
-    : { duration: 0.22, ease: filterEase };
+    : { duration: 0.22, ease: easeOut };
 
-  const activePillTransition = reduceMotion ? { duration: 0 } : pillTransition;
+  const activePillTransition = springSnappy(reduceMotion);
 
   return (
     <div className="tool-bar">

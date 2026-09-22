@@ -47,19 +47,88 @@
 .thumb {
   position: relative;
   aspect-ratio: 16 / 10;
-  background: color-mix(in oklab, var(--color-bg), var(--color-muted) 10%);
+  background: color-mix(in oklab, var(--color-bg), var(--color-muted) 12%);
   overflow: hidden;
   border-radius: var(--card-radius-media);
+  isolation: isolate;
 }
 
-.thumb img {
+.thumbFiller {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in oklab, var(--color-bg), var(--color-muted) 8%) 0%,
+      color-mix(in oklab, var(--color-bg-elev), var(--color-muted) 14%) 48%,
+      color-mix(in oklab, var(--color-bg), var(--color-muted) 10%) 100%
+    );
+  transition: opacity var(--motion-slow, 0.35s) var(--ease-out, cubic-bezier(0.2, 0, 0, 1));
+}
+
+.thumbFillerSweep {
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    105deg,
+    transparent 28%,
+    color-mix(in oklab, var(--color-bg-elev), transparent 35%) 48%,
+    transparent 68%
+  );
+  animation: thumbSweep 1.35s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.thumb[data-loaded="true"] .thumbFiller {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.thumb[data-loaded="true"] .thumbFillerSweep {
+  animation: none;
+}
+
+.thumbImg {
   object-fit: cover;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: scale(1.02);
+  transition:
+    opacity var(--motion-enter, 0.45s) var(--ease-out, cubic-bezier(0.2, 0, 0, 1)),
+    transform 0.55s var(--ease-out, cubic-bezier(0.2, 0, 0, 1));
+  z-index: 1;
 }
 
-.tile:hover .thumb img,
-.tile[data-active="true"] .thumb img {
+.thumb[data-loaded="true"] .thumbImg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tile:hover .thumb[data-loaded="true"] .thumbImg,
+.tile[data-active="true"] .thumb[data-loaded="true"] .thumbImg {
   transform: scale(1.04);
+}
+
+@keyframes thumbSweep {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumbFillerSweep {
+    animation: none;
+  }
+  .thumbImg,
+  .thumbFiller {
+    transition: none;
+  }
+  .thumb[data-loaded="true"] .thumbImg {
+    transform: none;
+  }
+  .tile:hover .thumb[data-loaded="true"] .thumbImg,
+  .tile[data-active="true"] .thumb[data-loaded="true"] .thumbImg {
+    transform: none;
+  }
 }
 
 .meta {

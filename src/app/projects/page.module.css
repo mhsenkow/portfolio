@@ -3,29 +3,19 @@
 	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 	gap: var(--space-6);
 }
-.card {
-	background: var(--surface-card);
-	border: var(--border-weak);
-	border-radius: var(--radius-md);
-    padding: var(--space-5);
-	box-shadow: var(--shadow-1);
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+
+.cardBody {
+	margin: 0;
 }
-.card:hover, .card:focus-visible {
-    transform: translateY(-2px);
-    border: var(--border-strong);
-    box-shadow: var(--shadow-2);
+
+.cardBody h3 {
+	margin: 0;
+	text-transform: lowercase;
 }
-.image {
-    position: relative;
-    aspect-ratio: 3 / 2;
-    margin-bottom: var(--space-4);
-    overflow: hidden;
-    border-radius: var(--radius-md);
+
+.cardBody p {
+	margin-top: var(--space-2);
+	color: var(--color-muted);
+	font-size: var(--size-1);
+	line-height: 1.45;
 }
-.imageImg { object-fit: cover; }
-.card h3 { margin: 0; text-transform: lowercase; }
-.card p { margin-top: var(--space-2); color: var(--color-muted); }
