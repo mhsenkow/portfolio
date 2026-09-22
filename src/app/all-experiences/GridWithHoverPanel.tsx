@@ -13,15 +13,22 @@ import {
 import { createPortal } from "react-dom";
 import {
   ArrowRight,
+  Buildings,
   CaretLeft,
   CaretRight,
+  CirclesFour,
   GridFour,
   Rows,
   Square,
   SquaresFour,
 } from "@phosphor-icons/react";
 import type { ProjectCard } from "@/content/project-card";
-import { groupByCareerEra } from "@/content/career-eras";
+import {
+  GRID_GROUP_CYCLE,
+  GRID_GROUP_LABEL,
+  groupGridItems,
+  type GridGroupMode,
+} from "@/content/career-eras";
 import { LightboxImage } from "@/app/components/Lightbox";
 import {
   dismissIntroModal,
@@ -150,15 +157,20 @@ function readDensity(): GridDensity {
   return "normal";
 }
 
-function readEraBands(): boolean {
+function readGroupMode(): GridGroupMode {
   try {
-    const raw = localStorage.getItem("grid-era-bands");
-    if (raw === "0") return false;
-    if (raw === "1") return true;
+    const raw = localStorage.getItem("grid-group-mode");
+    if (raw && (GRID_GROUP_CYCLE as string[]).includes(raw)) {
+      return raw as GridGroupMode;
+    }
+    // Migrate eras/flat toggle
+    const legacy = localStorage.getItem("grid-era-bands");
+    if (legacy === "0") return "flat";
+    if (legacy === "1") return "eras";
   } catch {
     /* ignore */
   }
-  return true;
+  return "eras";
 }
 
 export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Props) {
@@ -172,7 +184,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     return window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? false : true;
   });
   const [density, setDensity] = useState<GridDensity>("normal");
-  const [eraBands, setEraBands] = useState(true);
+  const [groupMode, setGroupMode] = useState<GridGroupMode>("eras");
 
   const [sort, setSort] = useState<SortOption>("year-desc");
   const [skill, setSkill] = useState<SkillFilter>("all");
@@ -183,10 +195,9 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
   }, [items, sort, skill, company]);
 
   const bands = useMemo(() => {
-    if (!eraBands) return null;
     const direction = sort === "year-asc" ? "asc" : "desc";
-    return groupByCareerEra(processedItems, direction);
-  }, [processedItems, sort, eraBands]);
+    return groupGridItems(processedItems, groupMode, direction);
+  }, [processedItems, sort, groupMode]);
 
   const skillCounts = useMemo(() => getSkillCounts(items, company), [items, company]);
   const companyCounts = useMemo(() => getCompanyCounts(items, skill), [items, skill]);
@@ -212,11 +223,12 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     });
   }, []);
 
-  const toggleEraBands = useCallback(() => {
-    setEraBands((cur) => {
-      const next = !cur;
+  const cycleGroupMode = useCallback(() => {
+    setGroupMode((cur) => {
+      const i = GRID_GROUP_CYCLE.indexOf(cur);
+      const next = GRID_GROUP_CYCLE[(i + 1) % GRID_GROUP_CYCLE.length];
       try {
-        localStorage.setItem("grid-era-bands", next ? "1" : "0");
+        localStorage.setItem("grid-group-mode", next);
       } catch {
         /* ignore */
       }
@@ -226,7 +238,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
 
   useEffect(() => {
     setDensity(readDensity());
-    setEraBands(readEraBands());
+    setGroupMode(readGroupMode());
   }, []);
 
   useEffect(() => {
@@ -374,9 +386,15 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
 
   const DensityIcon =
     density === "small" ? SquaresFour : density === "medium" ? GridFour : Square;
+  const GroupIcon =
+    groupMode === "corp"
+      ? Buildings
+      : groupMode === "groups"
+        ? CirclesFour
+        : Rows;
 
   return (
-    <div className={styles.work} data-density={density}>
+    <div className={styles.work} data-density={density} data-group={groupMode}>
       <div className={styles.toolbar}>
         <SortFilterBar
           leading={
@@ -407,14 +425,13 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
               <button
                 type="button"
                 className={styles.densityBtn}
-                onClick={toggleEraBands}
-                aria-pressed={eraBands}
-                aria-label={eraBands ? "Era bands on. Click for flat grid." : "Flat grid. Click for era bands."}
-                title={eraBands ? "era bands" : "flat grid"}
-                data-active={eraBands ? "true" : undefined}
+                onClick={cycleGroupMode}
+                aria-label={`Grouping: ${GRID_GROUP_LABEL[groupMode]}. Click for next.`}
+                title={GRID_GROUP_LABEL[groupMode]}
+                data-active={groupMode !== "flat" ? "true" : undefined}
               >
-                <Rows size={16} weight="light" aria-hidden />
-                <span className={styles.densityLabel}>{eraBands ? "eras" : "flat"}</span>
+                <GroupIcon size={16} weight="light" aria-hidden />
+                <span className={styles.densityLabel}>{GRID_GROUP_LABEL[groupMode]}</span>
               </button>
               <button
                 type="button"
@@ -435,7 +452,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
       {bands ? (
         <div className={styles.bands}>
           {bands.map((band) => (
-            <section key={band.era} className={styles.band} data-era={band.era}>
+            <section key={band.id} className={styles.band} data-band={band.id}>
               <header className={styles.bandHead}>
                 <h2 className={styles.bandLabel}>{band.label}</h2>
                 <span className={styles.bandCount}>{band.items.length}</span>
