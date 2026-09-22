@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
-<link rel="stylesheet" href="../lib/number-tool.css?v=45">
+<link rel="stylesheet" href="../lib/number-tool.css?v=48">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="apple-touch-icon" href="../icons/icon-192.png">
 </head>
@@ -38,7 +38,7 @@
   <div class="stack">
     <fieldset class="panel">
       <legend>convert</legend>
-      <label class="row"><span class="key">amount</span><span class="value"><input id="amount" type="number" inputmode="decimal" min="0" step="0.01" value="1" data-primary data-axis="y" data-step-fast="0.1" data-gesture="1" aria-label="amount"></span></label>
+      <label class="row"><span class="key">amount</span><span class="value"><input id="amount" type="number" inputmode="decimal" min="0" step="0.01" value="1" data-primary data-axis="y" data-axis-x="density" data-step-fast="0.1" data-gesture="1" aria-label="amount"></span></label>
       <label class="row"><span class="key">from</span><span class="value">
         <select id="from" aria-label="from unit">
           <option value="cup">cup</option>
@@ -62,7 +62,7 @@
         </select>
       </span></label>
       <label class="row" id="densityRow"><span class="key">density</span><span class="value">
-        <select id="density" aria-label="ingredient density">
+        <select id="density" data-gesture="1" data-axis-x="amount" aria-label="ingredient density">
           <option value="1">water</option>
           <option value="0.53">flour</option>
           <option value="0.85">sugar</option>
@@ -80,8 +80,8 @@
     <ul class="list" id="hist"></ul>
   </div>
 </main>
-<script src="../lib/suite.js?v=47"></script>
-<script src="../lib/number-tool.js?v=45"></script>
+<script src="../lib/suite.js?v=48"></script>
+<script src="../lib/number-tool.js?v=48"></script>
 <script>
 (function () {
   if (window.IBMTools) IBMTools.mountSuiteNav('unit');

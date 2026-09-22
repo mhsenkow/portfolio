@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="book" data-faces="auto" data-type-size="md" data-measure="narrow">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>stories — ibm.io</title>
+<meta name="description" content="A quiet ereader. Local stories, shared look with the ibm.io instrument suite.">
+<link rel="canonical" href="https://ibm.io/stories/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="/lib/number-tool.css?v=50">
+<link rel="manifest" href="/manifest.webmanifest">
+<style>
+  /* Ereader needs scroll; number-tool locks the viewport. */
+  html.stories-app,
+  html.stories-app body.tool-app {
+    overflow: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100%;
+    max-height: none !important;
+    touch-action: pan-y !important;
+  }
+  html.stories-app body.tool-app {
+    align-items: stretch;
+    padding-right: max(var(--pad), env(safe-area-inset-right));
+  }
+  html.stories-app body.tool-app main {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    flex: 1;
+    min-height: 0;
+    overflow: visible;
+    justify-content: flex-start;
+    pointer-events: auto !important;
+  }
+  /* Gesture shell disables main hits except .face/.stack — restore library/reader. */
+  html.stories-app[data-gestures="1"] main,
+  html.stories-app[data-gestures="1"] main * {
+    pointer-events: auto !important;
+  }
+
+  /* Reading type follows chrome book face (set in JS). */
+  html.stories-app {
+    --type: Georgia, "Times New Roman", serif;
+    --type-size: 1.125rem;
+    --type-leading: 1.7;
+    --measure: 38rem;
+  }
+  html[data-type-size="sm"] { --type-size: 1rem; --type-leading: 1.65; }
+  html[data-type-size="md"] { --type-size: 1.125rem; --type-leading: 1.7; }
+  html[data-type-size="lg"] { --type-size: 1.25rem; --type-leading: 1.75; }
+  html[data-type-size="xl"] { --type-size: 1.375rem; --type-leading: 1.8; }
+  html[data-measure="narrow"] { --measure: 34rem; }
+  html[data-measure="medium"] { --measure: 38rem; }
+  html[data-measure="wide"] { --measure: 44rem; }
+
+  .library-lede {
+    margin: 0 0 28px;
+    color: var(--mute);
+    font-size: 13px;
+    max-width: 36rem;
+  }
+
+  .story-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--hair);
+  }
+  .story-list li { border-bottom: 1px solid var(--hair); }
+  .story-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px 18px;
+    align-items: baseline;
+    width: 100%;
+    padding: 18px 2px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+  }
+  .story-card:hover .story-card-title,
+  .story-card:focus-visible .story-card-title { color: var(--accent); }
+  .story-card:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .story-card-index {
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: var(--mute);
+    font-variant-numeric: tabular-nums;
+  }
+  .story-card-title {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    margin: 0 0 4px;
+    transition: color var(--dur) var(--ease-out);
+  }
+  .story-card-blurb {
+    display: block;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--mute);
+    max-width: 36rem;
+  }
+  .story-card-meta {
+    font-size: 11px;
+    color: var(--mute);
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  .story-card-progress {
+    display: block;
+    margin-top: 6px;
+    height: 2px;
+    width: 72px;
+    background: var(--hair);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .story-card-progress > i {
+    display: block;
+    height: 100%;
+    width: var(--pct, 0%);
+    background: var(--accent);
+  }
+
+  .reader {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding-bottom: 20vh;
+  }
+  .reader-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 36px;
+    min-height: 32px;
+  }
+  .reader-back {
+    border: 0;
+    background: transparent;
+    color: var(--mute);
+    font: inherit;
+    font-size: 12px;
+    letter-spacing: .06em;
+    cursor: pointer;
+    padding: 8px 0;
+    min-height: 44px;
+  }
+  .reader-back:hover,
+  .reader-back:focus-visible { color: var(--ink); }
+  .reader-back:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+  /* Fixed reading meter — stays put; % in the toolbar scrolled away and said little. */
+  .reader-meter {
+    position: fixed;
+    top: max(52px, calc(env(safe-area-inset-top) + 44px));
+    right: max(14px, env(safe-area-inset-right));
+    z-index: 170;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+    max-width: min(42vw, 11rem);
+    pointer-events: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .reader-meter[hidden] { display: none !important; }
+  html[data-meter="off"] .reader-meter { display: none !important; }
+  .reader-meter-viz {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 18px;
+    opacity: 0.9;
+  }
+  html[data-meter="left"] .reader-meter-viz,
+  html[data-meter="words"] .reader-meter-viz { display: none; }
+  .reader-meter-viz .tick {
+    display: block;
+    width: 3px;
+    min-height: 3px;
+    height: var(--h, 40%);
+    border-radius: 1px;
+    background: var(--hair);
+    transition: background 120ms var(--ease-out), opacity 120ms var(--ease-out);
+  }
+  .reader-meter-viz .tick.is-done {
+    background: color-mix(in srgb, var(--accent) 55%, var(--hair));
+  }
+  .reader-meter-viz .tick.is-now {
+    background: var(--accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .reader-meter-label {
+    font-size: 11px;
+    letter-spacing: .07em;
+    color: var(--mute);
+    text-align: right;
+    line-height: 1.35;
+  }
+  .reader-meter-label b {
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: .04em;
+  }
+  html[data-meter="marks"] .reader-meter-label {
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: lowercase;
+  }
+  @media (max-width: 720px) {
+    .reader-meter {
+      top: auto;
+      bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px));
+      right: max(12px, env(safe-area-inset-right));
+    }
+  }
+
+  .reader-title {
+    font-family: var(--type);
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: .08em;
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+  .reader-epigraph {
+    font-family: var(--type);
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--mute);
+    margin: 0 0 48px;
+    line-height: 1.5;
+  }
+
+  .section {
+    margin: 0 0 2.4em;
+  }
+  .section-num {
+    display: block;
+    font-family: var(--ui);
+    font-size: 11px;
+    letter-spacing: .16em;
+    color: var(--mute);
+    margin: 0 0 0.85em;
+    font-variant-numeric: tabular-nums;
+  }
+  .section p {
+    font-family: var(--type);
+    font-size: var(--type-size);
+    line-height: var(--type-leading);
+    margin: 0 0 1.15em;
+    hyphens: auto;
+    text-wrap: pretty;
+  }
+  .section p:last-child { margin-bottom: 0; }
+  .section p.is-alone {
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+  }
+  .section-heading {
+    font-family: var(--ui);
+    font-size: 0.72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--mute);
+    margin: 0 0 1.1em;
+  }
+  .section p.is-formula {
+    font-family: var(--type);
+    font-style: italic;
+    text-align: center;
+    letter-spacing: .02em;
+    margin: 1.6em 0;
+    color: var(--ink);
+  }
+  .section p.is-broadcast {
+    font-family: var(--ui);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: 0.92em;
+    margin: 1.6em 0;
+  }
+
+  /* Left story jump rail */
+  .story-rail {
+    position: fixed;
+    top: max(56px, calc(env(safe-area-inset-top) + 48px));
+    left: max(10px, env(safe-area-inset-left));
+    bottom: max(24px, env(safe-area-inset-bottom));
+    z-index: 170;
+    width: min(148px, 22vw);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    pointer-events: none;
+  }
+  .story-rail::-webkit-scrollbar { display: none; }
+  .story-rail[hidden] { display: none !important; }
+  .story-rail button {
+    pointer-events: auto;
+    display: grid;
+    grid-template-columns: 1.6em 1fr;
+    gap: 8px;
+    align-items: baseline;
+    width: 100%;
+    margin: 0;
+    padding: 8px 6px;
+    border: 0;
+    background: transparent;
+    color: var(--mute);
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    letter-spacing: .04em;
+    line-height: 1.35;
+    opacity: 0.42;
+    transition: opacity var(--dur, 220ms) var(--ease-out, ease), color var(--dur, 220ms) var(--ease-out, ease);
+  }
+  .story-rail button:hover,
+  .story-rail button:focus-visible {
+    opacity: 0.95;
+    color: var(--ink);
+    outline: none;
+  }
+  .story-rail button:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .story-rail button[aria-current="true"] {
+    opacity: 1;
+    color: var(--ink);
+  }
+  .story-rail .rail-index {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .08em;
+  }
+  .story-rail .rail-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-transform: lowercase;
+  }
+  @media (max-width: 900px) {
+    .story-rail {
+      width: auto;
+      max-width: 42px;
+    }
+    .story-rail .rail-title { display: none; }
+    .story-rail button {
+      grid-template-columns: 1fr;
+      justify-items: start;
+      padding: 7px 4px;
+    }
+  }
+  @media (max-width: 560px) {
+    .story-rail {
+      top: auto;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      left: max(10px, env(safe-area-inset-left));
+      right: auto;
+      flex-direction: row;
+      width: auto;
+      max-width: calc(100vw - 120px);
+      gap: 0;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--hair);
+      border-radius: 2px;
+      padding: 2px;
+    }
+    .story-rail button {
+      padding: 8px 10px;
+      opacity: 0.55;
+    }
+  }
+
+  .reader-end {
+    margin-top: 3em;
+    padding-top: 1.5em;
+    border-top: 1px solid var(--hair);
+    color: var(--mute);
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+
+  .progress-rail {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 2px;
+    z-index: 180;
+    pointer-events: none;
+    background: transparent;
+  }
+  .progress-rail > i {
+    display: block;
+    height: 100%;
+    width: var(--pct, 0%);
+    background: var(--accent);
+    transition: width 80ms linear;
+  }
+
+  [hidden] { display: none !important; }
+
+  /* Support icons — same corner set as wordcount settings */
+  #settings > .inner {
+    position: relative;
+    --action-inset: 12px;
+  }
+  .support {
+    position: absolute;
+    top: 12px;
+    right: var(--action-inset);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+  .support a,
+  .support button.shuffle-looks {
+    pointer-events: auto;
+    color: var(--mute);
+    opacity: 0.4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: opacity .2s cubic-bezier(0.4, 0, 0.2, 1), color .2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .support a:hover,
+  .support a:focus-visible,
+  .support button.shuffle-looks:hover,
+  .support button.shuffle-looks:focus-visible {
+    opacity: 0.85;
+    color: var(--ink);
+    outline: none;
+  }
+  .support a:focus-visible,
+  .support button.shuffle-looks:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .support a::after,
+  .support button.shuffle-looks::after {
+    content: attr(data-tip);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    padding: 5px 8px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    color: var(--mute);
+    background: var(--face);
+    border: 1px solid var(--rule);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .18s ease, transform .18s ease;
+    z-index: 4;
+  }
+  .support a:hover::after,
+  .support a:focus-visible::after,
+  .support button.shuffle-looks:hover::after,
+  .support button.shuffle-looks:focus-visible::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .support svg {
+    width: 13px;
+    height: 13px;
+    display: block;
+  }
+  #settings .fields > fieldset:first-of-type {
+    padding-right: 160px;
+  }
+  @keyframes stories-shuffle-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  body.is-shuffling .support button.shuffle-looks svg {
+    animation: stories-shuffle-spin .42s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .support a::after,
+    .support button.shuffle-looks::after { transition: none; }
+    body.is-shuffling .support button.shuffle-looks svg { animation: none; }
+  }
+
+  @media (max-width: 640px) {
+    .story-card {
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+    }
+    .story-card-meta {
+      grid-column: 2;
+      white-space: normal;
+    }
+  }
+
+  @media print {
+    .suite-nav, .dock, .reader-toolbar, .progress-rail, .reader-meter, .story-rail, header.masthead { display: none !important; }
+    html.stories-app body.tool-app { padding: 0; background: #fff; color: #000; }
+    .reader { max-width: none; padding: 0; }
+  }
+</style>
+</head>
+<body class="tool-app" data-tool="stories">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>stories</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+
+<div class="progress-rail" id="progressRail" hidden aria-hidden="true"><i id="progressFill"></i></div>
+
+<div class="reader-meter" id="readerMeter" hidden>
+  <div class="reader-meter-viz" id="readerMeterViz" aria-hidden="true"></div>
+  <span class="reader-meter-label" id="readerMeterLabel" aria-live="polite"></span>
+</div>
+
+<nav class="story-rail" id="storyRail" hidden aria-label="stories"></nav>
+
+<main>
+  <section id="library" aria-label="library">
+    <p class="library-lede">Local reading. Progress stays on this device. Look settings sync with the rest of the suite.</p>
+    <ol class="story-list" id="storyList"></ol>
+  </section>
+
+  <article id="reader" class="reader" hidden aria-label="reader">
+    <div class="reader-toolbar">
+      <button type="button" class="reader-back" id="backBtn">← library</button>
+    </div>
+    <h2 class="reader-title" id="readerTitle"></h2>
+    <p class="reader-epigraph" id="readerEpigraph"></p>
+    <div id="readerBody"></div>
+    <p class="reader-end" id="readerEnd" hidden>end</p>
+  </article>
+</main>
+
+<script src="/lib/suite.js?v=50"></script>
+<script src="/lib/number-tool.js?v=50"></script>
+<script src="/stories/content/private-speech.js"></script>
+<script src="/stories/content/nagai-protocol.js"></script>
+<script src="/stories/content/definitive-host.js"></script>
+<script src="/stories/content/four-elements.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  document.documentElement.classList.add('stories-app');
+
+  if (window.IBMTools) IBMTools.mountSuiteNav('stories');
+
+  var STORE_KEY = 'ibm.tool.stories.progress';
+  var pathParts = location.pathname.replace(/\/+$/, '').split('/');
+  var pathTail = pathParts[pathParts.length - 1] || '';
+  if (pathTail === 'index.html') pathTail = pathParts[pathParts.length - 2] || '';
+  var dedicatedId = null;
+  var libraryEl = document.getElementById('library');
+  var readerEl = document.getElementById('reader');
+  var storyList = document.getElementById('storyList');
+  var storyRail = document.getElementById('storyRail');
+  var readerBody = document.getElementById('readerBody');
+  var readerTitle = document.getElementById('readerTitle');
+  var readerEpigraph = document.getElementById('readerEpigraph');
+  var readerMeter = document.getElementById('readerMeter');
+  var readerMeterViz = document.getElementById('readerMeterViz');
+  var readerMeterLabel = document.getElementById('readerMeterLabel');
+  var readerEnd = document.getElementById('readerEnd');
+  var progressRail = document.getElementById('progressRail');
+  var progressFill = document.getElementById('progressFill');
+  var backBtn = document.getElementById('backBtn');
+  var mastTitle = document.querySelector('header.masthead h1');
+
+  var activeId = null;
+  var saveTimer = null;
+  var meterCache = null;
+
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'stories',
+    about: 'A quiet ereader for local stories. Theme and chrome sync with words, time, and the other instruments. Progress is stored only in this browser. The meter tracks what is left to read — switch it in settings.',
+    hasViz: false,
+    gestures: false,
+    extra: {
+      defaults: { typeSize: 'md', measure: 'narrow', typeFace: 'book', meter: 'left' },
+      fieldsHtml:
+        '<fieldset><legend>size</legend><div class="seg" role="radiogroup" aria-label="type size">' +
+          '<label><input type="radio" name="typeSize" value="sm"><span>sm</span></label>' +
+          '<label><input type="radio" name="typeSize" value="md"><span>md</span></label>' +
+          '<label><input type="radio" name="typeSize" value="lg"><span>lg</span></label>' +
+          '<label><input type="radio" name="typeSize" value="xl"><span>xl</span></label>' +
+        '</div></fieldset>' +
+        '<fieldset><legend>measure</legend><div class="seg" role="radiogroup" aria-label="line length">' +
+          '<label><input type="radio" name="measure" value="narrow"><span>narrow</span></label>' +
+          '<label><input type="radio" name="measure" value="medium"><span>medium</span></label>' +
+          '<label><input type="radio" name="measure" value="wide"><span>wide</span></label>' +
+        '</div></fieldset>' +
+        '<fieldset><legend>type</legend><div class="seg" role="radiogroup" aria-label="reading face">' +
+          '<label><input type="radio" name="typeFace" value="book"><span>book</span></label>' +
+          '<label><input type="radio" name="typeFace" value="serif"><span>serif</span></label>' +
+          '<label><input type="radio" name="typeFace" value="sans"><span>sans</span></label>' +
+          '<label><input type="radio" name="typeFace" value="mono"><span>mono</span></label>' +
+        '</div></fieldset>' +
+        '<fieldset><legend>meter</legend><div class="seg" role="radiogroup" aria-label="reading meter">' +
+          '<label><input type="radio" name="meter" value="left"><span>left</span></label>' +
+          '<label><input type="radio" name="meter" value="words"><span>words</span></label>' +
+          '<label><input type="radio" name="meter" value="part"><span>part</span></label>' +
+          '<label><input type="radio" name="meter" value="marks"><span>marks</span></label>' +
+          '<label><input type="radio" name="meter" value="off"><span>off</span></label>' +
+        '</div></fieldset>',
+      onChange: applyReadingChrome
+    },
+    onApply: applyReadingChrome
+  });
+
+  (function mountSupportIcons() {
+    var inner = document.querySelector('#settings > .inner');
+    if (!inner || inner.querySelector('.support')) return;
+    var support = document.createElement('div');
+    support.className = 'support';
+    support.setAttribute('aria-label', 'support');
+    support.innerHTML =
+      '<a id="linkHome" href="https://ibm.io/" target="_blank" rel="noopener noreferrer" data-tip="ibm.io · home" aria-label="ibm.io home">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M2.5 7.2 8 2.8l5.5 4.4"/><path d="M4 6.8v6.2h8V6.8"/><path d="M6.6 13V9.2h2.8V13"/>' +
+        '</svg></a>' +
+      '<a id="linkPortfolio" href="https://ibm.io/projects" target="_blank" rel="noopener noreferrer" data-tip="portfolio · work" aria-label="portfolio">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">' +
+          '<rect x="2.5" y="4.5" width="11" height="8.5" rx="1.2"/><path d="M5.5 4.5V3.6c0-.6.5-1.1 1.1-1.1h2.8c.6 0 1.1.5 1.1 1.1v.9"/><path d="M2.5 8h11"/>' +
+        '</svg></a>' +
+      '<a id="linkMcp" href="https://wordcount-mcp.mhsenkow.workers.dev/demo" target="_blank" rel="noopener noreferrer" data-tip="ChatGPT · Claude" aria-label="use in ChatGPT or Claude">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M3.2 4.2h7.2c.9 0 1.6.7 1.6 1.6v3.2c0 .9-.7 1.6-1.6 1.6H7.1L4.6 13v-2.4H3.2c-.9 0-1.6-.7-1.6-1.6V5.8c0-.9.7-1.6 1.6-1.6z"/>' +
+          '<circle cx="5.6" cy="7.4" r=".55" fill="currentColor" stroke="none"/>' +
+          '<circle cx="8" cy="7.4" r=".55" fill="currentColor" stroke="none"/>' +
+          '<circle cx="10.4" cy="7.4" r=".55" fill="currentColor" stroke="none"/>' +
+        '</svg></a>' +
+      '<a id="linkHost" href="https://www.greengeeks.com/track/senkowm" target="_blank" rel="sponsored noopener noreferrer" data-tip="where this lives · affiliate" aria-label="where this lives, affiliate link">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M8 14.5V8.2"/><path d="M8 11.2c-2.4 0-4-1.5-4-3.4C4 5.4 5.6 3.5 8 2.5c2.4 1 4 2.9 4 5.3 0 1.9-1.6 3.4-4 3.4z"/>' +
+          '<path d="M8 8.2c-1.2-.8-2-2.1-2-3.5"/><path d="M8 8.2c1.2-.8 2-2.1 2-3.5"/>' +
+        '</svg></a>' +
+      '<a id="linkTip" href="https://venmo.com/u/Michael-Senkow?txn=pay&note=stories" target="_blank" rel="noopener noreferrer" data-tip="coffee · if you like" aria-label="coffee, if you like, venmo tip">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M3.5 6.5h7.2v4.2c0 1.3-1.1 2.3-2.4 2.3H5.9c-1.3 0-2.4-1-2.4-2.3V6.5z"/>' +
+          '<path d="M10.7 7.2h1.1c.9 0 1.7.8 1.7 1.7S12.7 10.6 11.8 10.6h-1.1"/>' +
+          '<path d="M5.2 4.2c.4-.7 1-.9 1.5-.5.4.3.5.8.3 1.3"/><path d="M7.4 3.6c.4-.7 1-.9 1.5-.5.4.3.5.8.3 1.3"/>' +
+        '</svg></a>' +
+      '<button type="button" id="shuffleLooks" class="shuffle-looks" data-tip="shuffle looks · easter egg" aria-label="shuffle look combination">' +
+        '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">' +
+          '<rect x="2.5" y="2.5" width="11" height="11" rx="2"/>' +
+          '<circle cx="5.5" cy="5.5" r="0.75" fill="currentColor" stroke="none"/>' +
+          '<circle cx="10.5" cy="5.5" r="0.75" fill="currentColor" stroke="none"/>' +
+          '<circle cx="8" cy="8" r="0.75" fill="currentColor" stroke="none"/>' +
+          '<circle cx="5.5" cy="10.5" r="0.75" fill="currentColor" stroke="none"/>' +
+          '<circle cx="10.5" cy="10.5" r="0.75" fill="currentColor" stroke="none"/>' +
+        '</svg></button>';
+    inner.insertBefore(support, inner.firstChild);
+
+    var themes = (window.IBMTools && IBMTools.THEMES) ||
+      ['light', 'dark', 'contrast', 'paper', 'glass', 'frost', 'brutal', 'loom', 'tank', 'nes'];
+    var uis = ['braun', 'monocle', 'bauhaus', 'noyes', 'ikea', 'military', 'terminal', 'nyt'];
+    var typeFaces = ['book', 'serif', 'sans', 'mono'];
+    var sizes = ['sm', 'md', 'lg', 'xl'];
+    var measures = ['narrow', 'medium', 'wide'];
+    var shuffleBusy = false;
+    var shuffleTimer = null;
+
+    function pickOne(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function checkRadio(name, value) {
+      var node = document.querySelector('input[name="' + name + '"][value="' + value + '"]');
+      if (node) {
+        node.checked = true;
+        node.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+
+    function rollLook() {
+      var settings = S();
+      settings.theme = pickOne(themes);
+      settings.ui = pickOne(uis);
+      settings.typeFace = pickOne(typeFaces);
+      settings.typeSize = pickOne(sizes);
+      settings.measure = pickOne(measures);
+      checkRadio('theme', settings.theme);
+      checkRadio('ui', settings.ui);
+      checkRadio('typeFace', settings.typeFace);
+      checkRadio('typeSize', settings.typeSize);
+      checkRadio('measure', settings.measure);
+      applyReadingChrome();
+    }
+
+    function shuffleLooks() {
+      if (shuffleBusy) return;
+      shuffleBusy = true;
+      if (shuffleTimer) clearTimeout(shuffleTimer);
+      document.body.classList.remove('is-shuffling');
+      void document.body.offsetWidth;
+      document.body.classList.add('is-shuffling');
+      try { if (navigator.vibrate) navigator.vibrate([12, 30, 12, 30, 18]); } catch (err) {}
+      var step = 0;
+      var steps = 4;
+      function tick() {
+        rollLook();
+        step += 1;
+        if (step < steps) {
+          shuffleTimer = setTimeout(tick, 95);
+        } else {
+          shuffleTimer = setTimeout(function () {
+            document.body.classList.remove('is-shuffling');
+            shuffleBusy = false;
+            shuffleTimer = null;
+          }, 420);
+        }
+      }
+      tick();
+    }
+
+    var shuffleBtn = document.getElementById('shuffleLooks');
+    if (shuffleBtn) shuffleBtn.addEventListener('click', shuffleLooks);
+  })();
+
+  function S() {
+    return (toolUI && toolUI.settings) || { typeSize: 'md', measure: 'narrow', typeFace: 'book', meter: 'left', ui: 'braun', faces: 'auto' };
+  }
+
+  function bookFaceFor(settings) {
+    var ui = settings.ui || 'braun';
+    var role = settings.typeFace || 'book';
+    var WEB = {
+      braun: { sans: 'Helvetica, "Helvetica Neue", Arial, sans-serif', serif: 'Times, "Times New Roman", serif', book: 'Palatino, "Palatino Linotype", Georgia, serif', mono: '"SF Mono", Menlo, Consolas, monospace' },
+      monocle: { sans: '"Source Sans 3", "Avenir Next", sans-serif', serif: '"Source Serif 4", Georgia, serif', book: '"Source Serif 4", Palatino, Georgia, serif', mono: '"Source Code Pro", Menlo, monospace' },
+      bauhaus: { sans: '"Josefin Sans", Futura, sans-serif', serif: '"Josefin Slab", Georgia, serif', book: '"Cormorant Garamond", Didot, Georgia, serif', mono: '"Space Mono", Menlo, monospace' },
+      noyes: { sans: '"IBM Plex Sans", Helvetica, Arial, sans-serif', serif: '"IBM Plex Serif", Georgia, serif', book: '"IBM Plex Serif", Palatino, Georgia, serif', mono: '"IBM Plex Mono", Menlo, monospace' },
+      ikea: { sans: 'Verdana, Geneva, Tahoma, sans-serif', serif: 'Georgia, Times, serif', book: 'Palatino, Georgia, serif', mono: 'Consolas, monospace' },
+      military: { sans: 'Oswald, "Arial Narrow", sans-serif', serif: '"Roboto Slab", Georgia, serif', book: '"Roboto Slab", Georgia, serif', mono: '"Share Tech Mono", monospace' },
+      terminal: { sans: '"IBM Plex Sans", Helvetica, Arial, sans-serif', serif: '"IBM Plex Serif", Georgia, serif', book: 'Georgia, Times, serif', mono: '"SF Mono", Menlo, Consolas, monospace' },
+      nyt: { sans: '"Libre Franklin", Helvetica, Arial, sans-serif', serif: 'Georgia, Times, serif', book: '"Newsreader", Georgia, serif', mono: '"IBM Plex Mono", Menlo, monospace' }
+    };
+    var LOCAL = {
+      braun: { sans: 'Helvetica, Arial, sans-serif', serif: 'Times, serif', book: 'Palatino, Georgia, serif', mono: 'ui-monospace, Menlo, monospace' },
+      monocle: { sans: '"Avenir Next", "Gill Sans", sans-serif', serif: 'Georgia, serif', book: 'Palatino, Georgia, serif', mono: 'ui-monospace, Menlo, monospace' },
+      bauhaus: { sans: 'Futura, "Century Gothic", sans-serif', serif: '"Century Schoolbook", Georgia, serif', book: 'Didot, Georgia, serif', mono: 'ui-monospace, monospace' },
+      noyes: { sans: 'system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif', serif: 'Georgia, serif', book: 'Palatino, Georgia, serif', mono: 'ui-monospace, Menlo, monospace' },
+      ikea: { sans: 'Verdana, Geneva, Tahoma, sans-serif', serif: 'Georgia, Times, serif', book: 'Palatino, Georgia, serif', mono: 'Consolas, monospace' },
+      military: { sans: '"Arial Narrow", Impact, sans-serif', serif: 'Georgia, serif', book: 'Georgia, serif', mono: '"Courier New", monospace' },
+      terminal: { sans: 'system-ui, Helvetica, Arial, sans-serif', serif: 'Georgia, serif', book: 'Georgia, serif', mono: 'ui-monospace, Menlo, monospace' },
+      nyt: { sans: 'system-ui, Helvetica, Arial, sans-serif', serif: 'Georgia, Times, serif', book: 'Georgia, serif', mono: 'ui-monospace, Menlo, monospace' }
+    };
+    var table = settings.faces === 'local' ? LOCAL : WEB;
+    var pack = table[ui] || table.braun;
+    return pack[role] || pack.book;
+  }
+
+  function applyReadingChrome() {
+    var settings = S();
+    var meter = settings.meter || 'left';
+    if (['left', 'words', 'part', 'marks', 'off'].indexOf(meter) < 0) meter = 'left';
+    document.documentElement.setAttribute('data-type-size', settings.typeSize || 'md');
+    document.documentElement.setAttribute('data-measure', settings.measure || 'narrow');
+    document.documentElement.setAttribute('data-meter', meter);
+    document.documentElement.style.setProperty('--type', bookFaceFor(settings));
+    if (activeId && !readerEl.hidden) updateProgressUI(scrollProgress());
+  }
+
+  function loadProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveProgress(map) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(map)); } catch (e) {}
+  }
+
+  function catalog() {
+    return (window.IBMStories && IBMStories.catalog) || [];
+  }
+
+  function sectionStats(story) {
+    return (story.sections || []).map(function (sec) {
+      var words = 0;
+      (sec.paragraphs || []).forEach(function (p) {
+        words += String(p).trim().split(/\s+/).filter(Boolean).length;
+      });
+      var heading = String(sec.heading || '').replace(/^[IVXLC]+\.?\s*/i, '').trim();
+      return {
+        n: sec.n,
+        heading: heading || ('part ' + sec.n),
+        label: sec.heading || String(sec.n),
+        words: words
+      };
+    });
+  }
+
+  function ensureMeterCache(story) {
+    if (meterCache && meterCache.id === story.id) return meterCache;
+    var parts = sectionStats(story);
+    var total = parts.reduce(function (sum, p) { return sum + p.words; }, 0) || wordCount(story) || 1;
+    var maxW = parts.reduce(function (m, p) { return Math.max(m, p.words); }, 1);
+    meterCache = {
+      id: story.id,
+      parts: parts,
+      total: total,
+      maxW: maxW,
+      readingMin: story.readingMin || Math.max(1, Math.round(total / 200))
+    };
+    return meterCache;
+  }
+
+  function currentPartIndex() {
+    var sections = readerBody.querySelectorAll('.section');
+    if (!sections.length) return 0;
+    var probe = window.scrollY + Math.min(window.innerHeight * 0.38, 220);
+    var idx = 0;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop <= probe) idx = i;
+      else break;
+    }
+    return idx;
+  }
+
+  function formatWords(n) {
+    n = Math.max(0, Math.round(n));
+    if (n >= 1000) {
+      var k = n / 1000;
+      return (k >= 10 ? Math.round(k) : Math.round(k * 10) / 10) + 'k';
+    }
+    return n.toLocaleString('en-US');
+  }
+
+  function shortPartLabel(part) {
+    var t = String(part.heading || part.label || '').replace(/^THE\s+/i, '').trim();
+    if (t.length > 22) t = t.slice(0, 20).replace(/\s+\S*$/, '') + '…';
+    return t.toLowerCase();
+  }
+
+  function wordCount(story) {
+    if (story.words) return story.words;
+    var n = 0;
+    (story.sections || []).forEach(function (sec) {
+      (sec.paragraphs || []).forEach(function (p) {
+        n += String(p).trim().split(/\s+/).filter(Boolean).length;
+      });
+    });
+    return n;
+  }
+
+  function readingLabel(story) {
+    var words = wordCount(story);
+    var min = story.readingMin || Math.max(1, Math.round(words / 200));
+    return min + ' min · ' + words.toLocaleString() + ' words';
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function storyHref(id) {
+    if (dedicatedId) return '../' + id + '/';
+    return id + '/';
+  }
+
+  function shortTitle(story) {
+    return String(story.title || story.id || '')
+      .replace(/^THE\s+/i, '')
+      .trim();
+  }
+
+  function isFormula(text) {
+    var t = String(text || '').trim();
+    return /[=τ]/.test(t) && t.length < 48 && !/\s{2,}/.test(t) && /tanh|v\(|aτ|\/\s*c/.test(t);
+  }
+
+  function isBroadcast(text) {
+    var t = String(text || '').trim();
+    return t.length > 12 && t === t.toUpperCase() && /[A-Z]/.test(t) && !/[a-z]/.test(t);
+  }
+
+  function renderRail() {
+    if (!storyRail) return;
+    var html = '';
+    catalog().forEach(function (story, i) {
+      html +=
+        '<button type="button" data-id="' + escapeHtml(story.id) + '"' +
+          (story.id === activeId ? ' aria-current="true"' : '') + '>' +
+          '<span class="rail-index">' + String(i + 1).padStart(2, '0') + '</span>' +
+          '<span class="rail-title">' + escapeHtml(shortTitle(story)) + '</span>' +
+        '</button>';
+    });
+    storyRail.innerHTML = html;
+  }
+
+  function renderLibrary() {
+    var progress = loadProgress();
+    var html = '';
+    catalog().forEach(function (story, i) {
+      var pct = Math.max(0, Math.min(100, Math.round((progress[story.id] && progress[story.id].pct) || 0)));
+      html +=
+        '<li>' +
+          '<button type="button" class="story-card" data-id="' + escapeHtml(story.id) + '">' +
+            '<span class="story-card-index">' + String(i + 1).padStart(2, '0') + '</span>' +
+            '<span>' +
+              '<span class="story-card-title">' + escapeHtml(story.title) + '</span>' +
+              '<span class="story-card-blurb">' + escapeHtml(story.blurb || '') + '</span>' +
+              (pct > 0 ? '<span class="story-card-progress" aria-hidden="true" style="--pct:' + pct + '%"><i></i></span>' : '') +
+            '</span>' +
+            '<span class="story-card-meta">' + escapeHtml(readingLabel(story)) + '</span>' +
+          '</button>' +
+        '</li>';
+    });
+    storyList.innerHTML = html || '<li><p class="library-lede">No stories yet.</p></li>';
+  }
+
+  function renderStory(story) {
+    var html = '';
+    (story.sections || []).forEach(function (sec) {
+      html += '<section class="section" id="sec-' + sec.n + '">';
+      html += '<span class="section-num">' + sec.n + '.</span>';
+      if (sec.heading) {
+        html += '<h3 class="section-heading">' + escapeHtml(sec.heading) + '</h3>';
+      }
+      (sec.paragraphs || []).forEach(function (p) {
+        var text = String(p).trim();
+        var alone = text.split(/\s+/).length <= 12;
+        var formula = isFormula(text);
+        var broadcast = isBroadcast(text);
+        var cls = [];
+        if (broadcast) cls.push('is-broadcast');
+        else if (formula) cls.push('is-formula');
+        else if (alone) cls.push('is-alone');
+        html += '<p' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + escapeHtml(p) + '</p>';
+      });
+      html += '</section>';
+    });
+    readerBody.innerHTML = html;
+    readerTitle.textContent = story.title;
+    readerEpigraph.textContent = story.epigraph || '';
+    readerEpigraph.hidden = !story.epigraph;
+    readerEnd.hidden = false;
+  }
+
+  function setView(mode) {
+    var reading = mode === 'reader';
+    libraryEl.hidden = reading;
+    readerEl.hidden = !reading;
+    progressRail.hidden = !reading;
+    if (readerMeter) readerMeter.hidden = !reading;
+    if (storyRail) storyRail.hidden = !reading;
+    if (mastTitle) mastTitle.textContent = reading ? 'read' : 'stories';
+    document.title = reading && activeId
+      ? ((IBMStories.byId[activeId] || {}).title || 'read') + ' — stories'
+      : 'stories — ibm.io';
+    if (reading) renderRail();
+  }
+
+  function scrollProgress() {
+    if (!activeId || readerEl.hidden) return 0;
+    var el = document.documentElement;
+    var max = Math.max(1, el.scrollHeight - el.clientHeight);
+    return Math.max(0, Math.min(1, el.scrollTop / max));
+  }
+
+  function renderMeterViz(cache, partIdx, pct01) {
+    if (!readerMeterViz || !cache) return;
+    var mode = (S().meter || 'left');
+    if (mode === 'left' || mode === 'words' || mode === 'off') {
+      readerMeterViz.innerHTML = '';
+      return;
+    }
+    var html = '';
+    cache.parts.forEach(function (part, i) {
+      var h = Math.max(18, Math.round((part.words / cache.maxW) * 100));
+      var cls = 'tick';
+      if (i < partIdx) cls += ' is-done';
+      else if (i === partIdx) cls += ' is-now';
+      html += '<i class="' + cls + '" style="--h:' + h + '%" title="' + escapeHtml(part.label) + '"></i>';
+    });
+    /* progress cue: dim unfinished ticks via opacity on the rail fill already exists */
+    readerMeterViz.innerHTML = html;
+    readerMeterViz.style.setProperty('--pct', Math.round(pct01 * 100) + '%');
+  }
+
+  function updateProgressUI(pct01) {
+    var pct = Math.round(pct01 * 100);
+    progressFill.style.setProperty('--pct', pct + '%');
+    if (!readerMeter || !activeId) return;
+
+    var story = IBMStories.byId && IBMStories.byId[activeId];
+    if (!story) return;
+    var cache = ensureMeterCache(story);
+    var partIdx = currentPartIndex();
+    var part = cache.parts[partIdx] || cache.parts[0];
+    var remain = Math.max(0, 1 - pct01);
+    var wordsLeft = Math.round(cache.total * remain);
+    var minLeft = cache.readingMin * remain;
+    var mode = S().meter || 'left';
+
+    renderMeterViz(cache, partIdx, pct01);
+
+    if (mode === 'off') {
+      readerMeterLabel.textContent = '';
+      return;
+    }
+
+    if (mode === 'words') {
+      readerMeterLabel.innerHTML = pct01 >= 0.995
+        ? '<b>end</b>'
+        : '<b>' + formatWords(wordsLeft) + '</b> words left';
+    } else if (mode === 'part') {
+      readerMeterLabel.innerHTML = part
+        ? '<b>' + escapeHtml(String(partIdx + 1)) + '/' + cache.parts.length + '</b> ' + escapeHtml(shortPartLabel(part))
+        : '';
+    } else if (mode === 'marks') {
+      readerMeterLabel.textContent = part ? shortPartLabel(part) : '';
+    } else if (pct01 >= 0.995 || minLeft <= 0.4) {
+      readerMeterLabel.innerHTML = '<b>end</b>';
+    } else if (minLeft < 1) {
+      readerMeterLabel.innerHTML = '<b>&lt; 1</b> min left';
+    } else if (minLeft < 60) {
+      readerMeterLabel.innerHTML = '<b>' + Math.max(1, Math.round(minLeft)) + '</b> min left';
+    } else {
+      var h = Math.floor(minLeft / 60);
+      var m = Math.round(minLeft % 60);
+      readerMeterLabel.innerHTML = '<b>' + h + 'h ' + m + 'm</b> left';
+    }
+
+    readerMeter.setAttribute('aria-label', readerMeterLabel.textContent || 'reading progress');
+  }
+
+  function persistScroll() {
+    if (!activeId) return;
+    var map = loadProgress();
+    var pct01 = scrollProgress();
+    map[activeId] = {
+      pct: Math.round(pct01 * 100),
+      y: window.scrollY || 0,
+      updatedAt: Date.now()
+    };
+    saveProgress(map);
+    updateProgressUI(pct01);
+  }
+
+  function openStory(id, opts) {
+    var story = IBMStories.byId && IBMStories.byId[id];
+    if (!story) return;
+    activeId = id;
+    meterCache = null;
+    renderStory(story);
+    setView('reader');
+    var progress = loadProgress()[id];
+    var restore = !(opts && opts.fromStart);
+    requestAnimationFrame(function () {
+      if (restore && progress && progress.y > 40) {
+        window.scrollTo(0, progress.y);
+        updateProgressUI((progress.pct || 0) / 100);
+      } else {
+        window.scrollTo(0, 0);
+        updateProgressUI(0);
+      }
+    });
+    /* Dedicated folder URLs stay put; library uses hash. */
+    if (!dedicatedId && location.hash !== '#' + id) {
+      history.replaceState(null, '', '#' + id);
+    }
+  }
+
+  function jumpToStory(id) {
+    if (!id || id === activeId) return;
+    persistScroll();
+    location.href = storyHref(id);
+  }
+
+  function closeReader() {
+    persistScroll();
+    if (dedicatedId) {
+      location.href = '../';
+      return;
+    }
+    activeId = null;
+    setView('library');
+    renderLibrary();
+    history.replaceState(null, '', location.pathname + location.search);
+    window.scrollTo(0, 0);
+  }
+
+  storyList.addEventListener('click', function (e) {
+    var btn = e.target.closest('.story-card');
+    if (!btn) return;
+    jumpToStory(btn.getAttribute('data-id'));
+  });
+
+  if (storyRail) {
+    storyRail.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-id]');
+      if (!btn) return;
+      jumpToStory(btn.getAttribute('data-id'));
+    });
+  }
+
+  backBtn.addEventListener('click', closeReader);
+
+  window.addEventListener('scroll', function () {
+    if (!activeId || readerEl.hidden) return;
+    updateProgressUI(scrollProgress());
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(persistScroll, 200);
+  }, { passive: true });
+
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && activeId && !document.body.classList.contains('settings-open')) {
+      closeReader();
+    }
+  });
+
+  applyReadingChrome();
+  renderLibrary();
+
+  /* After catalog loads, resolve dedicated path /stories/<id>/ */
+  if (pathTail && pathTail !== 'stories' && IBMStories.byId && IBMStories.byId[pathTail]) {
+    dedicatedId = pathTail;
+    if (backBtn) backBtn.textContent = '← library';
+  }
+
+  function openFromHash() {
+    var hash = (location.hash || '').replace(/^#/, '');
+    if (hash && IBMStories.byId && IBMStories.byId[hash]) {
+      openStory(hash);
+      return true;
+    }
+    return false;
+  }
+
+  window.addEventListener('hashchange', function () {
+    if (dedicatedId) return;
+    if (!openFromHash() && activeId) closeReader();
+  });
+
+  if (dedicatedId) {
+    openStory(dedicatedId);
+  } else if (!openFromHash()) {
+    setView('library');
+  }
+})();
+</script>
+</body>
+</html>

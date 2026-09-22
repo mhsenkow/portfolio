@@ -1,88 +1,158 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-type Theme = 'dark' | 'light' | 'hc' | 'electric' | 'paper' | 'forest';
-type Font = 'geist' | 'ibm-plex' | 'inter' | 'work-sans' | 'space-grotesk' | 'dm-sans' | 'libre-baskerville' | 'lora' | 'manrope' | 'jetbrains-mono' | 'fira-code';
+/** Wordcount theme cycle */
+type Theme =
+  | "light"
+  | "dark"
+  | "contrast"
+  | "paper"
+  | "glass"
+  | "frost"
+  | "brutal"
+  | "loom"
+  | "tank"
+  | "nes";
+
+type Font =
+  | "geist"
+  | "ibm-plex"
+  | "inter"
+  | "work-sans"
+  | "space-grotesk"
+  | "dm-sans"
+  | "libre-baskerville"
+  | "lora"
+  | "manrope"
+  | "jetbrains-mono"
+  | "fira-code";
+
+const THEMES: Theme[] = [
+  "light",
+  "dark",
+  "contrast",
+  "paper",
+  "glass",
+  "frost",
+  "brutal",
+  "loom",
+  "tank",
+  "nes",
+];
+
+const THEME_LABEL: Record<Theme, string> = {
+  light: "light",
+  dark: "dark",
+  contrast: "contrast",
+  paper: "paper",
+  glass: "glass",
+  frost: "frost",
+  brutal: "brutal",
+  loom: "loom",
+  tank: "tank",
+  nes: "nes",
+};
+
+/** Map legacy portfolio theme names → wordcount set */
+function migrateTheme(raw: string | null): Theme | null {
+  if (!raw) return null;
+  const map: Record<string, Theme> = {
+    hc: "contrast",
+    electric: "frost",
+    forest: "tank",
+  };
+  if (map[raw]) return map[raw];
+  if ((THEMES as string[]).includes(raw)) return raw as Theme;
+  return null;
+}
 
 function getStoredTheme(): Theme | null {
-  try { return (localStorage.getItem('theme') as Theme) || null; } catch { return null; }
+  try {
+    return migrateTheme(localStorage.getItem("theme"));
+  } catch {
+    return null;
+  }
 }
 
 function storeTheme(theme: Theme) {
-  try { localStorage.setItem('theme', theme); } catch {}
+  try {
+    localStorage.setItem("theme", theme);
+  } catch {}
 }
 
 function applyTheme(theme: Theme) {
-  if (typeof document === 'undefined') return;
-  const html = document.documentElement;
-  html.setAttribute('data-theme', theme);
+  if (typeof document === "undefined") return;
+  document.documentElement.setAttribute("data-theme", theme);
 }
 
 function getStoredFont(): Font | null {
-  try { return (localStorage.getItem('font') as Font) || null; } catch { return null; }
+  try {
+    return (localStorage.getItem("font") as Font) || null;
+  } catch {
+    return null;
+  }
 }
 
 function storeFont(font: Font) {
-  try { localStorage.setItem('font', font); } catch {}
+  try {
+    localStorage.setItem("font", font);
+  } catch {}
 }
 
 function applyFont(font: Font) {
-  if (typeof document === 'undefined') return;
-  const html = document.documentElement;
-  html.setAttribute('data-font', font);
-  console.log('[font] Applied font:', font, 'to html element');
-  // Force update by directly setting body font-family
+  if (typeof document === "undefined") return;
+  document.documentElement.setAttribute("data-font", font);
   const fontMap: Record<Font, string> = {
-    'geist': 'var(--font-geist), ui-sans-serif, system-ui',
-    'ibm-plex': 'var(--font-ibm-plex), ui-sans-serif, system-ui',
-    'inter': 'var(--font-inter), ui-sans-serif, system-ui',
-    'work-sans': 'var(--font-work-sans), ui-sans-serif, system-ui',
-    'space-grotesk': 'var(--font-space-grotesk), ui-sans-serif, system-ui',
-    'dm-sans': 'var(--font-dm-sans), ui-sans-serif, system-ui',
-    'libre-baskerville': 'var(--font-libre-baskerville), Georgia, serif',
-    'lora': 'var(--font-lora), Georgia, serif',
-    'manrope': 'var(--font-manrope), ui-sans-serif, system-ui',
-    'jetbrains-mono': 'var(--font-jetbrains-mono), SF Mono, Monaco, monospace',
-    'fira-code': 'var(--font-fira-code), SF Mono, Monaco, monospace'
+    geist: "var(--font-geist), ui-sans-serif, system-ui",
+    "ibm-plex": "var(--font-ibm-plex), ui-sans-serif, system-ui",
+    inter: "var(--font-inter), ui-sans-serif, system-ui",
+    "work-sans": "var(--font-work-sans), ui-sans-serif, system-ui",
+    "space-grotesk": "var(--font-space-grotesk), ui-sans-serif, system-ui",
+    "dm-sans": "var(--font-dm-sans), ui-sans-serif, system-ui",
+    "libre-baskerville": "var(--font-libre-baskerville), Georgia, serif",
+    lora: "var(--font-lora), Georgia, serif",
+    manrope: "var(--font-manrope), ui-sans-serif, system-ui",
+    "jetbrains-mono": "var(--font-jetbrains-mono), SF Mono, Monaco, monospace",
+    "fira-code": "var(--font-fira-code), SF Mono, Monaco, monospace",
   };
   document.body.style.fontFamily = fontMap[font];
 }
 
 export function initThemeOnLoad() {
-  if (typeof document === 'undefined') return;
+  if (typeof document === "undefined") return;
   const stored = getStoredTheme();
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const initial: Theme = stored ?? (prefersDark ? 'dark' : 'light');
+  const prefersDark =
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const initial: Theme = stored ?? (prefersDark ? "dark" : "light");
   applyTheme(initial);
 }
 
-export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('light');
-  const [font, setFont] = useState<Font>('geist');
+type Props = {
+  /** Single cycling orb — wordcount-style. Full controls when false. */
+  compact?: boolean;
+};
+
+export default function ThemeToggle({ compact = false }: Props) {
+  const [theme, setTheme] = useState<Theme>("light");
+  const [font, setFont] = useState<Font>("geist");
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
-    // Read the theme that was already applied by the inline script
-    const currentTheme = document.documentElement.getAttribute('data-theme') as Theme;
+    const currentTheme = migrateTheme(document.documentElement.getAttribute("data-theme"));
     const stored = getStoredTheme();
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initial: Theme = currentTheme || stored || (prefersDark ? 'dark' : 'light');
+    const prefersDark =
+      window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initial: Theme = currentTheme || stored || (prefersDark ? "dark" : "light");
     setTheme(initial);
-    
-    // Only apply theme if it's not already set
-    if (!currentTheme) {
-      applyTheme(initial);
-    }
-    
+    applyTheme(initial);
+    storeTheme(initial);
+
     const storedFont = getStoredFont();
-    const currentFont = document.documentElement.getAttribute('data-font') as Font;
-    const initialFont: Font = currentFont || storedFont || 'geist';
+    const currentFont = document.documentElement.getAttribute("data-font") as Font;
+    const initialFont: Font = currentFont || storedFont || "geist";
     setFont(initialFont);
-    
-    // Only apply font if it's not already set
-    if (!currentFont) {
-      applyFont(initialFont);
-    }
+    if (!currentFont) applyFont(initialFont);
   }, []);
 
   useEffect(() => {
@@ -95,101 +165,85 @@ export default function ThemeToggle() {
     storeFont(font);
   }, [font]);
 
-  return (
-    <div role="group" aria-label="Theme and Font" style={{ display: 'inline-flex', gap: 8, alignItems: 'center' }}>
-      <div style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
+  function cycleTheme() {
+    const idx = THEMES.indexOf(theme);
+    const next = THEMES[(idx + 1) % THEMES.length];
+    setTheme(next);
+  }
+
+  if (compact) {
+    return (
+      <div className="masthead-theme">
         <button
           type="button"
-          aria-pressed={theme === 'light'}
-          aria-label="Light theme"
-          onClick={() => setTheme('light')}
-          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+          className="masthead-orb-btn"
+          aria-label={`theme: ${THEME_LABEL[theme]}`}
+          title={`theme: ${THEME_LABEL[theme]}`}
+          onClick={cycleTheme}
+          data-theme-face={theme}
         >
-          {/* sun icon */}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-          </svg>
+          <span className="theme-orb" aria-hidden="true" />
         </button>
         <button
           type="button"
-          aria-pressed={theme === 'dark'}
-          aria-label="Dark theme"
-          onClick={() => setTheme('dark')}
-          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
+          className="masthead-link masthead-settings"
+          aria-expanded={settingsOpen}
+          aria-haspopup="dialog"
+          onClick={() => setSettingsOpen((v) => !v)}
         >
-          {/* moon icon */}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
+          type
         </button>
-        <button
-          type="button"
-          aria-pressed={theme === 'hc'}
-          aria-label="High contrast theme"
-          onClick={() => setTheme('hc')}
-          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
-        >
-          {/* three circles icon */}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <circle cx="7" cy="12" r="3"/>
-            <circle cx="12" cy="12" r="3"/>
-            <circle cx="17" cy="12" r="3"/>
-          </svg>
-        </button>
-        <button
-          type="button"
-          aria-pressed={theme === 'electric'}
-          aria-label="80's electric theme"
-          onClick={() => setTheme('electric')}
-          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
-        >
-          {/* lightning bolt icon */}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/>
-          </svg>
-        </button>
-        <button
-          type="button"
-          aria-pressed={theme === 'paper'}
-          aria-label="Classic paper theme"
-          onClick={() => setTheme('paper')}
-          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
-        >
-          {/* file/paper icon */}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <path d="M14 2v6h6"/>
-            <path d="M16 13H8"/>
-            <path d="M16 17H8"/>
-            <path d="M10 9H8"/>
-          </svg>
-        </button>
-        <button
-          type="button"
-          aria-pressed={theme === 'forest'}
-          aria-label="Forest theme"
-          onClick={() => setTheme('forest')}
-          style={{ width: 28, height: 28, borderRadius: 999, border: 'var(--border)', background: 'var(--surface-card)', display: 'grid', placeItems: 'center' }}
-        >
-          {/* tree/leaf icon */}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M12 2C8 2 5 5 5 9c0 5 4 8 7 12 3-4 7-7 7-12 0-4-3-7-7-7z"/>
-            <path d="M12 2v20"/>
-          </svg>
-        </button>
+        {settingsOpen && (
+          <>
+            <button
+              type="button"
+              className="masthead-settings-scrim"
+              aria-label="close type settings"
+              onClick={() => setSettingsOpen(false)}
+            />
+            <div className="masthead-settings-panel" role="dialog" aria-label="type settings">
+              <label className="masthead-settings-label">
+                font
+                <select
+                  aria-label="Font"
+                  value={font}
+                  onChange={(e) => setFont(e.target.value as Font)}
+                >
+                  <option value="geist">Geist</option>
+                  <option value="ibm-plex">IBM Plex Sans</option>
+                  <option value="inter">Inter</option>
+                  <option value="work-sans">Work Sans</option>
+                  <option value="space-grotesk">Space Grotesk</option>
+                  <option value="dm-sans">DM Sans</option>
+                  <option value="libre-baskerville">Libre Baskerville</option>
+                  <option value="lora">Lora</option>
+                  <option value="manrope">Manrope</option>
+                  <option value="jetbrains-mono">JetBrains Mono</option>
+                  <option value="fira-code">Fira Code</option>
+                </select>
+              </label>
+            </div>
+          </>
+        )}
       </div>
-      
+    );
+  }
+
+  return (
+    <div role="group" aria-label="Theme and Font" style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
+      <button type="button" onClick={cycleTheme} aria-label={`theme: ${THEME_LABEL[theme]}`}>
+        {THEME_LABEL[theme]}
+      </button>
       <select
         aria-label="Font"
         value={font}
         onChange={(e) => setFont(e.target.value as Font)}
         style={{
-          padding: '4px 8px',
-          borderRadius: 'var(--radius-sm)',
-          border: 'var(--border)',
-          background: 'var(--surface-card)',
-          fontSize: 'var(--size-0)',
+          padding: "4px 8px",
+          borderRadius: "var(--radius-sm)",
+          border: "var(--border)",
+          background: "var(--surface-card)",
+          fontSize: "var(--size-0)",
         }}
       >
         <option value="geist">Geist</option>
@@ -207,5 +261,3 @@ export default function ThemeToggle() {
     </div>
   );
 }
-
-

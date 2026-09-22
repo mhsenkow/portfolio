@@ -29,6 +29,26 @@ export function taxTip({ subtotal, taxPct, tipPct, tipOn }) {
   return { taxAmount: taxAmt, tipAmount: tipAmt, tipBase, grand };
 }
 
+/** Invoice lines → subtotal → discount → tax → due. */
+export function invoiceTotal({ lines, discount, discMode, taxPct }) {
+  const rows = (Array.isArray(lines) ? lines : []).map((L) => {
+    const qty = Math.max(0, Number(L && L.qty) || 0);
+    const rate = Math.max(0, Number(L && L.rate) || 0);
+    const amt = qty * rate;
+    const desc = String((L && L.desc) || '').trim();
+    return { desc, qty, rate, amt };
+  }).filter((L) => L.desc || L.amt > 0);
+  const subtotal = rows.reduce((s, L) => s + L.amt, 0);
+  const discRaw = Math.max(0, Number(discount) || 0);
+  let discAmt = discMode === 'pct' ? subtotal * (discRaw / 100) : discRaw;
+  if (discAmt > subtotal) discAmt = subtotal;
+  const taxable = Math.max(0, subtotal - discAmt);
+  const tax = Math.max(0, Number(taxPct) || 0);
+  const taxAmount = taxable * (tax / 100);
+  const grand = taxable + taxAmount;
+  return { lines: rows, subtotal, discountAmount: discAmt, taxAmount, grand };
+}
+
 /** Distance at pace → duration ms; or duration → required pace. */
 export function paceEta({ distance, paceMinPerUnit, hours, mode }) {
   const d = Math.max(0, Number(distance) || 0);
@@ -86,6 +106,138 @@ export function contrastRatio(fgHex, bgHex) {
     aaa: ratio >= 7,
     aaLarge: ratio >= 3,
     aaaLarge: ratio >= 4.5
+  };
+}
+
+/** D65 / 2° CIE XYZ → CIELAB. */
+function xyzToLab(x, y, z) {
+  const Xn = 0.95047;
+  const Yn = 1;
+  const Zn = 1.08883;
+  const f = (t) => (t > 216 / 24389 ? Math.cbrt(t) : (841 / 108) * t + 4 / 29);
+  const fx = f(x / Xn);
+  const fy = f(y / Yn);
+  const fz = f(z / Zn);
+  return { L: 116 * fy - 16, a: 500 * (fx - fy), b: 200 * (fy - fz) };
+}
+
+function labToXyz(L, a, b) {
+  const Xn = 0.95047;
+  const Yn = 1;
+  const Zn = 1.08883;
+  const fy = (L + 16) / 116;
+  const fx = fy + a / 500;
+  const fz = fy - b / 200;
+  const inv = (t) => {
+    const t3 = t * t * t;
+    return t3 > 216 / 24389 ? t3 : (108 / 841) * (t - 4 / 29);
+  };
+  return [Xn * inv(fx), Yn * inv(fy), Zn * inv(fz)];
+}
+
+function linearToSrgb(c) {
+  const x = Math.max(0, Math.min(1, c));
+  return x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055;
+}
+
+function rgbToLab(rgb) {
+  const [r, g, b] = rgb.map(srgbToLinear);
+  const x = r * 0.4124564 + g * 0.3575761 + b * 0.1804375;
+  const y = r * 0.2126729 + g * 0.7151522 + b * 0.072175;
+  const z = r * 0.0193339 + g * 0.119192 + b * 0.9503041;
+  return xyzToLab(x, y, z);
+}
+
+function labToRgb(L, a, b) {
+  const [x, y, z] = labToXyz(L, a, b);
+  const r = linearToSrgb(x * 3.2404542 + y * -1.5371385 + z * -0.4985314);
+  const g = linearToSrgb(x * -0.969266 + y * 1.8760108 + z * 0.041556);
+  const bl = linearToSrgb(x * 0.0556434 + y * -0.2040259 + z * 1.0572252);
+  return [
+    Math.round(Math.max(0, Math.min(1, r)) * 255),
+    Math.round(Math.max(0, Math.min(1, g)) * 255),
+    Math.round(Math.max(0, Math.min(1, bl)) * 255)
+  ];
+}
+
+function rgbToHex(rgb) {
+  return (
+    '#' +
+    rgb
+      .map((c) => Math.max(0, Math.min(255, Math.round(c))).toString(16).padStart(2, '0'))
+      .join('')
+  );
+}
+
+/**
+ * Helmholtz / Schrödinger-style geometry over CIELAB (paper approx via ΔE structure).
+ * Neutral at equal lightness = closest to black → (L*, 0, 0).
+ * Path A→gray is radial in a*b* (shortest under the usual ΔE family).
+ *
+ * Build from geometric HCL, or from hex (+ optional intensity / quality for Bezold–Brücke).
+ */
+export function colorGeometry(opts = {}) {
+  const t = Math.max(0, Math.min(100, Number(opts.path) || 0)) / 100;
+  const geo = opts.quality !== 'straight';
+  let L;
+  let a;
+  let b;
+  let rgb;
+
+  if (opts.hex != null && opts.hue == null && opts.C == null && opts.L == null) {
+    const base = parseHexColor(opts.hex) || [196, 92, 38];
+    const inten = Math.max(5, Math.min(150, Number(opts.intensity) || 100)) / 100;
+    if (geo) {
+      const lab0 = rgbToLab(base);
+      L = Math.max(0, Math.min(100, lab0.L * inten));
+      a = lab0.a;
+      b = lab0.b;
+      rgb = labToRgb(L, a, b);
+    } else {
+      rgb = base.map((c) => Math.max(0, Math.min(255, c * inten)));
+      const lab = rgbToLab(rgb);
+      L = lab.L;
+      a = lab.a;
+      b = lab.b;
+    }
+  } else {
+    L = Math.max(0, Math.min(100, Number(opts.L) != null ? Number(opts.L) : 50));
+    const C = Math.max(0, Math.min(140, Number(opts.C) != null ? Number(opts.C) : 40));
+    const hueDeg = ((Number(opts.hue) || 0) % 360 + 360) % 360;
+    const rad = (hueDeg * Math.PI) / 180;
+    a = C * Math.cos(rad);
+    b = C * Math.sin(rad);
+    rgb = labToRgb(L, a, b);
+  }
+
+  const lab = { L, a, b };
+  const C = Math.sqrt(a * a + b * b);
+  const hue = ((Math.atan2(b, a) * 180) / Math.PI + 360) % 360;
+  const mid = { L, a: a * (1 - t), b: b * (1 - t) };
+  const midC = C * (1 - t);
+  const midRgb = labToRgb(mid.L, mid.a, mid.b);
+  const grayRgb = labToRgb(L, 0, 0);
+  const damp = C > 0 ? Math.pow(C, 0.7) : 0;
+  /* Straight-line intensity twin of current Lab color (same L* scaled via RGB). */
+  const straightRgb = rgb.map((c) => Math.max(0, Math.min(255, c * 0.45)));
+  const straightLab = rgbToLab(straightRgb);
+
+  return {
+    hex: rgbToHex(rgb),
+    L,
+    a,
+    b,
+    C,
+    hue,
+    grayL: L,
+    grayHex: rgbToHex(grayRgb),
+    midHex: rgbToHex(midRgb),
+    midC,
+    path: t,
+    damp,
+    quality: geo ? 'geodesic' : 'straight',
+    straightHue: ((Math.atan2(straightLab.b, straightLab.a) * 180) / Math.PI + 360) % 360,
+    hueShift: (((Math.atan2(straightLab.b, straightLab.a) * 180) / Math.PI + 360) % 360) - hue
   };
 }
 

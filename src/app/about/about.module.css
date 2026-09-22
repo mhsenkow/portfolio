@@ -1,0 +1,238 @@
+.page {
+  padding: var(--space-12) 0 var(--space-16);
+}
+
+.mast {
+  margin-bottom: var(--space-8);
+}
+
+.hint {
+  margin: 0 0 var(--space-2);
+  font-size: var(--size-1);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--color-muted);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, var(--size-7));
+  line-height: 1.05;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.7fr);
+  gap: clamp(var(--space-6), 4vw, var(--space-10));
+  align-items: start;
+}
+
+.story {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 40rem;
+  min-width: 0;
+  color: var(--color-text);
+  font-size: var(--size-3);
+  line-height: 1.55;
+}
+
+.story p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.story strong {
+  font-weight: 600;
+}
+
+.orgList {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  min-width: 0;
+}
+
+.orgList li {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 7rem) minmax(0, 1fr);
+  gap: var(--space-3) var(--space-4);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: var(--border-weak, 1px solid color-mix(in srgb, var(--color-text) 12%, transparent));
+}
+
+.orgList li:first-child {
+  border-top: var(--border-weak, 1px solid color-mix(in srgb, var(--color-text) 12%, transparent));
+}
+
+.orgName {
+  font-size: var(--size-2);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+}
+
+.orgBody {
+  font-size: var(--size-2);
+  line-height: 1.5;
+  color: var(--color-muted);
+  min-width: 0;
+}
+
+.orgBodyFull {
+  grid-column: 1 / -1;
+  font-size: var(--size-2);
+  line-height: 1.5;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.aside {
+  display: grid;
+  gap: var(--space-5);
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-4));
+  min-width: 0;
+}
+
+.portrait {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--card-radius, 24px);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  background: var(--surface-image-frame, var(--card-bg));
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+.portraitImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.meta {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.metaLabel {
+  margin: 0 0 var(--space-2);
+  font-size: var(--size-1);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--color-muted);
+}
+
+.metaText {
+  margin: 0;
+  font-size: var(--size-2);
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+.links {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.links a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--size-2);
+  border-bottom: 1px solid transparent;
+  width: fit-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.links a:hover,
+.links a:focus-visible {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* tablet: stack story, then photo + meta side-by-side */
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .aside {
+    position: static;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    align-items: stretch;
+    max-width: none;
+  }
+
+  .story {
+    max-width: none;
+  }
+}
+
+/* narrow tablet: stack photo above meta */
+@media (max-width: 720px) {
+  .aside {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+}
+
+/* phone: single column, stacked org rows, tighter chrome */
+@media (max-width: 640px) {
+  .page {
+    padding: var(--space-8) 0 var(--space-12);
+  }
+
+  .mast {
+    margin-bottom: var(--space-6);
+  }
+
+  .story {
+    font-size: clamp(16px, 4.2vw, 18px);
+    gap: var(--space-3);
+  }
+
+  .orgList li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: var(--space-3) 0;
+  }
+
+  .orgBodyFull {
+    grid-column: auto;
+  }
+
+  .aside {
+    max-width: min(360px, 100%);
+  }
+
+  .meta {
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 420px) {
+  .aside {
+    max-width: none;
+  }
+
+  .links {
+    gap: 8px;
+  }
+}

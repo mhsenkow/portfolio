@@ -242,15 +242,18 @@
     };
   }
 
-  function ensureDeepHost(stage, kind, scrubId) {
+  function ensureDeepHost(stage, kind, scrubId, scrubXId) {
     if (!stage) return null;
     var want = kind === 'webgl' ? 'deep-canvas' : 'deep-chart';
     var el = stage.querySelector('.' + want);
+    function applyScrub(overlay) {
+      if (!overlay || !scrubId) return;
+      overlay.setAttribute('data-scrub', scrubId);
+      if (scrubXId) overlay.setAttribute('data-scrub-x', scrubXId);
+      else overlay.removeAttribute('data-scrub-x');
+    }
     if (el && stage.getAttribute('data-deep') === kind) {
-      if (scrubId) {
-        var overlay = stage.querySelector('.deep-scrub');
-        if (overlay) overlay.setAttribute('data-scrub', scrubId);
-      }
+      if (scrubId) applyScrub(stage.querySelector('.deep-scrub'));
       return el;
     }
     stage.innerHTML = '';
@@ -269,14 +272,14 @@
     if (scrubId) {
       var ov = document.createElement('div');
       ov.className = 'deep-scrub';
-      ov.setAttribute('data-scrub', scrubId);
+      applyScrub(ov);
       ov.setAttribute('aria-hidden', 'true');
       stage.appendChild(ov);
     }
     return el;
   }
 
-  var DEEP_WEBGL = { fuel: 1, ratio: 1, exposure: 1, combo: 1, bayes: 1, sample: 1 };
+  var DEEP_WEBGL = { fuel: 1, ratio: 1, exposure: 1, combo: 1, bayes: 1, sample: 1, hue: 1 };
   var _deepPaintGen = 0;
   var _deepResizeRaf = 0;
   var _deepLastSize = { w: 0, h: 0 };
@@ -518,6 +521,7 @@
             '<fieldset><legend>keys</legend><p class="keys-hint">' +
               '<kbd>esc</kbd> close · <kbd>⌘/ctrl</kbd>+<kbd>,</kbd> settings · <kbd>⌘/ctrl</kbd>+<kbd>⇧</kbd>+<kbd>t</kbd> theme' +
               '<br><strong>gestures</strong> — face / chart: drag up/down = primary · left/right = linked axis · pinch · trackpad · <kbd>⌘</kbd>+scroll = coarse' +
+              '<br>mapped stage cells: up/down = field · left/right = linked field when marked · tap focuses · arrows nudge' +
               '<br>value row: drag that field · tap empty cell to type · stack scrolls when mid-list' +
               '<br>chart cell: tab to focus · <kbd>↑</kbd><kbd>↓</kbd> nudge · <kbd>⇧</kbd> = coarse · live value while dragging' +
               '<br>steppers: hold ± to accelerate · haptic on each step' +
@@ -528,7 +532,7 @@
     document.body.appendChild(dock);
     polishInputs(document);
     mountSteppers(document);
-    mountGestures();
+    if (opts.gestures !== false) mountGestures();
     mountInstrumentLayout();
 
     var panel = document.getElementById('settings');
@@ -814,8 +818,19 @@
         /* One tab stop per mapped field — deal grids can have dozens of cells */
         el.setAttribute('tabindex', firstOfId ? '0' : '-1');
         el.setAttribute('role', 'slider');
-        el.setAttribute('aria-orientation', 'vertical');
-        el.setAttribute('aria-label', 'adjust ' + scrubLabelFor(input, scrubId));
+        var scrubXId = el.getAttribute('data-scrub-x');
+        var scrubXInput = scrubXId ? document.getElementById(scrubXId) : null;
+        if (scrubXInput) {
+          el.setAttribute('aria-orientation', 'undefined');
+          el.setAttribute(
+            'aria-label',
+            'adjust ' + scrubLabelFor(input, scrubId) + ' up/down · ' +
+              scrubLabelFor(scrubXInput, scrubXId) + ' left/right'
+          );
+        } else {
+          el.setAttribute('aria-orientation', 'vertical');
+          el.setAttribute('aria-label', 'adjust ' + scrubLabelFor(input, scrubId));
+        }
       } else if (!el.getAttribute('aria-label') && scrubId) {
         el.setAttribute('aria-label', 'adjust ' + scrubLabelFor(input, scrubId));
       }
@@ -1076,6 +1091,63 @@
         }
       }
     });
+    pairGestureAxes(root);
+  }
+
+  /** Ensure every scrubbable field has a horizontal partner (data-axis-x). */
+  function pairGestureAxes(root) {
+    root = root || document;
+    var main = root.querySelector ? (root.querySelector('main') || root) : document;
+    var nodes = main.querySelectorAll
+      ? main.querySelectorAll('input[type="number"][id], select[id][data-primary], select[id][data-gesture], select[id][data-axis-x]')
+      : [];
+    var fields = [];
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      if (nodes[i].id && nodes[i].closest && nodes[i].closest('.stack, .panel, fieldset.panel, main')) {
+        /* Drop self-pairs (e.g. data-axis-x pointing at itself) */
+        if (nodes[i].getAttribute('data-axis-x') === nodes[i].id) {
+          nodes[i].removeAttribute('data-axis-x');
+        }
+        fields.push(nodes[i]);
+      }
+    }
+    if (fields.length < 2) return;
+    var primary = null;
+    for (i = 0; i < fields.length; i++) {
+      if (fields[i].hasAttribute('data-primary')) {
+        primary = fields[i];
+        break;
+      }
+    }
+    if (!primary) primary = fields[0];
+    function ensurePair(el, partner) {
+      if (!el || !partner || el === partner || !partner.id) return;
+      if (!el.getAttribute('data-axis-x')) el.setAttribute('data-axis-x', partner.id);
+    }
+    /* Primary ↔ first other field */
+    var second = null;
+    for (i = 0; i < fields.length; i++) {
+      if (fields[i] !== primary) {
+        second = fields[i];
+        break;
+      }
+    }
+    ensurePair(primary, second);
+    ensurePair(second, primary);
+    /* If primary already named a partner, mirror reciprocal */
+    var named = primary.getAttribute('data-axis-x');
+    if (named) {
+      var namedEl = document.getElementById(named);
+      ensurePair(namedEl, primary);
+    }
+    /* Remaining fields: next in list, falling back to primary */
+    for (i = 0; i < fields.length; i++) {
+      if (fields[i].getAttribute('data-axis-x')) continue;
+      var next = fields[(i + 1) % fields.length];
+      if (next === fields[i]) next = primary;
+      ensurePair(fields[i], next !== fields[i] ? next : second);
+    }
   }
 
   /** Attach Braun-style ± steppers to every number input in root. */
@@ -1106,17 +1178,59 @@
 
   /**
    * Gesture vocabulary (number tools):
-   * - Face / chart: ambient scrub → data-primary (Y), data-axis-x (X), data-pinch (pinch)
-   * - Chart [data-scrub=id]: locks to that input (envelope / mapped cell)
-   * - Row (incl. its input): locked scrub → that field on both axes; tap (no drag) focuses
-   * - Stack mid-scroll: wheel defers to scroll; empty chart well hits stage through main
-   * - Ratio stage: owns its own drag (skipped here)
-   * - Steppers: hold to accelerate; independent of scrub
-   * Attrs on inputs: data-primary, data-axis-x, data-pinch, data-step-fast
-   * Attrs on viz: data-scrub="<input id>"
+   * - Click/focus a field → that field is A (↕); its data-axis-x partner is B (↔)
+   * - Face / ambient stage: A/B from focus, else data-primary + its partner
+   * - Chart [data-scrub]: Y = that field; X = data-scrub-x or the field's data-axis-x
+   * - Row drag: same dual A/B (not both axes on one field when a partner exists)
+   * - Pinch → data-pinch on the active A field
+   * Attrs: data-primary, data-axis-x, data-pinch, data-step-fast
+   * Viz: data-scrub · data-scrub-x (optional override)
    */
   var scrubBubble = null;
   var scrubBubbleAnchor = null;
+  var axisChip = null;
+  var axisChipY = null;
+  var axisChipX = null;
+
+  function fieldShortLabel(input) {
+    if (!input) return '';
+    var row = input.closest('label.row');
+    var key = row && row.querySelector('.key');
+    if (key && key.textContent) return key.textContent.trim();
+    var aria = input.getAttribute('aria-label');
+    if (aria) return aria.split(' ')[0];
+    return input.id || '';
+  }
+
+  function ensureAxisChip() {
+    if (axisChip) return axisChip;
+    axisChip = document.createElement('div');
+    axisChip.className = 'axis-chip';
+    axisChip.setAttribute('aria-hidden', 'true');
+    axisChip.innerHTML = '<span class="axis-y"></span><span class="axis-x"></span>';
+    var face = document.querySelector('main .face');
+    if (face && face.parentNode) face.parentNode.insertBefore(axisChip, face.nextSibling);
+    else document.body.appendChild(axisChip);
+    return axisChip;
+  }
+
+  function updateAxisChip(yInput, xInput) {
+    if (!yInput) return;
+    var chip = ensureAxisChip();
+    var yEl = chip.querySelector('.axis-y');
+    var xEl = chip.querySelector('.axis-x');
+    var yLab = fieldShortLabel(yInput);
+    var xLab = xInput && xInput !== yInput ? fieldShortLabel(xInput) : '';
+    if (yEl) yEl.textContent = '↕ ' + yLab;
+    if (xEl) {
+      xEl.textContent = xLab ? '↔ ' + xLab : '';
+      xEl.hidden = !xLab;
+    }
+    chip.classList.toggle('is-dual', !!xLab);
+    chip.classList.add('is-on');
+    axisChipY = yInput;
+    axisChipX = xInput && xInput !== yInput ? xInput : null;
+  }
 
   function ensureScrubBubble() {
     if (scrubBubble) return scrubBubble;
@@ -1206,6 +1320,23 @@
     var scrubTimer = null;
     var drag = null;
 
+    function isGestureField(el) {
+      return !!(
+        el &&
+        el.matches &&
+        (el.matches('input[type="number"]') ||
+          el.matches('select[data-primary], select[data-gesture], select[data-axis-x]'))
+      );
+    }
+
+    function partnerOf(input) {
+      if (!input) return null;
+      var xId = input.getAttribute('data-axis-x');
+      if (!xId) return null;
+      var el = document.getElementById(xId);
+      return el && el !== input ? el : null;
+    }
+
     function primaryInput() {
       return document.querySelector('main input[type="number"][data-primary], main select[data-primary]') ||
         document.querySelector('main input[type="number"], main select[data-gesture]');
@@ -1213,46 +1344,39 @@
 
     function resolveTarget(axis) {
       var focused = document.activeElement;
-      if (focused && focused.matches && focused.matches('input[type="number"]')) {
-        if (axis === 'x') {
-          var xId = focused.getAttribute('data-axis-x');
-          if (xId) {
-            var xEl = document.getElementById(xId);
-            if (xEl) return xEl;
-          }
-        }
+      if (isGestureField(focused)) {
+        if (axis === 'x') return partnerOf(focused) || focused;
         return focused;
       }
-      var hovered = document.querySelector('label.row:hover input[type="number"]');
+      var hovered = document.querySelector('label.row:hover input[type="number"], label.row:hover select[data-primary], label.row:hover select[data-gesture]');
       if (hovered) {
-        if (axis === 'x') {
-          var hx = hovered.getAttribute('data-axis-x');
-          if (hx) {
-            var hxEl = document.getElementById(hx);
-            if (hxEl) return hxEl;
-          }
-        }
+        if (axis === 'x') return partnerOf(hovered) || hovered;
         return hovered;
+      }
+      if (axisChipY) {
+        if (axis === 'x') return axisChipX || partnerOf(axisChipY) || axisChipY;
+        return axisChipY;
       }
       var primary = primaryInput();
       if (!primary) return null;
-      if (axis === 'x') {
-        var px = primary.getAttribute('data-axis-x');
-        if (px) {
-          var pxEl = document.getElementById(px);
-          if (pxEl) return pxEl;
-        }
-      }
+      if (axis === 'x') return partnerOf(primary) || primary;
       return primary;
     }
 
     function setActive(input) {
-      document.querySelectorAll('label.row[data-active]').forEach(function (r) {
+      document.querySelectorAll('label.row[data-active], label.row[data-pair]').forEach(function (r) {
         r.removeAttribute('data-active');
+        r.removeAttribute('data-pair');
       });
       if (!input) return;
       var row = input.closest('label.row');
       if (row) row.setAttribute('data-active', 'true');
+      var pair = partnerOf(input);
+      if (pair) {
+        var prow = pair.closest('label.row');
+        if (prow) prow.setAttribute('data-pair', 'true');
+      }
+      updateAxisChip(input, pair);
     }
 
     function beginScrub() {
@@ -1267,7 +1391,7 @@
     function endScrubNow() {
       if (scrubTimer) clearTimeout(scrubTimer);
       scrubTimer = null;
-      document.body.classList.remove('is-scrubbing');
+      document.body.classList.remove('is-scrubbing', 'is-dual-scrub');
       hideScrubBubble();
       document.querySelectorAll('.tool-stage [data-scrub].is-live').forEach(function (n) {
         n.classList.remove('is-live');
@@ -1367,13 +1491,18 @@
 
       if (absY < 1 && absX < 1) return;
 
+      /* No scrub targets (ereader / map / plain pages) — allow native scroll. */
+      if (!primaryInput() && !document.querySelector('main [data-scrub], main .face, main .tool-stage')) {
+        return;
+      }
+
       if (absY >= absX) {
         e.preventDefault();
         accumY += dy;
         accumX = 0;
         while (Math.abs(accumY) >= THRESH) {
           var ydir = accumY < 0 ? 1 : -1;
-          accumY -= (accumY > 0 ? 1 : -1) * THRESH;
+          accumY -= ((accumY > 0 ? 1 : -1) * THRESH);
           nudge(resolveTarget('y'), ydir, { fast: e.shiftKey });
         }
       } else {
@@ -1382,7 +1511,7 @@
         accumY = 0;
         while (Math.abs(accumX) >= THRESH) {
           var xdir = accumX > 0 ? 1 : -1;
-          accumX -= (accumX > 0 ? 1 : -1) * THRESH;
+          accumX -= ((accumX > 0 ? 1 : -1) * THRESH);
           nudge(resolveTarget('x'), xdir, { fast: e.shiftKey });
         }
       }
@@ -1410,12 +1539,21 @@
       var typingHere = onRowInput && row.matches(':focus-within') && document.activeElement === t;
 
       var locked = null;
-      if (row) locked = row.querySelector('input[type="number"]');
+      var lockedX = null;
+      if (row) locked = row.querySelector('input[type="number"], select[data-primary], select[data-gesture]');
       if (onRowInput) locked = t;
-      /* Chart region mapped to a field (envelope, day col, …) */
+      /* Chart region: Y = scrub field; X = explicit scrub-x or that field's axis partner */
       if (!locked && scrubHit) {
         var scrubId = scrubHit.getAttribute('data-scrub');
         if (scrubId) locked = document.getElementById(scrubId);
+        var scrubXId = scrubHit.getAttribute('data-scrub-x');
+        if (scrubXId) lockedX = document.getElementById(scrubXId);
+      }
+      if (locked && !lockedX) lockedX = partnerOf(locked);
+      var ambient = !!(!row && !locked && (face || stage));
+      if (ambient && !lockedX) {
+        var ay = axisChipY || primaryInput();
+        if (ay) lockedX = partnerOf(ay);
       }
 
       /* Defer focus so a scrub drag doesn't pop the keyboard */
@@ -1431,7 +1569,9 @@
         accumX: 0,
         moved: false,
         locked: locked,
-        ambient: !!(!row && !locked && (face || stage)),
+        lockedX: lockedX,
+        dualScrub: !!(lockedX && lockedX !== locked && (locked || ambient)),
+        ambient: ambient,
         focusEl: onRowInput && !typingHere ? t : null,
         scrubEl: scrubHit || null,
         captureEl: row || scrubHit || face || stage
@@ -1455,10 +1595,11 @@
       var absY = Math.abs(drag.accumY);
       var absX = Math.abs(drag.accumX);
       if (!drag.moved && absY < 6 && absX < 6) return;
-      if (!drag.moved) {
+        if (!drag.moved) {
         drag.moved = true;
         drag.focusEl = null;
         document.body.classList.add('is-scrubbing');
+        document.body.classList.toggle('is-dual-scrub', !!drag.dualScrub || !!(axisChipX));
         document.querySelectorAll('.tool-stage [data-scrub].is-live').forEach(function (n) {
           n.classList.remove('is-live');
         });
@@ -1470,14 +1611,19 @@
           try { active.blur(); } catch (err) {}
         }
         var firstTarget = drag.locked || resolveTarget('y');
+        if (firstTarget) setActive(firstTarget);
         updateScrubBubble(firstTarget, e.clientX, e.clientY, drag.scrubEl || drag.captureEl);
       }
       e.preventDefault();
 
       var thresh = e.pointerType === 'touch' || e.pointerType === 'pen' ? TOUCH_THRESH : THRESH;
       function dragTarget(axis) {
-        /* Row lock owns both axes; ambient face/chart uses primary / axis-x / focus */
-        if (drag.locked && !drag.ambient) return drag.locked;
+        /* Locked field (row or scrub): Y = A, X = partner B when dual */
+        if (drag.locked) {
+          if (drag.dualScrub && axis === 'x') return drag.lockedX || drag.locked;
+          return drag.locked;
+        }
+        /* Ambient face/stage: A/B from focus / last chip / primary */
         return resolveTarget(axis);
       }
       if (absY >= absX) {
@@ -1486,17 +1632,20 @@
           drag.accumY -= (drag.accumY > 0 ? 1 : -1) * thresh;
           nudge(dragTarget('y'), ydir, { fast: e.shiftKey });
         }
-        drag.accumX = 0;
+        /* Dual scrub keeps both axes live; single-lock discards the other axis */
+        if (!drag.dualScrub) drag.accumX = 0;
       } else {
         while (Math.abs(drag.accumX) >= thresh) {
           var xdir = drag.accumX > 0 ? 1 : -1;
           drag.accumX -= (drag.accumX > 0 ? 1 : -1) * thresh;
           nudge(dragTarget('x'), xdir, { fast: e.shiftKey });
         }
-        drag.accumY = 0;
+        if (!drag.dualScrub) drag.accumY = 0;
       }
       if (drag.moved) {
-        var liveInput = drag.locked && !drag.ambient ? drag.locked : resolveTarget(absY >= absX ? 'y' : 'x');
+        var liveInput = drag.dualScrub
+          ? dragTarget(absY >= absX ? 'y' : 'x')
+          : (drag.locked && !drag.ambient ? drag.locked : resolveTarget(absY >= absX ? 'y' : 'x'));
         updateScrubBubble(liveInput, e.clientX, e.clientY, drag.scrubEl || drag.captureEl);
       }
     }
@@ -1547,14 +1696,20 @@
       if (!t || !t.getAttribute) return;
       var scrubId = t.getAttribute('data-scrub');
       if (!scrubId) return;
-      var input = document.getElementById(scrubId);
-      if (!input) return;
+      var inputY = document.getElementById(scrubId);
+      if (!inputY) return;
+      var scrubXId = t.getAttribute('data-scrub-x');
+      var inputX = scrubXId ? document.getElementById(scrubXId) : partnerOf(inputY);
       var dir = 0;
-      if (e.key === 'ArrowUp' || e.key === 'ArrowRight') dir = 1;
-      else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') dir = -1;
+      var axis = 'y';
+      if (e.key === 'ArrowUp') { dir = 1; axis = 'y'; }
+      else if (e.key === 'ArrowDown') { dir = -1; axis = 'y'; }
+      else if (e.key === 'ArrowRight') { dir = 1; axis = 'x'; }
+      else if (e.key === 'ArrowLeft') { dir = -1; axis = 'x'; }
       else return;
       e.preventDefault();
       lastScrubId = scrubId;
+      var input = (axis === 'x' && inputX && inputX !== inputY) ? inputX : inputY;
       nudge(input, dir, { fast: e.shiftKey });
       var v = parseFloat(input.value);
       if (isFinite(v)) t.setAttribute('aria-valuenow', String(v));
@@ -1568,9 +1723,7 @@
     document.addEventListener('keydown', onScrubKey);
 
     document.addEventListener('focusin', function (e) {
-      if (e.target && e.target.matches && e.target.matches('input[type="number"]')) {
-        setActive(e.target);
-      }
+      if (isGestureField(e.target)) setActive(e.target);
       var scrub = e.target && e.target.closest && e.target.closest('[data-scrub]');
       if (scrub) {
         lastScrubId = scrub.getAttribute('data-scrub');
@@ -1582,15 +1735,20 @@
     document.addEventListener('focusout', function (e) {
       var scrub = e.target && e.target.closest && e.target.closest('[data-scrub]');
       if (scrub) scrub.classList.remove('is-live');
+      /* Keep last A/B chip + row marks; only clear active if nothing gesture-related retains focus */
       setTimeout(function () {
         var a = document.activeElement;
-        if (!a || !a.matches || !a.matches('input[type="number"]')) {
-          document.querySelectorAll('label.row[data-active]').forEach(function (r) {
-            if (!r.matches(':hover')) r.removeAttribute('data-active');
-          });
-        }
+        if (isGestureField(a)) return;
+        if (a && a.closest && a.closest('[data-scrub]')) return;
+        document.querySelectorAll('label.row[data-active]').forEach(function (r) {
+          if (!r.matches(':hover')) r.removeAttribute('data-active');
+        });
       }, 0);
     });
+
+    /* Seed A/B chip from primary so ambient scrub has a readable pair immediately */
+    var seed = primaryInput();
+    if (seed) setActive(seed);
   }
 
   function formatMoney(n, opts) {

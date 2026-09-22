@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto" data-show-viz="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>hue — ibm.io</title>
+<meta name="description" content="path · gray">
+<link rel="canonical" href="https://ibm.io/hue/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="webFonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@400;500&family=Josefin+Sans:wght@400;500&family=Josefin+Slab:wght@400;500&family=Libre+Franklin:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Oswald:wght@400;500&family=Roboto+Slab:wght@400;500&family=Share+Tech+Mono&family=Source+Code+Pro:wght@400;500&family=Source+Sans+3:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Space+Mono:wght@400;700&display=swap"></noscript>
+<link rel="stylesheet" href="../lib/number-tool.css?v=48">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+</head>
+<body class="tool-app" data-tool="hue">
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>hue</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings">settings</button>
+  </div>
+</header>
+<main>
+
+  <div class="face">
+    <div class="face-value" id="out" role="status" aria-live="polite" aria-atomic="true">0</div>
+    <p class="face-sub" id="sub">chroma</p>
+  </div>
+  <div class="stack">
+    <fieldset class="panel">
+      <legend>geometry</legend>
+      <label class="row"><span class="key">hue</span><span class="value"><input id="hue" type="number" inputmode="numeric" min="0" max="360" step="1" value="52" data-primary data-axis="y" data-axis-x="chroma" data-pinch="light" data-step-fast="15" data-gesture="1" aria-label="hue angle degrees"><span class="unit">°</span></span></label>
+      <label class="row"><span class="key">chroma</span><span class="value"><input id="chroma" type="number" inputmode="decimal" min="0" max="140" step="1" value="62" aria-label="chroma C star"><span class="unit">C*</span></span></label>
+      <label class="row"><span class="key">light</span><span class="value"><input id="light" type="number" inputmode="decimal" min="0" max="100" step="1" value="51" aria-label="lightness L star"><span class="unit">L*</span></span></label>
+      <label class="row"><span class="key">path</span><span class="value"><input id="path" type="number" inputmode="numeric" min="0" max="100" step="5" value="50" aria-label="desaturation path toward gray percent"><span class="unit">%</span></span></label>
+      <label class="row"><span class="key">hex</span><span class="value"><input id="hex" type="text" value="#c45c26" spellcheck="false" autocomplete="off" aria-label="color hex"></span></label>
+    </fieldset>
+    <div class="presets" id="presets" role="group" aria-label="hue presets" data-cols="4">
+      <button type="button" class="preset" data-hue="52" data-chroma="62" data-light="51" data-path="50" aria-pressed="true">accent<span class="preset-meta">warm</span></button>
+      <button type="button" class="preset" data-hue="231" data-chroma="29" data-light="50" data-path="40" aria-pressed="false">sky<span class="preset-meta">cool</span></button>
+      <button type="button" class="preset" data-hue="152" data-chroma="38" data-light="52" data-path="55" aria-pressed="false">leaf<span class="preset-meta">green</span></button>
+      <button type="button" class="preset" data-hue="317" data-chroma="42" data-light="45" data-path="45" aria-pressed="false">plum<span class="preset-meta">violet</span></button>
+    </div>
+    <p class="note">drag the stage: ↕ / ↔ pan two params · pinch light · deep: orbit the solid</p>
+  </div>
+</main>
+<script src="../lib/suite.js?v=48"></script>
+<script src="../lib/number-tool.js?v=48"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('hue');
+  var toolUI = window.IBMNumberTool && IBMNumberTool.mountSettings({
+    id: 'hue',
+    about: "Geometric hue, saturation, and lightness from a perceptual metric — Helmholtz / Schrödinger via CIELAB. Scrub hue · chroma · light; path walks the geodesic to the closest gray. Metaphor stages + a deep WebGL Lab gamut solid.",
+    hasViz: true,
+    extra: {"defaults":{"face":"chroma","quality":"geodesic","shape":"path","solid":"gamut"},"fieldsHtml":"<fieldset><legend>face</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"face metric\"><label><input type=\"radio\" name=\"face\" value=\"chroma\"><span>chroma</span></label><label><input type=\"radio\" name=\"face\" value=\"hue\"><span>hue</span></label><label><input type=\"radio\" name=\"face\" value=\"light\"><span>light</span></label></div></fieldset><fieldset><legend>shape</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"metaphor stage\"><label><input type=\"radio\" name=\"shape\" value=\"path\"><span>path</span></label><label><input type=\"radio\" name=\"shape\" value=\"wheel\"><span>wheel</span></label><label><input type=\"radio\" name=\"shape\" value=\"leaf\"><span>leaf</span></label></div></fieldset><fieldset><legend>solid</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"deep solid\"><label><input type=\"radio\" name=\"solid\" value=\"gamut\"><span>gamut</span></label><label><input type=\"radio\" name=\"solid\" value=\"leaf\"><span>leaf</span></label><label><input type=\"radio\" name=\"solid\" value=\"cone\"><span>cone</span></label></div></fieldset><fieldset><legend>quality</legend><div class=\"seg\" role=\"radiogroup\" aria-label=\"compare dim path\"><label><input type=\"radio\" name=\"quality\" value=\"geodesic\"><span>geodesic</span></label><label><input type=\"radio\" name=\"quality\" value=\"straight\"><span>straight</span></label></div></fieldset>"},
+    onApply: function () {
+      if (typeof window.__ibmToolRender === 'function') window.__ibmToolRender();
+    }
+  });
+
+  var stage = IBMNumberTool.ensureStage('hue');
+  var syncing = false;
+  function parseHex(hex){
+    var h = String(hex || '').replace('#','').trim();
+    if (h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+    if (h.length !== 6 || /[^0-9a-fA-F]/.test(h)) return null;
+    return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+  }
+  function toHex(rgb){
+    return '#' + rgb.map(function(c){
+      return Math.max(0, Math.min(255, Math.round(c))).toString(16).padStart(2,'0');
+    }).join('');
+  }
+  function lin(c){ var x=c/255; return x<=0.04045 ? x/12.92 : Math.pow((x+0.055)/1.055, 2.4); }
+  function linOut(c){ var x=Math.max(0,Math.min(1,c)); return x<=0.0031308 ? 12.92*x : 1.055*Math.pow(x,1/2.4)-0.055; }
+  function rgbToLab(rgb){
+    var r=lin(rgb[0]), g=lin(rgb[1]), b=lin(rgb[2]);
+    var x=r*0.4124564+g*0.3575761+b*0.1804375;
+    var y=r*0.2126729+g*0.7151522+b*0.0721750;
+    var z=r*0.0193339+g*0.1191920+b*0.9503041;
+    var Xn=0.95047, Yn=1, Zn=1.08883;
+    function f(t){ return t>216/24389 ? Math.cbrt(t) : (841/108)*t+4/29; }
+    var fx=f(x/Xn), fy=f(y/Yn), fz=f(z/Zn);
+    return { L:116*fy-16, a:500*(fx-fy), b:200*(fy-fz) };
+  }
+  function labToRgb(L,a,b){
+    var Xn=0.95047, Yn=1, Zn=1.08883;
+    var fy=(L+16)/116, fx=fy+a/500, fz=fy-b/200;
+    function inv(t){ var t3=t*t*t; return t3>216/24389 ? t3 : (108/841)*(t-4/29); }
+    var x=Xn*inv(fx), y=Yn*inv(fy), z=Zn*inv(fz);
+    return [
+      Math.round(Math.max(0,Math.min(1,linOut(x*3.2404542+y*-1.5371385+z*-0.4985314)))*255),
+      Math.round(Math.max(0,Math.min(1,linOut(x*-0.9692660+y*1.8760108+z*0.0415560)))*255),
+      Math.round(Math.max(0,Math.min(1,linOut(x*0.0556434+y*-0.2040259+z*1.0572252)))*255)
+    ];
+  }
+  function faceMode(){
+    var s = toolUI && toolUI.settings;
+    if (s && s.face === 'hue') return 'hue';
+    if (s && s.face === 'light') return 'light';
+    return 'chroma';
+  }
+  function quality(){
+    var s = toolUI && toolUI.settings;
+    return (s && s.quality === 'straight') ? 'straight' : 'geodesic';
+  }
+  function shapeMode(){
+    var s = toolUI && toolUI.settings;
+    if (s && s.shape === 'wheel') return 'wheel';
+    if (s && s.shape === 'leaf') return 'leaf';
+    return 'path';
+  }
+  function solidMode(){
+    var s = toolUI && toolUI.settings;
+    if (s && s.solid === 'leaf') return 'leaf';
+    if (s && s.solid === 'cone') return 'cone';
+    return 'gamut';
+  }
+  function bindSwatchFocus(){
+    var btn = stage.querySelector('[data-focus]');
+    if (btn) btn.addEventListener('click', function(e){
+      e.preventDefault();
+      var el = document.getElementById('hex');
+      if (el) { el.focus(); el.select && el.select(); }
+    });
+  }
+  function paintPath(g){
+    var L = Math.round(g.L);
+    var span = Math.max(60, g.C * 1.35, 40);
+    var ax = 50 + (g.a / span) * 42;
+    var ay = 50 - (g.b / span) * 42;
+    var mx = 50 + (g.a * (1-g.t) / span) * 42;
+    var my = 50 - (g.b * (1-g.t) / span) * 42;
+    var shift = Math.round(g.hueShift * 10) / 10;
+    stage.innerHTML =
+      '<div class="hue-stage is-path">' +
+        '<div class="hue-path" role="img" aria-label="color to gray path">' +
+          '<button type="button" class="hue-swatch is-ref" style="background:' + g.hex + '" data-focus="hex" aria-label="edit hex"></button>' +
+          '<span class="hue-arrow" aria-hidden="true"></span>' +
+          '<div class="hue-swatch is-mid" style="background:' + g.midHex + '" title="path"></div>' +
+          '<span class="hue-arrow" aria-hidden="true"></span>' +
+          '<div class="hue-swatch is-gray" style="background:' + g.grayHex + '" title="closest gray"></div>' +
+          '<span class="hue-sep" aria-hidden="true"></span>' +
+          '<div class="hue-swatch is-dim" style="background:' + g.compareHex + '" title="' + g.q + ' dim"></div>' +
+        '</div>' +
+        '<div class="hue-plane" data-scrub="hue" data-scrub-x="chroma" aria-hidden="true">' +
+          '<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">' +
+            '<line x1="8" y1="50" x2="92" y2="50" class="hue-axis"/>' +
+            '<line x1="50" y1="8" x2="50" y2="92" class="hue-axis"/>' +
+            '<line x1="50" y1="50" x2="' + ax.toFixed(1) + '" y2="' + ay.toFixed(1) + '" class="hue-ray"/>' +
+            '<circle cx="50" cy="50" r="2.2" class="hue-dot is-n"/>' +
+            '<circle cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="2.6" class="hue-dot is-m" fill="' + g.midHex + '"/>' +
+            '<circle cx="' + ax.toFixed(1) + '" cy="' + ay.toFixed(1) + '" r="3.2" class="hue-dot is-c" fill="' + g.hex + '"/>' +
+          '</svg>' +
+          '<div class="hue-meta"><span>↕ hue</span><span>↔ chroma</span><span>L* ' + L + '</span><span>Δh ' + (shift >= 0 ? '+' : '') + shift + '°</span></div>' +
+        '</div>' +
+      '</div>';
+    bindSwatchFocus();
+  }
+  function paintWheel(g){
+    var rMax = 42;
+    var r = Math.max(4, Math.min(rMax, (g.C / 100) * rMax));
+    var rMid = Math.max(2, r * (1 - g.t));
+    var rad = g.hue * Math.PI / 180;
+    var ax = 50 + Math.cos(rad) * r;
+    var ay = 50 - Math.sin(rad) * r;
+    var mx = 50 + Math.cos(rad) * rMid;
+    var my = 50 - Math.sin(rad) * rMid;
+    var ticks = '';
+    var i, ang, x1, y1, x2, y2;
+    for (i = 0; i < 12; i++) {
+      ang = i * 30 * Math.PI / 180;
+      x1 = 50 + Math.cos(ang) * 38;
+      y1 = 50 - Math.sin(ang) * 38;
+      x2 = 50 + Math.cos(ang) * 42;
+      y2 = 50 - Math.sin(ang) * 42;
+      ticks += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" class="hue-axis"/>';
+    }
+    var wedges = '';
+    for (i = 0; i < 24; i++) {
+      var a0 = i * 15 * Math.PI / 180;
+      var a1 = (i + 1) * 15 * Math.PI / 180;
+      var sample = labToRgb(g.L, 55 * Math.cos(a0 + 0.13), 55 * Math.sin(a0 + 0.13));
+      var fill = toHex(sample);
+      var p1x = 50 + Math.cos(a0) * 36, p1y = 50 - Math.sin(a0) * 36;
+      var p2x = 50 + Math.cos(a1) * 36, p2y = 50 - Math.sin(a1) * 36;
+      wedges += '<path d="M50 50 L' + p1x.toFixed(1) + ' ' + p1y.toFixed(1) + ' A36 36 0 0 0 ' + p2x.toFixed(1) + ' ' + p2y.toFixed(1) + ' Z" fill="' + fill + '" opacity="0.55"/>';
+    }
+    stage.innerHTML =
+      '<div class="hue-stage is-wheel">' +
+        '<div class="hue-plane" data-scrub="hue" data-scrub-x="chroma" aria-hidden="true">' +
+          '<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">' +
+            wedges +
+            '<circle cx="50" cy="50" r="36" class="hue-ring" fill="none"/>' +
+            ticks +
+            '<line x1="50" y1="50" x2="' + ax.toFixed(1) + '" y2="' + ay.toFixed(1) + '" class="hue-ray"/>' +
+            '<circle cx="50" cy="50" r="4" fill="' + g.grayHex + '" class="hue-dot is-n"/>' +
+            '<circle cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" r="3" fill="' + g.midHex + '"/>' +
+            '<circle cx="' + ax.toFixed(1) + '" cy="' + ay.toFixed(1) + '" r="4.5" fill="' + g.hex + '" stroke="rgba(0,0,0,.25)" stroke-width="0.4"/>' +
+          '</svg>' +
+          '<div class="hue-meta"><span>↕ hue</span><span>↔ chroma</span><span>L* ' + Math.round(g.L) + '</span></div>' +
+        '</div>' +
+      '</div>';
+  }
+  function paintLeaf(g){
+    var maxC = 110;
+    var maxL = 100;
+    function xOf(c){ return 12 + (c / maxC) * 76; }
+    function yOf(l){ return 88 - (l / maxL) * 76; }
+    var pts = '';
+    var i, lv, cv, rgb, hx;
+    for (lv = 8; lv <= 92; lv += 7) {
+      for (cv = 0; cv <= 100; cv += 10) {
+        rgb = labToRgb(lv, cv * Math.cos(g.hue * Math.PI / 180), cv * Math.sin(g.hue * Math.PI / 180));
+        hx = toHex(rgb);
+        pts += '<circle cx="' + xOf(cv).toFixed(1) + '" cy="' + yOf(lv).toFixed(1) + '" r="1.6" fill="' + hx + '" opacity="0.85"/>';
+      }
+    }
+    var xC = xOf(g.C), yL = yOf(g.L);
+    var xM = xOf(g.C * (1 - g.t));
+    stage.innerHTML =
+      '<div class="hue-stage is-leaf">' +
+        '<div class="hue-plane" data-scrub="light" data-scrub-x="chroma" aria-hidden="true">' +
+          '<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">' +
+            '<line x1="12" y1="88" x2="88" y2="88" class="hue-axis"/>' +
+            '<line x1="12" y1="88" x2="12" y2="12" class="hue-axis"/>' +
+            pts +
+            '<line x1="12" y1="' + yL.toFixed(1) + '" x2="' + xC.toFixed(1) + '" y2="' + yL.toFixed(1) + '" class="hue-ray"/>' +
+            '<circle cx="12" cy="' + yL.toFixed(1) + '" r="2.4" fill="' + g.grayHex + '"/>' +
+            '<circle cx="' + xM.toFixed(1) + '" cy="' + yL.toFixed(1) + '" r="2.6" fill="' + g.midHex + '"/>' +
+            '<circle cx="' + xC.toFixed(1) + '" cy="' + yL.toFixed(1) + '" r="3.4" fill="' + g.hex + '"/>' +
+          '</svg>' +
+          '<div class="hue-meta"><span>↕ light</span><span>↔ chroma</span><span>h ' + Math.round(g.hue) + '°</span></div>' +
+        '</div>' +
+      '</div>';
+  }
+  function paint(g){
+    if (!stage) return;
+    var sh = shapeMode();
+    if (sh === 'wheel') paintWheel(g);
+    else if (sh === 'leaf') paintLeaf(g);
+    else paintPath(g);
+    IBMNumberTool.afterPaint && IBMNumberTool.afterPaint();
+  }
+  function render(){
+    if (syncing) return;
+    var hueDeg = parseFloat(document.getElementById('hue').value);
+    var C = parseFloat(document.getElementById('chroma').value);
+    var L = parseFloat(document.getElementById('light').value);
+    var pathPct = parseFloat(document.getElementById('path').value) || 0;
+    if (!isFinite(hueDeg)) hueDeg = 0;
+    if (!isFinite(C)) C = 0;
+    if (!isFinite(L)) L = 50;
+    var g = fromHCL(hueDeg, C, L, pathPct);
+    if (document.activeElement !== document.getElementById('hex')) document.getElementById('hex').value = g.hex;
+    var face = faceMode();
+    if (face === 'hue') {
+      document.getElementById('out').textContent = Math.round(g.hue) + '°';
+      document.getElementById('sub').textContent = 'C* ' + (Math.round(g.C * 10) / 10) + ' · L* ' + Math.round(g.L) + ' · path ' + Math.round(g.t * 100) + '%';
+    } else if (face === 'light') {
+      document.getElementById('out').textContent = (Math.round(g.L * 10) / 10).toFixed(1);
+      document.getElementById('sub').textContent = 'hue ' + Math.round(g.hue) + '° · C* ' + (Math.round(g.C * 10) / 10) + ' · ' + g.q;
+    } else {
+      document.getElementById('out').textContent = (Math.round(g.C * 10) / 10).toFixed(1);
+      document.getElementById('sub').textContent = 'hue ' + Math.round(g.hue) + '° · L* ' + Math.round(g.L) + ' · ' + g.q;
+    }
+    var mode = IBMNumberTool.vizMode ? IBMNumberTool.vizMode(toolUI && toolUI.settings || {}) : 'viz';
+    if (mode === 'deep') {
+      IBMNumberTool.paintDeep('hue', stage, {
+        a: g.a, b: g.b, C: g.C, L: g.L, t: g.t, hue: g.hue, hex: g.hex, solid: solidMode()
+      });
+    } else if (mode !== 'plain') paint(g);
+    else stage.innerHTML = '';
+    if (presets) presets.sync();
+  }
+  function fromHCL(hueDeg, C, L, pathPct){
+    var h = ((hueDeg % 360) + 360) % 360;
+    var c = Math.max(0, Math.min(140, C));
+    var l = Math.max(0, Math.min(100, L));
+    var t = Math.max(0, Math.min(1, (pathPct || 0) / 100));
+    var rad = h * Math.PI / 180;
+    var a = c * Math.cos(rad);
+    var b = c * Math.sin(rad);
+    var rgb = labToRgb(l, a, b);
+    var midRgb = labToRgb(l, a*(1-t), b*(1-t));
+    var grayRgb = labToRgb(l, 0, 0);
+    var dimRgb = labToRgb(Math.max(0, l * 0.45), a, b);
+    var strRgb = rgb.map(function(v){ return Math.max(0, Math.min(255, v * 0.45)); });
+    var strLab = rgbToLab(strRgb);
+    var strHue = ((Math.atan2(strLab.b, strLab.a) * 180 / Math.PI) + 360) % 360;
+    var dimLab = rgbToLab(dimRgb);
+    var dimHue = ((Math.atan2(dimLab.b, dimLab.a) * 180 / Math.PI) + 360) % 360;
+    return {
+      hex: toHex(rgb), L: l, a: a, b: b, C: c, hue: h,
+      grayHex: toHex(grayRgb), midHex: toHex(midRgb), midC: c*(1-t), t: t,
+      q: quality(),
+      compareHex: quality() === 'straight' ? toHex(strRgb) : toHex(dimRgb),
+      compareHue: quality() === 'straight' ? strHue : dimHue,
+      hueShift: (quality() === 'straight' ? strHue : dimHue) - h
+    };
+  }
+  function applyLabToFields(lab, pathKeep){
+    var C = Math.sqrt(lab.a*lab.a + lab.b*lab.b);
+    var hue = ((Math.atan2(lab.b, lab.a) * 180 / Math.PI) + 360) % 360;
+    syncing = true;
+    document.getElementById('hue').value = Math.round(hue);
+    document.getElementById('chroma').value = Math.round(C * 10) / 10;
+    document.getElementById('light').value = Math.round(lab.L * 10) / 10;
+    if (pathKeep == null) document.getElementById('path').value = document.getElementById('path').value;
+    syncing = false;
+  }
+  window.__ibmToolRender = render;
+
+  var presets = IBMNumberTool.bindPresets('#presets', {
+    keys: ["hue","chroma","light","path"],
+    map: null,
+    after: function () { render(); }
+  });
+  function fromHexInput(){
+    var parsed = parseHex(document.getElementById('hex').value);
+    if (!parsed) return;
+    applyLabToFields(rgbToLab(parsed));
+    render();
+  }
+  ['hue','chroma','light','path'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+    document.getElementById(id).addEventListener('change', render);
+  });
+  document.getElementById('hex').addEventListener('input', fromHexInput);
+  document.getElementById('hex').addEventListener('change', fromHexInput);
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,3 +1,5 @@
+import { githubBuilds } from './github-builds';
+
 export type Project = {
 	slug: string;
 	title: string;
@@ -31,6 +33,99 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+	...githubBuilds,
+	{
+		slug: 'walstad-loom',
+		title: 'walstad loom',
+		description:
+			'A generative pixel-art Walstad aquarium — 3D voxel sim → palette-quantize render, closed nutrient loop, agent fish with genomes. Watch more than you play.',
+		year: 2026,
+		featured: true,
+		category: 'creative',
+		image: {
+			src: '/images/projects/walstad-loom/card.png',
+			alt: 'walstad loom — library capsule',
+			width: 600,
+			height: 900,
+		},
+		gallery: [
+			{ src: '/images/projects/walstad-loom/tank-void.png', alt: 'Void tank — isolated aquascape' },
+			{ src: '/images/projects/walstad-loom/planted.png', alt: 'Planted community tank' },
+			{ src: '/images/projects/walstad-loom/school.png', alt: 'Schooling fish in the water column' },
+			{ src: '/images/projects/walstad-loom/night.png', alt: 'Night photoperiod' },
+			{ src: '/images/projects/walstad-loom/detail.png', alt: 'Close detail in the tank' },
+		],
+		stack: ['Godot 4', 'GDScript', 'GDShader', 'Simulation', 'Pixel art', 'Steam'],
+		links: [
+			{ label: 'Steam', href: 'https://store.steampowered.com/app/4796460/' },
+			{ label: 'GitHub (free builds)', href: 'https://github.com/mhsenkow/SimFish/releases' },
+			{ label: 'Site', href: 'https://mhsenkow.github.io/SimFish/docs/' },
+		],
+		details: {
+			role: 'Design, engineering, simulation, art direction',
+			entity: 'Sleeping Ox Studios',
+			years: '2025–2026 · Early Access July 7, 2026',
+			skills: [
+				'Systems design',
+				'Real-time rendering',
+				'Procedural content',
+				'Game feel / HUD craft',
+				'Steamworks',
+			],
+			headerImage: {
+				src: '/images/projects/walstad-loom/header.png',
+				alt: 'walstad loom store header',
+				width: 920,
+				height: 430,
+			},
+			prototypes: [
+				{ label: 'Wishlist on Steam', href: 'https://store.steampowered.com/app/4796460/' },
+				{ label: 'Play free (GitHub)', href: 'https://github.com/mhsenkow/SimFish/releases/latest' },
+			],
+			synopsis: [
+				'walstad loom is a living tank you watch more than you play. A continuous 3D voxel aquascape runs through a palette-quantize + dither pipeline so everything reads as chunky 48-color pixel art — while plants, fish, shrimp, and snails interact in a Walstad-style closed nutrient loop underneath.',
+				'Craft thesis: the beauty is downstream of the sim. Leaves arrange by real phyllotaxis. Shells draw carbonate and erode in soft water. Beer–Lambert extinction turns depth into colour. Fish carry genomes, coats, and minds — not keyframed loops.',
+				'Built solo in Godot 4 as digital craft: the same through-line as the generative sketches and Isovox experiments, taken all the way to a shippable Steam game. macOS / Windows / Linux / Android.',
+			],
+			sections: [
+				{
+					title: 'The pipeline',
+					body: [
+						'Continuous 3D simulation → voxel fauna and foliage → GDShader palette LUT + Bayer dither → 48-color output. Motion comes from state, not animation clips.',
+					],
+					images: [
+						{ src: '/images/projects/walstad-loom/tank-void.png', alt: 'Void preset tank' },
+					],
+				},
+				{
+					title: 'The loop',
+					body: [
+						'Plants pull nutrients from stratified substrate. Fauna waste feeds the bed. Algae blooms when nutrients run hot; grazers pull it back. Population dynamics settle over minutes of observation — the tank teaches you by happening.',
+					],
+					images: [
+						{ src: '/images/projects/walstad-loom/planted.png', alt: 'Planted bed' },
+					],
+				},
+				{
+					title: 'Agents, not sprites',
+					body: [
+						'Each fish is an individual: heritable morphology, swim pattern, flank motifs, asymmetry. Optional Guardian companion voice runs locally (on-device LLM on desktop Steam builds).',
+					],
+					images: [
+						{ src: '/images/projects/walstad-loom/school.png', alt: 'School in the column' },
+					],
+				},
+			],
+			goals: [
+				'Make a tank that feels like watching a real planted aquarium — then prove the feeling is load-bearing sim, not wallpaper.',
+				'Ship the craft: Steam depots, notarized macOS, free GitHub builds, a store page that reads honest.',
+			],
+			results: [
+				'Public builds on GitHub Releases; Steam wishlist open for Early Access July 7, 2026.',
+				'Same binaries across GitHub and Steam desktop depots.',
+			],
+		},
+	},
 	{
 		slug: 'apple-accessibility',
 		title: 'Apple — Accessibility and internal tooling',
@@ -1534,9 +1629,10 @@ export const projects: Project[] = [
 			synopsis: [
 				"I'm not fully sure how to group these. In relation to direct work, these experiments could inform smart headers, backgrounds, loaders, etc. In relation to artwork elsewhere…I'm always game for a challenge.",
 				"A collection of browser-based generative sketches. Pieces range from UI-adjacent concepts (headers/loaders) to purely artistic explorations.",
-				"Recent additions include interactive 3D voxel environments like the Isovox Aquarium — a real-time ecosystem simulation with customizable tank shapes, brush tools, and dynamic fish behavior."
+				"The Isovox Aquarium sketch grew into walstad loom — the full Godot game on Steam. See that case study for the shipped version."
 			],
 			prototypes: [
+				{ label: 'walstad loom (Steam)', href: '/projects/walstad-loom' },
 				{ label: 'Isovox Aquarium', href: 'https://isovox-aquarium.vercel.app/' },
 				{ label: 'Voice Visualizer', href: 'https://mhsenkow.org/experiments/AliceSong/' },
 				{ label: 'Music Sound experiment 2', href: 'https://mhsenkow.org/experiments/CAL/' },

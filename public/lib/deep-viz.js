@@ -5,9 +5,9 @@
 (function (global) {
   'use strict';
 
-  var WEBGL_3D = { fuel: 1, exposure: 1, bayes: 1 };
+  var WEBGL_3D = { fuel: 1, exposure: 1, bayes: 1, hue: 1 };
   var CANVAS_2D = { ratio: 1, combo: 1, sample: 1 };
-  var WEBGL = { fuel: 1, ratio: 1, exposure: 1, combo: 1, bayes: 1, sample: 1 };
+  var WEBGL = { fuel: 1, ratio: 1, exposure: 1, combo: 1, bayes: 1, sample: 1, hue: 1 };
 
   function engine(toolId) {
     if (WEBGL_3D[toolId]) return 'webgl3d';
@@ -932,6 +932,43 @@
     ]);
   }
 
+  function specInvoice(p) {
+    var lines = Array.isArray(p.lines) ? p.lines : [];
+    var data = [];
+    var i;
+    for (i = 0; i < lines.length; i++) {
+      var L = lines[i] || {};
+      var amt = Math.max(0, num(L.amt, 0));
+      if (amt <= 0 && !L.desc) continue;
+      data.push({
+        line: String(L.desc || ('L' + (i + 1))).slice(0, 24),
+        amount: amt,
+        kind: 'line'
+      });
+    }
+    var disc = Math.max(0, num(p.disc, 0));
+    var tax = Math.max(0, num(p.tax, 0));
+    if (disc > 0) data.push({ line: 'discount', amount: disc, kind: 'disc' });
+    if (tax > 0) data.push({ line: 'tax', amount: tax, kind: 'tax' });
+    if (!data.length) data.push({ line: '—', amount: 0, kind: 'line' });
+    return deepShell([
+      {
+        data: { values: data },
+        mark: { type: 'bar', cornerRadiusEnd: 1 },
+        encoding: {
+          y: { field: 'line', type: 'nominal', title: null, sort: null },
+          x: { field: 'amount', type: 'quantitative', title: '$' },
+          color: {
+            field: 'kind',
+            type: 'nominal',
+            scale: { domain: ['line', 'disc', 'tax'], range: 'category' },
+            legend: null
+          }
+        }
+      }
+    ], { left: 72, top: 8, right: 12, bottom: 28 });
+  }
+
   function specUnit(p) {
     var amount = Math.max(0, num(p.amount, 1));
     var density = Math.max(0.01, num(p.density, 1));
@@ -1248,6 +1285,43 @@
     ]);
   }
 
+  function specHue(p) {
+    var aa = num(p.a, 40);
+    var bb = num(p.b, 20);
+    var t = clamp(num(p.t, 0.5), 0, 1);
+    var span = Math.max(40, Math.abs(aa), Math.abs(bb), 1) * 1.25;
+    var c = themeColors();
+    var steps = [];
+    var i;
+    for (i = 0; i <= 20; i++) {
+      var u = i / 20;
+      steps.push({
+        a: Math.round(aa * (1 - u) * 10) / 10,
+        b: Math.round(bb * (1 - u) * 10) / 10
+      });
+    }
+    var mid = { a: Math.round(aa * (1 - t) * 10) / 10, b: Math.round(bb * (1 - t) * 10) / 10 };
+    var tip = { a: Math.round(aa * 10) / 10, b: Math.round(bb * 10) / 10 };
+    return deepShell([
+      {
+        data: { values: steps },
+        mark: { type: 'line', strokeWidth: 2, point: false, color: c.mute },
+        encoding: {
+          x: { field: 'a', type: 'quantitative', scale: { domain: [-span, span] }, title: 'a*' },
+          y: { field: 'b', type: 'quantitative', scale: { domain: [-span, span] }, title: 'b*' }
+        }
+      },
+      {
+        data: { values: [{ a: 0, b: 0 }, mid, tip] },
+        mark: { type: 'point', filled: true, size: 72, color: c.accent },
+        encoding: {
+          x: { field: 'a', type: 'quantitative', scale: { domain: [-span, span] } },
+          y: { field: 'b', type: 'quantitative', scale: { domain: [-span, span] } }
+        }
+      }
+    ]);
+  }
+
   function specOdds(p) {
     var prob = clamp(num(p.p, 0.5), 0, 1);
     var win = num(p.win, 100);
@@ -1460,6 +1534,369 @@
     return Promise.resolve();
   }
 
+  /* ─── Hue: 3D CIELAB gamut solid ───────────────────────────────── */
+
+  function srgbLin(c) {
+    var x = c / 255;
+    return x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+  }
+
+  function rgbToLabArr(r, g, b) {
+    var R = srgbLin(r), G = srgbLin(g), B = srgbLin(b);
+    var x = R * 0.4124564 + G * 0.3575761 + B * 0.1804375;
+    var y = R * 0.2126729 + G * 0.7151522 + B * 0.072175;
+    var z = R * 0.0193339 + G * 0.119192 + B * 0.9503041;
+    var Xn = 0.95047, Yn = 1, Zn = 1.08883;
+    function f(t) { return t > 216 / 24389 ? Math.cbrt(t) : (841 / 108) * t + 4 / 29; }
+    var fx = f(x / Xn), fy = f(y / Yn), fz = f(z / Zn);
+    return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
+  }
+
+  function labWorld(L, a, b) {
+    return [a / 180, (L / 100) * 1.15 - 0.55, b / 180];
+  }
+
+  function buildLabGamutCloud(step) {
+    step = step || 18;
+    var positions = [];
+    var colors = [];
+    var r, g, b, lab, p;
+    for (r = 0; r <= 255; r += step) {
+      for (g = 0; g <= 255; g += step) {
+        for (b = 0; b <= 255; b += step) {
+          /* Prefer shell samples: skip deep interior for clarity. */
+          var edge =
+            r === 0 || r >= 255 - step ||
+            g === 0 || g >= 255 - step ||
+            b === 0 || b >= 255 - step;
+          if (!edge && ((r + g + b) / 3) % (step * 2) !== 0) continue;
+          lab = rgbToLabArr(r, g, b);
+          p = labWorld(lab[0], lab[1], lab[2]);
+          positions.push(p[0], p[1], p[2]);
+          colors.push(r / 255, g / 255, b / 255);
+        }
+      }
+    }
+    return { positions: positions, colors: colors, count: positions.length / 3 };
+  }
+
+  function paintHueFlat(canvas, payload) {
+    var state = canvas._deepGL;
+    if (state && state.raf) {
+      cancelAnimationFrame(state.raf);
+      state.raf = 0;
+    }
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return Promise.reject(new Error('2d context missing'));
+    canvas._deepGL = { regl: null, yaw: 0, pitch: 0, draw: null, raf: 0 };
+    var dpr = Math.min(global.devicePixelRatio || 1, 2);
+    var cw = Math.max(1, Math.floor(canvas.clientWidth * dpr));
+    var ch = Math.max(1, Math.floor(canvas.clientHeight * dpr));
+    canvas.width = cw;
+    canvas.height = ch;
+    ctx.clearRect(0, 0, cw, ch);
+    var aa = num(payload.a, 40);
+    var bb = num(payload.b, 20);
+    var L = clamp(num(payload.L, 50), 0, 100);
+    var t = clamp(num(payload.t, 0.5), 0, 1);
+    var cx = cw * 0.5, cy = ch * 0.52;
+    var scale = Math.min(cw, ch) * 0.0032;
+    var mute = muteRgb();
+    ctx.strokeStyle = 'rgba(' + Math.round(mute[0] * 255) + ',' + Math.round(mute[1] * 255) + ',' + Math.round(mute[2] * 255) + ',0.35)';
+    ctx.lineWidth = dpr;
+    ctx.beginPath();
+    ctx.moveTo(20 * dpr, cy);
+    ctx.lineTo(cw - 20 * dpr, cy);
+    ctx.moveTo(cx, 20 * dpr);
+    ctx.lineTo(cx, ch - 28 * dpr);
+    ctx.stroke();
+    /* gamut slice at L* */
+    var step = 14;
+    var r, g, b, lab;
+    for (r = 0; r <= 255; r += step) {
+      for (g = 0; g <= 255; g += step) {
+        for (b = 0; b <= 255; b += step) {
+          lab = rgbToLabArr(r, g, b);
+          if (Math.abs(lab[0] - L) > 4) continue;
+          ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+          ctx.fillRect(cx + lab[1] * scale - dpr, cy - lab[2] * scale - dpr, dpr * 2, dpr * 2);
+        }
+      }
+    }
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + aa * scale, cy - bb * scale);
+    ctx.stroke();
+    ctx.fillStyle = 'rgb(180,180,180)';
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3 * dpr, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgb(160,160,160)';
+    ctx.beginPath();
+    ctx.arc(cx + aa * (1 - t) * scale, cy - bb * (1 - t) * scale, 3.5 * dpr, 0, Math.PI * 2);
+    ctx.fill();
+    var hex = payload.hex || '#c45c26';
+    ctx.fillStyle = hex;
+    ctx.beginPath();
+    ctx.arc(cx + aa * scale, cy - bb * scale, 5 * dpr, 0, Math.PI * 2);
+    ctx.fill();
+    return Promise.resolve();
+  }
+
+  function paintHue(canvas, payload) {
+    if (preferFlat()) return paintHueFlat(canvas, payload);
+    var factory = getReglFactory();
+    if (!factory || typeof factory !== 'function') {
+      return paintHueFlat(canvas, payload);
+    }
+    var g = GL();
+    var state = canvas._deepGL;
+    if (state && state.raf) {
+      cancelAnimationFrame(state.raf);
+      state.raf = 0;
+    }
+    var regl;
+    if (state && state.regl) {
+      regl = state.regl;
+      state.yaw = state.yaw != null ? state.yaw : 0.85;
+      state.pitch = state.pitch != null ? state.pitch : 0.35;
+    } else {
+      try {
+        regl = factory({
+          canvas: canvas,
+          attributes: { alpha: true, antialias: true, preserveDrawingBuffer: false }
+        });
+      } catch (e) {
+        return paintHueFlat(canvas, payload);
+      }
+      state = { regl: regl, yaw: 0.85, pitch: 0.35, draw: null, raf: 0, gamut: null };
+      canvas._deepGL = state;
+      bindOrbit(canvas, state);
+    }
+
+    var L = clamp(num(payload.L, 50), 0, 100);
+    var aa = num(payload.a, 40);
+    var bb = num(payload.b, 20);
+    var C = Math.sqrt(aa * aa + bb * bb) || 1;
+    var t = clamp(num(payload.t, 0.5), 0, 1);
+    var hueRad = Math.atan2(bb, aa);
+    var solid = payload.solid || 'gamut';
+
+    if (!state.gamut) state.gamut = buildLabGamutCloud(20);
+
+    var axisPos = [];
+    var i, u, p0, p1;
+    for (i = 0; i <= 24; i++) {
+      u = i / 24;
+      p0 = labWorld(u * 100, 0, 0);
+      axisPos.push(p0[0], p0[1], p0[2]);
+    }
+    var axisLines = [];
+    for (i = 0; i < 24; i++) axisLines.push(i, i + 1);
+
+    /* Equal-lightness ring */
+    var ringPos = [];
+    var ringLines = [];
+    var ringR = Math.max(20, Math.min(110, C * 1.15 + 25));
+    for (i = 0; i <= 48; i++) {
+      u = (i / 48) * Math.PI * 2;
+      p0 = labWorld(L, Math.cos(u) * ringR, Math.sin(u) * ringR);
+      ringPos.push(p0[0], p0[1], p0[2]);
+    }
+    for (i = 0; i < 48; i++) ringLines.push(i, i + 1);
+
+    /* Constant-hue leaf (plane fan) */
+    var leafPos = [];
+    var leafLines = [];
+    var li = 0;
+    var lv, cv;
+    for (lv = 5; lv <= 95; lv += 8) {
+      for (cv = 0; cv <= 100; cv += 12) {
+        p0 = labWorld(lv, Math.cos(hueRad) * cv, Math.sin(hueRad) * cv);
+        leafPos.push(p0[0], p0[1], p0[2]);
+        if (cv > 0) {
+          leafLines.push(li - 1, li);
+        }
+        li++;
+      }
+    }
+
+    /* Path color → gray + optional apex ray (stimulus quality) */
+    var pathPos = [];
+    var pathLines = [];
+    for (i = 0; i <= 20; i++) {
+      u = i / 20;
+      p0 = labWorld(L, aa * (1 - u), bb * (1 - u));
+      pathPos.push(p0[0], p0[1], p0[2]);
+      if (i > 0) pathLines.push(i - 1, i);
+    }
+    var apexPos = [];
+    var apexLines = [];
+    for (i = 0; i <= 16; i++) {
+      u = i / 16;
+      p0 = labWorld(L * u, aa * u, bb * u);
+      apexPos.push(p0[0], p0[1], p0[2]);
+      if (i > 0) apexLines.push(i - 1, i);
+    }
+
+    var markP = labWorld(L, aa, bb);
+    var midP = labWorld(L, aa * (1 - t), bb * (1 - t));
+    var grayP = labWorld(L, 0, 0);
+    var sphC = sphereMesh(markP[0], markP[1], markP[2], 0.04, 10);
+    var sphM = sphereMesh(midP[0], midP[1], midP[2], 0.028, 8);
+    var sphG = sphereMesh(grayP[0], grayP[1], grayP[2], 0.024, 8);
+
+    var hex = String(payload.hex || '#c45c26').replace('#', '');
+    if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    var cr = parseInt(hex.slice(0, 2), 16) / 255;
+    var cg = parseInt(hex.slice(2, 4), 16) / 255;
+    var cb = parseInt(hex.slice(4, 6), 16) / 255;
+    if (!isFinite(cr)) { cr = 0.77; cg = 0.36; cb = 0.15; }
+
+    var mute = muteRgb();
+    var accent = accentRgb();
+
+    var drawPoints = regl({
+      frag: [
+        'precision mediump float;',
+        'varying vec3 vColor;',
+        'void main(){',
+        '  vec2 c=gl_PointCoord-vec2(0.5);',
+        '  if(dot(c,c)>0.25) discard;',
+        '  gl_FragColor=vec4(vColor,0.78);',
+        '}'
+      ].join('\n'),
+      vert: [
+        'precision mediump float;',
+        'attribute vec3 position;',
+        'attribute vec3 color;',
+        'uniform mat4 uMVP;',
+        'uniform float uSize;',
+        'varying vec3 vColor;',
+        'void main(){',
+        '  vColor=color;',
+        '  gl_PointSize=uSize;',
+        '  gl_Position=uMVP*vec4(position,1.0);',
+        '}'
+      ].join('\n'),
+      attributes: {
+        position: state.gamut.positions,
+        color: state.gamut.colors
+      },
+      uniforms: {
+        uMVP: regl.prop('mvp'),
+        uSize: regl.prop('size')
+      },
+      count: state.gamut.count,
+      primitive: 'points',
+      depth: { enable: true },
+      blend: {
+        enable: true,
+        func: { srcRGB: 'src alpha', srcAlpha: 1, dstRGB: 'one minus src alpha', dstAlpha: 1 }
+      }
+    });
+
+    function lineDrawer(positions, elements, alpha) {
+      return regl({
+        frag: [
+          'precision mediump float;',
+          'uniform vec3 uColor;',
+          'uniform float uAlpha;',
+          'void main(){ gl_FragColor=vec4(uColor,uAlpha); }'
+        ].join('\n'),
+        vert: [
+          'precision mediump float;',
+          'attribute vec3 position;',
+          'uniform mat4 uMVP;',
+          'void main(){ gl_Position=uMVP*vec4(position,1.0); }'
+        ].join('\n'),
+        attributes: { position: positions },
+        elements: elements,
+        primitive: 'lines',
+        uniforms: {
+          uMVP: regl.prop('mvp'),
+          uColor: regl.prop('color'),
+          uAlpha: alpha
+        },
+        depth: { enable: true, mask: false }
+      });
+    }
+
+    var drawAxis = lineDrawer(axisPos, axisLines, 0.55);
+    var drawRing = lineDrawer(ringPos, ringLines, 0.4);
+    var drawLeaf = lineDrawer(leafPos, leafLines, 0.22);
+    var drawPath = lineDrawer(pathPos, pathLines, 0.95);
+    var drawApex = lineDrawer(apexPos, apexLines, 0.55);
+
+    function sphereDrawer(mesh, col) {
+      return regl({
+        frag: [
+          'precision mediump float;',
+          'varying vec3 vN;',
+          'uniform vec3 uColor;',
+          'void main(){',
+          '  vec3 L=normalize(vec3(0.35,1.0,0.25));',
+          '  float d=0.35+0.65*max(dot(normalize(vN),L),0.0);',
+          '  gl_FragColor=vec4(uColor*d,1.0);',
+          '}'
+        ].join('\n'),
+        vert: [
+          'precision mediump float;',
+          'attribute vec3 position;',
+          'attribute vec3 normal;',
+          'uniform mat4 uMVP;',
+          'varying vec3 vN;',
+          'void main(){ vN=normal; gl_Position=uMVP*vec4(position,1.0); }'
+        ].join('\n'),
+        attributes: { position: mesh.positions, normal: mesh.normals },
+        elements: mesh.cells,
+        uniforms: { uMVP: regl.prop('mvp'), uColor: col }
+      });
+    }
+
+    var drawMark = sphereDrawer(sphC, [cr, cg, cb]);
+    var drawMid = sphereDrawer(sphM, [
+      cr * 0.55 + 0.35,
+      cg * 0.55 + 0.35,
+      cb * 0.55 + 0.35
+    ]);
+    var drawGray = sphereDrawer(sphG, [0.55, 0.55, 0.55]);
+
+    function frame() {
+      var sz = resizeCanvas(canvas, regl);
+      var eye = g.orbitEye
+        ? g.orbitEye(state.yaw, state.pitch, 2.05, [0, 0.05, 0])
+        : [1.4, 0.8, 1.4];
+      var view = g.lookAt ? g.lookAt(eye, [0, 0.05, 0], [0, 1, 0]) : null;
+      var proj = g.perspective
+        ? g.perspective(Math.PI / 4.2, sz.aspect, 0.05, 30)
+        : null;
+      var mvp = view && proj && g.mul ? g.mul(proj, view) : [
+        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
+      ];
+      regl.clear({ color: [0, 0, 0, 0], depth: 1 });
+      if (solid !== 'leaf') {
+        drawPoints({ mvp: mvp, size: Math.max(2, Math.min(5, sz.w / 280)) });
+      }
+      drawAxis({ mvp: mvp, color: mute });
+      if (solid !== 'cone') drawRing({ mvp: mvp, color: accent });
+      if (solid === 'leaf' || solid === 'gamut') drawLeaf({ mvp: mvp, color: [cr, cg, cb] });
+      if (solid === 'cone' || solid === 'gamut') drawApex({ mvp: mvp, color: [cr * 0.7, cg * 0.7, cb * 0.7] });
+      drawPath({ mvp: mvp, color: [cr, cg, cb] });
+      drawGray({ mvp: mvp });
+      drawMid({ mvp: mvp });
+      drawMark({ mvp: mvp });
+      state.raf = requestAnimationFrame(frame);
+    }
+
+    state.draw = frame;
+    if (state.raf) cancelAnimationFrame(state.raf);
+    resizeCanvas(canvas, regl);
+    state.raf = requestAnimationFrame(frame);
+    return Promise.resolve();
+  }
+
   /* ─── WebGL tool painters ───────────────────────────────────────── */
 
   function paintFuel(canvas, payload) {
@@ -1611,6 +2048,7 @@
     hourly: 'days',
     budget: 'live',
     tax: 'tip',
+    invoice: 'q1',
     unit: 'amount',
     dose: 'want',
     bitrate: 'size',
@@ -1629,7 +2067,12 @@
     exposure: 'iso',
     combo: 'n',
     bayes: 'prior',
-    sample: 'n'
+    sample: 'n',
+    hue: 'hue'
+  };
+
+  var WEBGL_SCRUB_X = {
+    hue: 'chroma'
   };
 
   var SPECS = {
@@ -1637,6 +2080,7 @@
     hourly: specHourly,
     budget: specBudget,
     tax: specTax,
+    invoice: specInvoice,
     unit: specUnit,
     dose: specDose,
     bitrate: specBitrate,
@@ -1657,7 +2101,7 @@
     }
 
     if (WEBGL[toolId]) {
-      var canvas = ensure(stage, 'webgl', WEBGL_SCRUB[toolId] || null);
+      var canvas = ensure(stage, 'webgl', WEBGL_SCRUB[toolId] || null, WEBGL_SCRUB_X[toolId] || null);
       if (!canvas) return Promise.reject(new Error('no canvas'));
       if (toolId === 'fuel') return paintFuel(canvas, payload);
       if (toolId === 'ratio') return paintRatio(canvas, payload);
@@ -1665,10 +2109,11 @@
       if (toolId === 'combo') return paintCombo(canvas, payload);
       if (toolId === 'bayes') return paintBayes(canvas, payload);
       if (toolId === 'sample') return paintSample(canvas, payload);
+      if (toolId === 'hue') return paintHue(canvas, payload);
       return Promise.reject(new Error('unknown webgl tool'));
     }
 
-    var el = ensure(stage, 'vega', VEGA_SCRUB[toolId] || null);
+    var el = ensure(stage, 'vega', VEGA_SCRUB[toolId] || null, null);
     if (!el) return Promise.reject(new Error('no chart host'));
     var build = SPECS[toolId];
     if (!build) return Promise.reject(new Error('unknown vega tool: ' + toolId));

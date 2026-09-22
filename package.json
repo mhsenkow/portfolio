@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev --turbopack",
-    "start": "next start",
+    "dev": "next dev --turbopack -p 1337",
+    "start": "next start -p 1337",
     "lint": "eslint",
     "scrape": "node scripts/scrape.js",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",

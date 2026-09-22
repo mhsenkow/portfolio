@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, IBM_Plex_Sans, Inter, Work_Sans, Space_Grotesk, DM_Sans, Libre_Baskerville, Lora, Manrope, JetBrains_Mono, Fira_Code } from "next/font/google";
 import { Nav } from "./components/Nav";
 import { LightboxProvider } from "./components/Lightbox";
+import { IntroModal } from "./components/IntroModal";
 import Script from "next/script";
 import "@/styles/globals.css";
 
@@ -96,22 +97,22 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlex.variable} ${inter.variable} ${workSans.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${libreBaskerville.variable} ${lora.variable} ${manrope.variable} ${jetBrainsMono.variable} ${firaCode.variable}`}>
         <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var t=localStorage.getItem('theme');var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);}catch(e){}})();`}
+          {`(function(){try{var t=localStorage.getItem('theme');var map={hc:'contrast',electric:'frost',forest:'tank'};if(map[t])t=map[t];var ok=['light','dark','contrast','paper','glass','frost','brutal','loom','tank','nes'];if(ok.indexOf(t)<0)t=null;var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||p);if(t)localStorage.setItem('theme',t);var f=localStorage.getItem('font')||'geist';document.documentElement.setAttribute('data-font',f);}catch(e){}})();`}
         </Script>
         <LightboxProvider>
         <div className="app-shell">
           <a href="#content" className="sr-only">Skip to content</a>
           <header className="site-header">
-            <div className="container">
-              <nav aria-label="Primary"><Nav /></nav>
-            </div>
+            <nav aria-label="Primary" className="site-header__nav">
+              <Nav />
+            </nav>
           </header>
           <main className="app-main">{children}</main>
           {/* overlay root for panels (left/right drawers, modals) */}
           <div id="overlays" className="overlay-root" />
+          <IntroModal />
           <footer className="site-footer">
             <div className="container footer-inner">
-              <p className="footer-copy">© {new Date().getFullYear()} mhsenkow</p>
               <ul className="icon-links" role="list">
                 <li>
                   <a className="icon-btn" href="mailto:mhsenkow@gmail.com" aria-label="Email">
@@ -147,6 +148,7 @@ export default function RootLayout({
                   </a>
                 </li>
               </ul>
+              <p className="footer-copy">© {new Date().getFullYear()}</p>
             </div>
           </footer>
         </div>

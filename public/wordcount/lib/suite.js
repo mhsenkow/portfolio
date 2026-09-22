@@ -32,9 +32,12 @@
     exposure: '<circle cx="8" cy="8" r="5.2"/><circle cx="8" cy="8" r="2"/><path d="M8 2.8v1.4M8 11.8v1.4M2.8 8h1.4M11.8 8h1.4"/>',
     dose: '<path d="M6 3.5h4v3.2c1.6 1 2.6 2.6 2.6 4.4A4.6 4.6 0 0 1 8 15.5 4.6 4.6 0 0 1 3.4 11c0-1.8 1-3.4 2.6-4.4z"/>',
     tax: '<rect x="3.5" y="2.5" width="9" height="11" rx="1"/><path d="M5.5 5.5h5M5.5 8h3.5M5.5 10.5h4M9.5 12.5l1.5-1.5"/>',
+    invoice: '<rect x="3" y="2.5" width="10" height="11" rx="1"/><path d="M5 5.5h6M5 8h6M5 10.5h3.5"/><path d="M10.2 10.2h1.8v1.8"/>',
     pace: '<path d="M2.5 11.5 6 5.5l2.5 3.5L12 3.5"/><path d="M11 3.5h2.5V6"/>',
     contrast: '<circle cx="6" cy="8" r="3.2"/><path d="M10 4.8a3.2 3.2 0 0 1 0 6.4"/><path d="M10 4.8v6.4"/>',
+    hue: '<circle cx="8" cy="8" r="5.2"/><circle cx="8" cy="8" r="1.6"/><path d="M8 2.8 9.2 5.4M8 2.8 6.8 5.4"/>',
     bayes: '<path d="M3 12.5V8.5l3-3 3 2 4-5"/><path d="M3 12.5h10"/>',
+    stories: '<path d="M3 3.5h4.2c.8 0 1.5.4 1.8 1v8.2c-.4-.3-.9-.4-1.5-.4H3zM13 3.5H8.8c-.8 0-1.5.4-1.8 1v8.2c.4-.3.9-.4 1.5-.4H13z"/>',
     tools: '<rect x="2.5" y="2.5" width="4.2" height="4.2" rx=".6"/><rect x="9.3" y="2.5" width="4.2" height="4.2" rx=".6"/><rect x="2.5" y="9.3" width="4.2" height="4.2" rx=".6"/><rect x="9.3" y="9.3" width="4.2" height="4.2" rx=".6"/>'
   };
 
@@ -94,6 +97,26 @@
           'Start / pause from the dial; scrub vertically to nudge the limit.',
           'Horizontal scrub on the dial jumps in coarser 5-minute steps.',
           'Enter limits as 25m, 5:00, or bare minutes.'
+        ]
+      }
+    },
+    {
+      id: 'stories', label: 'stories', blurb: 'read · library', group: 'desk', paths: ['stories'], icon: I.stories, status: 'live',
+      help: {
+        lead: 'A quiet ereader for local stories.',
+        body: 'Open a title from the library. Progress is saved on this device. Theme, chrome, type size, and measure sync with the rest of the suite via shared look settings.',
+        math: {
+          eq: [
+            'reading ≈ words ÷ 200',
+            'left ≈ reading × (1 − progress)',
+            'progress = scrollY ÷ (scrollHeight − viewHeight)'
+          ],
+          explain: 'Reading time is a draft estimate at ~200 words per minute. The meter shows what is left (minutes, words, or which part you are in). Progress is how far you have scrolled through the open story, restored the next time you open it.'
+        },
+        use: [
+          'Pick a story from the library; Esc or ← library returns.',
+          'Settings: size, measure, reading face, and meter (left / words / part / marks / off).',
+          'Theme orb and chrome match words and time.'
         ]
       }
     },
@@ -190,6 +213,28 @@
         use: [
           'Enter subtotal and tax %; pick tip and whether it applies pre-tax or after tax.',
           'Scrub each receipt band on the stage.'
+        ]
+      }
+    },
+    {
+      id: 'invoice', label: 'invoice', blurb: 'lines · due', group: 'money', paths: ['invoice'], icon: I.invoice, status: 'live',
+      help: {
+        lead: 'Build a local invoice from line items.',
+        body: 'Name the parties, add up to four lines (description × qty × rate), then optional discount and tax. The face is total due; the stage is a printable sheet (or amount bands). Copy pastes a plain-text invoice; pdf opens the print dialog (choose Save as PDF).',
+        math: {
+          eq: [
+            'line = qty × rate',
+            'subtotal = Σ lines',
+            'discount = $  or  subtotal × (disc% ÷ 100)',
+            'tax = (subtotal − discount) × (tax% ÷ 100)',
+            'due = subtotal − discount + tax'
+          ],
+          explain: 'Each line is quantity times unit rate. Sum the lines for the subtotal. Discount subtracts either a flat dollar amount or a percent of that subtotal (disc as). Tax applies to what’s left after discount. Total due is the taxed remainder.'
+        },
+        use: [
+          'Fill from / to and meta, then edit line rows.',
+          'Scrub quantity on the sheet; tax and discount scrub on their total rows.',
+          'Use copy for plain text, pdf for a Save-as-PDF print dialog.'
         ]
       }
     },
@@ -350,6 +395,27 @@
           'Enter or scrub fg / bg hex values.',
           'Pick text size (normal / large) for the right WCAG rungs.',
           'Read the ratio and which bands clear.'
+        ]
+      }
+    },
+    {
+      id: 'hue', label: 'hue', blurb: 'path · gray', group: 'form', paths: ['hue'], icon: I.hue, status: 'live',
+      help: {
+        lead: 'Build hue, saturation, and lightness from a perceptual path to gray.',
+        body: 'Inspired by Helmholtz / Schrödinger and the EuroVis 2025 geometry-of-color work: attributes come from closest similarity in a perceptual metric. Scrub hue, chroma (C*), and light (L*) — the three geometric attributes. Path walks the shortest ray to the closest gray at that lightness. Hex stays synced either direction.',
+        math: {
+          eq: [
+            'a* = C* · cos(hue)',
+            'b* = C* · sin(hue)',
+            'gray = (L*, 0, 0)',
+            'path(t) = (L*, a*(1−t), b*(1−t))'
+          ],
+          explain: 'CIELAB approximates the perceptual metric (ΔE family keeps neutral as closest to black on each equal-L* plane). Hue is the angle in a*b*; chroma is distance from the neutral axis; lightness is the equal-L* surface. Settings face picks which attribute the big number shows. Compare dim uses geodesic (hold hue, lower L*) vs straight RGB scale (Bezold–Brücke hue shift).'
+        },
+        use: [
+          'Scrub hue · chroma · light; path desaturates toward gray.',
+          'Settings → shape: path, wheel, or hue leaf metaphors.',
+          'Deep mode: orbit the Lab gamut solid (gamut / leaf / cone).'
         ]
       }
     },
@@ -951,6 +1017,44 @@
         'grand = ' + fmtMoney(sub) + ' + ' + fmtMoney(taxAmt) + ' + ' + fmtMoney(tipAmt) + ' = ' + fmtMoney(grand)
       ];
     },
+    invoice: function () {
+      var lines = [];
+      var i;
+      for (i = 1; i <= 4; i++) {
+        var desc = String(elVal('d' + i) || '').trim();
+        var qty = Math.max(0, numVal('q' + i));
+        var rate = Math.max(0, numVal('r' + i));
+        var amt = qty * rate;
+        if (!desc && amt <= 0) continue;
+        lines.push({ desc: desc || ('L' + i), qty: qty, rate: rate, amt: amt });
+      }
+      var sub = lines.reduce(function (s, L) { return s + L.amt; }, 0);
+      var discRaw = Math.max(0, numVal('discount'));
+      var discMode = elVal('discMode') === 'pct' ? 'pct' : 'dollars';
+      var discAmt = discMode === 'pct' ? sub * (discRaw / 100) : discRaw;
+      if (discAmt > sub) discAmt = sub;
+      var taxable = Math.max(0, sub - discAmt);
+      var taxPct = Math.max(0, numVal('tax'));
+      var taxAmt = taxable * (taxPct / 100);
+      var grand = taxable + taxAmt;
+      var out = lines.slice(0, 3).map(function (L) {
+        return L.desc + ' = ' + fmtNum(L.qty, 2) + ' × ' + fmtMoney(L.rate) + ' = ' + fmtMoney(L.amt);
+      });
+      if (lines.length > 3) out.push('… +' + (lines.length - 3) + ' more');
+      out.push('subtotal = ' + fmtMoney(sub));
+      if (discAmt > 0) {
+        out.push(
+          'discount = ' +
+            (discMode === 'pct' ? fmtMoney(sub) + ' × (' + fmtNum(discRaw, 2) + ' ÷ 100)' : fmtMoney(discRaw)) +
+            ' = ' + fmtMoney(discAmt)
+        );
+      }
+      if (taxAmt > 0 || taxPct > 0) {
+        out.push('tax = ' + fmtMoney(taxable) + ' × (' + fmtNum(taxPct, 2) + ' ÷ 100) = ' + fmtMoney(taxAmt));
+      }
+      out.push('due = ' + fmtMoney(grand));
+      return out;
+    },
     unit: function () {
       var ML = { cup: 240, tbsp: 15, tsp: 5, ml: 1 };
       var G_PURE = { g: 1, oz: 28.3495, lb: 453.592 };
@@ -1077,6 +1181,22 @@
         'L_fg = ' + fmtNum(L1, 3) + ' · L_bg = ' + fmtNum(L2, 3) + (lift ? '  (lift ' + fmtNum(lift, 0) + ')' : ''),
         'contrast = (' + fmtNum(lighter, 3) + ' + 0.05) ÷ (' + fmtNum(darker, 3) + ' + 0.05) = ' + fmtNum(ratio, 2),
         (ratio >= aaaNeed ? 'AAA' : ratio >= aaNeed ? 'AA' : 'fail') + ' for ' + (large ? 'large' : 'normal') + ' text'
+      ];
+    },
+    hue: function () {
+      var hue = ((numVal('hue', 0) % 360) + 360) % 360;
+      var C = Math.max(0, numVal('chroma', 0));
+      var L = Math.max(0, Math.min(100, numVal('light', 50)));
+      var pathT = Math.max(0, Math.min(100, numVal('path', 50))) / 100;
+      var rad = (hue * Math.PI) / 180;
+      var a = C * Math.cos(rad);
+      var b = C * Math.sin(rad);
+      var faceEl = document.querySelector('input[name="face"]:checked');
+      var face = (faceEl && faceEl.value) || 'chroma';
+      return [
+        'a* = ' + fmtNum(C, 1) + ' × cos(' + fmtNum(hue, 0) + '°) = ' + fmtNum(a, 1),
+        'b* = ' + fmtNum(C, 1) + ' × sin(' + fmtNum(hue, 0) + '°) = ' + fmtNum(b, 1),
+        'path t = ' + fmtNum(pathT, 2) + ' → mid C* ' + fmtNum(C * (1 - pathT), 1) + ' · face ' + face + ' · L* ' + fmtNum(L, 1)
       ];
     },
     odds: function () {
