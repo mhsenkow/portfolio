@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { LinkToken } from "@/app/components/LinkToken";
 
-const STORAGE_KEY = "intro-dismissed";
 export const INTRO_OPEN_EVENT = "portfolio:open-intro";
 export const INTRO_STATE_EVENT = "portfolio:intro-state";
 
@@ -28,17 +27,6 @@ export function openIntroModal() {
   window.dispatchEvent(new Event(INTRO_OPEN_EVENT));
 }
 
-function readShouldOpen(): boolean {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const force = params.get("intro") === "1";
-    const dismissed = sessionStorage.getItem(STORAGE_KEY) === "1";
-    return force || !dismissed;
-  } catch {
-    return true;
-  }
-}
-
 const EARLIER_SITES = [
   { href: "https://mhsenkow.work/", label: "Prior portfolio (Vercel)" },
   { href: "https://webgl-portfolio-jbxw.vercel.app/", label: "WebGL portfolio" },
@@ -52,35 +40,30 @@ const EARLIER_SITES = [
 ] as const;
 
 export function IntroModal() {
-  // Prefer covering first paint; boot script + CSS already hide the shell.
+  // Full page load always starts covered; dismiss lasts for this SPA session only.
   const [open, setOpen] = useState(true);
-  const [ready, setReady] = useState(false);
 
   const dismiss = useCallback(() => {
     setOpen(false);
     emitIntroState(false);
-    try {
-      sessionStorage.setItem(STORAGE_KEY, "1");
-    } catch {
-      /* ignore */
-    }
   }, []);
 
   useEffect(() => {
-    const shouldOpen = readShouldOpen();
     try {
       const params = new URLSearchParams(window.location.search);
       if (params.get("intro") === "1") {
         params.delete("intro");
         const next = `${window.location.pathname}${params.toString() ? `?${params}` : ""}${window.location.hash}`;
         window.history.replaceState({}, "", next);
+        setOpen(true);
+        emitIntroState(true);
+        return;
       }
     } catch {
       /* ignore */
     }
-    setOpen(shouldOpen);
-    emitIntroState(shouldOpen);
-    setReady(true);
+    // Hard refresh / first paint: stay open and sync attr (boot script already set open).
+    emitIntroState(true);
   }, []);
 
   useEffect(() => {
@@ -106,8 +89,6 @@ export function IntroModal() {
     };
   }, [open, dismiss]);
 
-  // Still resolving session — keep solid cover (boot curtain handles paint).
-  if (!ready) return null;
   if (!open) return null;
 
   return (
