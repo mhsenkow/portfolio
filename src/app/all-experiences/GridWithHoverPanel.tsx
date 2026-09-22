@@ -171,8 +171,10 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
                       src={p.image.src}
                       alt={p.image.alt}
                       fill
-                      priority={index < 8}
-                      sizes="(max-width: 600px) 50vw, 200px"
+                      priority={index < 12}
+                      loading={index < 12 ? "eager" : "lazy"}
+                      sizes="220px"
+                      quality={70}
                     />
                   ) : null}
                 </div>

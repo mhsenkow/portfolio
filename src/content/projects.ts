@@ -191,7 +191,7 @@ export const projects: Project[] = [
 			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/apple/' },
 			{ label: 'App bundles', href: 'https://developer.apple.com/app-store/app-bundles/' },
 		],
-		image: { src: '/images/projects/ae/apple.png', alt: 'Apple' },
+		image: { src: '/images/projects/cards/apple.png', alt: 'Apple' },
 		stack: ['Accessibility', 'UX', 'Prototyping'],
 		details: {
 			role: 'Product Designer (intern)',
@@ -342,7 +342,7 @@ export const projects: Project[] = [
 		links: [
 			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/daiquery-notebooks-creation-then-merging-with-bento-notebooks/' },
 		],
-		image: { src: '/images/projects/ae/notebooks.png', alt: 'Notebooks and data workflows' },
+		image: { src: '/images/projects/cards/meta-notebooks.png', alt: 'Notebooks and data workflows' },
 		gallery: [
 		
 		],
@@ -430,7 +430,7 @@ export const projects: Project[] = [
 		links: [
 			{ label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/contracts-across-roles/' },
 		],
-		image: { src: '/images/projects/ae/Pie chart.png', alt: 'AI workflow and data-suite exploration' },
+		image: { src: '/images/projects/cards/contracts-suite.png', alt: 'AI workflow and data-suite exploration' },
 		stack: ['AI workflows', 'Data products', 'Prototyping', 'Design systems'],
 		details: {
 			role: 'Product Designer',
@@ -531,7 +531,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/re-envisioning-my-primary-product/' },
     ],
-    image: { src: '/images/projects/ae/Redsign.png', alt: 'Re-envisioning core product' },
+    image: { src: '/images/projects/cards/redesign.png', alt: 'Re-envisioning core product' },
     stack: ['Microsoft', 'Design System', 'Product'],
     details: {
       role: 'Primary Designer for Interactions',
@@ -621,7 +621,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences' },
     ],
-    image: { src: '/images/projects/ae/Infographic.png', alt: 'Windows Cloud peripherals' },
+    image: { src: '/images/projects/cards/windows-cloud.png', alt: 'Windows Cloud peripherals' },
     stack: ['Windows Cloud', 'Concepts'],
     details: {
       role: 'Product Designer',
@@ -649,7 +649,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/teams-admin-center/' },
     ],
-    image: { src: '/images/projects/ae/Teams.png', alt: 'Teams admin center' },
+    image: { src: '/images/projects/cards/teams.png', alt: 'Teams admin center' },
     stack: ['Microsoft', 'Admin'],
     details: {
       role: 'Product Designer / Design lead',
@@ -679,7 +679,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/researching-silence/' },
     ],
-    image: { src: '/images/projects/ae/Silence Mode.png', alt: 'Silence mode research' },
+    image: { src: '/images/projects/cards/silence-mode.png', alt: 'Silence mode research' },
     gallery: [
       { src: '/images/projects/researching-silence/early-silence-mode-concepts.png', alt: 'Early silence mode concepts showing initial UI explorations for blocking notifications and managing interruptions' },
       { src: '/images/projects/researching-silence/silence-mode-wireframes.png', alt: 'Silence mode wireframes exploring interface patterns for notification controls and time-based settings' },
@@ -753,7 +753,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/keyword-analysis-redesign/' },
     ],
-    image: { src: '/images/projects/ae/Topic Selection (1).png', alt: 'Topic selection' },
+    image: { src: '/images/projects/cards/topic-selection.png', alt: 'Topic selection' },
     stack: ['Microsoft', 'Analytics'],
     details: {
       role: 'Product Designer — expansion of design system, mentoring',
@@ -868,7 +868,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/navigation-update-leads-to-better-component-system/' },
     ],
-    image: { src: '/images/projects/ae/Redsign.png', alt: 'Navigation/component redesign' },
+    image: { src: '/images/projects/cards/redesign.png', alt: 'Navigation/component redesign' },
     gallery: [],
     stack: ['Microsoft', 'Design System'],
     details: {
@@ -1108,7 +1108,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/improving-your-work-life-balance-within-office-365/' },
     ],
-    image: { src: '/images/projects/ae/Data-Viz.png', alt: 'MyAnalytics top four metrics' },
+    image: { src: '/images/projects/cards/data-viz.png', alt: 'MyAnalytics top four metrics' },
     stack: ['Microsoft', 'Product', 'Animation'],
     details: {
       role: 'Designer 2 (UX with prototyping and Front-End collaboration)',
@@ -1171,7 +1171,7 @@ export const projects: Project[] = [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/trusted-news-ai-chrome-extension/' },
       { label: 'Final prototype', href: 'https://codepen.io/mhsenkow/full/xvVGWj' },
     ],
-    image: { src: '/images/projects/ae/TrustedNews (1).png', alt: 'Trusted News' },
+    image: { src: '/images/projects/cards/trusted-news.png', alt: 'Trusted News' },
     gallery: [
       { src: '/images/projects/trusted-news-chrome-extension/final-layout.png', alt: 'Final layout, displaying the regions of the extension' },
       { src: '/images/projects/trusted-news-chrome-extension/extension-interface-1.png', alt: 'Extension interface showing news source verification' },
@@ -1207,7 +1207,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/meta-infra-data-viz-framework-and-ai-infographics/' },
     ],
-    image: { src: '/images/projects/ae/Pie chart.png', alt: 'Data viz framework' },
+    image: { src: '/images/projects/cards/contracts-suite.png', alt: 'Data viz framework' },
     gallery: [
       { src: '/images/projects/data-viz-framework-meta/Axis_and_Legend.png', alt: 'Axis and Legend' },
       { src: '/images/projects/data-viz-framework-meta/Line_Chart.png', alt: 'Line Chart' },
@@ -1341,7 +1341,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/watson-analytics-early-work/' },
     ],
-    image: { src: '/images/projects/ae/WatsonAnalytics.png', alt: 'Watson Analytics' },
+    image: { src: '/images/projects/cards/watson.png', alt: 'Watson Analytics' },
     gallery: [],
     stack: ['IBM', 'Analytics'],
     details: {
@@ -1514,7 +1514,7 @@ export const projects: Project[] = [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/grad-school-data-visualization-work/' },
       { label: 'First project Video', href: 'https://youtu.be/cNAjJkotTjo' },
     ],
-    image: { src: '/images/projects/ae/Data-Viz.png', alt: 'Grad school data viz' },
+    image: { src: '/images/projects/cards/data-viz.png', alt: 'Grad school data viz' },
     gallery: [
       { src: '/images/projects/grad-school-data-viz/viz.png', alt: 'Visualization experiment 1' },
       { src: '/images/projects/grad-school-data-viz/viz1.png', alt: 'Visualization experiment 2' },
@@ -1565,9 +1565,9 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/guide-to-the-galaxy-a-mobile-app-concept/' },
     ],
-    image: { src: '/images/projects/ae/Adler.png', alt: 'Adler mobile concept' },
+    image: { src: '/images/projects/cards/adler.png', alt: 'Adler mobile concept' },
     gallery: [
-      { src: '/images/projects/ae/Adler.png', alt: 'Guide to the Galaxy concept' }
+      { src: '/images/projects/cards/adler.png', alt: 'Guide to the Galaxy concept' }
     ],
     category: 'creative',
     stack: ['Android', 'UX'],
@@ -1589,7 +1589,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/morphfaux-kuka-robot-plaster-research/' },
     ],
-    image: { src: '/images/projects/ae/Morphfaux.png', alt: 'Morphfaux' },
+    image: { src: '/images/projects/cards/morphfaux.png', alt: 'Morphfaux' },
     gallery: [
       { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-1.jpg', alt: 'Morphfaux — 3D model rendering' },
       { src: '/images/projects/morphfaux-kuka-plaster-research/morphfaux-2.jpg', alt: 'Morphfaux — detail study' },
@@ -1622,7 +1622,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Original', href: 'https://www.mhsenkow.work/all-experiences#/architecture-graduate-projects/' },
     ],
-    image: { src: '/images/projects/ae/Architecture.png', alt: 'Architecture projects' },
+    image: { src: '/images/projects/cards/architecture.png', alt: 'Architecture projects' },
     gallery: [
       { src: '/images/projects/architecture-graduate-projects/menil-1.png', alt: 'Menil Collection — exterior perspective' },
       { src: '/images/projects/architecture-graduate-projects/menil-2.png', alt: 'Menil Collection — interior space' },

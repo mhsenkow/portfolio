@@ -109,7 +109,7 @@ export const githubBuilds: Project[] = [
 		year: 2026,
 		category: 'creative',
 		image: {
-			src: '/images/projects/ramen/card.jpg',
+			src: '/images/projects/ramen/card.png',
 			alt: 'RAMEN — Kepler Drum walkthrough',
 			width: 1200,
 			height: 600,
@@ -165,7 +165,7 @@ export const githubBuilds: Project[] = [
 		year: 2026,
 		category: 'creative',
 		image: {
-			src: '/images/projects/loam/card.jpg',
+			src: '/images/projects/loam/card.png',
 			alt: 'loam — permaculture design builder',
 			width: 1200,
 			height: 600,
@@ -404,7 +404,7 @@ export const githubBuilds: Project[] = [
 		year: 2026,
 		category: 'creative',
 		image: {
-			src: '/images/projects/loom-storyteller/card.jpg',
+			src: '/images/projects/loom-storyteller/card.png',
 			alt: 'Loom Story Teller — local data storytelling',
 			width: 1200,
 			height: 600,
@@ -454,7 +454,7 @@ export const githubBuilds: Project[] = [
 		year: 2026,
 		category: 'creative',
 		image: {
-			src: '/images/projects/sleeping-ox/card.jpg',
+			src: '/images/projects/sleeping-ox/card.png',
 			alt: 'Sleeping Ox Studios — voxel portfolio world',
 			width: 1200,
 			height: 600,

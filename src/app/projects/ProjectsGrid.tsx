@@ -27,7 +27,8 @@ export function ProjectsGrid({ items }: { items?: Project[] }) {
                                     src={p.image.src}
                                     alt={p.image.alt}
                                     fill
-                                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                                    sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
+                                    quality={70}
                                     className={styles.imageImg}
                                 />
                             </div>
