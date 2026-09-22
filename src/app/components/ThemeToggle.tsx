@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
-  FONT_BEAT,
-  FONT_CHAPTERS,
+  FONTS,
   FONT_LABEL,
   THEMES,
   THEME_LABEL,
@@ -51,7 +50,6 @@ function storeFont(font: Font) {
   }
 }
 
-/** Font stacks via `html[data-font]` + on-demand next/font CSS vars. */
 function applyFont(font: Font) {
   if (typeof document === "undefined") return;
   document.documentElement.setAttribute("data-font", font);
@@ -59,7 +57,6 @@ function applyFont(font: Font) {
 }
 
 type Props = {
-  /** Kept for Nav API compatibility. */
   compact?: boolean;
 };
 
@@ -134,45 +131,26 @@ export default function ThemeToggle({ compact: _compact = true }: Props) {
             aria-label="close type settings"
             onClick={() => setSettingsOpen(false)}
           />
-          <div className="masthead-settings-panel" role="dialog" aria-label="Type — a career in faces">
-            <header className="type-story__head">
-              <p className="type-story__kicker">type</p>
-              <p className="type-story__lede">a career in faces</p>
-            </header>
-
-            <div className="type-story">
-              {FONT_CHAPTERS.map((chapter) => (
-                <section key={chapter.id} className="type-story__chapter" aria-label={chapter.era}>
-                  <div className="type-story__meta">
-                    <span className="type-story__era">{chapter.era}</span>
-                    {chapter.years ? (
-                      <span className="type-story__years">{chapter.years}</span>
-                    ) : null}
-                  </div>
-                  <p className="type-story__note">{chapter.note}</p>
-                  <ul className="type-story__faces" role="list">
-                    {chapter.fonts.map((id) => {
-                      const active = font === id;
-                      return (
-                        <li key={id}>
-                          <button
-                            type="button"
-                            className="type-story__face"
-                            data-active={active ? "true" : undefined}
-                            data-font-preview={id}
-                            aria-pressed={active}
-                            onClick={() => setFont(id)}
-                          >
-                            <span className="type-story__name">{FONT_LABEL[id]}</span>
-                            <span className="type-story__beat">{FONT_BEAT[id]}</span>
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-              ))}
-            </div>
+          <div className="masthead-settings-panel" role="dialog" aria-label="Type">
+            <ul className="type-list" role="list">
+              {FONTS.map((id) => {
+                const active = font === id;
+                return (
+                  <li key={id}>
+                    <button
+                      type="button"
+                      className="type-list__face"
+                      data-active={active ? "true" : undefined}
+                      data-font-preview={id}
+                      aria-pressed={active}
+                      onClick={() => setFont(id)}
+                    >
+                      {FONT_LABEL[id]}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </>
       )}

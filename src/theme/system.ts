@@ -39,16 +39,14 @@ export const THEME_LEGACY: Record<string, Theme> = {
 };
 
 /**
- * Typefaces as career chapters — chronological.
- * System stacks (sf-pro, segoe, optimistic) need no network load.
+ * Quiet career arc in face order only — all are loadable (no proprietary
+ * system faces that silently fall back).
  */
 export const FONTS = [
   "libre-baskerville",
   "lora",
-  "sf-pro",
   "ibm-plex",
-  "segoe",
-  "optimistic",
+  "inter",
   "geist",
   "jetbrains-mono",
   "fira-code",
@@ -59,88 +57,22 @@ export type Font = (typeof FONTS)[number];
 export const FONT_LABEL: Record<Font, string> = {
   "libre-baskerville": "Libre Baskerville",
   lora: "Lora",
-  "sf-pro": "SF Pro",
   "ibm-plex": "IBM Plex Sans",
-  segoe: "Segoe UI",
-  optimistic: "Optimistic",
+  inter: "Inter",
   geist: "Geist",
   "jetbrains-mono": "JetBrains Mono",
   "fira-code": "Fira Code",
 };
 
-/** Retired picker faces → nearest story face */
+/** Retired / unavailable faces → nearest working face */
 export const FONT_LEGACY: Record<string, Font> = {
-  inter: "geist",
-  "work-sans": "geist",
+  "work-sans": "inter",
   "space-grotesk": "geist",
-  "dm-sans": "geist",
+  "dm-sans": "inter",
   manrope: "geist",
-};
-
-export type FontChapter = {
-  id: string;
-  era: string;
-  years?: string;
-  note: string;
-  fonts: Font[];
-};
-
-/** Chapters drive the type panel — a career told in faces. */
-export const FONT_CHAPTERS: FontChapter[] = [
-  {
-    id: "school",
-    era: "school",
-    years: "2012–13",
-    note: "Architecture briefs and HCI thesis years",
-    fonts: ["libre-baskerville", "lora"],
-  },
-  {
-    id: "apple",
-    era: "apple",
-    years: "2012",
-    note: "IS&T accessibility tooling",
-    fonts: ["sf-pro"],
-  },
-  {
-    id: "ibm",
-    era: "ibm",
-    years: "2014–17",
-    note: "Watson, SPSS, early Carbon",
-    fonts: ["ibm-plex"],
-  },
-  {
-    id: "microsoft",
-    era: "microsoft",
-    years: "2017–24",
-    note: "MyAnalytics → Focus Time",
-    fonts: ["segoe"],
-  },
-  {
-    id: "meta",
-    era: "meta",
-    years: "2022",
-    note: "Notebooks, Vega, infra systems",
-    fonts: ["optimistic"],
-  },
-  {
-    id: "independent",
-    era: "independent",
-    years: "now",
-    note: "Machines, local tools, coded craft",
-    fonts: ["geist", "jetbrains-mono", "fira-code"],
-  },
-];
-
-export const FONT_BEAT: Record<Font, string> = {
-  "libre-baskerville": "architecture writing",
-  lora: "HCI reading",
-  "sf-pro": "Apple system UI",
-  "ibm-plex": "IBM Design",
-  segoe: "Windows / Office",
-  optimistic: "Meta product UI",
-  geist: "portfolio default",
-  "jetbrains-mono": "terminal craft",
-  "fira-code": "prototypes in code",
+  "sf-pro": "geist",
+  segoe: "inter",
+  optimistic: "inter",
 };
 
 export function migrateTheme(raw: string | null | undefined): Theme | null {

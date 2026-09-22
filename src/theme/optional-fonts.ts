@@ -1,5 +1,6 @@
 import {
   IBM_Plex_Sans,
+  Inter,
   Libre_Baskerville,
   Lora,
   JetBrains_Mono,
@@ -7,13 +8,17 @@ import {
 } from "next/font/google";
 import type { Font } from "./system";
 
-/**
- * Loaded typefaces only — company system stacks (SF Pro, Segoe, Optimistic)
- * are CSS-only and need no network fetch.
- */
+/** Non-Geist faces — CSS vars only, loaded when the type panel mounts. */
 const ibmPlex = IBM_Plex_Sans({
   weight: ["400", "600"],
   variable: "--font-ibm-plex",
+  subsets: ["latin"],
+  preload: false,
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   preload: false,
   display: "swap",
@@ -52,6 +57,7 @@ const firaCode = Fira_Code({
 
 const OPTIONAL_FONT_CLASS: Partial<Record<Font, string>> = {
   "ibm-plex": ibmPlex.variable,
+  inter: inter.variable,
   "libre-baskerville": libreBaskerville.variable,
   lora: lora.variable,
   "jetbrains-mono": jetBrainsMono.variable,
@@ -60,7 +66,7 @@ const OPTIONAL_FONT_CLASS: Partial<Record<Font, string>> = {
 
 const OPTIONAL_CLASSES = Object.values(OPTIONAL_FONT_CLASS);
 
-/** Attach every loaded face so the type panel can preview each name in-character. */
+/** Mount loaded faces so list previews render in-character. */
 export function ensureAllOptionalFontClasses() {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
@@ -69,7 +75,6 @@ export function ensureAllOptionalFontClasses() {
   }
 }
 
-/** Keep loaded faces mounted so chapter previews stay in-character. */
 export function ensureOptionalFontClass() {
   ensureAllOptionalFontClasses();
 }
