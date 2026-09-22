@@ -741,10 +741,13 @@
     max-width: 36em;
   }
   .intro-modal__enter {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 8px;
+    width: fit-content;
     margin-top: var(--space-6);
+    margin-left: auto;
+    margin-right: 0;
     padding: 10px 16px;
     font: inherit;
     font-size: 13px;
@@ -799,12 +802,22 @@
   }
   @media (max-width: 560px) {
     .intro-modal {
-      place-items: start stretch;
-      align-content: start;
+      place-items: stretch;
+      align-content: stretch;
+      padding: 0;
     }
     .intro-modal__panel {
+      width: 100%;
+      max-width: none;
       max-height: none;
-      padding: var(--space-4) var(--space-4) var(--space-8);
+      min-height: 100%;
+      border-radius: 0;
+      padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      display: flex;
+      flex-direction: column;
+    }
+    .intro-modal__proof {
+      margin-top: var(--space-6);
     }
     .intro-modal__proof-list li {
       grid-template-columns: 1fr;
@@ -812,6 +825,18 @@
     }
     .intro-modal__lede {
       font-size: 1.05rem;
+    }
+    .intro-modal__aside {
+      font-size: 11px;
+    }
+    .intro-modal__enter {
+      position: sticky;
+      bottom: max(8px, env(safe-area-inset-bottom));
+      z-index: 3;
+      margin-top: var(--space-5);
+      margin-left: auto;
+      padding: 12px 18px;
+      box-shadow: var(--shadow-2);
     }
   }
 
@@ -945,6 +970,26 @@
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
     font-feature-settings: "tnum" 1;
+  }
+  @media (max-width: 700px) {
+    .tool-bar__top {
+      gap: 10px 16px;
+    }
+    .tool-bar__count {
+      margin-left: 0;
+    }
+  }
+  @media (max-width: 420px) {
+    .tool-bar {
+      font-size: 10px;
+      letter-spacing: 0.04em;
+    }
+    .tool-bar__top {
+      gap: 8px 12px;
+    }
+    .tool-bar__dot {
+      margin: 0 6px;
+    }
   }
   .tool-bar__filters {
     display: flex;

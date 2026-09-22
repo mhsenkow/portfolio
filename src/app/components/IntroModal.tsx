@@ -244,11 +244,6 @@ export function IntroModal() {
           Apple IS&amp;T accessibility.
         </p>
 
-        <button type="button" className="intro-modal__enter" onClick={dismiss}>
-          View work
-          <ArrowRight size={16} weight="light" aria-hidden />
-        </button>
-
         <details className="intro-modal__earlier">
           <summary>Earlier sites</summary>
           <div className="intro-modal__links">
@@ -262,6 +257,11 @@ export function IntroModal() {
             ))}
           </div>
         </details>
+
+        <button type="button" className="intro-modal__enter" onClick={dismiss}>
+          View work
+          <ArrowRight size={16} weight="light" aria-hidden />
+        </button>
       </div>
     </div>
   );
