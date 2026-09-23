@@ -1,7 +1,7 @@
-# Michael Senkow — Staff Product Designer
+# Michael Senkow — Staff Product Designer / Creative Technologist
 # https://ibm.io
 
-> Portfolio of product design case studies and independent tools. Complex tooling, data workflows, and product systems.
+> Hi — staff-level product designer shipping AI-assisted workflows, data tools, and design systems across Microsoft, Meta, IBM, Apple, and startups. I turn complex systems into durable interfaces: notebooks, insights, alerts, and enterprise data tooling — with design-to-engineering fluency.
 
 ## Primary
 
@@ -9,16 +9,17 @@
 - [Case studies](https://ibm.io/projects): Selected enterprise and independent work
 - [Judge](https://ibm.io/projects/judge): Salesforce / CRM integrity (current)
 - [About](https://ibm.io/about): Background and experience
+- [A story](https://ibm.io/story): Systems → products → AI, plus local-first data tools, fabrication, and habitat games
 - [Archive](https://ibm.io/list-view): Chronological project list
 - [Explorations](https://ibm.io/other-design-work): Creative and experimental work
-- [Resume](https://drive.google.com/file/d/1AOqIET8BF5kRcZuXYrEYPFMxweFE4GPZ/view): PDF resume
+- [Resume](https://ibm.io/resume.pdf): PDF resume
 
 ## Experience highlights
 
-- Microsoft — Focus Time / Viva Insights, Workplace Analytics
-- Meta Infra — Daiquery / Bento notebooks, data viz, XDS
-- IBM — Watson Analytics, Carbon Design System contributions
-- i2Systems — Judge (Salesforce / CRM integrity)
+- Consulting — i2Systems, legal & HR AI platforms
+- Meta Infra — Daiquery / Bento notebooks, XDS data-viz, AI insight patterns
+- Microsoft — Viva Insights lineage, Focus Time, Teams admin, design leadership
+- IBM — Watson / Cognos, early Carbon, enterprise design transformation
 
 ## Optional
 

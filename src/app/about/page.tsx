@@ -1,17 +1,22 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { RESUME_URL } from '@/content/site';
+import {
+	CONTACT_EMAIL,
+	RESUME_URL,
+	SITE_BLURB,
+	SITE_GREETING,
+	SITE_ROLE,
+} from '@/content/site';
 import styles from './about.module.css';
 
 export const metadata: Metadata = {
 	title: 'About',
-	description:
-		'Michael Senkow — Staff Product Designer. Complex tooling, data workflows, and product systems.',
+	description: `Michael Senkow — ${SITE_ROLE}. ${SITE_BLURB}`,
 	alternates: { canonical: '/about' },
 };
 
 const LINKS = [
-	{ href: 'mailto:mhsenkow@gmail.com', label: 'mhsenkow@gmail.com' },
+	{ href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
 	{ href: RESUME_URL, label: 'Resume', external: true },
 	{ href: 'https://github.com/mhsenkow', label: 'GitHub', external: true },
 	{ href: 'https://www.linkedin.com/in/mhsenkow/', label: 'LinkedIn', external: true },
@@ -24,61 +29,59 @@ export default function AboutPage() {
 		<main id="content">
 			<section className={`container ${styles.page}`}>
 				<header className={styles.mast}>
-					<p className={styles.hint}>Staff Product Designer</p>
+					<p className={styles.hint}>{SITE_ROLE}</p>
 					<h1 className={`h1 ${styles.title}`}>About</h1>
 				</header>
 
 				<div className={styles.grid}>
 					<div className={styles.story}>
+						{SITE_GREETING.map((para) => (
+							<p key={para.slice(0, 28)}>{para}</p>
+						))}
+
 						<p>
-							I&apos;m Michael — a staff product designer focused on complex tooling,
-							data workflows, and systems that stay clear at scale. I design and
-							prototype enterprise products and the supporting infrastructure around them.
+							Recently: consulting for <strong>i2Systems</strong> (Lux, Judge) and AI
+							startups. Before that — <strong>Meta Infra</strong> notebooks &amp; data-viz
+							systems; <strong>Microsoft</strong> MyAnalytics / Viva Insights and Focus
+							Time research; <strong>IBM</strong> Watson / Cognos and early Carbon.
 						</p>
+
 						<p>
-							Background: B.S. Mechanical Engineering and Technical Communications at
-							Michigan Tech; M.S. HCI and digital fabrication at the University of
-							Michigan. Earlier work includes Boston startups, architecture research,
-							and an Apple IS&amp;T internship on accessibility.
+							Off-hours I ship independent local-first machines — same systems instinct
+							as the day job, just for myself.
 						</p>
+
+						<p>
+							M.S. HCI · UMich · B.S. ME &amp; Tech Comm · Michigan Tech · Apple IS&amp;T
+							internship. Email is the best first step.
+						</p>
+
 						<ul className={styles.orgList}>
 							<li>
-								<span className={styles.orgName}>i2Systems</span>
+								<span className={styles.orgName}>Now</span>
 								<span className={styles.orgBody}>
-									Current — Lux design system, Figma add-ons, Flux demos, SEO
-									tooling, <strong>Judge</strong> (CRM integrity), and related
-									experiments. Advancing how the team designs and ships — not the
-									company marketing site.
+									i2Systems + AI consulting.
+								</span>
+							</li>
+							<li>
+								<span className={styles.orgName}>Meta</span>
+								<span className={styles.orgBody}>
+									Daiquery / Bento, analysis workflows, XDS data-viz.
 								</span>
 							</li>
 							<li>
 								<span className={styles.orgName}>Microsoft</span>
 								<span className={styles.orgBody}>
-									MyAnalytics and Workplace Analytics → Viva Insights, including
-									Focus Time.
-								</span>
-							</li>
-							<li>
-								<span className={styles.orgName}>Meta Infra</span>
-								<span className={styles.orgBody}>
-									Daiquery / Bento notebooks, analysis workflows, data visualization
-									systems, and XDS.
+									Viva Insights lineage, Focus Time, Teams admin.
 								</span>
 							</li>
 							<li>
 								<span className={styles.orgName}>IBM</span>
 								<span className={styles.orgBody}>
-									Early Design program, Watson Analytics, and data-viz / platform
-									guide work that contributed to Carbon.
+									Watson / Cognos; early Carbon foundations.
 								</span>
 							</li>
 						</ul>
-						<p>
-							I also build and ship independent tools — local-first utilities,
-							simulations, and design experiments. Open to conversations about staff-level
-							product design for complex tooling, data workflows, and systems work —
-							email is the best first step.
-						</p>
 					</div>
 
 					<aside className={styles.aside}>

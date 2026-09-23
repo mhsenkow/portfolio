@@ -1,15 +1,18 @@
 "use client";
 
+import { useCallback, useState } from "react";
 import { EnvelopeSimple, GithubLogo, LinkedinLogo, SquaresFour } from "@phosphor-icons/react";
+import { CONTACT_EMAIL } from "@/content/site";
 
 const ICON = { size: 18, weight: "light" as const, "aria-hidden": true };
 
 const LINKS = [
   {
-    href: "mailto:mhsenkow@gmail.com",
+    href: `mailto:${CONTACT_EMAIL}`,
     label: "Email",
-    description: "mhsenkow@gmail.com — best for roles, collabs, and follow-ups.",
+    description: `${CONTACT_EMAIL} — best for roles, collabs, and follow-ups.`,
     Icon: EnvelopeSimple,
+    email: true,
   },
   {
     href: "https://github.com/mhsenkow",
@@ -32,9 +35,25 @@ const LINKS = [
 ] as const;
 
 export function FooterLinks() {
+  const [copied, setCopied] = useState(false);
+
+  const onEmailClick = useCallback(async () => {
+    // mailto: often no-ops when no desktop mail client is configured.
+    // Copy always works; default mailto navigation still fires.
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard may be blocked; mailto still proceeds */
+    }
+  }, []);
+
   return (
     <ul className="icon-links" role="list">
-      {LINKS.map(({ href, label, description, Icon }) => {
+      {LINKS.map((link) => {
+        const { href, label, description, Icon } = link;
+        const isEmail = "email" in link && link.email;
         const external = href.startsWith("http");
         return (
           <li key={href}>
@@ -43,11 +62,18 @@ export function FooterLinks() {
               href={href}
               target={external ? "_blank" : undefined}
               rel={external ? "noreferrer noopener" : undefined}
-              aria-label={label}
+              aria-label={isEmail && copied ? "Email address copied" : label}
+              onClick={isEmail ? onEmailClick : undefined}
             >
               <span className="tooltip" role="tooltip">
-                <span className="tooltip__title">{label}</span>
-                <span className="tooltip__desc">{description}</span>
+                <span className="tooltip__title">
+                  {isEmail && copied ? "Copied" : label}
+                </span>
+                <span className="tooltip__desc">
+                  {isEmail && copied
+                    ? `${CONTACT_EMAIL} is on your clipboard.`
+                    : description}
+                </span>
               </span>
               <Icon {...ICON} />
             </a>

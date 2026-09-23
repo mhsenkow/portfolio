@@ -7,8 +7,7 @@ import Link from 'next/link';
 import { ProjectPager } from '@/app/components/ProjectPager';
 import { LinkToken } from '@/app/components/LinkToken';
 import { SidePanelLayout } from '@/app/components/SidePanelLayout';
-import fs from 'fs';
-import path from 'path';
+import autoGalleries from '@/content/auto-galleries.json';
 
 export function generateStaticParams() {
 	return projects.map((p) => ({ slug: p.slug }));
@@ -87,23 +86,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 	if (!project) return notFound();
 
 	const mediaDir = projectMediaDir(project);
-	let autoGallery: { src: string; alt: string }[] = [];
-	try {
-		const dir = path.join(process.cwd(), 'public', 'images', 'projects', mediaDir);
-		const files = fs.readdirSync(dir);
-		autoGallery = files
-			.filter((f) => /\.(png|jpe?g|webp|gif|avif)$/i.test(f))
-			.filter((f) => {
-				try {
-					return fs.statSync(path.join(dir, f)).size >= 2048;
-				} catch {
-					return false;
-				}
-			})
-			.map((f) => ({ src: `/images/projects/${mediaDir}/${f}`, alt: project.title }));
-	} catch {
-		// ignore missing directory
-	}
+	const baked = (autoGalleries as Record<string, string[]>)[mediaDir] ?? [];
+	const autoGallery = baked.map((src) => ({ src, alt: project.title }));
 
 	const gallery = [
 		...(project.gallery ?? []),

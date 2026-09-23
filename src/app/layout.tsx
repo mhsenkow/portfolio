@@ -4,8 +4,11 @@ import { Nav } from "./components/Nav";
 import { LightboxProvider } from "./components/Lightbox";
 import { IntroModal } from "./components/IntroModal";
 import { FooterLinks } from "./components/FooterLinks";
+import { FooterStory } from "./components/FooterStory";
+import { GotoSearch } from "./components/GotoSearch";
+import { PulseBeacon } from "./components/PulseBeacon";
 import Script from "next/script";
-import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/content/site";
+import { SITE_BLURB, SITE_NAME, SITE_ROLE, SITE_TAGLINE, SITE_URL } from "@/content/site";
 import { defaultFontClassName } from "@/theme/optional-fonts";
 import "@/styles/globals.css";
 
@@ -23,10 +26,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Staff Product Designer`,
+    default: `${SITE_NAME} — ${SITE_ROLE}`,
     template: `%s — ${SITE_NAME}`,
   },
-  description: `${SITE_NAME} — Staff Product Designer. ${SITE_TAGLINE}. Case studies from Microsoft, Meta, IBM, and independent work.`,
+  description: `${SITE_NAME} — ${SITE_ROLE}. ${SITE_BLURB}`,
   alternates: {
     canonical: "/",
   },
@@ -34,22 +37,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Staff Product Designer`,
-    description: SITE_TAGLINE,
+    title: `${SITE_NAME} — ${SITE_ROLE}`,
+    description: SITE_BLURB,
     url: SITE_URL,
     images: [
       {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "Michael Senkow — Staff Product Designer",
+        alt: `${SITE_NAME} — ${SITE_ROLE}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Staff Product Designer`,
-    description: SITE_TAGLINE,
+    title: `${SITE_NAME} — ${SITE_ROLE}`,
+    description: SITE_BLURB,
     images: ["/images/og.png"],
   },
   robots: {
@@ -65,8 +68,8 @@ const personJsonLd = {
     "@type": "Person",
     name: SITE_NAME,
     url: SITE_URL,
-    jobTitle: "Staff Product Designer",
-    description: SITE_TAGLINE,
+    jobTitle: SITE_ROLE,
+    description: SITE_BLURB,
     image: `${SITE_URL}/images/profile/michael.jpg`,
     sameAs: [
       "https://github.com/mhsenkow",
@@ -80,6 +83,7 @@ const personJsonLd = {
       "Data visualization",
       "Enterprise tooling",
       "Local-first software",
+      "AI-assisted workflows",
     ],
   },
 };
@@ -133,8 +137,11 @@ html[data-theme=dark] .intro-modal,html[data-theme=frost] .intro-modal,html[data
         {/* Curtain first in DOM so first paint is covered */}
         <div id="intro-boot" className="intro-boot" aria-hidden="true" />
         <LightboxProvider>
+        <PulseBeacon />
         <div className="app-shell">
-          <a href="#content" className="sr-only">Skip to content</a>
+          <a href="#content" className="skip-link">
+            Skip to content
+          </a>
           <header className="site-header">
             <nav aria-label="Primary" className="site-header__nav">
               <Nav />
@@ -147,7 +154,11 @@ html[data-theme=dark] .intro-modal,html[data-theme=frost] .intro-modal,html[data
           <footer className="site-footer">
             <div className="container footer-inner">
               <FooterLinks />
-              <p className="footer-copy">© {new Date().getFullYear()}</p>
+              <div className="footer-end">
+                <FooterStory />
+                <GotoSearch />
+                <p className="footer-copy">© {new Date().getFullYear()}</p>
+              </div>
             </div>
           </footer>
         </div>

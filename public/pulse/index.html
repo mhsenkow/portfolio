@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-ui="braun" data-font="mono" data-faces="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)">
+<title>pulse — ibm.io</title>
+<meta name="description" content="sites · events — local first-party analytics">
+<link rel="canonical" href="https://ibm.io/pulse/">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+<link rel="stylesheet" href="../lib/number-tool.css?v=49">
+<style>
+  html.pulse-html { overflow: auto; height: auto; }
+  body.pulse-app {
+    overflow: auto;
+    height: auto;
+    min-height: 100dvh;
+    max-height: none;
+    align-items: stretch;
+    padding:
+      calc(max(var(--pad), env(safe-area-inset-top)) + var(--mast-h))
+      calc(max(var(--pad), env(safe-area-inset-right)) + 52px)
+      calc(max(24px, env(safe-area-inset-bottom)) + var(--dock-h))
+      max(var(--pad), env(safe-area-inset-left));
+  }
+  body.pulse-app main {
+    width: min(720px, 100%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .pulse-hero {
+    display: grid;
+    gap: 6px;
+  }
+  .pulse-hero .face-value {
+    font: 500 clamp(2.8rem, 12vw, 4.5rem)/1 var(--digits);
+    letter-spacing: -.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .pulse-hero .face-sub {
+    color: var(--mute);
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+  .pulse-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    color: var(--mute);
+    font-size: 12px;
+  }
+  .pulse-meta strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .pulse-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .pulse-toolbar .seg {
+    display: inline-flex;
+    border: 1px solid var(--hair);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .pulse-toolbar .seg label {
+    cursor: pointer;
+  }
+  .pulse-toolbar .seg input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pulse-toolbar .seg span {
+    display: block;
+    padding: 6px 10px;
+    font-size: 12px;
+    letter-spacing: .04em;
+    color: var(--mute);
+    border-right: 1px solid var(--hair);
+  }
+  .pulse-toolbar .seg label:last-child span { border-right: 0; }
+  .pulse-toolbar .seg input:checked + span {
+    color: var(--ink);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+  .pulse-toolbar button {
+    appearance: none;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 12px;
+    letter-spacing: .04em;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .pulse-toolbar button:hover,
+  .pulse-toolbar button:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .pulse-toolbar button.is-warn { color: var(--mark); border-color: color-mix(in srgb, var(--mark) 40%, var(--rule)); }
+  .pulse-section h2 {
+    margin: 0 0 10px;
+    font: 500 11px/1.2 var(--ui);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  .pulse-spark {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 56px;
+    padding: 0 0 2px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .pulse-spark span {
+    flex: 1;
+    min-width: 4px;
+    max-width: 28px;
+    background: color-mix(in srgb, var(--accent) 70%, var(--ink));
+    border-radius: 1px 1px 0 0;
+    opacity: .85;
+  }
+  .pulse-spark-empty {
+    color: var(--mute);
+    font-size: 13px;
+  }
+  .pulse-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .pulse-table th,
+  .pulse-table td {
+    text-align: left;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--hair);
+    vertical-align: top;
+  }
+  .pulse-table th {
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--mute);
+    font-weight: 500;
+  }
+  .pulse-table td.path,
+  .pulse-table td.name {
+    font-family: var(--digits);
+    font-size: 12px;
+    word-break: break-all;
+  }
+  .pulse-table td.count {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+    width: 4em;
+  }
+  .pulse-table td.time {
+    color: var(--mute);
+    font-size: 11px;
+    white-space: nowrap;
+    width: 7.5em;
+  }
+  .pulse-table td.site {
+    color: var(--mute);
+    font-size: 11px;
+    letter-spacing: .04em;
+    width: 5.5em;
+  }
+  .pulse-empty {
+    color: var(--mute);
+    font-size: 13px;
+    padding: 8px 0;
+  }
+  .pulse-note {
+    color: var(--mute);
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 42em;
+  }
+</style>
+</head>
+<body class="tool-app pulse-app" data-tool="pulse">
+<script>document.documentElement.classList.add('pulse-html');</script>
+<header class="masthead">
+  <div class="masthead-start">
+    <h1>pulse</h1>
+  </div>
+  <div class="actions">
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="theme">
+      <span class="theme-orb" aria-hidden="true"></span>
+    </button>
+    <button id="settingsToggle" type="button" aria-expanded="false" aria-controls="settings" hidden>settings</button>
+  </div>
+</header>
+<main>
+  <section class="pulse-hero" aria-live="polite">
+    <div class="face-value" id="heroCount">0</div>
+    <p class="face-sub" id="heroLabel">pageviews on this device</p>
+    <div class="pulse-meta" id="metaLine">
+      <span><strong id="metaEvents">0</strong> events</span>
+      <span><strong id="metaSuite">0</strong> suite</span>
+      <span><strong id="metaPortfolio">0</strong> portfolio</span>
+    </div>
+  </section>
+
+  <div class="pulse-toolbar" role="toolbar" aria-label="pulse controls">
+    <div class="seg" role="radiogroup" aria-label="site filter">
+      <label><input type="radio" name="site" value="all" checked><span>all</span></label>
+      <label><input type="radio" name="site" value="suite"><span>suite</span></label>
+      <label><input type="radio" name="site" value="portfolio"><span>portfolio</span></label>
+    </div>
+    <button type="button" id="btnRefresh">refresh</button>
+    <button type="button" id="btnExport">export</button>
+    <button type="button" id="btnToggleOff">pause</button>
+    <button type="button" id="btnClear" class="is-warn">clear</button>
+  </div>
+
+  <section class="pulse-section" aria-labelledby="sparkTitle">
+    <h2 id="sparkTitle">last days</h2>
+    <div class="pulse-spark" id="spark" hidden></div>
+    <p class="pulse-spark-empty" id="sparkEmpty">Browse a few tools — bars appear as days collect events.</p>
+  </section>
+
+  <section class="pulse-section" aria-labelledby="pathsTitle">
+    <h2 id="pathsTitle">top paths</h2>
+    <table class="pulse-table" id="pathsTable" hidden>
+      <thead><tr><th>path</th><th class="count">n</th></tr></thead>
+      <tbody id="pathsBody"></tbody>
+    </table>
+    <p class="pulse-empty" id="pathsEmpty">No paths yet.</p>
+  </section>
+
+  <section class="pulse-section" aria-labelledby="logTitle">
+    <h2 id="logTitle">recent</h2>
+    <table class="pulse-table" id="logTable" hidden>
+      <thead><tr><th>when</th><th>site</th><th>name</th><th>path</th></tr></thead>
+      <tbody id="logBody"></tbody>
+    </table>
+    <p class="pulse-empty" id="logEmpty">Empty log. Open /wordcount/ or a portfolio page, then refresh.</p>
+  </section>
+
+  <p class="pulse-note">Local only — events stay in IndexedDB on this browser. Nothing is sent to Google or any third party. Export when you want a dump; a Cloudflare collector can reuse the same beacon later.</p>
+</main>
+
+<script src="../lib/suite.js?v=49"></script>
+<script src="../lib/pulse.js?v=1"></script>
+<script src="../lib/number-tool.js?v=49"></script>
+<script>
+(function () {
+  if (window.IBMTools) IBMTools.mountSuiteNav('pulse');
+
+  var themeBtn = document.getElementById('themeBtn');
+  var THEMES = (window.IBMTools && IBMTools.THEMES) || ['light', 'dark', 'contrast', 'paper', 'glass', 'frost', 'brutal', 'loom', 'tank', 'nes'];
+
+  function applyLook() {
+    var shared = (window.IBMTools && IBMTools.loadShared()) || {};
+    var theme = shared.theme || localStorage.getItem('theme') || 'light';
+    if (THEMES.indexOf(theme) < 0) theme = 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    if (shared.ui) document.documentElement.setAttribute('data-ui', shared.ui);
+    if (shared.font) document.documentElement.setAttribute('data-font', shared.font);
+    if (shared.faces) document.documentElement.setAttribute('data-faces', shared.faces);
+  }
+  applyLook();
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var cur = document.documentElement.getAttribute('data-theme') || 'light';
+      var i = THEMES.indexOf(cur);
+      var next = THEMES[(i < 0 ? 0 : i + 1) % THEMES.length];
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      if (window.IBMTools) IBMTools.saveShared({ theme: next });
+    });
+  }
+
+  var siteFilter = 'all';
+  var $ = function (id) { return document.getElementById(id); };
+
+  function fmtTime(ts) {
+    try {
+      var d = new Date(ts);
+      return d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      return String(ts);
+    }
+  }
+
+  function updateOffBtn() {
+    var off = window.IBMPulse && IBMPulse.isOff();
+    var btn = $('btnToggleOff');
+    if (!btn) return;
+    btn.textContent = off ? 'resume' : 'pause';
+    btn.setAttribute('aria-pressed', off ? 'true' : 'false');
+  }
+
+  function render(summary) {
+    $('heroCount').textContent = String(summary.views || 0);
+    $('heroLabel').textContent = summary.views === 1 ? 'pageview on this device' : 'pageviews on this device';
+    $('metaEvents').textContent = String(summary.events || 0);
+    $('metaSuite').textContent = String((summary.bySite && summary.bySite.suite) || 0);
+    $('metaPortfolio').textContent = String((summary.bySite && summary.bySite.portfolio) || 0);
+
+    var spark = summary.spark || [];
+    var sparkEl = $('spark');
+    var sparkEmpty = $('sparkEmpty');
+    if (spark.length) {
+      var max = 1;
+      spark.forEach(function (d) { if (d.count > max) max = d.count; });
+      sparkEl.innerHTML = spark.map(function (d) {
+        var h = Math.max(4, Math.round((d.count / max) * 56));
+        return '<span title="' + d.day + ': ' + d.count + '" style="height:' + h + 'px"></span>';
+      }).join('');
+      sparkEl.hidden = false;
+      sparkEmpty.hidden = true;
+    } else {
+      sparkEl.hidden = true;
+      sparkEmpty.hidden = false;
+    }
+
+    var paths = summary.topPaths || [];
+    var pathsTable = $('pathsTable');
+    var pathsEmpty = $('pathsEmpty');
+    var pathsBody = $('pathsBody');
+    if (paths.length) {
+      pathsBody.innerHTML = paths.map(function (p) {
+        return '<tr><td class="path">' + escapeHtml(p.path) + '</td><td class="count">' + p.count + '</td></tr>';
+      }).join('');
+      pathsTable.hidden = false;
+      pathsEmpty.hidden = true;
+    } else {
+      pathsTable.hidden = true;
+      pathsEmpty.hidden = false;
+    }
+
+    var recent = summary.recent || [];
+    var logTable = $('logTable');
+    var logEmpty = $('logEmpty');
+    var logBody = $('logBody');
+    if (recent.length) {
+      logBody.innerHTML = recent.map(function (r) {
+        return '<tr>' +
+          '<td class="time">' + escapeHtml(fmtTime(r.ts)) + '</td>' +
+          '<td class="site">' + escapeHtml(r.site || '') + '</td>' +
+          '<td class="name">' + escapeHtml(r.name || '') + '</td>' +
+          '<td class="path">' + escapeHtml(r.path || '') + '</td>' +
+          '</tr>';
+      }).join('');
+      logTable.hidden = false;
+      logEmpty.hidden = true;
+    } else {
+      logTable.hidden = true;
+      logEmpty.hidden = false;
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function filterOpts() {
+    return siteFilter === 'all' ? {} : { site: siteFilter };
+  }
+
+  function refresh() {
+    if (!window.IBMPulse) return;
+    updateOffBtn();
+    IBMPulse.summarize(filterOpts()).then(render).catch(function () {
+      render({ views: 0, events: 0, bySite: {}, topPaths: [], spark: [], recent: [] });
+    });
+  }
+
+  document.querySelectorAll('input[name="site"]').forEach(function (el) {
+    el.addEventListener('change', function () {
+      if (el.checked) {
+        siteFilter = el.value;
+        refresh();
+      }
+    });
+  });
+
+  $('btnRefresh').addEventListener('click', refresh);
+  $('btnExport').addEventListener('click', function () {
+    if (!window.IBMPulse) return;
+    IBMPulse.exportJson(filterOpts()).then(function (json) {
+      var blob = new Blob([json], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'pulse-export-' + new Date().toISOString().slice(0, 10) + '.json';
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+  });
+  $('btnClear').addEventListener('click', function () {
+    if (!window.IBMPulse) return;
+    if (!confirm('Clear all pulse events on this device?')) return;
+    IBMPulse.clear().then(refresh);
+  });
+  $('btnToggleOff').addEventListener('click', function () {
+    if (!window.IBMPulse) return;
+    IBMPulse.setOff(!IBMPulse.isOff());
+    updateOffBtn();
+  });
+
+  refresh();
+  setInterval(refresh, 8000);
+})();
+</script>
+</body>
+</html>

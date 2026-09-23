@@ -1575,7 +1575,7 @@ export const projects: Project[] = [
       { src: '/images/projects/cards/adler.png', alt: 'Guide to the Galaxy concept' }
     ],
     category: 'creative',
-    stack: ['Android', 'UX'],
+    stack: ['Android', 'Java', 'Mobile', 'UX'],
     details: {
       role: 'User Experience Designer/Researcher',
       entity: 'Adler Spatial Visualization Lab',
@@ -1583,7 +1583,7 @@ export const projects: Project[] = [
       years: '2012',
       synopsis:
         'Two‑day Android MVP letting users “walk” the solar system around the planetarium with info bubbles.',
-      skills: ['Graphic Design', 'Processing', 'Android', 'Interaction Design']
+      skills: ['Mobile UX', 'Android', 'Java', 'Graphic Design', 'Processing', 'Interaction Design']
     }
   },
   {
@@ -1730,8 +1730,9 @@ export const projects: Project[] = [
 	{
 		slug: 'graphic-design-work',
 		title: 'Graphic design work',
-		description: 'Selected graphic design examples from various roles.',
-		year: 2015,
+		description:
+			'Selected graphic design from undergrad — marketing communications and visual compositions at Michigan Tech.',
+		year: 2010,
 		category: 'creative',
 		image: { src: '/images/projects/graphic-design-work/card.PNG', alt: 'Graphic design work' },
 		gallery: [
@@ -1742,13 +1743,16 @@ export const projects: Project[] = [
 		],
 		details: {
 			entity: 'Michigan Tech — Technical Communications',
-			synopsis: "Providing some examples of the more purely graphic design work from old roles. A sampling of graphics and visual compositions created alongside product design work."
+			years: 'Undergrad · ~2010',
+			synopsis:
+				'Examples of purely graphic / marcom work from undergraduate Technical Communications at Michigan Tech — before the HCI and product-systems track.',
 		}
 	},
 	{
 		slug: '3d-printer-experimentation',
 		title: '3D printer experimentation',
 		description: 'Explorations across Rhino/Grasshopper and node-based modeling; printed studies.',
+		year: 2019,
 		category: 'creative',
 				image: { src: '/images/projects/3d-printer-experimentation/card.png', alt: '3D printer experimentation' },
 		stack: ['Rhino', 'Grasshopper', 'Blender', '3D Printing', 'Parametric Design'],

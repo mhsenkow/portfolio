@@ -1,0 +1,35 @@
+.page {
+  padding: var(--space-10) 0 var(--space-12);
+}
+
+.mast {
+  width: min(100%, 52rem);
+  margin: 0 auto var(--space-5);
+}
+
+.hint {
+  margin: 0 0 var(--space-1);
+  font-size: var(--size-1);
+  letter-spacing: var(--track-label);
+  text-transform: lowercase;
+  color: var(--color-muted);
+}
+
+.title {
+  margin: 0;
+}
+
+.prose {
+  display: grid;
+  gap: var(--prose-gap);
+  width: min(100%, 52rem);
+  margin-inline: auto;
+  color: var(--color-text);
+  font-size: var(--size-3);
+  line-height: var(--leading-body);
+}
+
+.prose p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}

@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRight, X } from "@phosphor-icons/react";
 import { LinkToken } from "@/app/components/LinkToken";
 import { useDismissible } from "@/hooks/useDismissible";
+import { SITE_GREETING, SITE_NAME, SITE_ROLE, SITE_TAGLINE } from "@/content/site";
 
 export const INTRO_OPEN_EVENT = "portfolio:open-intro";
 export const INTRO_STATE_EVENT = "portfolio:intro-state";
@@ -88,10 +89,9 @@ const EARLIER_SITES = [
 ] as const;
 
 export function IntroModal() {
-  const [open, setOpen] = useState(() => {
-    if (typeof document === "undefined") return false;
-    return document.documentElement.getAttribute("data-intro") === "open";
-  });
+  // Always start closed so SSR HTML matches the first client paint.
+  // theme-init already sets data-intro + #intro-boot; sync open after mount.
+  const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
 
@@ -109,7 +109,7 @@ export function IntroModal() {
     return () => window.removeEventListener("portfolio:dismiss-intro", onDismissEvent);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       if (params.get("intro") === "1") {
@@ -128,8 +128,10 @@ export function IntroModal() {
     } catch {
       /* ignore */
     }
-    if (open) emitIntroState(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount sync only
+    if (document.documentElement.getAttribute("data-intro") === "open") {
+      setOpen(true);
+      emitIntroState(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -149,6 +151,7 @@ export function IntroModal() {
     openerRef,
     lockScroll: true,
     focusOnOpen: true,
+    trapFocus: true,
     disableOutside: true, // backdrop onClick handles outside
   });
 
@@ -158,11 +161,34 @@ export function IntroModal() {
     panel?.scrollTo({ top: 0 });
   }, [open]);
 
+  // Keep assistive tech + Tab out of the page chrome while the intro is up.
+  useEffect(() => {
+    const shell = document.querySelector(".app-shell");
+    if (!shell) return;
+    const inertTargets = [
+      shell.querySelector(".site-header"),
+      shell.querySelector(".app-main"),
+      shell.querySelector("#overlays"),
+      shell.querySelector(".site-footer"),
+      shell.querySelector(".skip-link"),
+    ].filter(Boolean) as HTMLElement[];
+
+    if (open) {
+      for (const el of inertTargets) el.setAttribute("inert", "");
+    } else {
+      for (const el of inertTargets) el.removeAttribute("inert");
+    }
+    return () => {
+      for (const el of inertTargets) el.removeAttribute("inert");
+    };
+  }, [open]);
+
   if (!open) return null;
 
   return (
     <div
       ref={rootRef}
+      id="intro-dialog"
       className="intro-modal"
       role="dialog"
       aria-modal="true"
@@ -178,46 +204,46 @@ export function IntroModal() {
         >
           <X size={14} weight="light" aria-hidden />
         </button>
-        <p className="intro-modal__hint">portfolio : i build machines</p>
+        <p className="intro-modal__hint">{SITE_TAGLINE}</p>
 
         <header className="intro-modal__mast">
           <h1 id="intro-title" className="h1 intro-modal__title">
-            Michael Senkow
+            {SITE_NAME}
           </h1>
-          <p className="intro-modal__role">Staff Product Designer</p>
-          <p className="intro-modal__lede">
-            Complex tooling, data workflows, and product systems — enterprise and independent.
-          </p>
+          <p className="intro-modal__role">{SITE_ROLE}</p>
+          <div className="intro-modal__lede">
+            {SITE_GREETING.map((para) => (
+              <p key={para.slice(0, 24)}>{para}</p>
+            ))}
+          </div>
         </header>
 
         <section className="intro-modal__proof" aria-label="Selected products">
           <p className="intro-modal__section-label">selected work</p>
           <ul className="intro-modal__proof-list">
             <li>
-              <span className="intro-modal__proof-org">i2Systems</span>
+              <span className="intro-modal__proof-org">Now</span>
               <span className="intro-modal__proof-body">
-                <strong>Current</strong> — Lux, Figma add-ons, Flux, SEO tooling,{" "}
-                <strong>Judge</strong> (CRM integrity). Internal product practice, not the marketing site.
+                <strong>i2Systems</strong> — Lux, Judge; also legal &amp; HR AI consulting.
               </span>
             </li>
             <li>
               <span className="intro-modal__proof-org">Meta Infra</span>
               <span className="intro-modal__proof-body">
-                <strong>Daiquery notebooks</strong> — SQL cells for Meta&apos;s warehouse; XDS infra,
-                data viz systems, AI workflows.
+                <strong>Daiquery / Bento</strong> notebooks, analysis workflows, XDS data-viz.
               </span>
             </li>
             <li>
               <span className="intro-modal__proof-org">Microsoft</span>
               <span className="intro-modal__proof-body">
-                <strong>Focus Time</strong> in Viva Insights on Outlook at scale. Earlier{" "}
-                <strong>Workplace Analytics → Viva Insights</strong>.
+                MyAnalytics → <strong>Viva Insights</strong>; research behind{" "}
+                <strong>Focus Time</strong>.
               </span>
             </li>
             <li>
               <span className="intro-modal__proof-org">IBM</span>
               <span className="intro-modal__proof-body">
-                Cognos Analytics with Watson; early <strong>Carbon Design System</strong>.
+                Watson / Cognos; early <strong>Carbon</strong> foundations.
               </span>
             </li>
           </ul>
@@ -236,7 +262,7 @@ export function IntroModal() {
         </p>
 
         <p className="intro-modal__aside">
-          M.S. HCI · UMich · B.S. ME &amp; Tech Comm · Michigan Tech · Apple IS&amp;T accessibility.
+          M.S. HCI · UMich · B.S. ME &amp; Tech Comm · Michigan Tech · Apple IS&amp;T · Seattle.
         </p>
 
         <details className="intro-modal__earlier">

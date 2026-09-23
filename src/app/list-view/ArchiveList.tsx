@@ -9,7 +9,8 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import type { Project } from "@/content/projects";
+import type { ArchiveItem } from "@/content/project-card";
+import { ARCHIVE_MILESTONES } from "@/content/archive-milestones";
 
 type ArchiveFilter = "all" | "work" | "side";
 
@@ -19,20 +20,20 @@ const FILTERS: { value: ArchiveFilter; label: string }[] = [
   { value: "side", label: "side projects" },
 ];
 
-const GAP_YEAR_MIN = 2012;
+const GAP_YEAR_MIN = 2010;
 
-function isSide(p: Project) {
+function isSide(p: ArchiveItem) {
   return p.category === "creative";
 }
 
 type YearBucket = {
   year: number | null;
-  work: Project[];
-  side: Project[];
+  work: ArchiveItem[];
+  side: ArchiveItem[];
   empty?: boolean;
 };
 
-function buildTimeline(projects: Project[]): YearBucket[] {
+function buildTimeline(projects: ArchiveItem[]): YearBucket[] {
   const dated = projects.filter((p) => typeof p.year === "number");
   const undated = projects.filter((p) => typeof p.year !== "number");
 
@@ -40,7 +41,7 @@ function buildTimeline(projects: Project[]): YearBucket[] {
   const maxY = years.length ? Math.max(...years) : new Date().getFullYear();
   const minY = years.length ? Math.min(Math.min(...years), GAP_YEAR_MIN) : GAP_YEAR_MIN;
 
-  const byYear = new Map<number, { work: Project[]; side: Project[] }>();
+  const byYear = new Map<number, { work: ArchiveItem[]; side: ArchiveItem[] }>();
   for (let y = minY; y <= maxY; y++) {
     byYear.set(y, { work: [], side: [] });
   }
@@ -83,7 +84,7 @@ function ProjectMark({
   lane,
   reduceMotion,
 }: {
-  project: Project;
+  project: ArchiveItem;
   lane: "work" | "side";
   reduceMotion: boolean | null;
 }) {
@@ -108,7 +109,7 @@ function ProjectMark({
   );
 }
 
-export function ArchiveList({ projects }: { projects: Project[] }) {
+export function ArchiveList({ projects }: { projects: ArchiveItem[] }) {
   const [filter, setFilter] = useState<ArchiveFilter>("all");
   const [activeYear, setActiveYear] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
@@ -212,8 +213,49 @@ export function ArchiveList({ projects }: { projects: Project[] }) {
     return `${Math.min(...years)}–${Math.max(...years)}`;
   }, [timeline]);
 
+  const edgeMilestones = useMemo(() => {
+    const datedKeys = new Set(
+      timeline.filter((b) => b.year !== null).map((b) => yearKey(b.year))
+    );
+    return ARCHIVE_MILESTONES.filter((m) => datedKeys.has(String(m.year)));
+  }, [timeline]);
+
   return (
     <div className="archive-viz" data-filter={filter}>
+      {edgeMilestones.length > 0 ? (
+        <aside className="archive-edge" aria-label="Key moments">
+          <span className="archive-edge__cap" aria-hidden="true">
+            eras
+          </span>
+          <ol className="archive-edge__rail">
+            {[...edgeMilestones].reverse().map((m) => {
+              const key = String(m.year);
+              const active = activeYear === key;
+              return (
+                <li key={key}>
+                  <button
+                    type="button"
+                    className="archive-edge__dot"
+                    data-active={active ? "true" : undefined}
+                    aria-label={`${m.year}: ${m.label}${m.detail ? `. ${m.detail}` : ""}`}
+                    aria-current={active ? "true" : undefined}
+                    onClick={() => jumpToYear(key)}
+                  >
+                    <span className="archive-edge__mark" aria-hidden="true" />
+                    <span className="archive-edge__tip" role="tooltip">
+                      <span className="archive-edge__tip-year">{m.year}</span>
+                      <span className="archive-edge__tip-label">{m.label}</span>
+                      {m.detail ? (
+                        <span className="archive-edge__tip-detail">{m.detail}</span>
+                      ) : null}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </aside>
+      ) : null}
       <div className="archive-viz__controls">
         <div className="archive-filter" role="group" aria-label="Filter projects">
           <LayoutGroup id="archive-filters">

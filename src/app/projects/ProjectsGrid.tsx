@@ -1,44 +1,41 @@
 "use client";
 
 import Link from "next/link";
-import Image, { type ImageLoader } from "next/image";
+import Image from "next/image";
+import { useRef } from "react";
 import styles from "./page.module.css";
-import { projects as allProjects, type Project } from "@/content/projects";
+import type { ProjectCard } from "@/content/project-card";
+import { useArrowNavGrid } from "@/hooks/useArrowNavGrid";
 
-/** Case-study cards render ~360px; never pull 1080 sources. */
-const caseCardLoader: ImageLoader = ({ src, width, quality }) => {
-  const w = Math.min(width, 640);
-  const q = quality ?? 75;
-  return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${q}`;
-};
-
-export function ProjectsGrid({ items }: { items?: Project[] }) {
-  const list =
-    items ??
-    [...allProjects.filter((p) => p.featured === true)].sort((a, b) => {
-      const rank = (p: Project) => (p.category === "creative" ? 1 : 0);
-      const byKind = rank(a) - rank(b);
-      if (byKind !== 0) return byKind;
-      return (b.year ?? 0) - (a.year ?? 0);
-    });
+export function ProjectsGrid({ items }: { items: ProjectCard[] }) {
+  const gridRef = useRef<HTMLDivElement>(null);
+  useArrowNavGrid(gridRef, "[data-grid-card]");
 
   return (
-    <div className={styles.grid} style={{ marginTop: "var(--space-8)" }}>
-      {list.map((p, index) => (
+    <div
+      ref={gridRef}
+      className={styles.grid}
+      style={{ marginTop: "var(--space-8)" }}
+      role="region"
+      aria-label="Case studies. Arrow keys move between projects; Enter opens."
+    >
+      {items.map((p, index) => (
         <Link
           key={p.slug}
           href={`/projects/${p.slug}`}
+          prefetch={false}
+          data-grid-card
           className={`glass-card is-interactive glass-card--pad ${styles.card}`}
+          aria-label={`${p.title}${p.year ? `, ${p.year}` : ""}`}
         >
-          {p.image && (
+          {(p.thumbSrc || p.image) && (
             <div className="card-image">
               <Image
-                src={p.image.src}
-                alt={p.image.alt}
+                src={p.thumbSrc || p.image!.src}
+                alt=""
                 fill
-                loader={caseCardLoader}
+                unoptimized
                 sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw"
-                quality={75}
                 priority={index < 4}
                 loading={index < 4 ? "eager" : "lazy"}
               />

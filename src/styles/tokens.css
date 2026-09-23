@@ -72,6 +72,10 @@
     --leading-title: 1.02;
     --leading-title-md: 1.08;
     --leading-label: 1.15;
+    /* body copy — denser scientific / editorial measure */
+    --leading-body: 1.4;
+    --leading-body-tight: 1.32;
+    --prose-gap: 0.75em;
 
     --size-0: clamp(12px, 0.75rem, 0.75rem);
     --size-1: clamp(14px, 0.875rem, 0.875rem);

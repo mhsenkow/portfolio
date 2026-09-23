@@ -131,7 +131,11 @@ export function LinkToken({ href, label, description, previewSrc }: Props) {
               </span>
             </span>
             <span className="link-token__tip-meta">
-              {host ? `${host} · opens in new tab` : "Open link"}
+              {host
+                ? `${host} · opens in new tab`
+                : href.startsWith("/projects/")
+                  ? "Open case study"
+                  : "Open"}
             </span>
           </span>,
           document.body

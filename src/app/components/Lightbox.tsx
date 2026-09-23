@@ -91,13 +91,23 @@ function LightboxOverlay({ openerRef }: { openerRef: React.RefObject<HTMLElement
     openerRef,
     lockScroll: true,
     focusOnOpen: true,
+    trapFocus: true,
     disableOutside: true, // backdrop onClick handles outside
   });
 
   if (!isOpen || items.length === 0) return null;
   const item = items[currentIndex];
   return (
-    <div className="lb-overlay" role="dialog" aria-modal="true" ref={backdropRef} onClick={(e) => { if (e.target === backdropRef.current) close(); }}>
+    <div
+      className="lb-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={item.alt || "Image lightbox"}
+      ref={backdropRef}
+      onClick={(e) => {
+        if (e.target === backdropRef.current) close();
+      }}
+    >
       <div className="lb-content">
         <button className="lb-close" onClick={close} aria-label="Close">
           <X size={18} weight="light" aria-hidden />
@@ -109,8 +119,18 @@ function LightboxOverlay({ openerRef }: { openerRef: React.RefObject<HTMLElement
           <ArrowRight size={18} weight="light" aria-hidden />
         </button>
         <div className="lb-image-wrap">
-          <Image src={item.src} alt={item.alt} fill sizes="100vw" style={{ objectFit: 'contain' }} />
+          <Image
+            src={item.src}
+            alt={item.alt}
+            fill
+            sizes="100vw"
+            unoptimized
+            style={{ objectFit: "contain" }}
+          />
         </div>
+        <p className="lb-status" aria-live="polite">
+          {currentIndex + 1} of {items.length}
+        </p>
       </div>
     </div>
   );

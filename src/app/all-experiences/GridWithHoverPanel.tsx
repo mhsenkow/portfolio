@@ -1,6 +1,6 @@
 "use client";
 
-import Image, { type ImageLoader } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -48,6 +48,7 @@ import {
   type SortOption,
 } from "@/app/components/SortFilterBar";
 import { useDismissible } from "@/hooks/useDismissible";
+import { useArrowNavGrid } from "@/hooks/useArrowNavGrid";
 import { warmGridImages } from "./warmGridImages";
 import styles from "./GridWithHoverPanel.module.css";
 
@@ -67,36 +68,14 @@ const DENSITY_LABEL: Record<GridDensity, string> = {
 };
 
 const EAGER_COUNT = 6;
-const WARM_INTRO = 12;
 const WARM_IDLE = 8;
 const COMPACT_MQ = "(max-width: 900px)";
 
-/** Must match next.config images.imageSizes / deviceSizes — unknown w → 400. */
-const ALLOWED_WIDTHS = [64, 96, 128, 256, 384, 440] as const;
-
-const DENSITY_THUMB: Record<GridDensity, { sizes: string; maxW: number }> = {
-  small: { sizes: "140px", maxW: 256 },
-  medium: { sizes: "180px", maxW: 384 },
-  normal: { sizes: "220px", maxW: 440 },
+const DENSITY_SIZES: Record<GridDensity, string> = {
+  small: "140px",
+  medium: "180px",
+  normal: "220px",
 };
-
-function snapWidth(requested: number, maxW: number): number {
-  const cap = Math.min(requested, maxW);
-  let best: number = ALLOWED_WIDTHS[0];
-  for (const w of ALLOWED_WIDTHS) {
-    if (w <= cap) best = w;
-    else break;
-  }
-  return best;
-}
-
-function makeThumbLoader(maxW: number): ImageLoader {
-  return ({ src, width, quality }) => {
-    const w = snapWidth(width, maxW);
-    const q = quality ?? 75;
-    return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${q}`;
-  };
-}
 
 function useCompactGrid() {
   const [compact, setCompact] = useState(false);
@@ -112,23 +91,26 @@ function useCompactGrid() {
 
 function GridTileImage({
   src,
+  fallbackSrc,
   alt,
   priority,
   density,
 }: {
   src: string;
+  fallbackSrc?: string;
   alt: string;
   priority?: boolean;
   density: GridDensity;
 }) {
   const [loaded, setLoaded] = useState(false);
-  const thumb = DENSITY_THUMB[density];
-  const loader = useMemo(() => makeThumbLoader(thumb.maxW), [thumb.maxW]);
+  const [currentSrc, setCurrentSrc] = useState(src);
+  const sizes = DENSITY_SIZES[density];
 
   const markLoaded = useCallback(() => setLoaded(true), []);
 
   useEffect(() => {
     setLoaded(false);
+    setCurrentSrc(src);
   }, [density, src]);
 
   const imgRef = useCallback(
@@ -144,20 +126,25 @@ function GridTileImage({
         <span className={styles.thumbFillerSweep} />
       </span>
       <Image
-        key={`${src}-${density}`}
+        key={`${currentSrc}-${density}`}
         ref={imgRef}
-        src={src}
+        src={currentSrc}
         alt={alt}
         fill
-        loader={loader}
+        unoptimized
         priority={priority}
         loading={priority ? "eager" : "lazy"}
-        sizes={thumb.sizes}
-        quality={75}
+        sizes={sizes}
         className={styles.thumbImg}
         onLoad={markLoaded}
         onLoadingComplete={markLoaded}
-        onError={markLoaded}
+        onError={() => {
+          if (fallbackSrc && currentSrc !== fallbackSrc) {
+            setCurrentSrc(fallbackSrc);
+            return;
+          }
+          markLoaded();
+        }}
       />
     </div>
   );
@@ -170,6 +157,7 @@ function ProjectPreview({
   project: ProjectCard;
   titleId?: string;
 }) {
+  const previewSrc = project.thumbSrc || project.image?.src;
   return (
     <>
       <p className="work-panel__meta">
@@ -180,17 +168,17 @@ function ProjectPreview({
         {project.title}
       </h2>
       <p className="work-panel__desc">{project.description}</p>
-      {project.image && (
+      {previewSrc && project.image && (
         <div className="work-panel__media">
           <LightboxImage
-            src={project.image.src}
+            src={previewSrc}
             alt={project.image.alt}
             group={[{ src: project.image.src, alt: project.image.alt }]}
             index={0}
-            width={720}
-            height={450}
+            width={440}
+            height={275}
             sizes="(max-width: 900px) 92vw, 360px"
-            unoptimized={false}
+            unoptimized
             style={{ width: "100%", height: "auto", display: "block" }}
           />
         </div>
@@ -245,6 +233,9 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
   const [groupMode, setGroupMode] = useState<GridGroupMode>("eras");
   const sheetRef = useRef<HTMLDivElement>(null);
   const sheetOpenerRef = useRef<HTMLElement | null>(null);
+  const workRef = useRef<HTMLDivElement>(null);
+
+  useArrowNavGrid(workRef, "[data-grid-card]");
 
   const [sort, setSort] = useState<SortOption>("year-desc");
   const [skill, setSkill] = useState<SkillFilter>("all");
@@ -333,18 +324,24 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
   }, [compact]);
 
   useEffect(() => {
-    warmGridImages(processedItems, introOpen ? WARM_INTRO : WARM_IDLE);
+    if (introOpen) return;
+    const run = () => warmGridImages(processedItems, WARM_IDLE);
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(run, { timeout: 1200 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const t = window.setTimeout(run, 200);
+    return () => window.clearTimeout(t);
   }, [processedItems, introOpen]);
 
   useEffect(() => {
     function onIntroState(e: Event) {
       const detail = (e as CustomEvent<IntroStateDetail>).detail;
       setIntroOpen(Boolean(detail?.open));
-      if (detail?.open) warmGridImages(processedItems, WARM_INTRO);
     }
     window.addEventListener(INTRO_STATE_EVENT, onIntroState);
     return () => window.removeEventListener(INTRO_STATE_EVENT, onIntroState);
-  }, [processedItems]);
+  }, []);
 
   useEffect(() => {
     if (!active) return;
@@ -361,6 +358,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     openerRef: sheetOpenerRef,
     lockScroll: true,
     focusOnOpen: true,
+    trapFocus: true,
   });
 
   const panel = useMemo(
@@ -390,7 +388,9 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
             <>
               <p className="work-panel__meta">Project detail</p>
               <h2 className="work-panel__title">Select a project</h2>
-              <p className="work-panel__desc">Hover a tile to preview title, year, and summary.</p>
+              <p className="work-panel__desc">
+                Hover or focus a tile to preview title, year, and summary.
+              </p>
             </>
           )}
         </div>
@@ -453,9 +453,11 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
       >
         <Link
           href={`/projects/${p.slug}`}
-          prefetch
+          prefetch={false}
+          data-grid-card
           className={`${styles.tile} glass-card is-interactive`}
           data-active={active?.slug === p.slug ? "true" : undefined}
+          aria-label={`${p.title}${p.year ? `, ${p.year}` : ""}`}
           onMouseEnter={() => {
             if (!compact) selectProject(p);
           }}
@@ -474,7 +476,8 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         >
           {p.image ? (
             <GridTileImage
-              src={p.image.src}
+              src={p.thumbSrc || p.image.src}
+              fallbackSrc={p.thumbSrc ? p.image.src : undefined}
               alt={p.image.alt}
               priority={!introOpen && index < EAGER_COUNT}
               density={density}
@@ -506,10 +509,13 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
 
   return (
     <div
+      ref={workRef}
       className={styles.work}
       data-density={density}
       data-group={groupMode}
       data-compact={compact ? "true" : undefined}
+      role="region"
+      aria-label="Work grid. Arrow keys move between projects; Enter opens."
     >
       <div className={styles.toolbar}>
         <SortFilterBar

@@ -1,5 +1,38 @@
 import type { NextConfig } from "next";
 
+/** Public suite tools (folder/index.html) — Next does not auto-index these in dev. */
+const SUITE_TOOLS = [
+  "pulse",
+  "wordcount",
+  "wordcounter",
+  "timecount",
+  "stories",
+  "tools",
+  "bill",
+  "hourly",
+  "budget",
+  "fuel",
+  "tax",
+  "invoice",
+  "unit",
+  "dose",
+  "bitrate",
+  "scalemap",
+  "pace",
+  "ratio",
+  "typescale",
+  "exposure",
+  "contrast",
+  "hue",
+  "odds",
+  "combo",
+  "deal",
+  "sample",
+  "streak",
+  "bayes",
+  "notebook",
+] as const;
+
 const nextConfig: NextConfig = {
   images: {
     // WebP first — AVIF cold-encodes slowly on CF Images for card grids
@@ -25,7 +58,24 @@ const nextConfig: NextConfig = {
         destination: "/projects/judge",
         permanent: true,
       },
+      // bandwidth stub folder → bitrate tool
+      {
+        source: "/bandwidth",
+        destination: "/bitrate",
+        permanent: true,
+      },
+      {
+        source: "/bandwidth/:path*",
+        destination: "/bitrate/:path*",
+        permanent: true,
+      },
     ];
+  },
+  async rewrites() {
+    return SUITE_TOOLS.map((id) => ({
+      source: `/${id}`,
+      destination: `/${id === "wordcounter" ? "wordcount" : id}/index.html`,
+    }));
   },
 };
 

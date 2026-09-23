@@ -14,7 +14,7 @@ export const githubBuilds: Project[] = [
 			src: '/images/projects/throughline/card.png',
 			alt: 'throughline — local-first AI notebooks',
 		},
-		stack: ['Tauri', 'HTML', 'Local-first', 'Ollama', 'Notebooks'],
+		stack: ['Tauri', 'Rust', 'Python', 'HTML', 'Local-first', 'Ollama', 'Notebooks'],
 		links: [
 			{ label: 'Live', href: 'https://ibm.io/notebook/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/throughline' },
@@ -23,7 +23,13 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
-			skills: ['Local-first architecture', 'Desktop + web parity', 'BYO model UX'],
+			skills: [
+				'Local-first architecture',
+				'Desktop + web parity',
+				'BYO model UX',
+				'Rust',
+				'Python',
+			],
 			synopsis: [
 				'throughline is a free, local-first AI notebook — web and macOS desktop — where your prompts, cells, and context stay on your machine. Bring your own model; nothing is held server-side.',
 				'Craft thesis: the notebook should feel like a quiet tool, not a chat product. Same through-line as wordcounter and the loom family — local by default, portable, no account wall.',
@@ -53,7 +59,7 @@ export const githubBuilds: Project[] = [
 			width: 1280,
 			height: 800,
 		},
-		stack: ['HTML', 'CSS', 'localStorage', 'PWA'],
+		stack: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'localStorage', 'PWA'],
 		links: [
 			{ label: 'Live', href: 'https://ibm.io/wordcount/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/wordcounter' },
@@ -62,7 +68,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2025–2026',
-			skills: ['Single-file apps', 'Theme systems', 'Offline UX'],
+			skills: ['Single-file apps', 'Theme systems', 'Offline UX', 'JavaScript'],
 			synopsis: [
 				'A quiet writing meter: paste or type, see words / reading time / sentences / characters, and keep everything on-device. Theme chrome ports into this portfolio.',
 				'Built as a single-file, offline-friendly tool — no accounts, no sync, no telemetry.',
@@ -83,7 +89,7 @@ export const githubBuilds: Project[] = [
 			src: '/images/projects/loom-os/card.png',
 			alt: 'LOOM — personal intelligence OS terminal',
 		},
-		stack: ['TypeScript', 'Ollama', 'Vector memory', 'Local-first'],
+		stack: ['TypeScript', 'Python', 'Ollama', 'Vector memory', 'Local-first'],
 		links: [
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/loom' },
 		],
@@ -91,7 +97,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2025–2026',
-			skills: ['Agent tooling', 'Local LLM UX', 'Terminal craft'],
+			skills: ['Agent tooling', 'Local LLM UX', 'Terminal craft', 'TypeScript', 'Python'],
 			synopsis: [
 				'LOOM is a personal intelligence OS — retro terminal chrome over a local-first AI stack. Ollama for inference, vector memory for recall, nothing that needs a SaaS login to think.',
 				'Part of the loom family: tools that treat local compute as the default substrate.',
@@ -113,7 +119,7 @@ export const githubBuilds: Project[] = [
 			width: 1200,
 			height: 600,
 		},
-		stack: ['Rust', 'Web', 'Simulation'],
+		stack: ['Rust', 'GDScript', 'GDShader', 'Web', 'Simulation'],
 		links: [
 			{ label: 'Live', href: 'https://mhsenkow.github.io/ramen/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/ramen' },
@@ -122,6 +128,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['Rust', 'GDScript', 'Embodied interaction', 'Simulation'],
 			synopsis: [
 				'RAMEN (RAMA CYCLE) lets you walk the inner surface of a Kepler Drum — an embodied skim of Clarke/Niven-scale habitat geometry in the browser.',
 			],
@@ -150,6 +157,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['WebXR', 'Three.js', 'JavaScript', 'Spatial UX'],
 			synopsis: [
 				'ORRERY is an embodied planetary god-game prototype: WebXR-first, built to feel like holding an orrery rather than clicking a map.',
 			],
@@ -169,7 +177,7 @@ export const githubBuilds: Project[] = [
 			width: 1200,
 			height: 600,
 		},
-		stack: ['Godot 4', 'GDScript', 'Simulation', 'Permaculture'],
+		stack: ['Godot 4', 'GDScript', 'GDShader', 'Simulation', 'Permaculture'],
 		links: [
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/loam' },
 		],
@@ -177,6 +185,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['GDScript', 'Systems simulation', 'Permaculture UX'],
 			synopsis: [
 				'loam swaps the city-builder tropes: plants are the buildings, nutrient carriers are the villagers, and the soil food web is the economy. Low-poly isometric Godot 4 craft adjacent to walstad loom.',
 			],
@@ -204,7 +213,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
-			skills: ['Systems design', 'Voxel rendering', 'Orbital folklore as UI'],
+			skills: ['Systems design', 'Voxel rendering', 'TypeScript', 'Three.js', 'Orbital folklore as UI'],
 			synopsis: [
 				'A real-time voxel strategy sim set inside a gas torus orbiting a neutron star — hundred-kilometer trees, floating water spheres, and drifting jungles obey orbital mechanics disguised as folk wisdom: East takes you Out, Out takes you West…',
 				'Inspired by Larry Niven’s The Integral Trees. No game engine — fixed-tick TypeScript sim with Three.js rendering and offline AI fallbacks.',
@@ -228,7 +237,7 @@ export const githubBuilds: Project[] = [
 			width: 1240,
 			height: 420,
 		},
-		stack: ['WebGL', 'GLSL', 'HTML'],
+		stack: ['WebGL', 'GLSL', 'HTML', 'Shader'],
 		links: [
 			{ label: 'Demo', href: 'https://mhsenkow.github.io/mercury-button/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/mercury-button' },
@@ -237,6 +246,7 @@ export const githubBuilds: Project[] = [
 			role: 'Shader craft',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['GLSL', 'WebGL', 'Fragment shaders', 'Optical materials'],
 			synopsis: [
 				'Single self-contained index.html. Capsule, metal, iridescence, and label are all generated per pixel; the surface is a live shallow-water fluid. Materials use measured optical constants — not a sprite sheet.',
 			],
@@ -256,7 +266,7 @@ export const githubBuilds: Project[] = [
 			width: 1280,
 			height: 800,
 		},
-		stack: ['TypeScript', 'Cloudflare Workers', 'Postgres', 'SEC EDGAR'],
+		stack: ['TypeScript', 'Cloudflare Workers', 'Postgres', 'SQL', 'SEC EDGAR'],
 		links: [
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/sec-loom' },
 		],
@@ -264,7 +274,13 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
-			skills: ['Data provenance', 'Financial disclosure UX', 'Terminal craft'],
+			skills: [
+				'Data provenance',
+				'Financial disclosure UX',
+				'Terminal craft',
+				'TypeScript',
+				'Postgres',
+			],
 			synopsis: [
 				'A cited research terminal for quarterly 13F changes and Form 4 insider activity: Whale Grid, Conviction Flow, consensus–contrarian maps, and constrained natural-language queries — with filing accession numbers on every move.',
 				'Demo data stays labeled as demo until the API reports live; it never pretends mock values are current market truth.',
@@ -292,7 +308,7 @@ export const githubBuilds: Project[] = [
 			width: 1600,
 			height: 1000,
 		},
-		stack: ['TypeScript', 'Vite', 'D3', 'DuckDB', 'Print'],
+		stack: ['TypeScript', 'Python', 'Vite', 'D3', 'DuckDB', 'Print'],
 		links: [
 			{ label: 'Live', href: 'https://mhsenkow.github.io/imbd_loom/?view=home' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/imbd_loom' },
@@ -305,6 +321,8 @@ export const githubBuilds: Project[] = [
 				'Construct-based data viz',
 				'Print-first authoring UX',
 				'DuckDB pipelines',
+				'TypeScript',
+				'Python',
 				'Data provenance / methodology',
 			],
 			headerImage: {
@@ -406,7 +424,7 @@ export const githubBuilds: Project[] = [
 			width: 1200,
 			height: 600,
 		},
-		stack: ['TypeScript', 'DuckDB', 'Vega-Lite', 'WebGPU', 'macOS'],
+		stack: ['TypeScript', 'Rust', 'DuckDB', 'Vega-Lite', 'WebGPU', 'WGSL', 'macOS'],
 		links: [
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/Loom_story_teller' },
 		],
@@ -414,6 +432,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['TypeScript', 'Rust', 'DuckDB', 'WebGPU', 'Local-first data storytelling'],
 			synopsis: [
 				'Local-first data storytelling on macOS: query with DuckDB, author with Vega-Lite, render with WebGPU — keep the narrative machine on your desk.',
 			],
@@ -430,7 +449,7 @@ export const githubBuilds: Project[] = [
 			src: '/images/projects/recursive-serendipity/card.png',
 			alt: 'Recursive Serendipity — evolutionary app runner',
 		},
-		stack: ['Tauri', 'Bun', 'Ollama', 'Playwright'],
+		stack: ['Tauri', 'Rust', 'TypeScript', 'Bun', 'Ollama', 'Playwright'],
 		links: [
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/RecursiveSerendipity' },
 		],
@@ -438,6 +457,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['Rust', 'TypeScript', 'Agent loops', 'Vision eval'],
 			synopsis: [
 				'An evolutionary loop for apps: generate, run, vision-eval with Playwright, mutate — all local via Tauri, Bun, and Ollama.',
 			],
@@ -465,6 +485,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Sleeping Ox Studios',
 			years: '2026',
+			skills: ['TypeScript', 'Three.js', 'Procedural theming', 'Spatial IA'],
 			synopsis: [
 				'Walkable portfolio: career work spirals west through time, solo GitHub repos east in thematic groves. The load-bearing idea is a theming engine that re-skins one fixed 3D world through many readings of “low-poly voxel.”',
 				'Content is generated from live sources — not hand-edited dossiers.',
@@ -487,7 +508,7 @@ export const githubBuilds: Project[] = [
 			width: 1280,
 			height: 800,
 		},
-		stack: ['TypeScript', 'Manifold', 'WebGL', 'STL'],
+		stack: ['TypeScript', 'Manifold', 'WebGL', 'STL', 'Computational geometry'],
 		links: [
 			{ label: 'Live', href: 'https://mhsenkow.github.io/trashcanAI/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/trashcanAI' },
@@ -496,6 +517,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['TypeScript', 'Manifold CSG', 'Parametric design', 'FDM fabrication'],
 			synopsis: [
 				'Browser tool for custom-dimensioned bins with algorithmic exterior finishes (ribbing, knurling, Voronoi, weave…) and smooth interiors — watertight Manifold meshes ready for FDM.',
 			],
@@ -515,7 +537,7 @@ export const githubBuilds: Project[] = [
 			width: 1280,
 			height: 720,
 		},
-		stack: ['TypeScript', 'Manifold', 'STL', 'Fabrication'],
+		stack: ['TypeScript', 'Manifold', 'STL', 'Fabrication', 'Computational geometry'],
 		links: [
 			{ label: 'Live', href: 'https://mhsenkow.github.io/geodesic/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/geodesic' },
@@ -524,6 +546,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['TypeScript', 'Manifold CSG', 'Parametric fabrication'],
 			synopsis: [
 				'Design geodesic dome connector hubs in the browser: icosa/octa/tetra V1–V8, round or timber sockets, Weaverbird-style organic surfaces, watertight STL bundles with fit checks.',
 			],
@@ -552,6 +575,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
+			skills: ['React', 'TypeScript', 'Canvas', 'Generative animation'],
 			synopsis: [
 				'A library of complex canvas loaders inspired by fractals, reaction-diffusion, strange attractors, and space-filling curves — waiting as craft, not spinner chrome.',
 			],
@@ -578,6 +602,7 @@ export const githubBuilds: Project[] = [
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2025',
+			skills: ['TypeScript', 'React', 'Vega', 'Data visualization'],
 			synopsis: [
 				'A Vega visualization gallery for interactive chart creation and data management — a playground adjacent to Meta-era data-viz craft.',
 			],

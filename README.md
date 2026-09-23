@@ -2,7 +2,7 @@
 
 Staff product designer portfolio for **[ibm.io](https://ibm.io)** (`mhsenkow`).
 
-Complex tooling, data workflows, and product systems — enterprise case studies plus independent machines and craft.
+Staff-level product designer / creative technologist shipping AI-assisted workflows, data tools, and design systems across Microsoft, Meta, IBM, Apple, and startups.
 
 ## Stack
 
@@ -48,6 +48,7 @@ npm run preview
 ## Useful routes
 
 - `/` — full work grid
+- `/story` — through-line (systems → products → AI)
 - `/projects` — selected case studies
 - `/about` — bio + contact
 - `/list-view` — chronological archive

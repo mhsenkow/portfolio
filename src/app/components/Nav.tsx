@@ -24,7 +24,13 @@ export function Nav() {
         aria-label="mhsenkow — home"
         aria-current={pathname === "/" ? "page" : undefined}
       >
-        <House className="masthead-brand__home" size={12} weight="light" aria-hidden focusable="false" />
+        <House
+          className="masthead-brand__home"
+          size={12}
+          weight="light"
+          aria-hidden
+          focusable="false"
+        />
         mhsenkow
       </Link>
       <div className="masthead-actions">
@@ -33,24 +39,30 @@ export function Nav() {
           className="masthead-link"
           onClick={openIntroModal}
           aria-haspopup="dialog"
+          aria-controls="intro-dialog"
         >
           intro
         </button>
-        {items.map((i) => (
-          <Link
-            key={i.href}
-            href={i.href}
-            className="masthead-link"
-            aria-current={pathname === i.href || pathname.startsWith(i.href + "/") ? "page" : undefined}
-          >
-            {i.label}
-          </Link>
-        ))}
+        {items.map((i) => {
+          const current =
+            pathname === i.href || pathname.startsWith(i.href + "/");
+          return (
+            <Link
+              key={i.href}
+              href={i.href}
+              className="masthead-link"
+              aria-current={current ? "page" : undefined}
+            >
+              {i.label}
+            </Link>
+          );
+        })}
         <a
           href={RESUME_URL}
           target="_blank"
           rel="noreferrer noopener"
           className="masthead-link masthead-link--resume"
+          aria-label="Resume (opens PDF in a new tab)"
         >
           resume
         </a>
