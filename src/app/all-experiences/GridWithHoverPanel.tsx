@@ -7,6 +7,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type CSSProperties,
 } from "react";
@@ -21,6 +22,7 @@ import {
   Rows,
   Square,
   SquaresFour,
+  X,
 } from "@phosphor-icons/react";
 import type { ProjectCard } from "@/content/project-card";
 import {
@@ -45,6 +47,7 @@ import {
   type SkillFilter,
   type SortOption,
 } from "@/app/components/SortFilterBar";
+import { useDismissible } from "@/hooks/useDismissible";
 import { warmGridImages } from "./warmGridImages";
 import styles from "./GridWithHoverPanel.module.css";
 
@@ -66,6 +69,7 @@ const DENSITY_LABEL: Record<GridDensity, string> = {
 const EAGER_COUNT = 6;
 const WARM_INTRO = 12;
 const WARM_IDLE = 8;
+const COMPACT_MQ = "(max-width: 900px)";
 
 /** Must match next.config images.imageSizes / deviceSizes — unknown w → 400. */
 const ALLOWED_WIDTHS = [64, 96, 128, 256, 384, 440] as const;
@@ -92,6 +96,18 @@ function makeThumbLoader(maxW: number): ImageLoader {
     const q = quality ?? 75;
     return `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${q}`;
   };
+}
+
+function useCompactGrid() {
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(COMPACT_MQ);
+    const apply = () => setCompact(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+  return compact;
 }
 
 function GridTileImage({
@@ -147,6 +163,50 @@ function GridTileImage({
   );
 }
 
+function ProjectPreview({
+  project,
+  titleId,
+}: {
+  project: ProjectCard;
+  titleId?: string;
+}) {
+  return (
+    <>
+      <p className="work-panel__meta">
+        {project.entity || project.year || "project"}
+        {project.year ? ` · ${project.year}` : ""}
+      </p>
+      <h2 id={titleId} className="work-panel__title">
+        {project.title}
+      </h2>
+      <p className="work-panel__desc">{project.description}</p>
+      {project.image && (
+        <div className="work-panel__media">
+          <LightboxImage
+            src={project.image.src}
+            alt={project.image.alt}
+            group={[{ src: project.image.src, alt: project.image.alt }]}
+            index={0}
+            width={720}
+            height={450}
+            sizes="(max-width: 900px) 92vw, 360px"
+            unoptimized={false}
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
+      )}
+      <a
+        href={`/projects/${project.slug}`}
+        className="work-panel__open"
+        onClick={() => dismissIntroModal()}
+      >
+        View case study
+        <ArrowRight size={16} weight="light" aria-hidden />
+      </a>
+    </>
+  );
+}
+
 function readDensity(): GridDensity {
   try {
     const raw = localStorage.getItem("grid-density");
@@ -163,7 +223,6 @@ function readGroupMode(): GridGroupMode {
     if (raw && (GRID_GROUP_CYCLE as string[]).includes(raw)) {
       return raw as GridGroupMode;
     }
-    // Migrate eras/flat toggle
     const legacy = localStorage.getItem("grid-era-bands");
     if (legacy === "0") return "flat";
     if (legacy === "1") return "eras";
@@ -175,16 +234,17 @@ function readGroupMode(): GridGroupMode {
 
 export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Props) {
   const router = useRouter();
+  const compact = useCompactGrid();
   /** Sticky selection — do not clear on blur or the panel CTA unmounts mid-click. */
   const [active, setActive] = useState<ProjectCard | null>(null);
   const [mountNode, setMountNode] = useState<Element | null>(null);
   const [introOpen, setIntroOpen] = useState(false);
-  const [open, setOpen] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia && window.matchMedia("(max-width: 900px)").matches ? false : true;
-  });
+  const [panelOpen, setPanelOpen] = useState(true);
+  const [sheetOpen, setSheetOpen] = useState(false);
   const [density, setDensity] = useState<GridDensity>("normal");
   const [groupMode, setGroupMode] = useState<GridGroupMode>("eras");
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const sheetOpenerRef = useRef<HTMLElement | null>(null);
 
   const [sort, setSort] = useState<SortOption>("year-desc");
   const [skill, setSkill] = useState<SkillFilter>("all");
@@ -209,6 +269,8 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     },
     [router]
   );
+
+  const closeSheet = useCallback(() => setSheetOpen(false), []);
 
   const cycleDensity = useCallback(() => {
     setDensity((cur) => {
@@ -245,16 +307,30 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     setMountNode(document.getElementById("overlays"));
   }, []);
 
+  /* Desktop only: side panel owns right padding */
   useEffect(() => {
+    if (compact) {
+      document.body.classList.remove("has-right-panel");
+      document.body.removeAttribute("data-right-panel");
+      setPanelOpen(false);
+      return;
+    }
     document.body.classList.add("has-right-panel");
+    setPanelOpen(true);
     return () => {
       document.body.classList.remove("has-right-panel");
+      document.body.removeAttribute("data-right-panel");
     };
-  }, []);
+  }, [compact]);
 
   useEffect(() => {
-    document.body.setAttribute("data-right-panel", open ? "open" : "closed");
-  }, [open]);
+    if (compact) return;
+    document.body.setAttribute("data-right-panel", panelOpen ? "open" : "closed");
+  }, [panelOpen, compact]);
+
+  useEffect(() => {
+    if (compact) setSheetOpen(false);
+  }, [compact]);
 
   useEffect(() => {
     warmGridImages(processedItems, introOpen ? WARM_INTRO : WARM_IDLE);
@@ -274,19 +350,34 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
     if (!active) return;
     if (!processedItems.some((p) => p.slug === active.slug)) {
       setActive(null);
+      setSheetOpen(false);
     }
   }, [processedItems, active]);
 
+  useDismissible({
+    open: compact && sheetOpen,
+    onClose: closeSheet,
+    rootRef: sheetRef,
+    openerRef: sheetOpenerRef,
+    lockScroll: true,
+    focusOnOpen: true,
+  });
+
   const panel = useMemo(
     () => (
-      <aside className="overlay-panel--right work-panel" aria-label="Details" data-state={open ? "open" : "closed"}>
+      <aside
+        className="overlay-panel--right work-panel"
+        aria-label="Details"
+        data-state={panelOpen ? "open" : "closed"}
+        hidden={compact || undefined}
+      >
         <button
           type="button"
           className="panel-handle"
-          aria-label={open ? "Close details" : "Open details"}
-          onClick={() => setOpen((v) => !v)}
+          aria-label={panelOpen ? "Close details" : "Open details"}
+          onClick={() => setPanelOpen((v) => !v)}
         >
-          {open ? (
+          {panelOpen ? (
             <CaretRight size={16} weight="light" aria-hidden />
           ) : (
             <CaretLeft size={16} weight="light" aria-hidden />
@@ -294,37 +385,7 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         </button>
         <div className="work-panel__body glass-card">
           {active ? (
-            <>
-              <p className="work-panel__meta">
-                {active.entity || active.year || "project"}
-                {active.year ? ` · ${active.year}` : ""}
-              </p>
-              <h2 className="work-panel__title">{active.title}</h2>
-              <p className="work-panel__desc">{active.description}</p>
-              {active.image && (
-                <div className="work-panel__media">
-                  <LightboxImage
-                    src={active.image.src}
-                    alt={active.image.alt}
-                    group={[{ src: active.image.src, alt: active.image.alt }]}
-                    index={0}
-                    width={720}
-                    height={450}
-                    sizes="360px"
-                    unoptimized={false}
-                    style={{ width: "100%", height: "auto", display: "block" }}
-                  />
-                </div>
-              )}
-              <a
-                href={`/projects/${active.slug}`}
-                className="work-panel__open"
-                onClick={() => dismissIntroModal()}
-              >
-                View case study
-                <ArrowRight size={16} weight="light" aria-hidden />
-              </a>
-            </>
+            <ProjectPreview project={active} />
           ) : (
             <>
               <p className="work-panel__meta">Project detail</p>
@@ -335,8 +396,44 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         </div>
       </aside>
     ),
-    [active, open]
+    [active, panelOpen, compact]
   );
+
+  const sheet =
+    compact && sheetOpen && active
+      ? createPortal(
+          <div className={styles.sheetRoot} ref={sheetRef}>
+            <button
+              type="button"
+              className={styles.sheetScrim}
+              aria-label="Dismiss preview"
+              onClick={closeSheet}
+            />
+            <div
+              className={`${styles.sheet} glass-card`}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="grid-sheet-title"
+            >
+              <div className={styles.sheetChrome}>
+                <span className={styles.sheetGrab} aria-hidden />
+                <button
+                  type="button"
+                  className={styles.sheetClose}
+                  aria-label="Close preview"
+                  onClick={closeSheet}
+                >
+                  <X size={16} weight="light" aria-hidden />
+                </button>
+              </div>
+              <div className={styles.sheetBody}>
+                <ProjectPreview project={active} titleId="grid-sheet-title" />
+              </div>
+            </div>
+          </div>,
+          document.body
+        )
+      : null;
 
   let tileIndex = 0;
 
@@ -347,19 +444,33 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         key={p.slug}
         className={styles.tileWrap}
         style={{ "--tile-i": index } as CSSProperties}
-        onMouseEnter={() => selectProject(p)}
-        onPointerEnter={() => selectProject(p)}
-        onFocus={() => selectProject(p)}
+        onMouseEnter={() => {
+          if (!compact) selectProject(p);
+        }}
+        onFocus={() => {
+          if (!compact) selectProject(p);
+        }}
       >
         <Link
           href={`/projects/${p.slug}`}
           prefetch
           className={`${styles.tile} glass-card is-interactive`}
           data-active={active?.slug === p.slug ? "true" : undefined}
-          onMouseEnter={() => selectProject(p)}
-          onFocus={() => selectProject(p)}
-          onTouchStart={() => selectProject(p)}
-          onClick={() => dismissIntroModal()}
+          onMouseEnter={() => {
+            if (!compact) selectProject(p);
+          }}
+          onFocus={() => {
+            if (!compact) selectProject(p);
+          }}
+          onClick={(e) => {
+            dismissIntroModal();
+            if (!compact) return;
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+            e.preventDefault();
+            sheetOpenerRef.current = e.currentTarget;
+            selectProject(p);
+            setSheetOpen(true);
+          }}
         >
           {p.image ? (
             <GridTileImage
@@ -394,7 +505,12 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         : Rows;
 
   return (
-    <div className={styles.work} data-density={density} data-group={groupMode}>
+    <div
+      className={styles.work}
+      data-density={density}
+      data-group={groupMode}
+      data-compact={compact ? "true" : undefined}
+    >
       <div className={styles.toolbar}>
         <SortFilterBar
           leading={
@@ -465,7 +581,8 @@ export function GridWithHoverPanel({ items, title = "work", onTitleClick }: Prop
         <div className={styles.grid}>{processedItems.map((p) => renderTile(p))}</div>
       )}
 
-      {mountNode ? createPortal(panel, mountNode) : panel}
+      {!compact && (mountNode ? createPortal(panel, mountNode) : panel)}
+      {sheet}
     </div>
   );
 }

@@ -336,3 +336,113 @@
 .tile[data-active="true"] .tileTitle {
   color: var(--color-accent);
 }
+
+/* Mobile preview — bottom sheet (replaces side panel under 900px) */
+.sheetRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: auto;
+}
+
+.sheetScrim {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: color-mix(in oklab, var(--color-bg) 35%, transparent);
+  backdrop-filter: saturate(1.1) blur(10px);
+  -webkit-backdrop-filter: saturate(1.1) blur(10px);
+  cursor: pointer;
+}
+
+.sheet {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-height: min(72dvh, 640px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  border-radius: var(--card-radius) var(--card-radius) 0 0;
+  border-bottom: 0;
+  padding: 0 var(--space-5) max(16px, env(safe-area-inset-bottom));
+  animation: sheetRise 0.32s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.sheetChrome {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 6px;
+  background: color-mix(in oklab, var(--card-bg, var(--color-bg-elev)) 92%, transparent);
+}
+
+.sheetGrab {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-muted) 45%, transparent);
+}
+
+.sheetClose {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.sheetClose:hover,
+.sheetClose:focus-visible {
+  color: var(--color-text);
+}
+
+.sheetClose:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.sheetBody {
+  padding-bottom: var(--space-2);
+}
+
+.sheetBody :global(.work-panel__open) {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--space-5);
+}
+
+@keyframes sheetRise {
+  from {
+    opacity: 0.6;
+    transform: translateY(18%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet {
+    animation: none;
+  }
+}
+

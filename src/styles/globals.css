@@ -2148,6 +2148,8 @@
     .overlay-panel--right { right: 6px; width: min(84vw, 360px); }
     .overlay-panel--right .panel-handle { left: -8px; }
     .overlay-panel--right .panel-handle::after { content:""; position:absolute; inset:-8px; border-radius:999px; }
+    /* Side rail replaced by bottom sheet on compact grid */
+    .overlay-panel--right.work-panel { display: none !important; }
   }
   @media (min-width: 1200px) {
     :root { --panel-width: 360px; }
