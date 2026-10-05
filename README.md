@@ -53,4 +53,5 @@ npm run preview
 - `/about` — bio + contact
 - `/list-view` — chronological archive
 - `/other-design-work` — explorations
+- `/essays` — rare long-form writing (footer icon; not in primary nav)
 - `/sitemap.xml`, `/robots.txt`, `/llms.txt`

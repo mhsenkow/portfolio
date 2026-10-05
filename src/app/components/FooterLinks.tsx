@@ -1,12 +1,20 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { EnvelopeSimple, GithubLogo, LinkedinLogo, SquaresFour } from "@phosphor-icons/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Article,
+  EnvelopeSimple,
+  GithubLogo,
+  LinkedinLogo,
+  SquaresFour,
+} from "@phosphor-icons/react";
 import { CONTACT_EMAIL } from "@/content/site";
 
 const ICON = { size: 18, weight: "light" as const, "aria-hidden": true };
 
-const LINKS = [
+const SOCIAL = [
   {
     href: `mailto:${CONTACT_EMAIL}`,
     label: "Email",
@@ -35,7 +43,10 @@ const LINKS = [
 ] as const;
 
 export function FooterLinks() {
+  const pathname = usePathname();
   const [copied, setCopied] = useState(false);
+  const essaysCurrent =
+    pathname === "/essays" || pathname.startsWith("/essays/");
 
   const onEmailClick = useCallback(async () => {
     // mailto: often no-ops when no desktop mail client is configured.
@@ -51,7 +62,7 @@ export function FooterLinks() {
 
   return (
     <ul className="icon-links" role="list">
-      {LINKS.map((link) => {
+      {SOCIAL.map((link) => {
         const { href, label, description, Icon } = link;
         const isEmail = "email" in link && link.email;
         const external = href.startsWith("http");
@@ -80,6 +91,22 @@ export function FooterLinks() {
           </li>
         );
       })}
+      <li>
+        <Link
+          className="icon-btn"
+          href="/essays"
+          aria-label="Essays"
+          aria-current={essaysCurrent ? "page" : undefined}
+        >
+          <span className="tooltip" role="tooltip">
+            <span className="tooltip__title">Essays</span>
+            <span className="tooltip__desc">
+              Rare long-form writing — process, tools, and systems.
+            </span>
+          </span>
+          <Article {...ICON} />
+        </Link>
+      </li>
     </ul>
   );
 }

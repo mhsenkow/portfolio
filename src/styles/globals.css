@@ -2638,6 +2638,7 @@
   .icon-btn{position:relative;display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:transparent;border:0;box-shadow:none;color:var(--color-muted);text-decoration:none;transition:color 0.2s ease, transform 140ms ease}
   .icon-btn::before{content:none}
   .icon-btn:hover{background:transparent;border:0;color:var(--color-text);transform:none;box-shadow:none}
+  .icon-btn[aria-current="page"]{color:var(--color-accent)}
   .icon-btn:focus-visible{background:transparent;border:0;color:var(--color-text);transform:none;box-shadow:none;outline:var(--focus-ring);outline-offset:3px}
   .icon-btn:active{transform:scale(0.96);box-shadow:none}
   .icon-btn svg{width:16px;height:16px}

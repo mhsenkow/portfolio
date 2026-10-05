@@ -12,6 +12,7 @@
 - [A story](https://ibm.io/story): Systems → products → AI, plus local-first data tools, fabrication, and habitat games
 - [Archive](https://ibm.io/list-view): Chronological project list
 - [Explorations](https://ibm.io/other-design-work): Creative and experimental work
+- [Essays](https://ibm.io/essays): Rare long-form writing — process, tools, and systems
 - [Resume](https://ibm.io/resume.pdf): PDF resume
 
 ## Experience highlights

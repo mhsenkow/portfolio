@@ -1,3 +1,4 @@
+import { listPublishedEssays } from "@/content/essays";
 import { projects } from "@/content/projects";
 import { deriveSkillsets } from "@/content/skillsets";
 import { RESUME_URL } from "@/content/site";
@@ -374,6 +375,14 @@ function buildDestinations(): Destination[] {
       text: `archive list view chronological timeline history ${ALIASES["list-view"].join(" ")}`,
     },
     {
+      id: "essays",
+      href: "/essays",
+      title: "Essays",
+      blurb: "Rare long-form writing",
+      kind: "page",
+      text: "essays writing notes long-form process tools systems thinking articles",
+    },
+    {
       id: "resume",
       href: RESUME_URL,
       title: "Resume",
@@ -382,6 +391,15 @@ function buildDestinations(): Destination[] {
       text: `resume cv curriculum vitae pdf download ${ALIASES.resume.join(" ")}`,
     },
   ];
+
+  const essayDests: Destination[] = listPublishedEssays().map((e) => ({
+    id: `essay-${e.slug}`,
+    href: `/essays/${e.slug}`,
+    title: e.title,
+    blurb: e.description,
+    kind: "page" as const,
+    text: `essay writing ${e.slug} ${e.title} ${e.description} ${(e.relatedProjects ?? []).join(" ")}`,
+  }));
 
   const projectDests: Destination[] = projects.map((p) => {
     const aliasTokens = [...(p.aliases ?? []), ...(ALIASES[p.slug] ?? [])].join(" ");
@@ -434,7 +452,7 @@ function buildDestinations(): Destination[] {
     });
   }
 
-  return [...pages, ...projectDests, ...tools];
+  return [...pages, ...essayDests, ...projectDests, ...tools];
 }
 
 type Sparse = Map<string, number>;
