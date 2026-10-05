@@ -425,28 +425,36 @@ export const githubBuilds: Project[] = [
 		slug: 'loom-storyteller',
 		title: 'Loom Story Teller',
 		description:
-			'Local-first data storytelling — mount a folder, query with DuckDB, chart with Vega-Lite / WebGPU, and Dive for Scuba-style slice-and-dice. Live at loom.ibm.io.',
+			'Local-first data storytelling at loom.ibm.io — live feeds into charts, DuckDB in the browser, Dive for Scuba-style slice-and-dice.',
 		year: 2026,
 		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/loom-storyteller/card.png',
-			alt: 'Loom Story Teller — Explorer / Data & sources',
-			width: 1200,
-			height: 600,
+			alt: 'Loom Chart — Quake globe from live USGS feed, sized by magnitude',
+			width: 1280,
+			height: 800,
 		},
 		gallery: [
 			{
 				src: '/images/projects/loom-storyteller/stories.png',
-				alt: 'What’s interesting right now — live open-data story suggestions',
+				alt: 'What’s interesting right now — 60+ live story cards across open data',
 			},
 			{
 				src: '/images/projects/loom-storyteller/chart.png',
-				alt: 'Loom chart view with encodings and visual controls',
+				alt: 'Quake globe — longitude × latitude, color by mag_type, size by magnitude',
+			},
+			{
+				src: '/images/projects/loom-storyteller/explorer.png',
+				alt: 'Explorer — USGS Quakes table with column sparklines and filters',
+			},
+			{
+				src: '/images/projects/loom-storyteller/dive.png',
+				alt: 'Dive — time-series count of quakes with filters, group-by, and shareable link',
 			},
 			{
 				src: '/images/projects/loom-storyteller/sources.png',
-				alt: 'Data & sources — discover open data catalogs',
+				alt: 'Data & sources — live feeds from Wikipedia, USGS, NASA, GDACS, and more',
 			},
 		],
 		stack: [
@@ -461,7 +469,7 @@ export const githubBuilds: Project[] = [
 			'Cloudflare',
 		],
 		links: [
-			{ label: 'Live', href: 'https://loom.ibm.io/' },
+			{ label: 'Live — loom.ibm.io', href: 'https://loom.ibm.io/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/Loom_story_teller' },
 		],
 		details: {
@@ -470,67 +478,102 @@ export const githubBuilds: Project[] = [
 			years: '2026',
 			skills: [
 				'Local-first data UX',
-				'DuckDB',
-				'WebGPU / Vega-Lite',
-				'Dive / OLAP-style exploration',
+				'DuckDB-WASM',
+				'Vega-Lite / WebGPU',
+				'Dive / OLAP exploration',
+				'Live open-data feeds',
 				'TypeScript',
 				'Rust',
 				'Tauri',
 			],
 			synopsis: [
-				'Local-first data storytelling for macOS and the web: mount a folder of CSV/Parquet, profile columns, author charts with Vega-Lite, and render voxels with WebGPU — nothing leaves your machine unless you choose.',
-				'Explorer → Chart → Query → Dive. Discover data.gov catalogs and live feeds, then ask questions by clicking: time windows, nested group-bys, percentiles, period compare, and shareable #dive= URLs.',
+				'Loom is a local-first data storyteller: connect a live feed or drop a CSV, then move Explorer → Chart → Query → Dive without leaving the browser. DuckDB runs on-device; charts author in Vega-Lite; GPU scenes (globe, firefly, terrain) render when the mark needs them.',
+				'“What’s interesting right now” scans dozens of live feeds — USGS quakes, ISS track, HN, crypto, weather, NASA events — and opens the best one as a shareable chart. The whole encoding travels in the URL hash so a link reopens the same view.',
 			],
 			goals: [
-				'Make millions of local rows feel as playful as a notebook and as precise as SQL.',
-				'Ship one craft language across desktop (Tauri + DuckDB) and the static web build at loom.ibm.io.',
+				'Make live open data feel as playful as a notebook and as precise as SQL.',
+				'Ship one craft language across desktop (Tauri + DuckDB) and the public web build at loom.ibm.io.',
 			],
 			results: [
-				'Public web build at loom.ibm.io with Explorer, Chart, Query, and Dive.',
-				'Data cube with axis pivot, layer slice, and linked pivot table; Smart tab for anomaly / forecast / clustering.',
-				'Open-source repo with sample data spool, NL-to-SQL scaffolds, and theme tokens shared with the ibm.io suite.',
+				'Public at https://loom.ibm.io — Explorer, Chart, Query, Dive, plus “What’s interesting right now.”',
+				'Live feeds and catalogs (data.gov, city portals, TidyTuesday, USGS, NASA, GDACS) load into DuckDB and chart in one tap.',
+				'Shareable #chart= / #dive= links restore data, encodings, headline, and look; Share exports Square / Portrait / Story / Wide frames.',
 			],
 			prototypes: [
-				{ label: 'Open Loom', href: 'https://loom.ibm.io/' },
+				{
+					label: 'Open Loom',
+					href: 'https://loom.ibm.io/',
+					description: 'Public web build — start from a live story or load your own CSV.',
+				},
+				{
+					label: 'Example: Quake globe',
+					href: 'https://loom.ibm.io/#chart=eyJ2IjoxLCJzcmMiOiJzdHJlYW06Ly91c2dzIiwiYyI6eyJrIjoiZ2xvYmUiLCJ4IjoibG9uZ2l0dWRlIiwieSI6ImxhdGl0dWRlIiwiYyI6Im1hZ190eXBlIiwicyI6Im1hZ25pdHVkZSIsInRpIjoiUXVha2UgZ2xvYmUiLCJzdCI6IlNwaW4gdGhlIHBsYW5ldCDigJQgcXVha2VzIGFzIHBvaW50cyJ9fQ',
+					description: 'Live USGS quakes on a globe — longitude × latitude, color by mag_type.',
+				},
 				{
 					label: 'Source',
 					href: 'https://github.com/mhsenkow/Loom_story_teller',
+					description: 'Open-source repo — desktop + web, sample spool, theme tokens shared with ibm.io.',
 				},
 			],
 			sections: [
 				{
-					title: 'Live stories & Dive',
+					title: 'What’s interesting right now',
 					body: [
-						'“What’s interesting right now” scans live feeds and open data into chartable stories — HN, USGS, ISS track, NYC 311, weather, and more. Dive is Scuba-style slice-and-dice: time windows, nested group-bys, percentiles, period compare, and shareable #dive= URLs.',
+						'Every empty screen leads with a discovery deck: 60+ live stories across Earth, Space, Markets, News, and Cities. Filter by topic or mark type (globe, choropleth, hexbin, trails…), tap a card, and Loom opens it as a chart with headline included — no blank canvas.',
 					],
 					images: [
 						{
 							src: '/images/projects/loom-storyteller/stories.png',
-							alt: 'Live open-data story suggestions',
+							alt: 'What’s interesting right now — live story cards from USGS, NASA, ISS, HN, and more',
 						},
 					],
 				},
 				{
-					title: 'Explorer & Chart',
+					title: 'Chart — encodings that travel',
 					body: [
-						'Virtualized tables with sparklines, saved views, column profiling, and linked highlighting to the chart. Encode X / Y / Color / Size / Row plus glow, outline, and opacity — with pan, zoom, brush, lasso, and pinned tooltips.',
+						'Suggest chart / Deep scan / Tell a story propose marks that fit the table. Encoding channels (X / Y / Color / Size / Lon / Lat) update the canvas live; Copy chart link or the address bar restores the same data, type, fields, and look. GPU scenes (globe, orbit, firefly, terrain) sit beside classic Vega-Lite marks.',
 					],
 					images: [
 						{
 							src: '/images/projects/loom-storyteller/chart.png',
-							alt: 'Chart view with encoding panel',
+							alt: 'Chart view — Quake globe with suggestions rail and encoding panel',
 						},
 					],
 				},
 				{
-					title: 'Data cube & sources',
+					title: 'Explorer — rows you can feel',
 					body: [
-						'The Data cube bins Rows × Columns × Depth into WebGPU voxels you can pivot, slice, and dock as a linked pivot table. Catalog search across data.gov / data.gov.uk, Wikipedia live streams, USGS / NWS / Open-Meteo polls, and folder mounts — plus DuckDB SQL against loom_active or stream:// virtual sources.',
+						'Virtualized tables with per-column sparklines, bars, heat, and null%, plus inline filters. Profile a column, spark a chart from the toolbar, or jump straight to Chart / Dive with the same active table (loom_active in DuckDB).',
+					],
+					images: [
+						{
+							src: '/images/projects/loom-storyteller/explorer.png',
+							alt: 'Explorer — USGS Quakes with magnitude sparklines and cell bars',
+						},
+					],
+				},
+				{
+					title: 'Dive — click to ask',
+					body: [
+						'Scuba-style slice-and-dice: pick a time window, filter, group by, compare periods, and drill any value. Metrics include count, percentiles, first/last, and share. The query lives in the link — Back undoes a step; Copy link shares the dive.',
+					],
+					images: [
+						{
+							src: '/images/projects/loom-storyteller/dive.png',
+							alt: 'Dive — quake count over time with filters, group-by, and SQL link',
+						},
+					],
+				},
+				{
+					title: 'Data & sources',
+					body: [
+						'Connect live feeds (Wikipedia edits, USGS quakes, NASA events, GDACS alerts, NWS, weather, transit…) or browse catalogs — data.gov, city/state portals, TidyTuesday, curated packs. Drop your own CSVs; everything stays on-device unless you choose to share.',
 					],
 					images: [
 						{
 							src: '/images/projects/loom-storyteller/sources.png',
-							alt: 'Open data discovery grid',
+							alt: 'Data & sources — live feeds panel with USGS Earthquakes connected',
 						},
 					],
 				},
