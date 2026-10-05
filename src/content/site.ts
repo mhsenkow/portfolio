@@ -5,13 +5,13 @@ export const SITE_NAME = 'Michael Senkow';
 
 export const SITE_TAGLINE = 'i build machines, interfaces, and objects';
 
-export const SITE_ROLE = 'Staff Product Designer | UX for AI Tools, Research & Design Systems';
+export const SITE_ROLE = 'Staff Product Designer / Creative Technologist';
 
 /**
  * Intro greeting — resume voice, keep it to two short beats.
  */
 export const SITE_GREETING = [
-	"Hi — UX designer for AI-powered and internal tools: research to product design to visual/brand systems to front-end contribution. Meta Staff PD on cross-pillar data/AI; also Microsoft, IBM, Apple.",
+	"Hi — staff product designer and creative technologist for AI-powered and internal tools: research to product design to systems to front-end contribution. Consulting now (i2Systems, legal & HR AI); before that Meta, Microsoft, IBM, Apple.",
 	"Comfortable as a shared design resource — feedback sessions, Figma specs/prototypes, visual cohesion, and design-to-code fluency (React/TS, Storybook) so teams ship on-brand.",
 ] as const;
 
