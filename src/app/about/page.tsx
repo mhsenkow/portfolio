@@ -40,10 +40,12 @@ export default function AboutPage() {
 						))}
 
 						<p>
-							Recently: consulting for <strong>i2Systems</strong> (Lux, Judge) and AI
-							startups. Before that — <strong>Meta Infra</strong> notebooks &amp; data-viz
-							systems; <strong>Microsoft</strong> MyAnalytics / Viva Insights and Focus
-							Time research; <strong>IBM</strong> Watson / Cognos and early Carbon.
+							Recently: consulting via <strong>Sleeping Ox Studios</strong> —{' '}
+							<strong>i2Systems</strong> (Storybook / Lux, Judge), legal &amp; HR AI
+							products, and design systems that unify product + marketing. Before that —{' '}
+							<strong>Meta</strong> notebooks &amp; XDS data-viz; <strong>Microsoft</strong>{' '}
+							MyAnalytics / Viva Insights; <strong>IBM</strong> Watson / Cognos and early
+							Carbon.
 						</p>
 
 						<p>

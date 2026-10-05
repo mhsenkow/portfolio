@@ -44,6 +44,8 @@ export const STORY_SENTENCES: StoryPart[][] = [
 		", ",
 		{ slug: "wordcounter", label: "wordcounter" },
 		", ",
+		{ slug: "loom-storyteller", label: "Loom Story Teller" },
+		", ",
 		{ slug: "starship-vega", label: "Starship Vega" },
 		", ",
 		{ slug: "imdb-loom", label: "IMDb Loom" },

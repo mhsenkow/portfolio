@@ -1,0 +1,251 @@
+order_id,order_date,customer_name,segment,country,region,category,product,quantity,unit_price,sales,profit
+ORD-1001,2024-11-23,Customer 70,Consumer,Canada,North America,Electronics,Tablet,4,274.07,1096.28,297.03
+ORD-1002,2024-09-08,Customer 4,Home Office,Mexico,North America,Apparel,Jacket,1,119.68,119.68,14.34
+ORD-1003,2023-01-07,Customer 21,Home Office,Germany,Europe,Apparel,Sneakers,8,710.4,5683.2,1664.21
+ORD-1004,2023-04-15,Customer 12,Corporate,Japan,Asia Pacific,Office Supplies,Notebooks,3,264.65,793.95,221.55
+ORD-1005,2024-04-15,Customer 69,Consumer,Canada,North America,Office Supplies,Notebooks,10,323.31,3233.1,203.8
+ORD-1006,2024-01-06,Customer 74,Consumer,Japan,Asia Pacific,Electronics,Monitor,5,996.65,4983.25,1173.83
+ORD-1007,2023-04-14,Customer 49,Corporate,Canada,North America,Electronics,Smartphone,5,1182.38,5911.9,1812.56
+ORD-1008,2024-11-30,Customer 10,Home Office,Brazil,Latin America,Office Supplies,Pens,6,431.48,2588.88,649.94
+ORD-1009,2024-10-17,Customer 72,Consumer,United Kingdom,Europe,Furniture,Chair,8,460.31,3682.48,1277.29
+ORD-1010,2023-03-09,Customer 28,Home Office,Australia,Asia Pacific,Electronics,Smartphone,1,967.61,967.61,164.83
+ORD-1011,2023-05-27,Customer 34,Consumer,Australia,Asia Pacific,Furniture,Lamp,7,1062.54,7437.78,1806.31
+ORD-1012,2023-08-13,Customer 18,Home Office,Germany,Europe,Office Supplies,Folders,7,1078.2,7547.4,1281.7
+ORD-1013,2024-11-27,Customer 55,Home Office,Brazil,Latin America,Electronics,Laptop,2,190.19,380.38,37.28
+ORD-1014,2024-07-20,Customer 2,Home Office,Canada,North America,Apparel,Hat,10,1195.38,11953.8,2495.17
+ORD-1015,2023-01-04,Customer 34,Home Office,Canada,North America,Office Supplies,Notebooks,2,357.85,715.7,69.74
+ORD-1016,2024-01-18,Customer 21,Home Office,United Kingdom,Europe,Electronics,Tablet,11,613.13,6744.43,739.68
+ORD-1017,2024-01-07,Customer 40,Consumer,India,Asia Pacific,Electronics,Monitor,6,590.42,3542.52,296.01
+ORD-1018,2023-03-12,Customer 69,Consumer,United States,North America,Furniture,Cabinet,2,110.1,220.2,43.11
+ORD-1019,2024-03-09,Customer 28,Home Office,United Kingdom,Europe,Apparel,Scarf,3,323.95,971.85,302.95
+ORD-1020,2024-06-13,Customer 58,Consumer,Germany,Europe,Office Supplies,Stapler,11,782.65,8609.15,1561.96
+ORD-1021,2024-08-25,Customer 29,Consumer,Germany,Europe,Furniture,Desk,6,33.07,198.42,42.89
+ORD-1022,2023-03-14,Customer 66,Consumer,Canada,North America,Electronics,Smartphone,2,1087.26,2174.52,669.51
+ORD-1023,2024-08-07,Customer 74,Corporate,France,Europe,Apparel,Sneakers,9,165.72,1491.48,493.16
+ORD-1024,2023-12-29,Customer 55,Corporate,Germany,Europe,Apparel,Hat,4,120.44,481.76,119.33
+ORD-1025,2023-04-22,Customer 32,Consumer,Brazil,Latin America,Electronics,Laptop,1,487.92,487.92,74.06
+ORD-1026,2023-03-19,Customer 57,Home Office,Germany,Europe,Apparel,Sneakers,7,226.72,1587.04,299.61
+ORD-1027,2023-08-31,Customer 22,Corporate,Canada,North America,Electronics,Monitor,1,1163.04,1163.04,381.37
+ORD-1028,2023-01-03,Customer 50,Corporate,Brazil,Latin America,Apparel,Sneakers,7,1083.71,7585.97,753.98
+ORD-1029,2024-07-23,Customer 63,Consumer,Brazil,Latin America,Office Supplies,Stapler,12,1149.12,13789.44,4807.37
+ORD-1030,2023-11-18,Customer 8,Consumer,Germany,Europe,Office Supplies,Pens,1,698.38,698.38,148.52
+ORD-1031,2023-03-24,Customer 24,Consumer,Mexico,North America,Apparel,Scarf,9,195.66,1760.94,595.61
+ORD-1032,2023-09-10,Customer 75,Home Office,Mexico,North America,Electronics,Smartphone,7,150.9,1056.3,334.94
+ORD-1033,2023-09-25,Customer 27,Home Office,United States,North America,Electronics,Headphones,11,703.74,7741.14,1601.14
+ORD-1034,2024-04-13,Customer 41,Consumer,Australia,Asia Pacific,Furniture,Bookshelf,7,164.01,1148.07,279.73
+ORD-1035,2023-08-07,Customer 65,Corporate,United States,North America,Apparel,Scarf,10,1195.35,11953.5,860.39
+ORD-1036,2024-07-10,Customer 39,Home Office,United Kingdom,Europe,Office Supplies,Paper,4,448.48,1793.92,174.59
+ORD-1037,2023-05-18,Customer 34,Consumer,India,Asia Pacific,Electronics,Monitor,5,1118.65,5593.25,453.48
+ORD-1038,2023-07-28,Customer 34,Home Office,Canada,North America,Furniture,Bookshelf,5,728.96,3644.8,966.91
+ORD-1039,2023-02-15,Customer 1,Corporate,Brazil,Latin America,Office Supplies,Paper,2,764.07,1528.14,456.61
+ORD-1040,2024-07-28,Customer 2,Consumer,United Kingdom,Europe,Office Supplies,Pens,12,534.67,6416.04,1679.08
+ORD-1041,2023-06-01,Customer 56,Consumer,Canada,North America,Furniture,Cabinet,1,1002.84,1002.84,225.39
+ORD-1042,2023-09-13,Customer 14,Corporate,United States,North America,Office Supplies,Notebooks,1,1079.52,1079.52,122.01
+ORD-1043,2023-06-16,Customer 23,Corporate,India,Asia Pacific,Apparel,Scarf,12,192.23,2306.76,758.84
+ORD-1044,2023-09-12,Customer 35,Consumer,United States,North America,Furniture,Bookshelf,7,964.26,6749.82,2087.17
+ORD-1045,2024-04-16,Customer 45,Corporate,Canada,North America,Apparel,Jacket,8,273.14,2185.12,644.56
+ORD-1046,2023-03-13,Customer 36,Corporate,Germany,Europe,Furniture,Desk,11,238.21,2620.31,389.06
+ORD-1047,2023-09-25,Customer 23,Home Office,India,Asia Pacific,Apparel,Scarf,6,1127.57,6765.42,572.37
+ORD-1048,2023-11-18,Customer 56,Home Office,France,Europe,Electronics,Laptop,10,526.0,5260.0,1412.64
+ORD-1049,2024-03-22,Customer 1,Home Office,India,Asia Pacific,Electronics,Headphones,10,234.57,2345.7,148.52
+ORD-1050,2023-12-05,Customer 80,Corporate,India,Asia Pacific,Furniture,Bookshelf,7,91.41,639.87,159.5
+ORD-1051,2023-10-30,Customer 71,Consumer,Canada,North America,Office Supplies,Folders,5,802.94,4014.7,593.59
+ORD-1052,2024-08-05,Customer 39,Corporate,Germany,Europe,Apparel,Hat,11,899.78,9897.58,1011.61
+ORD-1053,2024-09-13,Customer 42,Corporate,India,Asia Pacific,Electronics,Tablet,5,258.54,1292.7,369.36
+ORD-1054,2023-06-23,Customer 11,Corporate,Brazil,Latin America,Apparel,Sneakers,9,572.04,5148.36,1649.3
+ORD-1055,2023-07-23,Customer 19,Consumer,India,Asia Pacific,Office Supplies,Paper,4,809.97,3239.88,380.34
+ORD-1056,2024-02-29,Customer 74,Consumer,United States,North America,Furniture,Lamp,10,1020.89,10208.9,733.49
+ORD-1057,2023-04-20,Customer 55,Consumer,Japan,Asia Pacific,Apparel,Hat,4,183.91,735.64,188.53
+ORD-1058,2024-04-12,Customer 18,Corporate,United Kingdom,Europe,Apparel,Jacket,9,305.04,2745.36,835.96
+ORD-1059,2024-03-12,Customer 71,Corporate,India,Asia Pacific,Office Supplies,Stapler,10,979.49,9794.9,3110.92
+ORD-1060,2023-10-11,Customer 67,Corporate,United Kingdom,Europe,Apparel,Hat,5,904.12,4520.6,1365.04
+ORD-1061,2023-12-10,Customer 41,Home Office,Germany,Europe,Office Supplies,Stapler,2,858.55,1717.1,206.65
+ORD-1062,2023-08-08,Customer 9,Corporate,Canada,North America,Furniture,Chair,4,464.58,1858.32,178.1
+ORD-1063,2024-03-06,Customer 50,Home Office,Japan,Asia Pacific,Office Supplies,Folders,8,503.6,4028.8,451.43
+ORD-1064,2024-02-04,Customer 54,Home Office,United States,North America,Apparel,Hat,1,1131.75,1131.75,157.97
+ORD-1065,2024-02-03,Customer 44,Home Office,India,Asia Pacific,Furniture,Lamp,4,333.34,1333.36,260.93
+ORD-1066,2024-02-08,Customer 76,Home Office,Japan,Asia Pacific,Furniture,Lamp,3,1177.02,3531.06,742.36
+ORD-1067,2023-09-24,Customer 49,Corporate,United States,North America,Electronics,Headphones,3,1041.29,3123.87,326.5
+ORD-1068,2024-03-07,Customer 33,Consumer,Germany,Europe,Apparel,Backpack,6,915.39,5492.34,899.3
+ORD-1069,2024-10-27,Customer 9,Home Office,Brazil,Latin America,Electronics,Monitor,1,1199.89,1199.89,185.97
+ORD-1070,2023-09-02,Customer 17,Corporate,United States,North America,Electronics,Smartphone,4,1008.36,4033.44,953.51
+ORD-1071,2024-09-12,Customer 78,Home Office,Canada,North America,Furniture,Lamp,12,313.44,3761.28,604.32
+ORD-1072,2024-08-12,Customer 49,Corporate,Canada,North America,Furniture,Bookshelf,2,697.79,1395.58,458.68
+ORD-1073,2023-11-05,Customer 77,Consumer,Germany,Europe,Electronics,Monitor,12,998.04,11976.48,1471.37
+ORD-1074,2024-06-02,Customer 44,Consumer,Mexico,North America,Electronics,Tablet,9,518.63,4667.67,752.29
+ORD-1075,2024-04-15,Customer 20,Corporate,Japan,Asia Pacific,Apparel,Jacket,7,1153.26,8072.82,1942.93
+ORD-1076,2024-08-29,Customer 35,Corporate,United Kingdom,Europe,Office Supplies,Folders,9,931.37,8382.33,1588.13
+ORD-1077,2024-09-16,Customer 49,Corporate,Germany,Europe,Electronics,Tablet,8,298.69,2389.52,452.61
+ORD-1078,2023-09-22,Customer 44,Corporate,United States,North America,Apparel,Backpack,3,589.16,1767.48,276.52
+ORD-1079,2023-09-05,Customer 53,Corporate,Mexico,North America,Office Supplies,Folders,1,623.82,623.82,66.95
+ORD-1080,2023-01-18,Customer 12,Corporate,India,Asia Pacific,Furniture,Lamp,11,856.52,9421.72,1737.86
+ORD-1081,2024-07-20,Customer 68,Corporate,Germany,Europe,Apparel,Sneakers,5,799.44,3997.2,642.37
+ORD-1082,2023-08-25,Customer 16,Home Office,Japan,Asia Pacific,Office Supplies,Notebooks,12,548.86,6586.32,935.17
+ORD-1083,2023-07-09,Customer 25,Consumer,Germany,Europe,Office Supplies,Paper,12,646.75,7761.0,2162.66
+ORD-1084,2023-07-18,Customer 38,Consumer,Brazil,Latin America,Office Supplies,Folders,9,719.37,6474.33,2228.16
+ORD-1085,2023-02-16,Customer 7,Home Office,Australia,Asia Pacific,Furniture,Bookshelf,1,851.96,851.96,74.95
+ORD-1086,2024-04-25,Customer 62,Corporate,France,Europe,Furniture,Lamp,2,1048.28,2096.56,465.9
+ORD-1087,2023-03-08,Customer 52,Corporate,Australia,Asia Pacific,Furniture,Desk,5,1129.75,5648.75,1092.01
+ORD-1088,2023-03-29,Customer 32,Consumer,Canada,North America,Electronics,Smartphone,3,974.88,2924.64,978.99
+ORD-1089,2024-06-19,Customer 49,Corporate,India,Asia Pacific,Apparel,Scarf,10,950.56,9505.6,1118.87
+ORD-1090,2024-09-16,Customer 13,Consumer,Brazil,Latin America,Office Supplies,Folders,7,372.01,2604.07,615.36
+ORD-1091,2023-06-10,Customer 1,Corporate,Germany,Europe,Office Supplies,Paper,3,293.92,881.76,190.11
+ORD-1092,2024-04-09,Customer 10,Home Office,Brazil,Latin America,Apparel,Backpack,1,283.92,283.92,74.41
+ORD-1093,2023-04-28,Customer 70,Consumer,Germany,Europe,Office Supplies,Folders,11,966.26,10628.86,1162.22
+ORD-1094,2024-09-01,Customer 73,Corporate,United Kingdom,Europe,Office Supplies,Pens,2,79.09,158.18,45.52
+ORD-1095,2023-10-06,Customer 65,Home Office,Brazil,Latin America,Electronics,Headphones,12,370.48,4445.76,759.12
+ORD-1096,2023-11-27,Customer 78,Corporate,Brazil,Latin America,Apparel,Jacket,10,55.51,555.1,99.7
+ORD-1097,2023-01-22,Customer 35,Home Office,United States,North America,Electronics,Smartphone,11,1004.46,11049.06,2459.08
+ORD-1098,2023-07-05,Customer 75,Corporate,United States,North America,Furniture,Lamp,9,784.6,7061.4,2293.7
+ORD-1099,2023-04-18,Customer 21,Corporate,Brazil,Latin America,Electronics,Headphones,6,494.75,2968.5,434.34
+ORD-1100,2024-07-17,Customer 5,Corporate,Japan,Asia Pacific,Apparel,Backpack,11,1134.67,12481.37,3670.39
+ORD-1101,2024-06-10,Customer 1,Home Office,Canada,North America,Office Supplies,Notebooks,6,146.18,877.08,247.13
+ORD-1102,2024-05-25,Customer 57,Consumer,India,Asia Pacific,Apparel,Hat,1,231.6,231.6,36.72
+ORD-1103,2024-05-11,Customer 16,Consumer,Germany,Europe,Office Supplies,Folders,3,1113.79,3341.37,606.24
+ORD-1104,2023-04-06,Customer 29,Consumer,Mexico,North America,Furniture,Chair,5,664.6,3323.0,716.69
+ORD-1105,2023-10-07,Customer 54,Corporate,Brazil,Latin America,Electronics,Smartphone,8,1119.72,8957.76,1232.22
+ORD-1106,2024-09-05,Customer 66,Home Office,Brazil,Latin America,Furniture,Lamp,9,180.41,1623.69,174.03
+ORD-1107,2023-10-01,Customer 1,Corporate,United Kingdom,Europe,Electronics,Tablet,7,413.13,2891.91,828.0
+ORD-1108,2024-07-19,Customer 70,Corporate,France,Europe,Apparel,Sneakers,8,649.99,5199.92,798.38
+ORD-1109,2024-02-25,Customer 6,Corporate,Brazil,Latin America,Office Supplies,Pens,12,292.66,3511.92,579.08
+ORD-1110,2023-06-05,Customer 64,Consumer,Brazil,Latin America,Apparel,Hat,11,952.53,10477.83,2573.41
+ORD-1111,2023-01-16,Customer 19,Corporate,United Kingdom,Europe,Office Supplies,Paper,8,126.86,1014.88,327.94
+ORD-1112,2024-10-27,Customer 11,Corporate,United Kingdom,Europe,Electronics,Headphones,5,411.56,2057.8,530.52
+ORD-1113,2024-07-08,Customer 5,Home Office,India,Asia Pacific,Apparel,Backpack,11,864.71,9511.81,2642.58
+ORD-1114,2023-04-11,Customer 13,Corporate,Canada,North America,Furniture,Bookshelf,4,898.15,3592.6,647.36
+ORD-1115,2024-01-03,Customer 48,Corporate,United Kingdom,Europe,Office Supplies,Paper,1,394.65,394.65,26.38
+ORD-1116,2023-06-24,Customer 23,Consumer,United Kingdom,Europe,Furniture,Cabinet,7,682.59,4778.13,1374.93
+ORD-1117,2023-05-27,Customer 30,Corporate,Mexico,North America,Apparel,Scarf,11,295.07,3245.77,1051.14
+ORD-1118,2023-10-22,Customer 70,Consumer,France,Europe,Apparel,Backpack,11,19.2,211.2,61.54
+ORD-1119,2023-09-14,Customer 59,Corporate,Canada,North America,Apparel,Backpack,10,364.59,3645.9,1234.53
+ORD-1120,2024-08-11,Customer 38,Home Office,Germany,Europe,Apparel,Hat,2,290.75,581.5,128.85
+ORD-1121,2023-02-20,Customer 78,Home Office,France,Europe,Electronics,Headphones,5,17.65,88.25,27.32
+ORD-1122,2023-07-14,Customer 80,Corporate,Brazil,Latin America,Office Supplies,Pens,10,963.9,9639.0,1115.25
+ORD-1123,2024-01-09,Customer 17,Consumer,United Kingdom,Europe,Electronics,Laptop,5,948.02,4740.1,284.45
+ORD-1124,2024-01-10,Customer 68,Home Office,France,Europe,Office Supplies,Stapler,3,247.35,742.05,212.19
+ORD-1125,2023-12-13,Customer 15,Corporate,France,Europe,Furniture,Bookshelf,8,1161.12,9288.96,1286.92
+ORD-1126,2024-07-24,Customer 47,Consumer,Canada,North America,Furniture,Chair,11,871.27,9583.97,3296.72
+ORD-1127,2024-11-19,Customer 34,Home Office,Japan,Asia Pacific,Electronics,Tablet,9,155.32,1397.88,224.47
+ORD-1128,2024-07-28,Customer 42,Home Office,Japan,Asia Pacific,Office Supplies,Paper,11,286.72,3153.92,181.37
+ORD-1129,2023-05-24,Customer 6,Consumer,Germany,Europe,Electronics,Headphones,12,368.21,4418.52,762.15
+ORD-1130,2024-02-02,Customer 59,Corporate,France,Europe,Apparel,Jacket,2,287.88,575.76,121.64
+ORD-1131,2024-11-01,Customer 13,Corporate,India,Asia Pacific,Apparel,Scarf,12,874.11,10489.32,3310.68
+ORD-1132,2024-03-31,Customer 31,Corporate,Mexico,North America,Apparel,Backpack,1,830.81,830.81,95.69
+ORD-1133,2023-07-14,Customer 16,Corporate,Canada,North America,Office Supplies,Folders,11,435.54,4790.94,811.79
+ORD-1134,2023-05-09,Customer 73,Consumer,Canada,North America,Furniture,Cabinet,1,68.29,68.29,10.25
+ORD-1135,2023-06-01,Customer 77,Consumer,Canada,North America,Furniture,Cabinet,4,977.16,3908.64,468.64
+ORD-1136,2024-11-07,Customer 4,Consumer,France,Europe,Furniture,Chair,9,306.78,2761.02,282.59
+ORD-1137,2023-02-23,Customer 17,Home Office,United States,North America,Office Supplies,Pens,10,393.94,3939.4,402.9
+ORD-1138,2024-08-30,Customer 14,Corporate,Japan,Asia Pacific,Electronics,Laptop,8,542.34,4338.72,688.17
+ORD-1139,2024-11-05,Customer 67,Corporate,India,Asia Pacific,Furniture,Cabinet,1,874.87,874.87,282.26
+ORD-1140,2023-04-21,Customer 63,Home Office,Brazil,Latin America,Electronics,Laptop,8,1017.98,8143.84,1448.64
+ORD-1141,2023-10-09,Customer 80,Home Office,Brazil,Latin America,Electronics,Laptop,6,733.09,4398.54,306.6
+ORD-1142,2024-09-11,Customer 56,Consumer,Mexico,North America,Office Supplies,Stapler,10,640.42,6404.2,1191.92
+ORD-1143,2024-04-09,Customer 52,Corporate,Canada,North America,Furniture,Lamp,8,1066.6,8532.8,1485.94
+ORD-1144,2023-06-06,Customer 61,Consumer,Canada,North America,Office Supplies,Stapler,6,800.81,4804.86,779.78
+ORD-1145,2023-05-14,Customer 72,Consumer,Canada,North America,Electronics,Laptop,7,123.1,861.7,234.07
+ORD-1146,2024-03-09,Customer 7,Corporate,Mexico,North America,Office Supplies,Paper,7,429.49,3006.43,750.41
+ORD-1147,2024-11-03,Customer 62,Consumer,Mexico,North America,Office Supplies,Notebooks,2,696.88,1393.76,158.64
+ORD-1148,2023-08-20,Customer 55,Home Office,Canada,North America,Office Supplies,Folders,6,144.94,869.64,116.16
+ORD-1149,2023-07-04,Customer 35,Home Office,Mexico,North America,Electronics,Monitor,11,996.72,10963.92,1427.88
+ORD-1150,2024-11-04,Customer 52,Consumer,France,Europe,Office Supplies,Notebooks,1,224.24,224.24,20.85
+ORD-1151,2024-04-09,Customer 44,Consumer,United Kingdom,Europe,Electronics,Laptop,12,640.34,7684.08,1251.42
+ORD-1152,2023-06-09,Customer 21,Home Office,Australia,Asia Pacific,Office Supplies,Notebooks,10,718.7,7187.0,2263.92
+ORD-1153,2024-03-28,Customer 54,Corporate,United States,North America,Electronics,Tablet,8,797.03,6376.24,1247.82
+ORD-1154,2024-08-30,Customer 63,Home Office,Germany,Europe,Electronics,Tablet,7,140.18,981.26,248.72
+ORD-1155,2023-07-29,Customer 39,Consumer,France,Europe,Electronics,Smartphone,7,1181.46,8270.22,549.43
+ORD-1156,2024-03-16,Customer 23,Consumer,United Kingdom,Europe,Office Supplies,Notebooks,6,151.02,906.12,180.51
+ORD-1157,2023-03-15,Customer 51,Home Office,Japan,Asia Pacific,Furniture,Cabinet,9,1001.36,9012.24,2630.31
+ORD-1158,2024-08-12,Customer 55,Home Office,United States,North America,Apparel,Jacket,8,1106.03,8848.24,2730.86
+ORD-1159,2023-06-25,Customer 80,Corporate,Japan,Asia Pacific,Apparel,Backpack,2,490.8,981.6,333.61
+ORD-1160,2024-06-20,Customer 11,Corporate,Australia,Asia Pacific,Electronics,Headphones,2,298.03,596.06,135.1
+ORD-1161,2024-10-10,Customer 15,Home Office,France,Europe,Office Supplies,Pens,6,936.71,5620.26,409.79
+ORD-1162,2023-06-01,Customer 31,Consumer,India,Asia Pacific,Furniture,Bookshelf,6,875.04,5250.24,1552.42
+ORD-1163,2024-11-02,Customer 10,Consumer,United Kingdom,Europe,Office Supplies,Pens,3,726.06,2178.18,605.67
+ORD-1164,2024-08-01,Customer 80,Corporate,Brazil,Latin America,Apparel,Scarf,10,543.1,5431.0,1777.27
+ORD-1165,2023-10-09,Customer 76,Consumer,Australia,Asia Pacific,Furniture,Lamp,2,566.95,1133.9,271.47
+ORD-1166,2023-10-21,Customer 10,Home Office,Australia,Asia Pacific,Electronics,Tablet,8,546.68,4373.44,293.31
+ORD-1167,2023-02-12,Customer 58,Home Office,Canada,North America,Apparel,Hat,10,668.75,6687.5,1922.96
+ORD-1168,2024-04-06,Customer 14,Corporate,Germany,Europe,Office Supplies,Folders,8,605.63,4845.04,1634.31
+ORD-1169,2024-06-20,Customer 67,Home Office,Canada,North America,Furniture,Desk,4,851.49,3405.96,1182.88
+ORD-1170,2024-11-26,Customer 77,Consumer,United Kingdom,Europe,Office Supplies,Notebooks,5,469.8,2349.0,663.22
+ORD-1171,2023-09-16,Customer 78,Consumer,Australia,Asia Pacific,Electronics,Tablet,2,673.09,1346.18,223.42
+ORD-1172,2024-11-02,Customer 51,Consumer,Australia,Asia Pacific,Electronics,Monitor,11,176.58,1942.38,300.96
+ORD-1173,2023-05-11,Customer 68,Consumer,Mexico,North America,Electronics,Tablet,9,457.0,4113.0,1182.48
+ORD-1174,2023-12-16,Customer 63,Consumer,Japan,Asia Pacific,Office Supplies,Paper,6,376.17,2257.02,756.89
+ORD-1175,2024-06-03,Customer 70,Home Office,Germany,Europe,Furniture,Chair,2,360.58,721.16,206.57
+ORD-1176,2023-06-16,Customer 24,Home Office,India,Asia Pacific,Electronics,Tablet,10,164.21,1642.1,267.69
+ORD-1177,2023-09-01,Customer 57,Home Office,Mexico,North America,Furniture,Lamp,1,497.74,497.74,125.88
+ORD-1178,2024-04-25,Customer 25,Corporate,France,Europe,Apparel,Sneakers,9,293.09,2637.81,896.01
+ORD-1179,2024-03-04,Customer 21,Consumer,Mexico,North America,Apparel,Hat,5,935.52,4677.6,939.6
+ORD-1180,2024-07-21,Customer 14,Home Office,Mexico,North America,Furniture,Bookshelf,1,772.29,772.29,241.14
+ORD-1181,2024-06-09,Customer 19,Corporate,India,Asia Pacific,Electronics,Tablet,2,917.64,1835.28,241.96
+ORD-1182,2024-02-10,Customer 65,Corporate,Canada,North America,Furniture,Lamp,6,1117.12,6702.72,1169.42
+ORD-1183,2023-04-12,Customer 43,Consumer,Germany,Europe,Apparel,Jacket,6,275.65,1653.9,240.82
+ORD-1184,2024-04-25,Customer 58,Home Office,United Kingdom,Europe,Electronics,Tablet,8,837.72,6701.76,614.13
+ORD-1185,2024-09-15,Customer 68,Corporate,United States,North America,Electronics,Laptop,5,265.06,1325.3,125.71
+ORD-1186,2024-10-16,Customer 80,Corporate,Canada,North America,Office Supplies,Pens,5,153.24,766.2,93.12
+ORD-1187,2024-08-11,Customer 31,Home Office,Canada,North America,Electronics,Headphones,10,646.98,6469.8,1550.08
+ORD-1188,2024-03-02,Customer 24,Home Office,United Kingdom,Europe,Office Supplies,Stapler,1,740.85,740.85,90.51
+ORD-1189,2024-06-03,Customer 71,Consumer,Canada,North America,Office Supplies,Paper,9,656.55,5908.95,1689.51
+ORD-1190,2023-01-17,Customer 46,Consumer,Japan,Asia Pacific,Apparel,Jacket,11,469.16,5160.76,836.0
+ORD-1191,2023-02-15,Customer 46,Home Office,Australia,Asia Pacific,Furniture,Desk,10,884.34,8843.4,1324.35
+ORD-1192,2023-05-19,Customer 9,Home Office,Australia,Asia Pacific,Furniture,Lamp,12,578.41,6940.92,726.6
+ORD-1193,2023-02-12,Customer 41,Corporate,Brazil,Latin America,Electronics,Tablet,4,60.22,240.88,26.46
+ORD-1194,2023-07-15,Customer 37,Corporate,India,Asia Pacific,Apparel,Scarf,8,309.95,2479.6,684.34
+ORD-1195,2024-02-14,Customer 57,Corporate,United States,North America,Office Supplies,Notebooks,2,960.82,1921.64,347.98
+ORD-1196,2024-06-15,Customer 35,Consumer,Australia,Asia Pacific,Furniture,Lamp,12,601.05,7212.6,2360.63
+ORD-1197,2023-10-28,Customer 42,Consumer,Japan,Asia Pacific,Electronics,Headphones,10,1194.16,11941.6,1243.56
+ORD-1198,2023-06-20,Customer 57,Corporate,Canada,North America,Office Supplies,Notebooks,5,539.53,2697.65,715.68
+ORD-1199,2023-02-28,Customer 10,Home Office,Brazil,Latin America,Electronics,Tablet,10,1197.8,11978.0,1585.49
+ORD-1200,2023-05-27,Customer 78,Home Office,Japan,Asia Pacific,Office Supplies,Folders,12,817.86,9814.32,3296.01
+ORD-1201,2024-01-06,Customer 50,Home Office,Brazil,Latin America,Electronics,Smartphone,2,289.31,578.62,140.92
+ORD-1202,2024-08-10,Customer 18,Home Office,United States,North America,Furniture,Lamp,6,451.44,2708.64,755.51
+ORD-1203,2023-01-27,Customer 24,Corporate,Australia,Asia Pacific,Apparel,Backpack,11,340.2,3742.2,1265.45
+ORD-1204,2024-04-01,Customer 28,Home Office,India,Asia Pacific,Apparel,Scarf,2,320.04,640.08,81.99
+ORD-1205,2023-06-26,Customer 57,Consumer,France,Europe,Apparel,Sneakers,2,169.79,339.58,24.52
+ORD-1206,2023-06-11,Customer 23,Corporate,Australia,Asia Pacific,Office Supplies,Paper,9,654.27,5888.43,1868.98
+ORD-1207,2024-05-20,Customer 4,Corporate,India,Asia Pacific,Furniture,Desk,4,952.14,3808.56,460.92
+ORD-1208,2023-03-09,Customer 40,Corporate,India,Asia Pacific,Office Supplies,Stapler,9,162.69,1464.21,461.63
+ORD-1209,2024-10-19,Customer 10,Corporate,Brazil,Latin America,Apparel,Hat,10,95.91,959.1,327.74
+ORD-1210,2023-05-13,Customer 56,Home Office,Brazil,Latin America,Office Supplies,Pens,9,770.63,6935.67,725.39
+ORD-1211,2023-08-19,Customer 45,Home Office,United States,North America,Electronics,Monitor,3,370.52,1111.56,109.59
+ORD-1212,2023-05-09,Customer 39,Home Office,France,Europe,Electronics,Tablet,4,764.99,3059.96,658.66
+ORD-1213,2023-06-07,Customer 22,Home Office,India,Asia Pacific,Electronics,Monitor,11,209.01,2299.11,764.41
+ORD-1214,2023-02-16,Customer 74,Corporate,Mexico,North America,Office Supplies,Folders,1,991.68,991.68,58.03
+ORD-1215,2024-07-12,Customer 38,Home Office,Germany,Europe,Apparel,Scarf,11,44.1,485.1,153.63
+ORD-1216,2023-03-03,Customer 21,Corporate,France,Europe,Apparel,Sneakers,11,492.06,5412.66,1007.1
+ORD-1217,2023-11-23,Customer 45,Corporate,Japan,Asia Pacific,Apparel,Hat,4,413.51,1654.04,153.99
+ORD-1218,2023-05-06,Customer 35,Corporate,United Kingdom,Europe,Office Supplies,Folders,9,134.57,1211.13,148.39
+ORD-1219,2024-09-22,Customer 54,Consumer,Germany,Europe,Furniture,Desk,1,353.93,353.93,58.49
+ORD-1220,2024-05-25,Customer 66,Corporate,United Kingdom,Europe,Office Supplies,Folders,12,380.76,4569.12,1274.49
+ORD-1221,2024-04-13,Customer 31,Consumer,Brazil,Latin America,Office Supplies,Stapler,1,115.34,115.34,19.37
+ORD-1222,2024-10-31,Customer 61,Corporate,Mexico,North America,Office Supplies,Paper,1,343.38,343.38,78.72
+ORD-1223,2024-01-10,Customer 52,Corporate,India,Asia Pacific,Electronics,Laptop,7,167.65,1173.55,151.79
+ORD-1224,2023-10-23,Customer 10,Corporate,United States,North America,Apparel,Jacket,10,677.69,6776.9,1075.88
+ORD-1225,2024-09-17,Customer 16,Consumer,India,Asia Pacific,Apparel,Scarf,5,991.77,4958.85,1175.11
+ORD-1226,2023-05-28,Customer 26,Home Office,Canada,North America,Apparel,Backpack,6,672.94,4037.64,644.74
+ORD-1227,2023-12-08,Customer 61,Home Office,India,Asia Pacific,Apparel,Scarf,1,62.0,62.0,5.65
+ORD-1228,2023-11-23,Customer 21,Corporate,Brazil,Latin America,Furniture,Cabinet,9,174.62,1571.58,517.7
+ORD-1229,2024-05-16,Customer 73,Corporate,Mexico,North America,Office Supplies,Folders,6,612.72,3676.32,745.98
+ORD-1230,2024-08-20,Customer 40,Home Office,Brazil,Latin America,Electronics,Tablet,6,811.18,4867.08,1674.13
+ORD-1231,2024-08-14,Customer 30,Home Office,United States,North America,Apparel,Backpack,11,941.22,10353.42,2928.45
+ORD-1232,2024-01-25,Customer 19,Home Office,United States,North America,Apparel,Sneakers,9,757.8,6820.2,1609.03
+ORD-1233,2023-11-18,Customer 54,Consumer,Germany,Europe,Electronics,Monitor,12,139.0,1668.0,92.88
+ORD-1234,2023-03-05,Customer 18,Home Office,Japan,Asia Pacific,Furniture,Lamp,9,931.77,8385.93,2735.12
+ORD-1235,2024-04-15,Customer 69,Corporate,Germany,Europe,Office Supplies,Stapler,9,457.18,4114.62,1386.65
+ORD-1236,2023-10-13,Customer 72,Corporate,India,Asia Pacific,Office Supplies,Notebooks,10,585.14,5851.4,1973.1
+ORD-1237,2023-11-21,Customer 62,Corporate,Germany,Europe,Office Supplies,Notebooks,12,255.08,3060.96,800.43
+ORD-1238,2024-02-09,Customer 45,Consumer,India,Asia Pacific,Office Supplies,Notebooks,2,691.58,1383.16,294.55
+ORD-1239,2024-11-02,Customer 33,Home Office,France,Europe,Electronics,Tablet,12,102.2,1226.4,401.28
+ORD-1240,2023-10-06,Customer 18,Consumer,Brazil,Latin America,Furniture,Chair,9,331.19,2980.71,651.6
+ORD-1241,2024-10-15,Customer 30,Consumer,Mexico,North America,Furniture,Chair,1,806.44,806.44,168.8
+ORD-1242,2023-05-21,Customer 1,Home Office,Canada,North America,Apparel,Backpack,12,571.11,6853.32,1743.19
+ORD-1243,2023-10-22,Customer 42,Corporate,United Kingdom,Europe,Apparel,Hat,8,783.44,6267.52,1734.68
+ORD-1244,2023-02-08,Customer 23,Corporate,United States,North America,Electronics,Monitor,4,645.9,2583.6,689.65
+ORD-1245,2023-10-24,Customer 5,Consumer,United Kingdom,Europe,Electronics,Headphones,8,230.08,1840.64,505.63
+ORD-1246,2024-06-20,Customer 64,Consumer,France,Europe,Electronics,Tablet,5,549.58,2747.9,666.07
+ORD-1247,2024-04-14,Customer 33,Home Office,India,Asia Pacific,Apparel,Backpack,4,972.11,3888.44,580.18
+ORD-1248,2023-06-29,Customer 79,Home Office,United Kingdom,Europe,Electronics,Tablet,5,684.8,3424.0,949.08
+ORD-1249,2023-07-09,Customer 18,Corporate,Japan,Asia Pacific,Apparel,Scarf,6,111.39,668.34,167.6
+ORD-1250,2023-10-01,Customer 43,Corporate,Australia,Asia Pacific,Furniture,Desk,5,465.22,2326.1,428.05

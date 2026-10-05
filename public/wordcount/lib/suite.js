@@ -38,7 +38,7 @@
     hue: '<circle cx="8" cy="8" r="5.2"/><circle cx="8" cy="8" r="1.6"/><path d="M8 2.8 9.2 5.4M8 2.8 6.8 5.4"/>',
     bayes: '<path d="M3 12.5V8.5l3-3 3 2 4-5"/><path d="M3 12.5h10"/>',
     stories: '<path d="M3 3.5h4.2c.8 0 1.5.4 1.8 1v8.2c-.4-.3-.9-.4-1.5-.4H3zM13 3.5H8.8c-.8 0-1.5.4-1.8 1v8.2c.4-.3.9-.4 1.5-.4H13z"/>',
-    pulse: '<path d="M2.5 8h2.2l1.4-3.2 2.2 6.4 1.6-3.2H13.5"/>',
+    dataexplorer: '<path d="M2.5 12.5V6.5l2.2 3 2.1-4.5 2.2 3.5 2.5-5.2V12.5"/><path d="M2.5 12.5h11"/>',
     tools: '<rect x="2.5" y="2.5" width="4.2" height="4.2" rx=".6"/><rect x="9.3" y="2.5" width="4.2" height="4.2" rx=".6"/><rect x="2.5" y="9.3" width="4.2" height="4.2" rx=".6"/><rect x="9.3" y="9.3" width="4.2" height="4.2" rx=".6"/>'
   };
 
@@ -122,22 +122,22 @@
       }
     },
     {
-      id: 'pulse', label: 'pulse', blurb: 'sites · events', group: 'desk', paths: ['pulse'], icon: I.pulse, status: 'live',
+      id: 'dataexplorer', label: 'data', blurb: 'csv · charts', group: 'desk', paths: ['dataexplorer'], icon: I.dataexplorer, status: 'live',
       help: {
-        lead: 'First-party analytics that never leaves this device.',
-        body: 'Suite tools and the portfolio write pageviews and named events into IndexedDB on this browser. Open pulse to inspect totals, top paths, and a live event log. No Google, no accounts — export JSON when you want a dump. A remote collector can plug into the same beacon later; this pass stays local.',
+        lead: 'Ask a CSV questions and get charts.',
+        body: 'Upload any tabular CSV. Chat, Slice, and Style build Vega-Lite views from columns detected on-device — nothing leaves the browser.',
         math: {
           eq: [
-            'views = count(name = pageview)',
-            'events = count(name ≠ pageview)',
-            'top(path) = group by path'
+            'metric = sum | mean | count',
+            'slice = metric × dimension × filters',
+            'marks = aggregate(slice)'
           ],
-          explain: 'Each beacon record is a row: name, site (suite or portfolio), path, optional tool id, session id, and props. The dashboard filters and aggregates those rows. Cap is ~5k events; oldest drop first.'
+          explain: 'Numeric columns become metrics; low-cardinality text becomes dimensions. A cut aggregates the metric by a dimension (or over time), then draws bars, lines, or pies.'
         },
         use: [
-          'Browse tools or portfolio pages; return here to see what landed.',
-          'Filter by site (all / suite / portfolio) or clear the store.',
-          'Export JSON for learning dumps; toggle off via shared pulse.off if you want silence.'
+          'Start from the working examples, or ask in plain English.',
+          'Open Data to upload a CSV — try the Bird Strikes set from Kaggle.',
+          'Click prior chat turns to replay that slice on the chart.'
         ]
       }
     },
@@ -1459,60 +1459,10 @@
     } catch (e) {}
   }
 
-  function suiteScriptBase() {
-    var scripts = document.getElementsByTagName('script');
-    var i, src;
-    for (i = scripts.length - 1; i >= 0; i--) {
-      src = scripts[i].src || '';
-      if (/suite\.js(\?|$)/.test(src)) {
-        return src.replace(/suite\.js(\?.*)?$/, '');
-      }
-    }
-    return '/lib/';
-  }
-
-  function pulseScriptUrl() {
-    var loc = global.location || {};
-    if (loc.protocol === 'file:') {
-      var base = suiteScriptBase();
-      if (/\/(wordcount|timecount)\/lib\/$/.test(base)) return base + '../../lib/pulse.js';
-      return base + 'pulse.js';
-    }
-    var root = suiteRoot();
-    return (!root || root === '/') ? '/lib/pulse.js' : root + '/lib/pulse.js';
-  }
-
-  function ensurePulse(toolId) {
-    function fire() {
-      try {
-        if (global.IBMPulse && typeof global.IBMPulse.pageview === 'function') {
-          global.IBMPulse.pageview({ site: 'suite', tool: toolId || null });
-        }
-      } catch (e) {}
-    }
-    if (global.IBMPulse) {
-      fire();
-      return;
-    }
-    var pending = document.querySelector('script[data-ibm-pulse]');
-    if (pending) {
-      pending.addEventListener('load', fire);
-      return;
-    }
-    var s = document.createElement('script');
-    s.src = pulseScriptUrl() + '?v=1';
-    s.async = true;
-    s.setAttribute('data-ibm-pulse', '1');
-    s.addEventListener('load', fire);
-    s.addEventListener('error', function () {});
-    (document.head || document.documentElement).appendChild(s);
-  }
-
   function mountSuiteNav(currentId) {
     injectStyles();
     currentId = currentId || detectToolId();
     rememberVisit(currentId);
-    ensurePulse(currentId);
     if (document.querySelector('.suite-nav')) {
       adoptSuiteChrome(document.querySelector('.suite-nav'));
       return;

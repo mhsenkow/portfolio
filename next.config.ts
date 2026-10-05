@@ -7,6 +7,7 @@ const SUITE_TOOLS = [
   "wordcounter",
   "timecount",
   "stories",
+  "dataexplorer",
   "tools",
   "bill",
   "hourly",

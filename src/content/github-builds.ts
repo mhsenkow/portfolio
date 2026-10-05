@@ -50,7 +50,7 @@ export const githubBuilds: Project[] = [
 		slug: 'wordcounter',
 		title: 'wordcounter',
 		description:
-			'Free online word counter — single-file, offline-capable, localStorage only. Live at ibm.io/wordcount.',
+			'Free online word counter — single-file, offline-capable, localStorage only. Sibling money/unit tools (invoice, tax, dose…) live on the same suite at ibm.io.',
 		year: 2026,
 		category: 'creative',
 		image: {
@@ -71,11 +71,17 @@ export const githubBuilds: Project[] = [
 			skills: ['Single-file apps', 'Theme systems', 'Offline UX', 'JavaScript'],
 			synopsis: [
 				'A quiet writing meter: paste or type, see words / reading time / sentences / characters, and keep everything on-device. Theme chrome ports into this portfolio.',
-				'Built as a single-file, offline-friendly tool — no accounts, no sync, no telemetry.',
+				'Built as a single-file, offline-friendly tool — no accounts, no sync, no telemetry. The same craft language powers sibling calculators (invoice, tax, bill, dose, and more) under /tools on ibm.io.',
 			],
 			goals: ['Make the most common writing metric feel calm and local.'],
-			results: ['Public at ibm.io/wordcount; themes reused across the suite.'],
-			prototypes: [{ label: 'Open wordcounter', href: 'https://ibm.io/wordcount/' }],
+			results: [
+				'Public at ibm.io/wordcount; themes reused across the suite.',
+				'Invoice generator and related money/unit tools shipped into the same suite.',
+			],
+			prototypes: [
+				{ label: 'Open wordcounter', href: 'https://ibm.io/wordcount/' },
+				{ label: 'Invoice generator', href: 'https://ibm.io/invoice/' },
+			],
 		},
 	},
 	{
@@ -268,6 +274,7 @@ export const githubBuilds: Project[] = [
 		},
 		stack: ['TypeScript', 'Cloudflare Workers', 'Postgres', 'SQL', 'SEC EDGAR'],
 		links: [
+			{ label: 'Live', href: 'https://mhsenkow.github.io/sec-loom/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/sec-loom' },
 		],
 		details: {
@@ -290,8 +297,11 @@ export const githubBuilds: Project[] = [
 				'Ship a polished product proof from a written PRD.',
 			],
 			results: [
-				'Public repo with Whale Grid, Conviction Flow, and provenance-backed moves',
+				'Public GitHub Pages demo with Whale Grid, Conviction Flow, and provenance-backed moves',
 				'Demo/live honesty rules baked into the product surface — mock data never poses as market truth',
+			],
+			prototypes: [
+				{ label: 'Open SEC Loom', href: 'https://mhsenkow.github.io/sec-loom/' },
 			],
 		},
 	},
@@ -415,26 +425,115 @@ export const githubBuilds: Project[] = [
 		slug: 'loom-storyteller',
 		title: 'Loom Story Teller',
 		description:
-			'Local-first data storytelling for macOS — DuckDB, Vega-Lite, WebGPU.',
+			'Local-first data storytelling — mount a folder, query with DuckDB, chart with Vega-Lite / WebGPU, and Dive for Scuba-style slice-and-dice. Live at loom.ibm.io.',
 		year: 2026,
+		featured: true,
 		category: 'creative',
 		image: {
 			src: '/images/projects/loom-storyteller/card.png',
-			alt: 'Loom Story Teller — local data storytelling',
+			alt: 'Loom Story Teller — Explorer / Data & sources',
 			width: 1200,
 			height: 600,
 		},
-		stack: ['TypeScript', 'Rust', 'DuckDB', 'Vega-Lite', 'WebGPU', 'WGSL', 'macOS'],
+		gallery: [
+			{
+				src: '/images/projects/loom-storyteller/stories.png',
+				alt: 'What’s interesting right now — live open-data story suggestions',
+			},
+			{
+				src: '/images/projects/loom-storyteller/chart.png',
+				alt: 'Loom chart view with encodings and visual controls',
+			},
+			{
+				src: '/images/projects/loom-storyteller/sources.png',
+				alt: 'Data & sources — discover open data catalogs',
+			},
+		],
+		stack: [
+			'TypeScript',
+			'Rust',
+			'Tauri',
+			'DuckDB',
+			'Vega-Lite',
+			'WebGPU',
+			'WGSL',
+			'macOS',
+			'Cloudflare',
+		],
 		links: [
+			{ label: 'Live', href: 'https://loom.ibm.io/' },
 			{ label: 'GitHub', href: 'https://github.com/mhsenkow/Loom_story_teller' },
 		],
 		details: {
 			role: 'Design & engineering',
 			entity: 'Independent',
 			years: '2026',
-			skills: ['TypeScript', 'Rust', 'DuckDB', 'WebGPU', 'Local-first data storytelling'],
+			skills: [
+				'Local-first data UX',
+				'DuckDB',
+				'WebGPU / Vega-Lite',
+				'Dive / OLAP-style exploration',
+				'TypeScript',
+				'Rust',
+				'Tauri',
+			],
 			synopsis: [
-				'Local-first data storytelling on macOS: query with DuckDB, author with Vega-Lite, render with WebGPU — keep the narrative machine on your desk.',
+				'Local-first data storytelling for macOS and the web: mount a folder of CSV/Parquet, profile columns, author charts with Vega-Lite, and render voxels with WebGPU — nothing leaves your machine unless you choose.',
+				'Explorer → Chart → Query → Dive. Discover data.gov catalogs and live feeds, then ask questions by clicking: time windows, nested group-bys, percentiles, period compare, and shareable #dive= URLs.',
+			],
+			goals: [
+				'Make millions of local rows feel as playful as a notebook and as precise as SQL.',
+				'Ship one craft language across desktop (Tauri + DuckDB) and the static web build at loom.ibm.io.',
+			],
+			results: [
+				'Public web build at loom.ibm.io with Explorer, Chart, Query, and Dive.',
+				'Data cube with axis pivot, layer slice, and linked pivot table; Smart tab for anomaly / forecast / clustering.',
+				'Open-source repo with sample data spool, NL-to-SQL scaffolds, and theme tokens shared with the ibm.io suite.',
+			],
+			prototypes: [
+				{ label: 'Open Loom', href: 'https://loom.ibm.io/' },
+				{
+					label: 'Source',
+					href: 'https://github.com/mhsenkow/Loom_story_teller',
+				},
+			],
+			sections: [
+				{
+					title: 'Live stories & Dive',
+					body: [
+						'“What’s interesting right now” scans live feeds and open data into chartable stories — HN, USGS, ISS track, NYC 311, weather, and more. Dive is Scuba-style slice-and-dice: time windows, nested group-bys, percentiles, period compare, and shareable #dive= URLs.',
+					],
+					images: [
+						{
+							src: '/images/projects/loom-storyteller/stories.png',
+							alt: 'Live open-data story suggestions',
+						},
+					],
+				},
+				{
+					title: 'Explorer & Chart',
+					body: [
+						'Virtualized tables with sparklines, saved views, column profiling, and linked highlighting to the chart. Encode X / Y / Color / Size / Row plus glow, outline, and opacity — with pan, zoom, brush, lasso, and pinned tooltips.',
+					],
+					images: [
+						{
+							src: '/images/projects/loom-storyteller/chart.png',
+							alt: 'Chart view with encoding panel',
+						},
+					],
+				},
+				{
+					title: 'Data cube & sources',
+					body: [
+						'The Data cube bins Rows × Columns × Depth into WebGPU voxels you can pivot, slice, and dock as a linked pivot table. Catalog search across data.gov / data.gov.uk, Wikipedia live streams, USGS / NWS / Open-Meteo polls, and folder mounts — plus DuckDB SQL against loom_active or stream:// virtual sources.',
+					],
+					images: [
+						{
+							src: '/images/projects/loom-storyteller/sources.png',
+							alt: 'Open data discovery grid',
+						},
+					],
+				},
 			],
 		},
 	},

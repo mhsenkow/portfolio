@@ -222,8 +222,8 @@ export const projects: Project[] = [
 				'Ship the craft: Steam depots, notarized macOS, free GitHub builds, a store page that reads honest.',
 			],
 			results: [
-				'Public builds on GitHub Releases; Steam wishlist open for Early Access July 7, 2026.',
-				'Same binaries across GitHub and Steam desktop depots.',
+				'Public builds on GitHub Releases (latest v0.2.36); Steam wishlist open for Early Access July 7, 2026.',
+				'Same binaries across GitHub and Steam desktop depots — keeper care loop, saltwater reef mode, and eight biome palettes.',
 			],
 		},
 	},
